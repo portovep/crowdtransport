@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<!-- Main Activity -->
+    <string name="app_name">project1886</string>
+    <string name="profile_welcome">Bienvenido</string>
+    <string name="option_menu_login">Log in</string>
+    <string name="option_menu_register">Registrarse</string>
+    <string name="option_menu_exit">Salir</string>
+    <string name="option_menu_profile">Mi perfil</string>
+    <string name="buttonBus">Autobuses</string>
+    <string name="buttonTaxi">Taxis</string>
+    <string name="buttonCollaborate">Colabora</string>
+    
+    <!-- Login Panel -->
+    <string name="loginActivity_name">Página de autenticación</string>
+    <string name="userName">ID usuario</string>
+    <string name="password">Contraseña</string>
+    <string name="buttonLogin">Entrar</string>
+    <string name="spinnerUserType">Tipo de usuario</string>
+    
+    <!-- Registration Panel -->
+    <string name="tabUserRegister">Usuarios</string>
+    <string name="tabTaxiRegister">Taxistas</string>
+    <string name="tabBusRegister">Conductores autobús</string>
+    <string name="fullName">Nombre y apellidos</string>
+    <string name="password2">Repita la contraseña</string>
+    <string name="email">Email</string>
+    <string name="buttonRegister">Registrar</string>
+   		<!--  taxista -->
+  	<string name="dni">DNI</string>
+  	<string name="licenceNumber">Nº licencia</string>
+  	<string name="carTradeMark">Marca de coche</string>
+  	<string name="carModel">Modelo de coche</string>
+   		<!--  Conductor autobuses -->
+  	<string name="cif">CIF empresa</string>
+  	<string name="authCode">Código de autorización</string>
+  	
+  	<!-- datos linea -->
+  	<string name="city">Ciudad</string>  	 
+   	<string name="line">Línea</string>
+   	<string name="buttonSearch">Buscar</string>
+   	<string name="spinnerCities">Elige ciudad</string>
+   	<string name="spinnerLines">Elige linea</string>
+   	
+   	<!-- Buttons -->
+   	<string name="buttonBack">Volver atrás</string>
+   	
+   	<!-- Notifications -->
+   	<string name="failServerNotFound">Lo sentimos, no se ha podido establecer conexión con el servidor</string>
+   	<string name="responseProblem">Se ha producido un error al recibir la respuesta del servidor</string>
+   	<string name="missingFields">Todos los campos son obligatorios</string>
+   	<string name="differentPasswords">Las contraseñas no son iguales</string>
+   	<string name="correctLogin">Autenticación correcta</string>
+   	<string name="failLoginInvalidData">ID de usuario o contraseña incorrectas</string>
+   	<string name="processingUserAuthentication">Comprobando credenciales...</string>
+   	<string name="processingUserRegistration">Registrando usuario...</string>
+   	<string name="correctRegister">Usuario registrado correctamente</string>
+   	<string name="failRegister">Ha ocurrido un error en el proceso de registro\nVuelva a intentarlo</string>
+   	<string name="failRegisterInvalidUserName">Ya existe un usuario con ese nombre\nElija otro nombre de usuario</string>
+  	<string name="failRegisterInvalidDNI">Ya existe un usuario registrado con el DNI especificado.\n
+  				Si cree que han suplantado su identidad, contacte con nosotros.
+  	</string>
+  	<string name="failRegisterInvalidLicence">El número de licencia introducido no es válido</string>
+  	<string name="failRegisterInvalidCompanyAuthCode">El código de autorización de registro no es válido para la compañía especificada</string>      	
+   	<string name="locationNotFound">Lo sentimos, pero no tenemos información sobre los autobuses que recorren esta línea</string>
+   	<string name="loadingCities">Obteniendo información de las ciudades disponibles</string>
+   	<string name="loadingLines">Obteniendo información de las líneas disponibles</string>
+   	<string name="failLoadingCities">No hay ciudades disponibles en estos momentos, vuelva a intentarlo más tarde</string>
+   	<string name="failLoadingLines">No existen líneas disponibles para la ciudad especificada</string>
+   	
+</resources>
