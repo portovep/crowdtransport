@@ -1,5 +1,7 @@
 package com.coctelmental.android.project1886;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.coctelmental.android.project1886.common.Geopoint;
@@ -11,6 +13,7 @@ import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
+import com.google.gson.reflect.TypeToken;
 
 
 import android.app.AlertDialog;
@@ -33,7 +36,7 @@ public class BusLocationMap extends MapActivity implements Runnable {
 	
 	private String targetCity = null;
 	private String targetLine = null;	
-	private Geopoint updatedLocation;										
+	private ArrayList<Geopoint> updatedLocation;										
 	
 	private MapView mapView;
 	private MapController mc;
@@ -91,25 +94,26 @@ public class BusLocationMap extends MapActivity implements Runnable {
 		super.onResume();
 	}
 
-	private Geopoint obtainLocation(){
-		Geopoint location;
-		String jsonLocation = "";
+	private ArrayList<Geopoint> obtainLocation(){
+		ArrayList<Geopoint> locations;
+		String jsonLocations = "";
 		// REST request to the specific resource
-		jsonLocation = ConnectionsHandler.get("/location/"+targetCity+targetLine);
-		if (jsonLocation != null) {
+		jsonLocations = ConnectionsHandler.get("/location/"+targetCity+targetLine);
+		if (jsonLocations != null) {
 			// Obtaining specific object from json codification
-			location = JsonHandler.fromJson(jsonLocation, Geopoint.class);
+			Type listType = new TypeToken<List<Geopoint>>() {}.getType();			
+			locations = JsonHandler.fromJson(jsonLocations, listType);
 		}
 		else
 			// return a null location
-			location = null;
-		return location;
+			locations = null;
+		return locations;
 	}
 	
-	private void showUpdatedLocation(Geopoint newLocation)
+	private void showUpdatedLocation(ArrayList<Geopoint> newLocations)
 	{
-	    // position not available
-	    if(newLocation == null)
+	    // no new locations
+	    if(newLocations == null || newLocations.size() == 0)
 	    {
 	    	// stopping thread and handler
 	    	flagStopThread=true;
@@ -132,19 +136,23 @@ public class BusLocationMap extends MapActivity implements Runnable {
 	    // position available
 	    else
 	    {
-	    	Log.w(getString(R.string.app_name), "New location received, lat="+newLocation.getLatitude()+" long="+newLocation.getLongitude());	    	
-	    	
-	    	// setup a Android GeoPoint with received position and add it to the new overlay item
-		    GeoPoint geop1 = new GeoPoint(newLocation.getLatitude(), newLocation.getLongitude());
-		    // setup overlay item
-		    OverlayItem overlayItem = new OverlayItem(geop1, newLocation.getId(),
-		    		getString(R.string.city)+": "+targetCity+"\n"+
-		    		getString(R.string.line)+": "+targetLine);		    
-		    // remove previous bus overlay and add the new one
+	    	Log.w(getString(R.string.app_name), "New location received, lat="+newLocations.get(0).getLatitude()+" long="+newLocations.get(0).getLongitude());
+		    // remove previous overlays
 		    busItemizedOverlay.removeAllOverlays();
-		    busItemizedOverlay.addOverlay(overlayItem);		    
+	    	GeoPoint geopoint = null;
+	    	for(int i=0; i<newLocations.size(); i++) {
+		    	// setup a Android GeoPoint with received position and add it to the new overlay item
+	    		Geopoint aux = newLocations.get(i);
+			    geopoint = new GeoPoint(aux.getLatitude(), aux.getLongitude());
+			    // setup overlay item
+			    OverlayItem overlayItem = new OverlayItem(geopoint, aux.getId(),
+			    		getString(R.string.city)+": "+targetCity+"\n"+
+			    		getString(R.string.line)+": "+targetLine);		    
+			    // add new overlay to the list
+			    busItemizedOverlay.addOverlay(overlayItem);
+	    	}
 		    // focus map's center on the geopoint
-		    mc.animateTo(geop1);     
+		    mc.animateTo(geopoint);     
 		    // adding our custom overlay to the list of the map
 	        mapOverlays = mapView.getOverlays();
 	        mapOverlays.add(busItemizedOverlay);
