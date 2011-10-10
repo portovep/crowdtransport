@@ -1,11 +1,13 @@
 package com.coctelmental.android.project1886;
 
 import java.lang.reflect.Type;
+import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.coctelmental.android.project1886.common.Geopoint;
 import com.coctelmental.android.project1886.common.util.JsonHandler;
+import com.coctelmental.android.project1886.model.ResultBundle;
 import com.coctelmental.android.project1886.util.ConnectionsHandler;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
@@ -36,7 +38,7 @@ public class BusLocationMap extends MapActivity implements Runnable {
 	
 	private String targetCity = null;
 	private String targetLine = null;	
-	private ArrayList<Geopoint> updatedLocation;										
+	private ResultBundle updatedLocation;			
 	
 	private MapView mapView;
 	private MapController mc;
@@ -57,9 +59,6 @@ public class BusLocationMap extends MapActivity implements Runnable {
     	Bundle extras = getIntent().getExtras();	    
         targetCity = extras != null ? extras.getString(BusLineSelection.TARGET_CITY) : null;
         targetLine = extras != null ? extras.getString(BusLineSelection.TARGET_LINE) : null;      
-        
-        if (targetCity == null || targetLine == null)
-        	goPreviousActivity();
 	    
 	    Log.w(getString(R.string.app_name), "Request information to city: "+targetCity+" and line: "+targetLine);
 	        
@@ -94,50 +93,24 @@ public class BusLocationMap extends MapActivity implements Runnable {
 		super.onResume();
 	}
 
-	private ArrayList<Geopoint> obtainLocation(){
-		ArrayList<Geopoint> locations;
-		String jsonLocations = "";
+	private ResultBundle obtainLocation(){
 		// REST request to the specific resource
-		jsonLocations = ConnectionsHandler.get("/location/"+targetCity+targetLine);
-		if (jsonLocations != null) {
-			// Obtaining specific object from json codification
-			Type listType = new TypeToken<List<Geopoint>>() {}.getType();			
-			locations = JsonHandler.fromJson(jsonLocations, listType);
-		}
-		else
-			// return a null location
-			locations = null;
-		return locations;
+		ResultBundle rb = ConnectionsHandler.getWithStatus("/location/"+targetCity+targetLine);
+		return rb;
 	}
 	
-	private void showUpdatedLocation(ArrayList<Geopoint> newLocations)
+	private void showUpdatedLocation(ResultBundle rb)
 	{
-	    // no new locations
-	    if(newLocations == null || newLocations.size() == 0)
-	    {
-	    	// stopping thread and handler
-	    	flagStopThread=true;
-	    	stopThreadHandler();
-	    	
-	    	// setup and show a alert dialog
-	    	AlertDialog.Builder builder = new AlertDialog.Builder(this);
-	    	builder.setMessage(getString(R.string.locationNotFound))
-	    	       .setCancelable(false)
-	    	       .setPositiveButton(getString(R.string.buttonBack), new DialogInterface.OnClickListener() {
-	    	           public void onClick(DialogInterface dialog, int id) {
-	    	        	   // call a method which starts previous activity
-	    	               goPreviousActivity();
-	    	           }
-	    	       });
-	    	// creating and showing the alert dialog
-	    	alertDialogLocationNotFound = builder.create();
-	    	alertDialogLocationNotFound.show();
-	    }
 	    // position available
-	    else
-	    {
+	    if (rb.getResultCode() == HttpURLConnection.HTTP_OK) {
+	    	String jsonLocations = rb.getContent();
+			// Obtaining specific object from json codification
+			Type listType = new TypeToken<List<Geopoint>>() {}.getType();			
+	    	ArrayList<Geopoint> newLocations = JsonHandler.fromJson(jsonLocations, listType);
+
 	    	Log.w(getString(R.string.app_name), "New location received, lat="+newLocations.get(0).getLatitude()+" long="+newLocations.get(0).getLongitude());
-		    // remove previous overlays
+
+	    	// remove previous overlays
 		    busItemizedOverlay.removeAllOverlays();
 	    	GeoPoint geopoint = null;
 	    	for(int i=0; i<newLocations.size(); i++) {
@@ -159,12 +132,26 @@ public class BusLocationMap extends MapActivity implements Runnable {
 	        // re-draw the map with new overlays
 	        mapView.invalidate();
 	    }
+	    // no new locations
+		else {
+			// default message = error server not found
+			String errorMessage = getString(R.string.failServerNotFound);
+			
+			Log.e("Http error code", Integer.toString(rb.getResultCode()));
+			
+			if (rb.getResultCode() == HttpURLConnection.HTTP_NOT_ACCEPTABLE)
+				// if response code = request not acceptable
+				errorMessage = getString(R.string.locationNotFound);			
+			
+	    	// stopping thread and handler
+	    	flagStopThread=true;
+	    	stopThreadHandler();
+	    	
+	    	goPreviousActivity(errorMessage);
+	    }
 	}
 	
-	private void goPreviousActivity(){
-		// finish activity and go previous activity
-		super.onBackPressed();
-	}
+
 	
 	@Override
 	public void run() {		
@@ -202,6 +189,22 @@ public class BusLocationMap extends MapActivity implements Runnable {
 			this.alertDialogLocationNotFound.dismiss();
 		flagStopThread = true;
 		super.onPause();
+	}
+	
+	private void goPreviousActivity(String message){
+    	// setup and show a alert dialog
+    	AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    	builder.setMessage(message)
+    	       .setCancelable(false)
+    	       .setPositiveButton(getString(R.string.buttonBack), new DialogInterface.OnClickListener() {
+    	           public void onClick(DialogInterface dialog, int id) {
+    	       			// finish activity and go previous activity
+    	       			BusLocationMap.super.onBackPressed();
+    	           }
+    	       });
+    	// creating and showing the alert dialog
+    	alertDialogLocationNotFound = builder.create();
+    	alertDialogLocationNotFound.show();
 	}
 	
 }	
