@@ -204,10 +204,8 @@ public class BusLineSelection extends Activity {
     	       .setCancelable(false)
     	       .setPositiveButton(getString(R.string.buttonBack), new DialogInterface.OnClickListener() {
     	           public void onClick(DialogInterface dialog, int id) {
-    	        	   Intent i = new Intent(BusLineSelection.this, MainActivity.class);
-    					// add flag to clear this activity from the top of Android activity stack
-    					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-    	        	   startActivity(i);
+   	       			// finish activity and go previous activity
+   	       			BusLineSelection.super.onBackPressed();
 	        	   }
     	       });
     	AlertDialog alert = builder.create();
