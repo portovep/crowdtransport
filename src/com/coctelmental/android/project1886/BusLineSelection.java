@@ -1,6 +1,9 @@
 package com.coctelmental.android.project1886;
 
+import java.net.HttpURLConnection;
+
 import com.coctelmental.android.project1886.common.util.JsonHandler;
+import com.coctelmental.android.project1886.model.ResultBundle;
 import com.coctelmental.android.project1886.util.ConnectionsHandler;
 
 import android.app.Activity;
@@ -10,12 +13,15 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 public class BusLineSelection extends Activity {
 	
@@ -92,52 +98,21 @@ public class BusLineSelection extends Activity {
 		}		
 	}	
 	
-	private String[] getAvailableCities()
+	private ResultBundle getAvailableCities()
 	{
-		String jsonCities;
-		String[] result;
 		// request to specific resource
-		jsonCities = ConnectionsHandler.get("/city");
-		if(jsonCities != null) {
-			result = JsonHandler.fromJson(jsonCities, String[].class);
-		}
-		else {
-			// if no cities available, return a empty string array
-			result = new String[]{};
-		}		
-		return result;
+		ResultBundle rb = ConnectionsHandler.getWithStatus("/city");
+		return rb;
 	}
 
-	private String[] getAvailableLines(String targetCity)
+	private ResultBundle getAvailableLines(String targetCity)
 	{
-		String jsonLines;
-		String[] result;
 		// request to specific resource
-		jsonLines = ConnectionsHandler.get("/city/"+targetCity+"/line");
-		if (jsonLines != null) {
-			result = JsonHandler.fromJson(jsonLines, String[].class);
-		}
-		else
-			// if no lines available, return a empty string array
-			result = new String[]{};
-		return result;
+		ResultBundle rb = ConnectionsHandler.getWithStatus("/city/"+targetCity+"/line");
+		return rb;
 	}
 	
-	private void showBackAlertDialog(String textToShow) {
-    	AlertDialog.Builder builder = new AlertDialog.Builder(this);
-    	builder.setMessage(textToShow)
-    	       .setCancelable(false)
-    	       .setPositiveButton(getString(R.string.buttonBack), new DialogInterface.OnClickListener() {
-    	           public void onClick(DialogInterface dialog, int id) {
-    	        	   //Intent i = new Intent(BusLineSelection.this, MainActivity.class);
-    	        	   //startActivity(i);
-	        	   }
-    	       });
-    	AlertDialog alert = builder.create();
-    	alert.show();
-	}
-	
-	private class GetAvailableCitiesTask extends AsyncTask<Void, Void, String[]> {
+	private class GetAvailableCitiesTask extends AsyncTask<Void, Void, ResultBundle> {
 		private ProgressDialog pdLoadingCities;
 		
 		protected void onPreExecute () {
@@ -146,54 +121,105 @@ public class BusLineSelection extends Activity {
 		}
 	    /** The system calls this to perform work in a worker thread and
 	      * delivers it the parameters given to AsyncTask.execute() */		
-	    protected String[] doInBackground(Void... params) {
+	    protected ResultBundle doInBackground(Void... params) {
 	    	// retrieving available cities form server
 	        return getAvailableCities();
-	    }
-	    
+	    }	    
 	    /** The system calls this to perform work in the UI thread and delivers
 	      * the result from doInBackground() */
-	    protected void onPostExecute(String[] cities) {
+	    protected void onPostExecute(ResultBundle rb) {
 	    	// disable the progress dialog
 	        pdLoadingCities.dismiss();
 	        // check if data is valid
-	        if(cities.length == 0)
-				showBackAlertDialog(getString(R.string.failLoadingCities));
-	        else {
+	        if(rb.getResultCode() == HttpURLConnection.HTTP_OK) {
+	        	String jsonCities = rb.getContent();
+	        	String[] cities = JsonHandler.fromJson(jsonCities, String[].class);
 	        	// setup and add to the spinner a new adapter with available cities
 	            ArrayAdapter<String> adapter = new ArrayAdapter<String>(BusLineSelection.this, android.R.layout.simple_spinner_item, cities);
 	            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-	            spCities.setAdapter(adapter);  	        	
+	            spCities.setAdapter(adapter);  	   
+	        }				
+	        else {
+				// default message = error server not found
+				String errorMessage = getString(R.string.failServerNotFound);
+				Log.e("Http error code", Integer.toString(rb.getResultCode()));
+				if (rb.getResultCode() == HttpURLConnection.HTTP_NOT_ACCEPTABLE)
+					// if response code = request not acceptable
+					errorMessage = getString(R.string.failLoadingCities);
+				showBackAlertDialog(errorMessage);
 	        }
 	    }
 	}
 	
-	private class GetAvailableLinesTask extends AsyncTask<String, Void, String[]> {
+	private class GetAvailableLinesTask extends AsyncTask<String, Void, ResultBundle> {
 		private ProgressDialog pdLoadingLines;
 		
 		protected void onPreExecute () {
+	        // enable spinnner and button if disabled
+			spLines.setEnabled(true);
+			bSearch.setEnabled(true);
 			// show a progress dialog while data is retrieved from the server
 			pdLoadingLines = ProgressDialog.show(BusLineSelection.this, "", getString(R.string.loadingLines), true);
 		}
 	
-	    protected String[] doInBackground(String... params) {
+	    protected ResultBundle doInBackground(String... params) {
 	    	// retrieving available lines form server
 	        return getAvailableLines(params[0]);
 	    }
 
-	    protected void onPostExecute(String[] lines) {
+	    protected void onPostExecute(ResultBundle rb) {
 	    	// disable the progress dialog
 	        pdLoadingLines.dismiss();
 	        // check if data is valid
-	        if(lines.length == 0)
-				showBackAlertDialog(getString(R.string.failLoadingLines));
-	        else {
-	        	// setup and add to the spinner a new adapter with available lines
+	        if(rb.getResultCode() == HttpURLConnection.HTTP_OK) {
+	        	String jsonLines = rb.getContent();
+	        	String[] lines = JsonHandler.fromJson(jsonLines, String[].class);
+	        	// setup and add to the spinner a new adapter with available cities
 	            ArrayAdapter<String> adapter = new ArrayAdapter<String>(BusLineSelection.this, android.R.layout.simple_spinner_item, lines);
 	            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-	            spLines.setAdapter(adapter);     	
+	            spLines.setAdapter(adapter);  	   
+	        }				
+	        else {
+				// default message = error server not found
+				String errorMessage = getString(R.string.failServerNotFound);
+				Log.e("Http error code", Integer.toString(rb.getResultCode()));
+				if (rb.getResultCode() == HttpURLConnection.HTTP_NOT_ACCEPTABLE) {
+					// if response code = request not acceptable
+					errorMessage = getString(R.string.failLoadingLines);
+					// disabling search button and cities spinner
+					spLines.setEnabled(false);
+					bSearch.setEnabled(false);
+					// show error message
+					showLongToast(errorMessage);
+				}
+				else
+					showBackAlertDialog(errorMessage);
 	        }
 	    }
+	}
+	
+	private void showBackAlertDialog(String textToShow) {
+    	AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    	builder.setMessage(textToShow)
+    	       .setCancelable(false)
+    	       .setPositiveButton(getString(R.string.buttonBack), new DialogInterface.OnClickListener() {
+    	           public void onClick(DialogInterface dialog, int id) {
+    	        	   Intent i = new Intent(BusLineSelection.this, MainActivity.class);
+    					// add flag to clear this activity from the top of Android activity stack
+    					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+    	        	   startActivity(i);
+	        	   }
+    	       });
+    	AlertDialog alert = builder.create();
+    	alert.show();
+	}
+	
+	private void showLongToast(String message) {
+		// information panel
+		Toast toast= Toast.makeText(getApplicationContext(), message,
+				Toast.LENGTH_LONG);
+		toast.setGravity(Gravity.CENTER, 0, 0);
+		toast.show();
 	}
 	
 }
