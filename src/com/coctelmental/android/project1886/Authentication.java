@@ -132,7 +132,7 @@ public class Authentication extends Activity {
 					String errorMessage = getString(R.string.failServerNotFound);
 					Log.e("Http error code", Integer.toString(rb.getResultCode()));
 					if (rb.getResultCode() == HttpURLConnection.HTTP_NOT_ACCEPTABLE)
-						// if response code = 404
+						// if response code = request not acceptable
 						errorMessage = getString(R.string.failLoginInvalidData);
 					showLongToast(errorMessage);							
 				}				

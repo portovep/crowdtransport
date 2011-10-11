@@ -117,8 +117,7 @@ public class RegistrationUser extends Activity {
 				// show message to the user
 				showLongToast(errorMessage);
 			}
-	    }
-	
+	    }	
 	}
 	
 	private int tryRegistration(User user) {
