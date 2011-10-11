@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView 
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical"
+	android:fillViewport="true">
+	
+	
+	<LinearLayout
+	  xmlns:android="http://schemas.android.com/apk/res/android"
+	  android:layout_width="fill_parent"
+	  android:layout_height="fill_parent"
+	  android:orientation="vertical">
+	  
+	  <TextView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="@string/collaborationMessage"
+        android:layout_marginTop="15dip"	            
+        android:layout_marginBottom="15dip"
+        android:gravity="center"/>	
+	  <TextView
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:text="@string/city"/>
+	  <Spinner
+	  	android:id="@+id/targetCity"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:prompt="@string/spinnerCities"/> 
+	  <TextView
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:text="@string/line"/>
+	  <Spinner
+	  	android:id="@+id/targetLine"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:prompt="@string/spinnerLines"/> 
+	  <Button
+	  	android:id="@+id/buttonStart"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="@string/buttonStart"
+		android:layout_marginTop="15dip" 
+		android:layout_gravity="center"/> 
+	</LinearLayout>
+</ScrollView>

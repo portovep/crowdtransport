@@ -17,6 +17,7 @@ public class MainActivity extends Activity{
     private static final int menuExit = Menu.FIRST + 3;
     
     private Button bBusLocation;
+    private Button bCollaboration;
     private TextView tvProfileName;
     
     @Override
@@ -34,6 +35,17 @@ public class MainActivity extends Activity{
 				Intent intent;
 				intent = new Intent(getApplicationContext(), BusLineSelection.class);
 				startActivity(intent);				
+			}
+		});
+        
+        bCollaboration = (Button) findViewById(R.id.buttonCollaborate);
+        bCollaboration.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				Intent intent;
+				intent = new Intent(getApplicationContext(), CollaborationLineSelection.class);
+				startActivity(intent);
 			}
 		});
     }

@@ -29,5 +29,6 @@
         <activity android:name=".RegistrationBus"/>
     	<activity android:name=".BusLineSelection"/>
     	<activity android:name=".BusLocationMap"/>
+  	    <activity android:name=".CollaborationLineSelection"/>
     </application>
 </manifest>

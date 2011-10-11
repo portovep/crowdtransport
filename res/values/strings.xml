@@ -36,14 +36,19 @@
   	<string name="cif">CIF empresa</string>
   	<string name="authCode">Código de autorización</string>
   	
-  	<!-- datos linea -->
+  	<!-- Bus line selection -->
   	<string name="city">Ciudad</string>  	 
    	<string name="line">Línea</string>
    	<string name="buttonSearch">Buscar</string>
    	<string name="spinnerCities">Elige ciudad</string>
    	<string name="spinnerLines">Elige linea</string>
    	
-   	<!-- Buttons -->
+   	<!-- Collaboration line selection -->
+   	<string name="buttonStart">Comenzar seguimiento</string>
+   	<string name="collaborationMessage">Elija la línea de autobús en la que viaja
+   	para empezar a colaborar con otros usuarios.</string>
+   	
+   	<!-- Common buttons -->
    	<string name="buttonBack">Volver atrás</string>
    	
    	<!-- Notifications -->
