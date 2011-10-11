@@ -22,13 +22,13 @@
         <activity android:name=".Authentication"
         		  android:label="@string/loginActivity_name">
      	</activity>
-        <activity android:name=".Registration">		 
-     	</activity>
+        <activity android:name=".Registration"/>		 
  	    <activity android:name=".RegistrationUser"/>
         <activity android:name=".RegistrationTaxi"/>
         <activity android:name=".RegistrationBus"/>
     	<activity android:name=".BusLineSelection"/>
     	<activity android:name=".BusLocationMap"/>
   	    <activity android:name=".CollaborationLineSelection"/>
+  	    <activity android:name=".CollaborationStatusPanel"/>
     </application>
 </manifest>

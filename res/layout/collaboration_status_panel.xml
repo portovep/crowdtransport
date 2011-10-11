@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView 
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical"
+	android:fillViewport="true">
+	
+	
+	<LinearLayout
+	  xmlns:android="http://schemas.android.com/apk/res/android"
+	  android:layout_width="fill_parent"
+	  android:layout_height="fill_parent"
+	  android:orientation="vertical">
+	  
+	  <TextView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="@string/collaborationStatusMessage"
+        android:layout_marginTop="15dip"	            
+        android:layout_marginBottom="15dip"/>	
+      <TextView
+      	android:id="@+id/collaborationInfoCity"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="@string/collaborationInfoCity"
+		android:layout_marginBottom="5dip"/>  
+      <TextView
+      	android:id="@+id/collaborationInfoLine"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="@string/collaborationInfoLine"/>          
+	  <TextView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center"
+		android:layout_marginTop="50dip"
+		android:text="STATUS INFO"/>
+		
+	  <Button
+	  	android:id="@+id/buttonFinish"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="@string/buttonFinishCollaboration"
+		android:layout_marginTop="15dip" 
+		android:layout_gravity="center"/> 
+	</LinearLayout>
+</ScrollView>

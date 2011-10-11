@@ -48,6 +48,12 @@
    	<string name="collaborationMessage">Elija la línea de autobús en la que viaja
    	para empezar a colaborar con otros usuarios.</string>
    	
+   	<!-- Collaboration status panel-->
+   	<string name="buttonFinishCollaboration">Finalizar seguimiento</string>
+   	<string name="collaborationStatusMessage">Usted está colaborando con otros usuarios enviando información
+   	en tiempo real de la posición del autobús en el que viaja</string>
+   	<string name="collaborationInfoCity">Ciudad: </string>
+   	<string name="collaborationInfoLine">Linea: </string>
    	<!-- Common buttons -->
    	<string name="buttonBack">Volver atrás</string>
    	
