@@ -38,7 +38,7 @@
 		android:text="STATUS INFO"/>
 		
 	  <Button
-	  	android:id="@+id/buttonFinish"
+	  	android:id="@+id/buttonFinishCollaboration"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:text="@string/buttonFinishCollaboration"

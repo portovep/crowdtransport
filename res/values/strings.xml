@@ -79,5 +79,6 @@
    	<string name="loadingLines">Obteniendo información de las líneas disponibles</string>
    	<string name="failLoadingCities">No hay ciudades disponibles en estos momentos, vuelva a intentarlo más tarde</string>
    	<string name="failLoadingLines">No existen líneas disponibles para la ciudad especificada</string>
+   	<string name="collaborationServiceFinished">El modo de seguimiento ha sido deshabilitado</string>
    	
 </resources>

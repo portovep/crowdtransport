@@ -30,5 +30,8 @@
     	<activity android:name=".BusLocationMap"/>
   	    <activity android:name=".CollaborationLineSelection"/>
   	    <activity android:name=".CollaborationStatusPanel"/>
+  	    <service android:name=".CollaborationTrackingService"
+  	    		 android:exported="false">
+  	    </service>
     </application>
 </manifest>
