@@ -12,14 +12,14 @@
     <string name="buttonTaxi">Taxis</string>
     <string name="buttonCollaborate">Colabora</string>
     
-    <!-- Login Panel -->
+    <!-- Authentication Activity -->
     <string name="loginActivity_name">Página de autenticación</string>
     <string name="userName">ID usuario</string>
     <string name="password">Contraseña</string>
     <string name="buttonLogin">Entrar</string>
     <string name="spinnerUserType">Tipo de usuario</string>
     
-    <!-- Registration Panel -->
+    <!-- Registration Activity -->
     <string name="tabUserRegister">Usuarios</string>
     <string name="tabTaxiRegister">Taxistas</string>
     <string name="tabBusRegister">Conductores autobús</string>
@@ -27,12 +27,12 @@
     <string name="password2">Repita la contraseña</string>
     <string name="email">Email</string>
     <string name="buttonRegister">Registrar</string>
-   		<!--  taxista -->
+   		<!-- Taxi driver -->
   	<string name="dni">DNI</string>
   	<string name="licenceNumber">Nº licencia</string>
   	<string name="carTradeMark">Marca de coche</string>
   	<string name="carModel">Modelo de coche</string>
-   		<!--  Conductor autobuses -->
+   		<!-- Bus driver -->
   	<string name="cif">CIF empresa</string>
   	<string name="authCode">Código de autorización</string>
   	
@@ -53,11 +53,12 @@
    	<string name="collaborationStatusMessage">Usted está colaborando con otros usuarios enviando información
    	en tiempo real de la posición del autobús en el que viaja</string>
    	<string name="collaborationInfoCity">Ciudad: </string>
-   	<string name="collaborationInfoLine">Linea: </string>
+   	<string name="collaborationInfoLine">Línea: </string>
+   	
    	<!-- Common buttons -->
    	<string name="buttonBack">Volver atrás</string>
    	
-   	<!-- Notifications -->
+   	<!-- Messages -->
    	<string name="failServerNotFound">Lo sentimos, no se ha podido establecer conexión con el servidor</string>
    	<string name="responseProblem">Se ha producido un error al recibir la respuesta del servidor</string>
    	<string name="missingFields">Todos los campos son obligatorios</string>
@@ -70,8 +71,7 @@
    	<string name="failRegister">Ha ocurrido un error en el proceso de registro\nVuelva a intentarlo</string>
    	<string name="failRegisterInvalidUserName">Ya existe un usuario con ese nombre\nElija otro nombre de usuario</string>
   	<string name="failRegisterInvalidDNI">Ya existe un usuario registrado con el DNI especificado.\n
-  				Si cree que han suplantado su identidad, contacte con nosotros.
-  	</string>
+  				Si cree que han suplantado su identidad, contacte con nosotros.</string>
   	<string name="failRegisterInvalidLicence">El número de licencia introducido no es válido</string>
   	<string name="failRegisterInvalidCompanyAuthCode">El código de autorización de registro no es válido para la compañía especificada</string>      	
    	<string name="locationNotFound">Lo sentimos, pero no tenemos información sobre los autobuses que recorren esta línea</string>
@@ -79,6 +79,11 @@
    	<string name="loadingLines">Obteniendo información de las líneas disponibles</string>
    	<string name="failLoadingCities">No hay ciudades disponibles en estos momentos, vuelva a intentarlo más tarde</string>
    	<string name="failLoadingLines">No existen líneas disponibles para la ciudad especificada</string>
+	<string name="failRestoringCollaborationStatusPanel">No se ha encontrado la información asociada al modo de colaboración</string>
+   	
+   	<!-- Notifications -->
+   	<string name="collaborationServiceStarted">El modo de seguimiento ha sido activado</string>
+   	<string name="collaborationServiceRunning">El modo de seguimiento está activado</string>
    	<string name="collaborationServiceFinished">El modo de seguimiento ha sido deshabilitado</string>
    	
 </resources>

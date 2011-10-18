@@ -1,6 +1,8 @@
 package com.coctelmental.android.project1886;
 
 import android.app.Activity;
+import android.app.ActivityManager;
+import android.app.ActivityManager.RunningServiceInfo;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -28,8 +30,7 @@ public class MainActivity extends Activity{
         tvProfileName = (TextView) findViewById(R.id.profileName);
         
         bBusLocation = (Button) findViewById(R.id.buttonBus);
-        bBusLocation.setOnClickListener(new View.OnClickListener() {
-			
+        bBusLocation.setOnClickListener(new View.OnClickListener() {		
 			@Override
 			public void onClick(View v) {
 				Intent intent;
@@ -39,12 +40,18 @@ public class MainActivity extends Activity{
 		});
         
         bCollaboration = (Button) findViewById(R.id.buttonCollaborate);
-        bCollaboration.setOnClickListener(new View.OnClickListener() {
-			
+        bCollaboration.setOnClickListener(new View.OnClickListener() {			
 			@Override
 			public void onClick(View arg0) {
 				Intent intent;
-				intent = new Intent(getApplicationContext(), CollaborationLineSelection.class);
+				// if collaborationTrackingService is running
+				if (isServiceRunning(CollaborationTrackingService.class.getName())) {
+					intent = new Intent(getApplicationContext(), CollaborationStatusPanel.class);
+					// specify flags for use current instance of target activity
+					intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				}
+				else 
+					intent = new Intent(getApplicationContext(), CollaborationLineSelection.class);
 				startActivity(intent);
 			}
 		});
@@ -52,8 +59,7 @@ public class MainActivity extends Activity{
       
 	@Override
 	public void onResume() {
-		super.onResume();
-		
+		super.onResume();		
 		// check if exist a user logged into the application 
         if(MyApplication.getInstance().getActiveUser() != null)
         {
@@ -85,8 +91,7 @@ public class MainActivity extends Activity{
 	}
 
 	@Override
-	public boolean onMenuItemSelected(int featureId, MenuItem item) {
-		
+	public boolean onMenuItemSelected(int featureId, MenuItem item) {		
 		Intent intent;
 		
 		switch(item.getItemId())
@@ -110,4 +115,13 @@ public class MainActivity extends Activity{
 		return super.onMenuItemSelected(featureId, item);
 	}
 	
+	private boolean isServiceRunning(String serviceName) {
+	    ActivityManager manager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+	    for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+	        if (serviceName.equals(service.service.getClassName())) {
+	            return true;
+	        }
+	    }
+	    return false;
+	}
 }

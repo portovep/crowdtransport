@@ -3,15 +3,11 @@ package com.coctelmental.android.project1886;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 public class CollaborationStatusPanel extends Activity {
-	
-	public static final String TARGET_CITY = "TARGET_CITY";
-	public static final String TARGET_LINE = "TARGET_LINE";
 	
 	private TextView tvCity;
 	private TextView tvLine;
@@ -24,7 +20,7 @@ public class CollaborationStatusPanel extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.collaboration_status_panel);
-		
+				
 	    // get data from intent
     	Bundle extras = getIntent().getExtras();	    
         targetCity = extras != null ? extras.getString(CollaborationLineSelection.TARGET_CITY) : null;
@@ -36,12 +32,10 @@ public class CollaborationStatusPanel extends Activity {
         tvLine = (TextView) findViewById(R.id.collaborationInfoLine);
         tvLine.append(" "+targetLine);
         
-        Log.e("info", targetCity+targetLine);
-        
         // launch location tracking service
         Intent i = new Intent(this, CollaborationTrackingService.class);
-        i.putExtra(TARGET_CITY, targetCity);
-        i.putExtra(TARGET_LINE, targetLine);
+        i.putExtra(CollaborationLineSelection.TARGET_CITY, targetCity);
+        i.putExtra(CollaborationLineSelection.TARGET_LINE, targetLine);
         startService(i);
         
         // setup button to finish service
@@ -50,11 +44,22 @@ public class CollaborationStatusPanel extends Activity {
 			
 			@Override
 			public void onClick(View arg0) {
+				// finish location tracking service
 				Intent i = new Intent(CollaborationStatusPanel.this, CollaborationTrackingService.class);
 				stopService(i);
+				goMainMenu();
 			}
 		});
 	}
-		
+
+	@Override
+	public void onBackPressed() {
+		// modify onBackPressed behavior to go directly to main menu
+		goMainMenu();
+	}
+	
+	private void goMainMenu() {
+		startActivity(new Intent(this, MainActivity.class));
+	}
 
 }
