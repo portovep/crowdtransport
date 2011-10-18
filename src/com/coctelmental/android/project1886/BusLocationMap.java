@@ -69,7 +69,7 @@ public class BusLocationMap extends MapActivity implements Runnable {
 	    mapView.setBuiltInZoomControls(true);
         mapView.setClickable(true);
         mapView.setEnabled(true);
-        mapView.setSatellite(false);
+        mapView.setSatellite(true);
         mapView.setTraffic(false);	
         mapView.setStreetView(false);
 	        
