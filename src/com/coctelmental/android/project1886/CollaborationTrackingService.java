@@ -20,7 +20,6 @@ import android.widget.Toast;
 public class CollaborationTrackingService extends Service {
 	
 	private static final int NOTIFICATION_ID = 1;
-	private Notification notificationTrackingService;
 	private NotificationManager notificationManager;
 	
 	private static final String PROVIDER = LocationManager.GPS_PROVIDER;
@@ -32,23 +31,14 @@ public class CollaborationTrackingService extends Service {
 	private String userID;
 	
 	private Location updatedLocation;
+	private PendingIntent pendingIntent;
 			
 	
 	@Override
 	public void onCreate() {
 		super.onCreate();
 		notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-		
-		// setup notification
-		int icon = R.drawable.icon;
-		CharSequence tickerText = getString(R.string.collaborationServiceStarted);
-		long when = System.currentTimeMillis();		
-		notificationTrackingService = new Notification(icon, tickerText, when);		
-		// default sound when notification is launched
-		notificationTrackingService.defaults |= Notification.DEFAULT_SOUND;
-		// add flag to unable behavior of clear button for this notification and specify as ongoing event
-		notificationTrackingService.flags |= Notification.FLAG_NO_CLEAR | Notification.FLAG_ONGOING_EVENT;		
+		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);	
 	}
 
 	@Override
@@ -58,18 +48,16 @@ public class CollaborationTrackingService extends Service {
         String targetCity = extras != null ? extras.getString(CollaborationLineSelection.TARGET_CITY) : "";
         String targetLine = extras != null ? extras.getString(CollaborationLineSelection.TARGET_LINE) : "";
         
-		// setup pending intent and notification texts
-		Context context = getApplicationContext();
-		CharSequence contentTitle = getString(R.string.app_name);
-		CharSequence contentText = getString(R.string.collaborationServiceRunning);
+		// setup pending intent 
 		Intent notificationIntent = new Intent(this, CollaborationInformationPanel.class);
 		notificationIntent.putExtra(CollaborationLineSelection.TARGET_CITY, targetCity);
 		notificationIntent.putExtra(CollaborationLineSelection.TARGET_LINE, targetLine);
-		PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);		
-		notificationTrackingService.setLatestEventInfo(context, contentTitle, contentText, pendingIntent);
-		
+		this.pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);		
+		// setup new notification
+		Notification notification = setupNotification(R.drawable.icon, getString(R.string.collaborationServiceStarted),
+				getString(R.string.app_name), getString(R.string.collaborationServiceRunning), pendingIntent);		
 		// launch notification
-		notificationManager.notify(NOTIFICATION_ID, notificationTrackingService);
+		notificationManager.notify(NOTIFICATION_ID, notification);
 		
         // build targetResourceID
         targetResourceID = targetCity+targetLine;
@@ -96,19 +84,29 @@ public class CollaborationTrackingService extends Service {
 		}
 		
 		@Override
+		public void onProviderEnabled(String arg0) {
+			// update notification to alert user
+			// setup notification
+			Notification notification = setupNotification(R.drawable.icon, getString(R.string.collaborationServiceRunning),
+					getString(R.string.app_name), getString(R.string.collaborationServiceRunning), pendingIntent);
+			// update current showed notification
+			notificationManager.notify(NOTIFICATION_ID, notification);
+		}
+		
+		@Override
+		public void onProviderDisabled(String arg0) {			
+			// update notification to alert user
+			// setup notification
+			Notification notification = setupNotification(R.drawable.icon_error, getString(R.string.collaborationServiceGPSDisabled), 
+					getString(R.string.app_name), getString(R.string.collaborationServiceGPSDisabled), pendingIntent);
+			// update current showed notification
+			notificationManager.notify(NOTIFICATION_ID, notification);
+		}
+		
+		@Override
 		public void onStatusChanged(String arg0, int arg1, Bundle arg2) {
 			// nothing to do here
 		}
-		
-		@Override
-		public void onProviderEnabled(String arg0) {
-			// nothing to do here
-		}
-		
-		@Override
-		public void onProviderDisabled(String arg0) {
-			// nothing to do here
-		}		
 	};
 	
 	private Runnable sendNewLocationInBackground = new Runnable() {		
@@ -153,4 +151,15 @@ public class CollaborationTrackingService extends Service {
 		return null;
 	}
 	
+	private Notification setupNotification(int icon, CharSequence tickerText, CharSequence contentTitle, 
+			CharSequence contentText, PendingIntent pendingIntent) {	
+		long when = System.currentTimeMillis();		
+		Notification notification = new Notification(icon, tickerText, when);
+		// default sound when notification is launched
+		notification.defaults |= Notification.DEFAULT_SOUND;
+		// add flag to unable behavior of clear button for this notification and specify as ongoing event
+		notification.flags |= Notification.FLAG_NO_CLEAR | Notification.FLAG_ONGOING_EVENT;
+		notification.setLatestEventInfo(getApplicationContext(), contentTitle, contentText, pendingIntent);		
+		return notification;		
+	}
 }

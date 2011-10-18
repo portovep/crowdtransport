@@ -80,10 +80,14 @@
    	<string name="failLoadingCities">No hay ciudades disponibles en estos momentos, vuelva a intentarlo más tarde</string>
    	<string name="failLoadingLines">No existen líneas disponibles para la ciudad especificada</string>
 	<string name="failRestoringCollaborationStatusPanel">No se ha encontrado la información asociada al modo de colaboración</string>
-   	
+	<string name="failGPSNotFound">El GPS no está habilitado, es necesario activarlo para poder enviar información de la posición del autobús</string>
+   	<string name="enableGPS">Activar GPS</string>
+   	<string name="noEnableGPS">No activar</string>
+   			
    	<!-- Notifications -->
    	<string name="collaborationServiceStarted">El modo de seguimiento ha sido activado</string>
    	<string name="collaborationServiceRunning">El modo de seguimiento está activado</string>
+   	<string name="collaborationServiceGPSDisabled">GPS deshabilitado. Habilitelo para poder enviar información de la posición del autobús</string>
    	<string name="collaborationServiceFinished">El modo de seguimiento ha sido deshabilitado</string>
    	
 </resources>
