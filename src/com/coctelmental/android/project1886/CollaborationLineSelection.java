@@ -48,7 +48,7 @@ public class CollaborationLineSelection extends Activity {
 			@Override
 			public void onClick(View v) {
 				Intent intent;
-				intent= new Intent(CollaborationLineSelection.this, CollaborationStatusPanel.class);
+				intent= new Intent(CollaborationLineSelection.this, CollaborationInformationPanel.class);
 				intent.putExtra(TARGET_CITY, targetCity);
 				intent.putExtra(TARGET_LINE, targetLine);
 				startActivity(intent);

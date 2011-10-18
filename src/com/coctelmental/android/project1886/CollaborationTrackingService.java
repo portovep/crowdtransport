@@ -62,7 +62,7 @@ public class CollaborationTrackingService extends Service {
 		Context context = getApplicationContext();
 		CharSequence contentTitle = getString(R.string.app_name);
 		CharSequence contentText = getString(R.string.collaborationServiceRunning);
-		Intent notificationIntent = new Intent(this, CollaborationStatusPanel.class);
+		Intent notificationIntent = new Intent(this, CollaborationInformationPanel.class);
 		notificationIntent.putExtra(CollaborationLineSelection.TARGET_CITY, targetCity);
 		notificationIntent.putExtra(CollaborationLineSelection.TARGET_LINE, targetLine);
 		PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);		

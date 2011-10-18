@@ -46,7 +46,7 @@ public class Authentication extends Activity {
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login);
+        setContentView(R.layout.authentication);
         
         // setting default values for fields which will be restored onResume() if needed
         restoredUserName = "";

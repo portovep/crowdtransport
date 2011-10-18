@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class CollaborationStatusPanel extends Activity {
+public class CollaborationInformationPanel extends Activity {
 	
 	private TextView tvCity;
 	private TextView tvLine;
@@ -19,7 +19,7 @@ public class CollaborationStatusPanel extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.collaboration_status_panel);
+		setContentView(R.layout.collaboration_information_panel);
 				
 	    // get data from intent
     	Bundle extras = getIntent().getExtras();	    
@@ -45,7 +45,7 @@ public class CollaborationStatusPanel extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				// finish location tracking service
-				Intent i = new Intent(CollaborationStatusPanel.this, CollaborationTrackingService.class);
+				Intent i = new Intent(CollaborationInformationPanel.this, CollaborationTrackingService.class);
 				stopService(i);
 				goMainMenu();
 			}

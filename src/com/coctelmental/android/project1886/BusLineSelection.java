@@ -39,7 +39,7 @@ public class BusLineSelection extends Activity {
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.bus_lines);
+        setContentView(R.layout.bus_line_selection);
         
         // Setup search button
         bSearch = (Button) findViewById(R.id.buttonSearch);

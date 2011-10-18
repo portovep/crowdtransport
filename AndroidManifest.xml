@@ -29,7 +29,7 @@
     	<activity android:name=".BusLineSelection"/>
     	<activity android:name=".BusLocationMap"/>
   	    <activity android:name=".CollaborationLineSelection"/>
-  	    <activity android:name=".CollaborationStatusPanel"/>
+  	    <activity android:name=".CollaborationInformationPanel"/>
   	    <service android:name=".CollaborationTrackingService"
   	    		 android:exported="false">
   	    </service>

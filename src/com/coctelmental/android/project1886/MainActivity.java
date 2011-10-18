@@ -25,7 +25,7 @@ public class MainActivity extends Activity{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_panel);
+        setContentView(R.layout.main_activity);
         
         tvProfileName = (TextView) findViewById(R.id.profileName);
         
@@ -46,7 +46,7 @@ public class MainActivity extends Activity{
 				Intent intent;
 				// if collaborationTrackingService is running
 				if (isServiceRunning(CollaborationTrackingService.class.getName())) {
-					intent = new Intent(getApplicationContext(), CollaborationStatusPanel.class);
+					intent = new Intent(getApplicationContext(), CollaborationInformationPanel.class);
 					// specify flags for use current instance of target activity
 					intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				}
