@@ -82,7 +82,6 @@ public class CollaborationInformationPanel extends Activity {
 	}
 	
 	private void showGPSDialog() {
-		getWindow().setBackgroundDrawable(null);
     	AlertDialog.Builder builder = new AlertDialog.Builder(this);
     	builder.setMessage(getString(R.string.failGPSNotFound))
     	       .setCancelable(false)
