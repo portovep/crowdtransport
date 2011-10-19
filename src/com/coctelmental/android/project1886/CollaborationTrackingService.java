@@ -1,8 +1,8 @@
 package com.coctelmental.android.project1886;
 
 import com.coctelmental.android.project1886.common.Geopoint;
+import com.coctelmental.android.project1886.logic.ControllerLocations;
 import com.coctelmental.android.project1886.logic.ControllerUsers;
-import com.coctelmental.android.project1886.util.ConnectionsHandler;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -28,13 +28,15 @@ public class CollaborationTrackingService extends Service {
 	private static final int DISTANCE_BETWEEN_UPDATES = 50; // meters
 	
 	private LocationManager locationManager;
-	private String targetResourceID;
+	private String targetCity;
+	private String targetLine;
 	private String userID;
 	
 	private Location updatedLocation;
 	private PendingIntent pendingIntent;
 	
 	private ControllerUsers controllerU;
+	private ControllerLocations controllerL;
 			
 	
 	@Override
@@ -44,14 +46,15 @@ public class CollaborationTrackingService extends Service {
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		
 		controllerU = new ControllerUsers();
+		controllerL = new ControllerLocations();
 	}
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 	    // get data from intent
     	Bundle extras = intent.getExtras();	    
-        String targetCity = extras != null ? extras.getString(CollaborationLineSelection.TARGET_CITY) : "";
-        String targetLine = extras != null ? extras.getString(CollaborationLineSelection.TARGET_LINE) : "";
+        this.targetCity = extras != null ? extras.getString(CollaborationLineSelection.TARGET_CITY) : "";
+        this.targetLine = extras != null ? extras.getString(CollaborationLineSelection.TARGET_LINE) : "";
         
 		// setup pending intent 
 		Intent notificationIntent = new Intent(this, CollaborationInformationPanel.class);
@@ -64,8 +67,6 @@ public class CollaborationTrackingService extends Service {
 		// launch notification
 		notificationManager.notify(NOTIFICATION_ID, notification);
 		
-        // build targetResourceID
-        targetResourceID = targetCity+targetLine;
         // get active user if exists
 	    if(controllerU.existActiveUser())
 	    	userID = controllerU.getActiveUser().getId();
@@ -131,7 +132,7 @@ public class CollaborationTrackingService extends Service {
 			gp.setLongitude(longitude.intValue());
 			
 			// sending new location
-			ConnectionsHandler.put("/location/"+this.targetResourceID, gp.toJson());
+			controllerL.sendLocation(targetCity, targetLine, gp);
 			
 			String newLocation = location.getLatitude() + " - " + location.getLongitude();
 			Log.e("New location found", newLocation + " - " + gp.getId());

@@ -7,8 +7,8 @@ import java.util.List;
 
 import com.coctelmental.android.project1886.common.Geopoint;
 import com.coctelmental.android.project1886.common.util.JsonHandler;
+import com.coctelmental.android.project1886.logic.ControllerLocations;
 import com.coctelmental.android.project1886.model.ResultBundle;
-import com.coctelmental.android.project1886.util.ConnectionsHandler;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
@@ -45,6 +45,7 @@ public class BusLocationMap extends MapActivity implements Runnable {
 	private List<Overlay> mapOverlays;	
 	private CustomItemizedOverlay busItemizedOverlay;
 	
+	private ControllerLocations controllerL;
 	
 	@Override
 	protected boolean isRouteDisplayed() {
@@ -55,6 +56,9 @@ public class BusLocationMap extends MapActivity implements Runnable {
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 	    
+        // get a instance of our controller
+        controllerL = new ControllerLocations();
+        
 	    // get data from intent
     	Bundle extras = getIntent().getExtras();	    
         targetCity = extras != null ? extras.getString(BusLineSelection.TARGET_CITY) : null;
@@ -93,12 +97,6 @@ public class BusLocationMap extends MapActivity implements Runnable {
 		super.onResume();
 	}
 
-	private ResultBundle obtainLocation(){
-		// REST request to the specific resource
-		ResultBundle rb = ConnectionsHandler.getWithStatus("/location/"+targetCity+targetLine);
-		return rb;
-	}
-	
 	private void showUpdatedLocation(ResultBundle rb)
 	{
 	    // position available
@@ -155,9 +153,8 @@ public class BusLocationMap extends MapActivity implements Runnable {
 	
 	@Override
 	public void run() {		
-		while(!this.flagStopThread)
-		{
-			updatedLocation = obtainLocation();
+		while(!this.flagStopThread) {
+			updatedLocation = controllerL.obtainLocation(targetCity, targetLine);
 			// notify the handler
 			handler.sendEmptyMessage(0);
 			try{
