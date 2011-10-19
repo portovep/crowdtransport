@@ -14,7 +14,7 @@ public class ControllerAvailableData {
 	}
 	
 	public ResultBundle getAvailableLines(String targetCity) {
-		String targetUrl = CITY_RESOURCE + "/" + targetCity + "/" + LINE_RESOURCE;
+		String targetUrl = CITY_RESOURCE + "/" + targetCity + LINE_RESOURCE;
 		return ConnectionsHandler.get(targetUrl);
 	}
 
