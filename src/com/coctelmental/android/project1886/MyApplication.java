@@ -19,11 +19,11 @@ public class MyApplication extends Application {
 		singleton = this;
 	}
 
-	public Credentials getActiveUser() {
+	public synchronized Credentials getActiveUser() {
 		return activeUser;
 	}
 
-	public void setActiveUser(Credentials activeUser) {
+	public synchronized void setActiveUser(Credentials activeUser) {
 		this.activeUser = activeUser;
 	}
 		
