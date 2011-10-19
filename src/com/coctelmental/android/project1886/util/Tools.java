@@ -3,7 +3,9 @@ package com.coctelmental.android.project1886.util;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 
 public class Tools {
@@ -33,6 +35,13 @@ public class Tools {
 		}	
 		return hash;
 	}
-
+	
+	public static Toast buildToast(Context context, String message, int gravity, int duration) {
+		// information panel
+		Toast toast= Toast.makeText(context, message,
+				duration);
+		toast.setGravity(gravity, 0, 0);
+		return toast;
+	}
 
 }

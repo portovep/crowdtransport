@@ -22,6 +22,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import com.coctelmental.android.project1886.common.util.JsonHandler;
 import com.coctelmental.android.project1886.logic.ControllerAvailableData;
 import com.coctelmental.android.project1886.model.ResultBundle;
+import com.coctelmental.android.project1886.util.Tools;
 
 public class CollaborationLineSelection extends Activity {
 
@@ -180,7 +181,7 @@ public class CollaborationLineSelection extends Activity {
 					spLines.setEnabled(false);
 					bStart.setEnabled(false);
 					// show error message
-					showLongToast(errorMessage);
+					Tools.buildToast(getApplicationContext(), errorMessage, Gravity.CENTER, Toast.LENGTH_LONG).show();
 				}
 				else
 					showBackAlertDialog(errorMessage);
@@ -201,12 +202,5 @@ public class CollaborationLineSelection extends Activity {
     	AlertDialog alert = builder.create();
     	alert.show();
 	}
-	
-	private void showLongToast(String message) {
-		// information panel
-		Toast toast= Toast.makeText(getApplicationContext(), message,
-				Toast.LENGTH_LONG);
-		toast.setGravity(Gravity.CENTER, 0, 0);
-		toast.show();
-	}		
+
 }

@@ -5,6 +5,7 @@ import java.net.HttpURLConnection;
 import com.coctelmental.android.project1886.common.util.JsonHandler;
 import com.coctelmental.android.project1886.logic.ControllerAvailableData;
 import com.coctelmental.android.project1886.model.ResultBundle;
+import com.coctelmental.android.project1886.util.Tools;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -181,7 +182,7 @@ public class BusLineSelection extends Activity {
 					spLines.setEnabled(false);
 					bSearch.setEnabled(false);
 					// show error message
-					showLongToast(errorMessage);
+					Tools.buildToast(getApplicationContext(), errorMessage, Gravity.CENTER, Toast.LENGTH_LONG).show();
 				}
 				else
 					showBackAlertDialog(errorMessage);
@@ -201,14 +202,6 @@ public class BusLineSelection extends Activity {
     	       });
     	AlertDialog alert = builder.create();
     	alert.show();
-	}
-	
-	private void showLongToast(String message) {
-		// information panel
-		Toast toast= Toast.makeText(getApplicationContext(), message,
-				Toast.LENGTH_LONG);
-		toast.setGravity(Gravity.CENTER, 0, 0);
-		toast.show();
 	}
 	
 }

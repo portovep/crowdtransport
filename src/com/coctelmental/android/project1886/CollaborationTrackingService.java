@@ -3,6 +3,7 @@ package com.coctelmental.android.project1886;
 import com.coctelmental.android.project1886.common.Geopoint;
 import com.coctelmental.android.project1886.logic.ControllerLocations;
 import com.coctelmental.android.project1886.logic.ControllerUsers;
+import com.coctelmental.android.project1886.util.Tools;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -16,6 +17,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
+import android.view.Gravity;
 import android.widget.Toast;
 
 public class CollaborationTrackingService extends Service {
@@ -146,7 +148,7 @@ public class CollaborationTrackingService extends Service {
 		// disabling current notification  
 		notificationManager.cancel(NOTIFICATION_ID);
 		// notifying the user
-		Toast.makeText(this, getString(R.string.collaborationServiceFinished), Toast.LENGTH_SHORT).show();
+		Tools.buildToast(getApplicationContext(), getString(R.string.collaborationServiceFinished), Gravity.CENTER, Toast.LENGTH_SHORT).show();
 		// finish service
 		stopSelf();
 	}

@@ -9,6 +9,7 @@ import com.coctelmental.android.project1886.common.util.JsonHandler;
 import com.coctelmental.android.project1886.logic.ControllerUsers;
 import com.coctelmental.android.project1886.model.Credentials;
 import com.coctelmental.android.project1886.model.ResultBundle;
+import com.coctelmental.android.project1886.util.Tools;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -80,7 +81,8 @@ public class Authentication extends Activity {
 				
 				// verify data
 				if(userID.equals("") || password.equals(""))
-					showShortToast(getString(R.string.missingFields));
+					Tools.buildToast(getApplicationContext(), getString(R.string.missingFields),
+							Gravity.CENTER, Toast.LENGTH_LONG).show();	
 				else 
 					// launch Async Task to try to authenticate user
 					new AuthenticationAsyncTask().execute(userID);
@@ -120,7 +122,8 @@ public class Authentication extends Activity {
 						// log in
 						controllerU.logIn(credentials);
 						// information panel
-						showShortToast(getString(R.string.correctLogin));					
+						Tools.buildToast(getApplicationContext(), getString(R.string.correctLogin),
+								Gravity.CENTER, Toast.LENGTH_SHORT).show();					
 						// go to main menu
 						Intent i = new Intent(Authentication.this, MainActivity.class);
 						// add flag to clear this activity from the top of Android activity stack
@@ -129,7 +132,8 @@ public class Authentication extends Activity {
 					}
 					else
 						// error: passwords don't match
-						showLongToast(getString(R.string.failLoginInvalidData));
+						Tools.buildToast(getApplicationContext(), getString(R.string.failLoginInvalidData),
+								Gravity.CENTER, Toast.LENGTH_LONG).show();	
 				}
 				else {
 					// default message = error server not found
@@ -138,7 +142,8 @@ public class Authentication extends Activity {
 					if (rb.getResultCode() == HttpURLConnection.HTTP_NOT_ACCEPTABLE)
 						// if response code = request not acceptable
 						errorMessage = getString(R.string.failLoginInvalidData);
-					showLongToast(errorMessage);							
+					Tools.buildToast(getApplicationContext(), errorMessage,
+							Gravity.CENTER, Toast.LENGTH_LONG).show();								
 				}				
 			}
 			// TYPE = Taxi
@@ -152,7 +157,8 @@ public class Authentication extends Activity {
 						// log in
 						controllerU.logIn(credentials);
 						// information panel
-						showShortToast(getString(R.string.correctLogin));					
+						Tools.buildToast(getApplicationContext(), getString(R.string.correctLogin),
+								Gravity.CENTER, Toast.LENGTH_SHORT).show();						
 						// go to main menu   ----------- CAMBIAR ---------------
 						Intent i = new Intent(Authentication.this, MainActivity.class);
 						// add flag to clear this activity from the top of Android activity stack
@@ -161,7 +167,8 @@ public class Authentication extends Activity {
 					}
 					else
 						// error: passwords don't match
-						showLongToast(getString(R.string.failLoginInvalidData));
+						Tools.buildToast(getApplicationContext(), getString(R.string.failLoginInvalidData),
+								Gravity.CENTER, Toast.LENGTH_LONG).show();	
 				}
 				else {
 					// default message = error server not found
@@ -170,7 +177,8 @@ public class Authentication extends Activity {
 					if (rb.getResultCode() == HttpURLConnection.HTTP_NOT_ACCEPTABLE)
 						// error: target user doesn't exist
 						errorMessage = getString(R.string.failLoginInvalidData);
-					showLongToast(errorMessage);							
+					Tools.buildToast(getApplicationContext(), errorMessage,
+							Gravity.CENTER, Toast.LENGTH_LONG).show();							
 				}					
 			}
 			// TYPE = Bus
@@ -184,7 +192,8 @@ public class Authentication extends Activity {
 						// log in
 						controllerU.logIn(credentials);
 						// information panel
-						showShortToast(getString(R.string.correctLogin));					
+						Tools.buildToast(getApplicationContext(), getString(R.string.correctLogin),
+								Gravity.CENTER, Toast.LENGTH_SHORT).show();						
 						// go to main menu   ----------- CAMBIAR ---------------
 						Intent i = new Intent(Authentication.this, MainActivity.class);
 						// add flag to clear this activity from the top of Android activity stack
@@ -193,7 +202,8 @@ public class Authentication extends Activity {
 					}
 					else
 						// error: passwords don't match
-						showLongToast(getString(R.string.failLoginInvalidData));
+						Tools.buildToast(getApplicationContext(), getString(R.string.failLoginInvalidData),
+								Gravity.CENTER, Toast.LENGTH_LONG).show();	
 				}
 				else {
 					// default message = error server not found
@@ -202,7 +212,8 @@ public class Authentication extends Activity {
 					if (rb.getResultCode() == HttpURLConnection.HTTP_NOT_ACCEPTABLE)
 						// error: target user doesn't exist
 						errorMessage = getString(R.string.failLoginInvalidData);
-					showLongToast(errorMessage);							
+					Tools.buildToast(getApplicationContext(), errorMessage,
+							Gravity.CENTER, Toast.LENGTH_LONG).show();							
 				}					
 			}
 
@@ -255,19 +266,4 @@ public class Authentication extends Activity {
 		super.onPause();
 	}
 
-	private void showShortToast(String message) {
-		// information panel
-		Toast toast= Toast.makeText(getApplicationContext(), message,
-				Toast.LENGTH_SHORT);
-		toast.setGravity(Gravity.CENTER, 0, 0);
-		toast.show();
-	}
-	
-	private void showLongToast(String message) {
-		// information panel
-		Toast toast= Toast.makeText(getApplicationContext(), message,
-				Toast.LENGTH_LONG);
-		toast.setGravity(Gravity.CENTER, 0, 0);
-		toast.show();
-	}
 }

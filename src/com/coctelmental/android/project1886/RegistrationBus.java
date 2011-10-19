@@ -6,6 +6,7 @@ import java.net.HttpURLConnection;
 import com.coctelmental.android.project1886.common.BusDriver;
 import com.coctelmental.android.project1886.logic.ControllerUsers;
 import com.coctelmental.android.project1886.model.Credentials;
+import com.coctelmental.android.project1886.util.Tools;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -74,10 +75,12 @@ public class RegistrationBus extends Activity {
 				// looking for invalid data
 				if(fullName.equals("") || dni.equals("") || password.equals("") || password2.equals("") || email.equals("") ||
 						companyCIF.equals("") || companyAuthCode.equals(""))
-					showShortToast(getString(R.string.missingFields));
+					Tools.buildToast(getApplicationContext(), getString(R.string.missingFields),
+							Gravity.CENTER, Toast.LENGTH_SHORT).show();
 				else if (!password.equals(password2))
 					// passwords doesn't match
-					showShortToast(getString(R.string.differentPasswords));
+					Tools.buildToast(getApplicationContext(), getString(R.string.differentPasswords),
+							Gravity.CENTER, Toast.LENGTH_SHORT).show();
 				else
 					// launch Async Task to try to register user
 					new RegistrationAsyncTask().execute();
@@ -113,7 +116,8 @@ public class RegistrationBus extends Activity {
 				Credentials credentials = new Credentials(busDriver.getFullName(), busDriver.getPassword(), Credentials.TYPE_BUS);
 				controllerU.logIn(credentials);
 				// show message to the user
-				showShortToast(getString(R.string.correctRegister));
+				Tools.buildToast(getApplicationContext(), getString(R.string.correctRegister),
+						Gravity.CENTER, Toast.LENGTH_SHORT).show();
 				// go to main menu  ---- CAMBIAR -----
 				Intent i = new Intent(RegistrationBus.this, MainActivity.class);
 				// add flag to clear this activity from the top of Android activity stack
@@ -134,7 +138,8 @@ public class RegistrationBus extends Activity {
 				else if (responseStatus == HttpURLConnection.HTTP_NOT_ACCEPTABLE)
 					errorMessage = getString(R.string.failRegister);
 				// show message to the user
-				showLongToast(errorMessage);
+				Tools.buildToast(getApplicationContext(), errorMessage,
+						Gravity.CENTER, Toast.LENGTH_LONG).show();
 			}
 	    }
 	}
@@ -142,20 +147,5 @@ public class RegistrationBus extends Activity {
 	private int tryRegistration(BusDriver busDriver) {
 		return controllerU.registerBusDriver(busDriver);			
 	}
-	
-	private void showShortToast(String message) {
-		// information panel
-		Toast toast= Toast.makeText(getApplicationContext(), message,
-				Toast.LENGTH_SHORT);
-		toast.setGravity(Gravity.CENTER, 0, 0);
-		toast.show();
-	}
-	
-	private void showLongToast(String message) {
-		// information panel
-		Toast toast= Toast.makeText(getApplicationContext(), message,
-				Toast.LENGTH_LONG);
-		toast.setGravity(Gravity.CENTER, 0, 0);
-		toast.show();
-	}	
+
 }
