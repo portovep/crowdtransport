@@ -6,10 +6,9 @@ import com.coctelmental.android.project1886.common.BusDriver;
 import com.coctelmental.android.project1886.common.TaxiDriver;
 import com.coctelmental.android.project1886.common.User;
 import com.coctelmental.android.project1886.common.util.JsonHandler;
+import com.coctelmental.android.project1886.logic.ControllerUsers;
 import com.coctelmental.android.project1886.model.Credentials;
 import com.coctelmental.android.project1886.model.ResultBundle;
-import com.coctelmental.android.project1886.util.ConnectionsHandler;
-import com.coctelmental.android.project1886.util.Tools;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -42,11 +41,16 @@ public class Authentication extends Activity {
 	private int restoredtargetUserType;
 	private String restoredUserName;
 	private String restoredPassword;
+	
+	private ControllerUsers controllerU;
 
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.authentication);
+        
+        // get a instance of our controller
+        controllerU = new ControllerUsers();
         
         // setting default values for fields which will be restored onResume() if needed
         restoredUserName = "";
@@ -103,18 +107,18 @@ public class Authentication extends Activity {
 	    	// disable the progress dialog
 	        pdprocessingAuthentication.dismiss();
 			// calculate password digest
-			String encPassword = Tools.digestFromPassword(password);					
+			String passwordDigest = controllerU.passwordToDigest(password);					
 			// check target user type
 			// TYPE = Normal User
 			if (targetUserType.equals(userTypes[0])) {
 				if (rb.getResultCode() == HttpURLConnection.HTTP_OK) {
 					String jsonUser = rb.getContent();
 					User user = JsonHandler.fromJson(jsonUser, User.class);
-					if (user.getPassword().equals(encPassword)) {
+					if (user.getPassword().equals(passwordDigest)) {
 						// setup new user credentials
-						Credentials credentials=new Credentials(userID, encPassword, Credentials.TYPE_USER);
+						Credentials credentials=new Credentials(userID, passwordDigest, Credentials.TYPE_USER);
 						// log in
-						MyApplication.getInstance().setActiveUser(credentials);
+						controllerU.logIn(credentials);
 						// information panel
 						showShortToast(getString(R.string.correctLogin));					
 						// go to main menu
@@ -142,11 +146,11 @@ public class Authentication extends Activity {
 				if (rb.getResultCode() == HttpURLConnection.HTTP_OK) {
 					String jsonUser = rb.getContent();
 					TaxiDriver taxiDriver = JsonHandler.fromJson(jsonUser, TaxiDriver.class);
-					if (taxiDriver.getPassword().equals(encPassword)) {
+					if (taxiDriver.getPassword().equals(passwordDigest)) {
 						// setup new user credentials
-						Credentials credentials=new Credentials(userID, encPassword, Credentials.TYPE_TAXI);
+						Credentials credentials=new Credentials(userID, passwordDigest, Credentials.TYPE_TAXI);
 						// log in
-						MyApplication.getInstance().setActiveUser(credentials);
+						controllerU.logIn(credentials);
 						// information panel
 						showShortToast(getString(R.string.correctLogin));					
 						// go to main menu   ----------- CAMBIAR ---------------
@@ -174,11 +178,11 @@ public class Authentication extends Activity {
 				if (rb.getResultCode() == HttpURLConnection.HTTP_OK) {
 					String jsonUser = rb.getContent();
 					BusDriver busDriver = JsonHandler.fromJson(jsonUser, BusDriver.class);
-					if (busDriver.getPassword().equals(encPassword)) {
+					if (busDriver.getPassword().equals(passwordDigest)) {
 						// setup new user credentials
-						Credentials credentials=new Credentials(userID, encPassword, Credentials.TYPE_BUS);
+						Credentials credentials=new Credentials(userID, passwordDigest, Credentials.TYPE_BUS);
 						// log in
-						MyApplication.getInstance().setActiveUser(credentials);
+						controllerU.logIn(credentials);
 						// information panel
 						showShortToast(getString(R.string.correctLogin));					
 						// go to main menu   ----------- CAMBIAR ---------------
@@ -209,13 +213,13 @@ public class Authentication extends Activity {
 		ResultBundle rb = null;
 		// TYPE = Normal User
 		if (targetUserType.equals(userTypes[0]))
-			rb = ConnectionsHandler.getWithStatus("/user/"+userID);
+			rb = controllerU.getUser(userID);
 		// TYPE = Taxi
 		else if (targetUserType.equals(userTypes[1]))
-			rb = ConnectionsHandler.getWithStatus("/taxi/"+userID);
+			rb = controllerU.getTaxiDriver(userID);
 		// TYPE = Bus
 		else if (targetUserType.equals(userTypes[2]))
-			rb = ConnectionsHandler.getWithStatus("/bus/"+userID);	
+			rb = controllerU.getBusDriver(userID);	
 		return rb;
 	}
 	

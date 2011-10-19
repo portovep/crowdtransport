@@ -1,6 +1,7 @@
 package com.coctelmental.android.project1886;
 
 import com.coctelmental.android.project1886.common.Geopoint;
+import com.coctelmental.android.project1886.logic.ControllerUsers;
 import com.coctelmental.android.project1886.util.ConnectionsHandler;
 
 import android.app.Notification;
@@ -32,13 +33,17 @@ public class CollaborationTrackingService extends Service {
 	
 	private Location updatedLocation;
 	private PendingIntent pendingIntent;
+	
+	private ControllerUsers controllerU;
 			
 	
 	@Override
 	public void onCreate() {
 		super.onCreate();
 		notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);	
+		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+		
+		controllerU = new ControllerUsers();
 	}
 
 	@Override
@@ -62,8 +67,8 @@ public class CollaborationTrackingService extends Service {
         // build targetResourceID
         targetResourceID = targetCity+targetLine;
         // get active user if exists
-	    if(MyApplication.getInstance().getActiveUser() != null)
-	    	userID = MyApplication.getInstance().getActiveUser().getId();
+	    if(controllerU.existActiveUser())
+	    	userID = controllerU.getActiveUser().getId();
 	    else
 	    	userID = "noUser";
         

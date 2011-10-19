@@ -4,9 +4,8 @@ import java.net.HttpURLConnection;
 
 
 import com.coctelmental.android.project1886.common.User;
+import com.coctelmental.android.project1886.logic.ControllerUsers;
 import com.coctelmental.android.project1886.model.Credentials;
-import com.coctelmental.android.project1886.util.ConnectionsHandler;
-import com.coctelmental.android.project1886.util.Tools;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -35,10 +34,15 @@ public class RegistrationUser extends Activity {
 	private String password2;
 	private String email;
 	
+	private ControllerUsers controllerU;
+	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registration_user);
+        
+        // get a instance of our controller
+        controllerU = new ControllerUsers();
         
         // obtain views
         etName= (EditText) findViewById(R.id.fullName);
@@ -83,7 +87,7 @@ public class RegistrationUser extends Activity {
 	      * delivers it the parameters given to AsyncTask.execute() */		
 	    protected Integer doInBackground(Void... params) {
 			// create an user instance with registration data
-			user= new User(userName, name, Tools.digestFromPassword(password), email);
+			user= new User(userName, name, controllerU.passwordToDigest(password), email);
 			// send request to the server and return response code
 	        return tryRegistration(user);
 	    }	    
@@ -96,7 +100,7 @@ public class RegistrationUser extends Activity {
 			if(responseStatus == HttpURLConnection.HTTP_OK) {
 				// add registered user as active user (log in)
 				Credentials credentials = new Credentials(user.getUserName(), user.getPassword(), Credentials.TYPE_USER);
-				MyApplication.getInstance().setActiveUser(credentials);
+				controllerU.logIn(credentials);
 				// information panel
 				showShortToast(getString(R.string.correctRegister));
 				// go to main menu
@@ -121,7 +125,7 @@ public class RegistrationUser extends Activity {
 	}
 	
 	private int tryRegistration(User user) {
-		return ConnectionsHandler.put("/user", user.toJson());			
+		return controllerU.registerUser(user);		
 	}
 	
 	private void showShortToast(String message) {

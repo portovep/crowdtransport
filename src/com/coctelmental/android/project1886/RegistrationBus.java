@@ -4,9 +4,8 @@ import java.net.HttpURLConnection;
 
 
 import com.coctelmental.android.project1886.common.BusDriver;
+import com.coctelmental.android.project1886.logic.ControllerUsers;
 import com.coctelmental.android.project1886.model.Credentials;
-import com.coctelmental.android.project1886.util.ConnectionsHandler;
-import com.coctelmental.android.project1886.util.Tools;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -39,10 +38,15 @@ public class RegistrationBus extends Activity {
 	private String companyCIF;
 	private String companyAuthCode;
 	
+	private ControllerUsers controllerU;
+	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registration_bus);
+        
+        // get a instance of our controller
+        controllerU = new ControllerUsers();
         
         // obtain views
         etFullName= (EditText) findViewById(R.id.fullName);
@@ -93,7 +97,7 @@ public class RegistrationBus extends Activity {
 	      * delivers it the parameters given to AsyncTask.execute() */		
 	    protected Integer doInBackground(Void... params) {
 			// create a busDriver instance with registration data
-			busDriver= new BusDriver(dni, fullName, Tools.digestFromPassword(password), email,
+			busDriver= new BusDriver(dni, fullName, controllerU.passwordToDigest(password), email,
 					companyCIF, companyAuthCode);
 	    	// send request to the server and return response code
 	        return tryRegistration(busDriver);
@@ -107,7 +111,7 @@ public class RegistrationBus extends Activity {
 			if(responseStatus == HttpURLConnection.HTTP_OK) {
 				// add registered user as active user (auto log in after registration)
 				Credentials credentials = new Credentials(busDriver.getFullName(), busDriver.getPassword(), Credentials.TYPE_BUS);
-				MyApplication.getInstance().setActiveUser(credentials);
+				controllerU.logIn(credentials);
 				// show message to the user
 				showShortToast(getString(R.string.correctRegister));
 				// go to main menu  ---- CAMBIAR -----
@@ -136,7 +140,7 @@ public class RegistrationBus extends Activity {
 	}
 	
 	private int tryRegistration(BusDriver busDriver) {
-		return ConnectionsHandler.put("/bus", busDriver.toJson());			
+		return controllerU.registerBusDriver(busDriver);			
 	}
 	
 	private void showShortToast(String message) {

@@ -4,9 +4,8 @@ import java.net.HttpURLConnection;
 
 
 import com.coctelmental.android.project1886.common.TaxiDriver;
+import com.coctelmental.android.project1886.logic.ControllerUsers;
 import com.coctelmental.android.project1886.model.Credentials;
-import com.coctelmental.android.project1886.util.ConnectionsHandler;
-import com.coctelmental.android.project1886.util.Tools;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -41,10 +40,15 @@ public class RegistrationTaxi extends Activity {
 	private String carTradeMark;
 	private String carModel;
 	
+	private ControllerUsers controllerU;
+	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registration_taxi);
+        
+        // get a instance of our controller
+        controllerU = new ControllerUsers();
         
         // obtain views
         etFullName= (EditText) findViewById(R.id.fullName);
@@ -96,7 +100,7 @@ public class RegistrationTaxi extends Activity {
 	      * delivers it the parameters given to AsyncTask.execute() */		
 	    protected Integer doInBackground(Void... params) {
 			// create a taxiDriver instance with registration data
-			taxiDriver= new TaxiDriver(dni, fullName, Tools.digestFromPassword(password), email,
+			taxiDriver= new TaxiDriver(dni, fullName, controllerU.passwordToDigest(password), email,
 					licence, carTradeMark, carModel);
 			// send request to the server and return response code
 	        return tryRegistration(taxiDriver);
@@ -110,7 +114,7 @@ public class RegistrationTaxi extends Activity {
 			if(responseStatus == HttpURLConnection.HTTP_OK) {
 				// add registered user as active user (auto log in after registration)
 				Credentials credentials = new Credentials(taxiDriver.getFullName(), taxiDriver.getPassword(), Credentials.TYPE_TAXI);
-				MyApplication.getInstance().setActiveUser(credentials);
+				controllerU.logIn(credentials);
 				// show message to the user
 				showShortToast(getString(R.string.correctRegister));
 				// go to main menu ---- CAMBIAR ----- 
@@ -140,7 +144,7 @@ public class RegistrationTaxi extends Activity {
 	}
 
 	private int tryRegistration(TaxiDriver taxiDriver) {
-		return ConnectionsHandler.put("/taxi", taxiDriver.toJson());			
+		return controllerU.registerTaxiDriver(taxiDriver);			
 	}
 	
 	private void showShortToast(String message) {

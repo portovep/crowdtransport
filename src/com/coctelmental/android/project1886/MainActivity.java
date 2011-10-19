@@ -1,5 +1,7 @@
 package com.coctelmental.android.project1886;
 
+import com.coctelmental.android.project1886.logic.ControllerUsers;
+
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningServiceInfo;
@@ -22,10 +24,15 @@ public class MainActivity extends Activity{
     private Button bCollaboration;
     private TextView tvProfileName;
     
+    private ControllerUsers controllerU;
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
+        
+        // get a instance of our controller
+        controllerU = new ControllerUsers();
         
         tvProfileName = (TextView) findViewById(R.id.profileName);
         
@@ -61,9 +68,9 @@ public class MainActivity extends Activity{
 	public void onResume() {
 		super.onResume();		
 		// check if exist a user logged into the application 
-        if(MyApplication.getInstance().getActiveUser() != null)
+        if(controllerU.existActiveUser())
         {
-        	String userName = MyApplication.getInstance().getActiveUser().getId();
+        	String userName = controllerU.getActiveUser().getId();
         	// show user's name
         	tvProfileName.setText(getString(R.string.profile_welcome)+" "+userName);
         }
@@ -77,7 +84,7 @@ public class MainActivity extends Activity{
 		// clear previous menu configuration
 		menu.clear();
 
-		if(MyApplication.getInstance().getActiveUser() == null)
+		if(!controllerU.existActiveUser())
 		{
 			menu.add(0, menuLogin, 0, R.string.option_menu_login);
 			menu.add(0, menuRegistration, 0, R.string.option_menu_register);
@@ -108,7 +115,7 @@ public class MainActivity extends Activity{
 			break;
 		case menuExit:
 			// logout and exit
-			MyApplication.getInstance().setActiveUser(null);
+			controllerU.logOut();
 			moveTaskToBack(true);
 			break;
 		}
