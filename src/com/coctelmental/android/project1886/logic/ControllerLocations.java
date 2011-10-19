@@ -12,7 +12,7 @@ public class ControllerLocations {
 		String resourceID = city + line;
 		String targetURL = LOCATION_RESOURCE + "/" + resourceID;
 		// REST request to the specific resource
-		return ConnectionsHandler.getWithStatus(targetURL);
+		return ConnectionsHandler.get(targetURL);
 	}
 	
 	public int sendLocation(String city, String line, Geopoint gp) {

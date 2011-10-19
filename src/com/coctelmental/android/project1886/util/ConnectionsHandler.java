@@ -12,23 +12,9 @@ import com.coctelmental.android.project1886.model.ResultBundle;
 
 public class ConnectionsHandler {
 	
-	public static final String SERVER_ADDRESS = "http://192.168.1.130:8085/UserManagerServer";
-	
-	public static String get(String targetURL) {
-		try {
-			ClientResource cr = new ClientResource(SERVER_ADDRESS+targetURL);
-			Representation r = cr.get(MediaType.APPLICATION_JSON);
-			if (cr.getResponse().getStatus().isSuccess())
-				return r.getText();
-			else
-				return null;
-		}catch(Exception e){
-			e.printStackTrace();
-			return null;
-		}
-	}
+	private static final String SERVER_ADDRESS = "http://192.168.1.130:8085/UserManagerServer";
 
-	public static ResultBundle getWithStatus(String targetURL) {
+	public static ResultBundle get(String targetURL) {
 		// create new result bundle and add default response code as 404
 		ResultBundle result = new ResultBundle();
 		ClientResource cr = new ClientResource(SERVER_ADDRESS+targetURL);

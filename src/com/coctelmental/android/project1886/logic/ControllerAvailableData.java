@@ -10,12 +10,12 @@ public class ControllerAvailableData {
 	
 	public ResultBundle getAvailableCities() {
 		// request to specific resource
-		return ConnectionsHandler.getWithStatus(CITY_RESOURCE);
+		return ConnectionsHandler.get(CITY_RESOURCE);
 	}
 	
 	public ResultBundle getAvailableLines(String targetCity) {
 		String targetUrl = CITY_RESOURCE + "/" + targetCity + "/" + LINE_RESOURCE;
-		return ConnectionsHandler.getWithStatus(targetUrl);
+		return ConnectionsHandler.get(targetUrl);
 	}
 
 }

@@ -20,17 +20,17 @@ public class ControllerUsers {
 	
 	public ResultBundle getUser(String userID) {
 		String targetURL = USER_RESOURCE + "/" + userID;
-		return ConnectionsHandler.getWithStatus(targetURL);
+		return ConnectionsHandler.get(targetURL);
 	}
 
 	public ResultBundle getTaxiDriver(String userID) {
 		String targetURL = TAXI_RESOURCE + "/" + userID;
-		return ConnectionsHandler.getWithStatus(targetURL);
+		return ConnectionsHandler.get(targetURL);
 	}
 
 	public ResultBundle getBusDriver(String userID) {
 		String targetURL = BUS_RESOURCE + "/" + userID;
-		return ConnectionsHandler.getWithStatus(targetURL);
+		return ConnectionsHandler.get(targetURL);
 	}
 
 	public int registerUser(User user) {
