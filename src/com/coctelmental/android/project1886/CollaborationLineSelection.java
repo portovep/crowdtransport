@@ -35,6 +35,9 @@ public class CollaborationLineSelection extends Activity {
 	
 	private String targetCity;
 	private String targetLine;
+	private GetAvailableCitiesTask getAvailableCitiesTask;
+	private GetAvailableLinesTask getAvailableLinesTask;
+	
 	
 	private ControllerAvailableData controllerAD;
 	
@@ -66,8 +69,11 @@ public class CollaborationLineSelection extends Activity {
         // Setup line spinner
         spLines = (Spinner) findViewById(R.id.targetLine);
         spLines.setOnItemSelectedListener(new LinesSpinnerItemSelectedListener());        
+
+        getAvailableCitiesTask = new GetAvailableCitiesTask();
+        getAvailableLinesTask = new GetAvailableLinesTask();
         // launch AsyncTask which show a progress dialog while the cities are retrieved from the server
-        new GetAvailableCitiesTask().execute();
+        getAvailableCitiesTask.execute();
         
     }
 
@@ -79,7 +85,7 @@ public class CollaborationLineSelection extends Activity {
 			// obtaining target city
 			targetCity = parent.getItemAtPosition(pos).toString();
 	        // launch AsyncTask which show a progress dialog while lines are retrieved from the server
-	        new GetAvailableLinesTask().execute(targetCity);			
+	        getAvailableLinesTask.execute(targetCity);			
 		}
 
 		@Override
