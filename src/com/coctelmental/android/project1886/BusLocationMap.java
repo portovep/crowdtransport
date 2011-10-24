@@ -4,6 +4,8 @@ import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import com.coctelmental.android.project1886.common.Geopoint;
 import com.coctelmental.android.project1886.common.util.JsonHandler;
@@ -27,12 +29,10 @@ import android.os.Message;
 import android.util.Log;
 
 
-public class BusLocationMap extends MapActivity implements Runnable {
+public class BusLocationMap extends MapActivity {
 	
-	private static final int UPDATE_TIME = 5000;
-	
-	private Thread updaterThread;
-	private Boolean flagStopThread;
+	private static final int TIME_BETWEEN_UPDATES = 5000;	
+	private Timer updaterTimer;
 	
 	private AlertDialog alertDialogLocationNotFound; 
 	
@@ -82,19 +82,17 @@ public class BusLocationMap extends MapActivity implements Runnable {
         mc.setZoom(17);
         // get reference to map overlays
         mapOverlays = mapView.getOverlays();
+        
+	    updaterTimer = new Timer();
 
 	    // get reference for our marker custom icon
         drawableBusMarker = this.getResources().getDrawable(R.drawable.bus_icon);    
 	}
 	
-	
-	
 	@Override
 	protected void onResume() {
-	    // setup and start a worker thread which will obtain the location from the server
-	    flagStopThread = false;
-	    updaterThread = new Thread(this);
-	    updaterThread.start();			
+	    // start a timer witch allow us to obtain the location from the server at regular intervals
+	    updaterTimer.schedule(new updaterTimerTask(), 0, TIME_BETWEEN_UPDATES);		
 		super.onResume();
 	}
 
@@ -139,6 +137,9 @@ public class BusLocationMap extends MapActivity implements Runnable {
 	    }
 	    // no new locations
 		else {
+	    	// stop updaterTimer
+	    	stopUpdater();			
+	    	
 			// default message = error server not found
 			String errorMessage = getString(R.string.failServerNotFound);
 			
@@ -147,43 +148,31 @@ public class BusLocationMap extends MapActivity implements Runnable {
 			if (rb.getResultCode() == HttpURLConnection.HTTP_NOT_ACCEPTABLE)
 				// if response code = request not acceptable
 				errorMessage = getString(R.string.locationNotFound);			
-			
-	    	// stopping thread and handler
-	    	flagStopThread=true;
-	    	stopThreadHandler();
 	    	
 	    	goPreviousActivity(errorMessage);
 	    }
 	}
-	
 
-	
-	@Override
-	public void run() {		
-		while(!this.flagStopThread) {
+	private class updaterTimerTask extends TimerTask {		
+		public void run() {
 			updatedLocation = controllerL.obtainLocation(targetCity, targetLine);
 			// notify the handler
 			handler.sendEmptyMessage(0);
-			try{
-				Thread.sleep(UPDATE_TIME);
-			}catch(Exception e)
-			{
-				Log.e(getString(R.string.app_name), e.getMessage()+"\n"+e.getCause());
-			}
-		}		
+		}
 	}
 	
 	private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {       		
-			//if(!updatedLocation.equals(location))
 			showUpdatedLocation(updatedLocation);
         }
 	};
 	
-	private void stopThreadHandler() {
-		handler.removeMessages(0);
-        //handler.removeCallbacks(this);
+	private void stopUpdater() {
+    	// remove pending messages
+		handler.removeMessages(0);		
+    	// cancel timer
+    	updaterTimer.cancel();
 	}
 
 	@Override
@@ -191,7 +180,7 @@ public class BusLocationMap extends MapActivity implements Runnable {
 		// dismiss alert dialog if it's needed
 		if (this.alertDialogLocationNotFound != null)
 			this.alertDialogLocationNotFound.dismiss();
-		flagStopThread = true;
+		stopUpdater();
 		super.onPause();
 	}
 	
