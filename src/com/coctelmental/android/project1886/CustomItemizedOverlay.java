@@ -29,13 +29,6 @@ public class CustomItemizedOverlay extends ItemizedOverlay {
 	public void addOverlay(OverlayItem overlay)
 	{
 		aOverlays.add(overlay);
-		populate();
-	}
-	
-	public void removeAllOverlays()
-	{
-		for(int i=0; i<aOverlays.size();i++)
-			aOverlays.remove(i);
 	}
 
 	@Override
@@ -56,6 +49,10 @@ public class CustomItemizedOverlay extends ItemizedOverlay {
 		dialog.setMessage(item.getSnippet());
 		dialog.show();
 		return true;
+	}
+	
+	public void populateNow() {
+		populate();
 	}
 
 }

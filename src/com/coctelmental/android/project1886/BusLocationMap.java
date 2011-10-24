@@ -43,7 +43,7 @@ public class BusLocationMap extends MapActivity implements Runnable {
 	private MapView mapView;
 	private MapController mc;
 	private List<Overlay> mapOverlays;	
-	private CustomItemizedOverlay busItemizedOverlay;
+	private Drawable drawableBusMarker;
 	
 	private ControllerLocations controllerL;
 	
@@ -79,11 +79,12 @@ public class BusLocationMap extends MapActivity implements Runnable {
 	        
 		// get map controller to control zoom and other stuff
 		mc = mapView.getController();
-        mc.setZoom(18); 
-	    
-	    // setup custom itemized overlay by adding custom icon
-	    Drawable drawableBusIcon = this.getResources().getDrawable(R.drawable.bus_icon);
-	    busItemizedOverlay = new CustomItemizedOverlay(drawableBusIcon, this);        
+        mc.setZoom(17);
+        // get reference to map overlays
+        mapOverlays = mapView.getOverlays();
+
+	    // get reference for our marker custom icon
+        drawableBusMarker = this.getResources().getDrawable(R.drawable.bus_icon);    
 	}
 	
 	
@@ -106,10 +107,12 @@ public class BusLocationMap extends MapActivity implements Runnable {
 			Type listType = new TypeToken<List<Geopoint>>() {}.getType();			
 	    	ArrayList<Geopoint> newLocations = JsonHandler.fromJson(jsonLocations, listType);
 
-	    	Log.w(getString(R.string.app_name), "New location received, lat="+newLocations.get(0).getLatitude()+" long="+newLocations.get(0).getLongitude());
+	    	Log.w(getString(R.string.app_name), "New location received ("+newLocations.size()+")," +
+	    			" lat="+newLocations.get(0).getLatitude()+" long="+newLocations.get(0).getLongitude());
 
 	    	// remove previous overlays
-		    busItemizedOverlay.removeAllOverlays();
+	    	CustomItemizedOverlay busItemizedOverlays = new CustomItemizedOverlay(drawableBusMarker, this);    
+	    	
 	    	GeoPoint geopoint = null;
 	    	for(int i=0; i<newLocations.size(); i++) {
 		    	// setup a Android GeoPoint with received position and add it to the new overlay item
@@ -120,13 +123,17 @@ public class BusLocationMap extends MapActivity implements Runnable {
 			    		getString(R.string.city)+": "+targetCity+"\n"+
 			    		getString(R.string.line)+": "+targetLine);		    
 			    // add new overlay to the list
-			    busItemizedOverlay.addOverlay(overlayItem);
+			    busItemizedOverlays.addOverlay(overlayItem);
 	    	}
+	    	busItemizedOverlays.populateNow();
+	    	
 		    // focus map's center on the geopoint
-		    mc.animateTo(geopoint);     
+	    	//mc.animateTo(geopoint);
+	    	
+	    	// clear previous overlays
+	    	mapOverlays.clear();
 		    // adding our custom overlay to the list of the map
-	        mapOverlays = mapView.getOverlays();
-	        mapOverlays.add(busItemizedOverlay);
+	        mapOverlays.add(busItemizedOverlays);
 	        // re-draw the map with new overlays
 	        mapView.invalidate();
 	    }
