@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import com.coctelmental.android.project1886.common.Geopoint;
+import com.coctelmental.android.project1886.common.BusLocation;
 import com.coctelmental.android.project1886.common.util.JsonHandler;
 import com.coctelmental.android.project1886.logic.ControllerLocations;
 import com.coctelmental.android.project1886.model.ResultBundle;
@@ -102,8 +102,8 @@ public class BusLocationMap extends MapActivity {
 	    if (rb.getResultCode() == HttpURLConnection.HTTP_OK) {
 	    	String jsonLocations = rb.getContent();
 			// Obtaining specific object from json codification
-			Type listType = new TypeToken<List<Geopoint>>() {}.getType();			
-	    	ArrayList<Geopoint> newLocations = JsonHandler.fromJson(jsonLocations, listType);
+			Type listType = new TypeToken<List<BusLocation>>() {}.getType();			
+	    	ArrayList<BusLocation> newLocations = JsonHandler.fromJson(jsonLocations, listType);
 
 	    	Log.w(getString(R.string.app_name), "New location received ("+newLocations.size()+")," +
 	    			" lat="+newLocations.get(0).getLatitude()+" long="+newLocations.get(0).getLongitude());
@@ -114,10 +114,10 @@ public class BusLocationMap extends MapActivity {
 	    	GeoPoint geopoint = null;
 	    	for(int i=0; i<newLocations.size(); i++) {
 		    	// setup a Android GeoPoint with received position and add it to the new overlay item
-	    		Geopoint aux = newLocations.get(i);
+	    		BusLocation aux = newLocations.get(i);
 			    geopoint = new GeoPoint(aux.getLatitude(), aux.getLongitude());
 			    // setup overlay item
-			    OverlayItem overlayItem = new OverlayItem(geopoint, aux.getId(),
+			    OverlayItem overlayItem = new OverlayItem(geopoint, aux.getBusLocationID(),
 			    		getString(R.string.city)+": "+targetCity+"\n"+
 			    		getString(R.string.line)+": "+targetLine);		    
 			    // add new overlay to the list

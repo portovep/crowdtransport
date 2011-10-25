@@ -1,6 +1,6 @@
 package com.coctelmental.android.project1886;
 
-import com.coctelmental.android.project1886.common.Geopoint;
+import com.coctelmental.android.project1886.common.BusLocation;
 import com.coctelmental.android.project1886.logic.ControllerLocations;
 import com.coctelmental.android.project1886.logic.ControllerUsers;
 import com.coctelmental.android.project1886.util.Tools;
@@ -127,7 +127,7 @@ public class CollaborationTrackingService extends Service {
 	private void sendNewLocation(Location location) {
 		if (location != null) {			
 			// setup new geopoint
-			Geopoint gp = new Geopoint(this.userID);
+			BusLocation gp = new BusLocation(this.userID);
 			Double latitude = location.getLatitude()*1E6;
 			Double longitude = location.getLongitude()*1E6;
 			gp.setLatitude(latitude.intValue());
@@ -137,7 +137,7 @@ public class CollaborationTrackingService extends Service {
 			controllerL.sendLocation(targetCity, targetLine, gp);
 			
 			String newLocation = location.getLatitude() + " - " + location.getLongitude();
-			Log.e("New location found", newLocation + " - " + gp.getId());
+			Log.e("New location found", newLocation + " - " + gp.getBusLocationID());
 		}
 	}
 	

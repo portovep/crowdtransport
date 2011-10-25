@@ -4,24 +4,24 @@ import com.coctelmental.android.project1886.common.util.JsonHandler;
 
 
 
-public class Geopoint {
+public class BusLocation {
 
-	private String id;
+	private String busLocationID;
 	private int latitude;
 	private int longitude;
 	
-	public Geopoint (String id)
-	{
-		this.id = id;
+	public BusLocation (String id) {
+		this.busLocationID = id;
 	}
 
-	public String getId() {
-		return id;
+	public String getBusLocationID() {
+		return busLocationID;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setBusLocationID(String busLocationID) {
+		this.busLocationID = busLocationID;
 	}
+
 
 	public int getLatitude() {
 		return latitude;
@@ -40,9 +40,9 @@ public class Geopoint {
 	}
 	
 	public String toString() {
-		return String.format("id: %s\n" +
+		return String.format("locationID: %s\n" +
 							 "latitude: %s\n" +
-							 "longitude: %s", id, latitude, longitude );
+							 "longitude: %s", busLocationID, latitude, longitude );
 	}
 
 	public String toJson() {
