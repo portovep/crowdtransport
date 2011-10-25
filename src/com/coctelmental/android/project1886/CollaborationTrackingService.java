@@ -1,6 +1,6 @@
 package com.coctelmental.android.project1886;
 
-import com.coctelmental.android.project1886.common.BusLocation;
+import com.coctelmental.android.project1886.common.CollaboratorBusLocation;
 import com.coctelmental.android.project1886.logic.ControllerLocations;
 import com.coctelmental.android.project1886.logic.ControllerUsers;
 import com.coctelmental.android.project1886.util.Tools;
@@ -73,7 +73,8 @@ public class CollaborationTrackingService extends Service {
 	    if(controllerU.existActiveUser())
 	    	userID = controllerU.getActiveUser().getId();
 	    else
-	    	userID = "noUser";
+	    	// if no user logged on, use unique id as identification of this installation
+	    	userID = MyApplication.getInstance().id();
         
 	    // registering location listener with target settings
         locationManager.requestLocationUpdates(PROVIDER, TIME_BETWEEN_UPDATES, DISTANCE_BETWEEN_UPDATES, collaboratorLocationListener);
@@ -126,18 +127,18 @@ public class CollaborationTrackingService extends Service {
 	
 	private void sendNewLocation(Location location) {
 		if (location != null) {			
-			// setup new geopoint
-			BusLocation gp = new BusLocation(this.userID);
+			// setup new location
+			CollaboratorBusLocation cBusLocation = new CollaboratorBusLocation(this.userID);
 			Double latitude = location.getLatitude()*1E6;
 			Double longitude = location.getLongitude()*1E6;
-			gp.setLatitude(latitude.intValue());
-			gp.setLongitude(longitude.intValue());
+			cBusLocation.setLatitude(latitude.intValue());
+			cBusLocation.setLongitude(longitude.intValue());
 			
 			// sending new location
-			controllerL.sendLocation(targetCity, targetLine, gp);
+			controllerL.sendLocation(targetCity, targetLine, cBusLocation);
 			
 			String newLocation = location.getLatitude() + " - " + location.getLongitude();
-			Log.e("New location found", newLocation + " - " + gp.getBusLocationID());
+			Log.e("New location found", newLocation + " - " + cBusLocation.getUserID());
 		}
 	}
 	

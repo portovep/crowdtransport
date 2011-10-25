@@ -1,6 +1,6 @@
 package com.coctelmental.android.project1886.logic;
 
-import com.coctelmental.android.project1886.common.BusLocation;
+import com.coctelmental.android.project1886.common.CollaboratorBusLocation;
 import com.coctelmental.android.project1886.model.ResultBundle;
 import com.coctelmental.android.project1886.util.ConnectionsHandler;
 
@@ -15,10 +15,10 @@ public class ControllerLocations {
 		return ConnectionsHandler.get(targetURL);
 	}
 	
-	public int sendLocation(String city, String line, BusLocation gp) {
+	public int sendLocation(String city, String line, CollaboratorBusLocation cbusLocation) {
 		String resourceID = city + line;
 		String targetURL = LOCATION_RESOURCE + "/" + resourceID;
-		return ConnectionsHandler.put(targetURL, gp.toJson());
+		return ConnectionsHandler.put(targetURL, cbusLocation.toJson());
 	}
 
 }
