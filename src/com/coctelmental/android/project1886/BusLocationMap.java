@@ -11,6 +11,7 @@ import com.coctelmental.android.project1886.common.BusLocation;
 import com.coctelmental.android.project1886.common.util.JsonHandler;
 import com.coctelmental.android.project1886.logic.ControllerLocations;
 import com.coctelmental.android.project1886.model.ResultBundle;
+import com.coctelmental.android.project1886.util.Tools;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
@@ -114,10 +115,11 @@ public class BusLocationMap extends MapActivity {
 	    	GeoPoint geopoint = null;
 	    	for(int i=0; i<newLocations.size(); i++) {
 		    	// setup a Android GeoPoint with received position and add it to the new overlay item
-	    		BusLocation aux = newLocations.get(i);
-			    geopoint = new GeoPoint(aux.getLatitude(), aux.getLongitude());
+	    		BusLocation busLocation = newLocations.get(i);
+			    geopoint = new GeoPoint(busLocation.getLatitude(), busLocation.getLongitude());
 			    // setup overlay item
-			    OverlayItem overlayItem = new OverlayItem(geopoint, aux.getBusLocationID(),
+			    OverlayItem overlayItem = new OverlayItem(geopoint, busLocation.getBusLocationID(),
+			    		getString(R.string.whenReceived)+": "+Tools.getTime(busLocation.getWhen())+"\n"+
 			    		getString(R.string.city)+": "+targetCity+"\n"+
 			    		getString(R.string.line)+": "+targetLine);		    
 			    // add new overlay to the list

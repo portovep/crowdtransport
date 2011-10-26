@@ -9,6 +9,7 @@ public class BusLocation {
 	private String busLocationID;
 	private int latitude;
 	private int longitude;
+	private long when;
 	
 	public BusLocation (String id) {
 		this.busLocationID = id;
@@ -39,14 +40,24 @@ public class BusLocation {
 		this.longitude = longitude;
 	}
 	
+	public long getWhen() {
+		return when;
+	}
+
+	public void setWhen(long when) {
+		this.when = when;
+	}
+	
 	public String toString() {
 		return String.format("locationID: %s\n" +
 							 "latitude: %s\n" +
-							 "longitude: %s", busLocationID, latitude, longitude );
+							 "longitude: %s" +
+							 "when: %s", busLocationID, latitude, longitude, when );
 	}
 
 	public String toJson() {
 		return JsonHandler.toJson(this);	
 	}
+
 	
 }

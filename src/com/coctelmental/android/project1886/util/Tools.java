@@ -2,6 +2,8 @@ package com.coctelmental.android.project1886.util;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import android.content.Context;
 import android.util.Log;
@@ -11,6 +13,7 @@ import android.widget.Toast;
 public class Tools {
 	
 	private static final String TARGET_ALGORITHM = "SHA-1";
+	private static final String DATE_FORMAT = "hh:mm:ss";
 	
 	public static String digestFromPassword(String password) {
 		String hash = "";
@@ -42,6 +45,11 @@ public class Tools {
 				duration);
 		toast.setGravity(gravity, 0, 0);
 		return toast;
+	}
+	
+	public static String getTime(long milliseconds) {
+		SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+		return sdf.format(new Date(milliseconds)).toString();
 	}
 
 }

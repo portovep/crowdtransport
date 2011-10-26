@@ -43,6 +43,9 @@
    	<string name="spinnerCities">Elige ciudad</string>
    	<string name="spinnerLines">Elige linea</string>
    	
+   	<!-- Bus location map -->    
+   	<string name="whenReceived">Recibido</string>    
+   	    
    	<!-- Collaboration line selection -->
    	<string name="buttonStart">Comenzar seguimiento</string>
    	<string name="collaborationMessage">Elija la línea de autobús en la que viaja
