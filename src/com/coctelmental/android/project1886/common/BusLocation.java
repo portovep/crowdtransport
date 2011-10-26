@@ -10,6 +10,7 @@ public class BusLocation {
 	private int latitude;
 	private int longitude;
 	private long when;
+	private int nCollaborators;
 	
 	public BusLocation (String id) {
 		this.busLocationID = id;
@@ -48,11 +49,20 @@ public class BusLocation {
 		this.when = when;
 	}
 	
+	public int getnCollaborators() {
+		return nCollaborators;
+	}
+
+	public void setnCollaborators(int nCollaborators) {
+		this.nCollaborators = nCollaborators;
+	}
+
 	public String toString() {
 		return String.format("locationID: %s\n" +
 							 "latitude: %s\n" +
-							 "longitude: %s" +
-							 "when: %s", busLocationID, latitude, longitude, when );
+							 "longitude: %s\n" +
+							 "when: %s\n" +
+							 "nCollaborators: %s", busLocationID, latitude, longitude, when, nCollaborators);
 	}
 
 	public String toJson() {

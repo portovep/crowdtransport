@@ -45,6 +45,7 @@
    	
    	<!-- Bus location map -->    
    	<string name="whenReceived">Recibido</string>    
+   	<string name="numberCollaborators">Nº colaboradores</string> 
    	    
    	<!-- Collaboration line selection -->
    	<string name="buttonStart">Comenzar seguimiento</string>

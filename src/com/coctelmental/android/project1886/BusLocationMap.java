@@ -120,6 +120,7 @@ public class BusLocationMap extends MapActivity {
 			    // setup overlay item
 			    OverlayItem overlayItem = new OverlayItem(geopoint, busLocation.getBusLocationID(),
 			    		getString(R.string.whenReceived)+": "+Tools.getTime(busLocation.getWhen())+"\n"+
+			    		getString(R.string.numberCollaborators)+": "+busLocation.getnCollaborators()+"\n"+
 			    		getString(R.string.city)+": "+targetCity+"\n"+
 			    		getString(R.string.line)+": "+targetLine);		    
 			    // add new overlay to the list
