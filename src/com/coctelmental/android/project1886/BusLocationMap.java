@@ -28,6 +28,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.widget.TextView;
 
 
 public class BusLocationMap extends MapActivity {
@@ -41,6 +42,7 @@ public class BusLocationMap extends MapActivity {
 	private String targetLine = null;	
 	private ResultBundle updatedLocation;			
 	
+	private TextView infoLabel;
 	private MapView mapView;
 	private MapController mc;
 	private List<Overlay> mapOverlays;	
@@ -68,6 +70,10 @@ public class BusLocationMap extends MapActivity {
 	    Log.w(getString(R.string.app_name), "Request information to city: "+targetCity+" and line: "+targetLine);
 	        
 	    setContentView(R.layout.bus_location_map);
+	    
+	    // setup information label at the top of view
+	    infoLabel = (TextView) findViewById(R.id.infoLabel);
+	    infoLabel.append(targetCity+" -> "+targetLine);
 	    
 	    // setup map configuration
 	    mapView = (MapView) findViewById(R.id.mapBusLocation);
