@@ -13,7 +13,7 @@ import android.widget.Toast;
 public class Tools {
 	
 	private static final String TARGET_ALGORITHM = "SHA-1";
-	private static final String DATE_FORMAT = "hh:mm:ss";
+	private static final String DATE_FORMAT = "HH:mm:ss";
 	
 	public static String digestFromPassword(String password) {
 		String hash = "";
