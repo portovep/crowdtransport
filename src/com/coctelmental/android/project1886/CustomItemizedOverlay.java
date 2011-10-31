@@ -9,8 +9,8 @@ import com.google.android.maps.ItemizedOverlay;
 import com.google.android.maps.OverlayItem;
 
 
-@SuppressWarnings("rawtypes")
-public class CustomItemizedOverlay extends ItemizedOverlay {
+
+public class CustomItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 	
 	private Context context;
 	private ArrayList<OverlayItem> aOverlays;
