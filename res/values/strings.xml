@@ -45,7 +45,12 @@
    	
    	<!-- Bus location map -->    
    	<string name="whenReceived">Recibido</string>    
-   	<string name="numberCollaborators">Nº colaboradores</string> 
+   	<string name="numberCollaborators">Nº colaboradores</string>
+
+   	<!-- Taxi route specification -->    
+   	<string name="origin">Origen</string>    
+   	<string name="destination">Destino</string>	
+   	<string name="confirm">Confirmar</string>	
    	    
    	<!-- Collaboration line selection -->
    	<string name="buttonStart">Comenzar seguimiento</string>
