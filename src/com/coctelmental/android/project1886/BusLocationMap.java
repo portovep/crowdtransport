@@ -90,15 +90,16 @@ public class BusLocationMap extends MapActivity {
         // get reference to map overlays
         mapOverlays = mapView.getOverlays();
         
-	    updaterTimer = new Timer();
+	    
 
 	    // get reference for our marker custom icon
-        drawableBusMarker = this.getResources().getDrawable(R.drawable.bus_icon);    
+        drawableBusMarker = this.getResources().getDrawable(R.drawable.temp_marker_bus);    
 	}
 	
 	@Override
 	protected void onResume() {
 	    // start a timer witch allow us to obtain the location from the server at regular intervals
+		updaterTimer = new Timer();
 	    updaterTimer.schedule(new updaterTimerTask(), 0, TIME_BETWEEN_UPDATES);		
 		super.onResume();
 	}
