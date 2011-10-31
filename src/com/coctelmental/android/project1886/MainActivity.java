@@ -3,8 +3,6 @@ package com.coctelmental.android.project1886;
 import com.coctelmental.android.project1886.logic.ControllerUsers;
 
 import android.app.Activity;
-import android.app.ActivityManager;
-import android.app.ActivityManager.RunningServiceInfo;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -20,8 +18,7 @@ public class MainActivity extends Activity{
     private static final int menuProfile = Menu.FIRST + 2;
     private static final int menuExit = Menu.FIRST + 3;
     
-    private Button bBusLocation;
-    private Button bCollaboration;
+
     private TextView tvProfileName;
     
     private ControllerUsers controllerU;
@@ -36,7 +33,7 @@ public class MainActivity extends Activity{
         
         tvProfileName = (TextView) findViewById(R.id.profileName);
         
-        bBusLocation = (Button) findViewById(R.id.buttonBus);
+        Button bBusLocation = (Button) findViewById(R.id.buttonBus);
         bBusLocation.setOnClickListener(new View.OnClickListener() {		
 			@Override
 			public void onClick(View v) {
@@ -46,13 +43,13 @@ public class MainActivity extends Activity{
 			}
 		});
         
-        bCollaboration = (Button) findViewById(R.id.buttonCollaborate);
+        Button bCollaboration = (Button) findViewById(R.id.buttonCollaborate);
         bCollaboration.setOnClickListener(new View.OnClickListener() {			
 			@Override
 			public void onClick(View arg0) {
 				Intent intent;
 				// if collaborationTrackingService is running
-				if (isServiceRunning(CollaborationTrackingService.class.getName())) {
+				if (MyApplication.getInstance().isServiceRunning(CollaborationTrackingService.class.getName())) {
 					intent = new Intent(getApplicationContext(), CollaborationInformationPanel.class);
 					// specify flags for use current instance of target activity
 					intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -60,6 +57,16 @@ public class MainActivity extends Activity{
 				else 
 					intent = new Intent(getApplicationContext(), CollaborationLineSelection.class);
 				startActivity(intent);
+			}
+		});
+        
+        Button bTaxiService = (Button) findViewById(R.id.buttonTaxi);
+        bTaxiService.setOnClickListener(new View.OnClickListener() {			
+			@Override
+			public void onClick(View v) {
+				Intent intent;
+				intent = new Intent(getApplicationContext(), TaxiRouteSpecification.class);
+				startActivity(intent);								
 			}
 		});
     }
@@ -122,13 +129,4 @@ public class MainActivity extends Activity{
 		return super.onMenuItemSelected(featureId, item);
 	}
 	
-	private boolean isServiceRunning(String serviceName) {
-	    ActivityManager manager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
-	    for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-	        if (serviceName.equals(service.service.getClassName())) {
-	            return true;
-	        }
-	    }
-	    return false;
-	}
 }

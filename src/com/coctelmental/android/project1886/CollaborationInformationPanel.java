@@ -54,12 +54,14 @@ public class CollaborationInformationPanel extends Activity {
 		
 		if (!isGPSEnabled())
 			showGPSDialog();
-		else {		
-		    // launch location tracking service
-		    Intent i = new Intent(this, CollaborationTrackingService.class);
-		    i.putExtra(CollaborationLineSelection.TARGET_CITY, targetCity);
-		    i.putExtra(CollaborationLineSelection.TARGET_LINE, targetLine);
-		    startService(i);
+		else {
+			if(!MyApplication.getInstance().isServiceRunning(CollaborationTrackingService.class.getName())) {
+			    // launch location tracking service
+			    Intent i = new Intent(this, CollaborationTrackingService.class);
+			    i.putExtra(CollaborationLineSelection.TARGET_CITY, targetCity);
+			    i.putExtra(CollaborationLineSelection.TARGET_LINE, targetLine);
+			    startService(i);
+			}
 		}
 	}
 

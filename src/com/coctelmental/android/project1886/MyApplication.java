@@ -4,7 +4,9 @@ import java.util.UUID;
 
 import com.coctelmental.android.project1886.model.Credentials;
 
+import android.app.ActivityManager;
 import android.app.Application;
+import android.app.ActivityManager.RunningServiceInfo;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -50,6 +52,16 @@ public class MyApplication extends Application {
 			}
 		}
 		return uniqueID;
-	}		
+	}
+	
+	public boolean isServiceRunning(String serviceName) {
+	    ActivityManager manager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+	    for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+	        if (serviceName.equals(service.service.getClassName())) {
+	            return true;
+	        }
+	    }
+	    return false;
+	}
 	
 }
