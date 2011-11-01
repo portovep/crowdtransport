@@ -50,12 +50,11 @@ public class MainActivity extends Activity{
 				Intent intent;
 				// if collaborationTrackingService is running
 				if (MyApplication.getInstance().isServiceRunning(CollaborationTrackingService.class.getName())) {
-					intent = new Intent(getApplicationContext(), CollaborationInformationPanel.class);
-					// specify flags for use current instance of target activity
-					intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					intent = CollaborationTrackingService.getNotificationIntent();
 				}
-				else 
+				else
 					intent = new Intent(getApplicationContext(), CollaborationLineSelection.class);
+					
 				startActivity(intent);
 			}
 		});

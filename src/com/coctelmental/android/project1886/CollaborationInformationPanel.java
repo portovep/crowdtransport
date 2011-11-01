@@ -26,9 +26,16 @@ public class CollaborationInformationPanel extends Activity {
 		setContentView(R.layout.collaboration_information_panel);
 				
 	    // get data from intent
-    	Bundle extras = getIntent().getExtras();	    
-        targetCity = extras != null ? extras.getString(CollaborationLineSelection.TARGET_CITY) : null;
-        targetLine = extras != null ? extras.getString(CollaborationLineSelection.TARGET_LINE) : null;
+    	Bundle extras = getIntent().getExtras();
+    	if(targetCity == null | targetLine == null) {
+	        targetCity = extras != null ? extras.getString(CollaborationLineSelection.TARGET_CITY) : null;
+	        targetLine = extras != null ? extras.getString(CollaborationLineSelection.TARGET_LINE) : null;
+    	}
+        
+        if(savedInstanceState != null && (targetCity == null | targetLine == null)) {
+        	targetCity = savedInstanceState.getString(CollaborationLineSelection.TARGET_CITY);
+        	targetLine = savedInstanceState.getString(CollaborationLineSelection.TARGET_LINE);
+        }
         
         // setup collaboration info
         tvCity = (TextView) findViewById(R.id.collaborationInfoCity);
@@ -47,6 +54,17 @@ public class CollaborationInformationPanel extends Activity {
 			}
 		});
 	}
+	
+	
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		outState.putString(CollaborationLineSelection.TARGET_CITY, targetCity);
+		outState.putString(CollaborationLineSelection.TARGET_LINE, targetLine);
+		super.onSaveInstanceState(outState);
+	}
+
+
 
 	@Override
 	protected void onResume() {
@@ -65,14 +83,17 @@ public class CollaborationInformationPanel extends Activity {
 		}
 	}
 
+	
 	@Override
 	public void onBackPressed() {
 		// modify onBackPressed behavior to go directly to main menu
 		goMainMenu();
-	}
+	} 
 	
 	private void goMainMenu() {
-		startActivity(new Intent(this, MainActivity.class));
+		Intent intent = new Intent(this, MainActivity.class);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(intent);
 	}
 	
 	private boolean isGPSEnabled() {

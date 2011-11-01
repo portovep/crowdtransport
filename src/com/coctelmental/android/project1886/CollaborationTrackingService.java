@@ -36,6 +36,7 @@ public class CollaborationTrackingService extends Service {
 	
 	private Location updatedLocation;
 	private PendingIntent pendingIntent;
+	private static Intent notificationIntent;
 	
 	private ControllerUsers controllerU;
 	private ControllerLocations controllerL;
@@ -59,7 +60,7 @@ public class CollaborationTrackingService extends Service {
         this.targetLine = extras != null ? extras.getString(CollaborationLineSelection.TARGET_LINE) : "";
         
 		// setup pending intent 
-		Intent notificationIntent = new Intent(this, CollaborationInformationPanel.class);
+		notificationIntent = new Intent(this, CollaborationInformationPanel.class);
 		notificationIntent.putExtra(CollaborationLineSelection.TARGET_CITY, targetCity);
 		notificationIntent.putExtra(CollaborationLineSelection.TARGET_LINE, targetLine);
 		this.pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);		
@@ -171,4 +172,9 @@ public class CollaborationTrackingService extends Service {
 		notification.setLatestEventInfo(getApplicationContext(), contentTitle, contentText, pendingIntent);		
 		return notification;		
 	}
+	
+	public static Intent getNotificationIntent() {
+		return notificationIntent;
+	}
+	
 }
