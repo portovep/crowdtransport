@@ -11,6 +11,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="#FFFFFF"
+        android:padding="4sp"
         android:orientation="horizontal" >
 
         <ImageView
@@ -26,10 +27,10 @@
             android:id="@+id/tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="4sp"
             android:layout_gravity="center_vertical"
-            android:textSize="18dp"
-            android:text="@string/origin" />
+            android:layout_margin="4sp"
+            android:text="@string/origin"
+            android:textSize="18dp" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -43,49 +44,74 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="4sp"
             android:layout_gravity="center_vertical"
-            android:textSize="18dp"
-            android:text="@string/destination" />
+            android:layout_margin="4sp"
+            android:text="@string/destination"
+            android:textSize="18dp" />
 
         <Button
             android:id="@+id/bConfirmRoute"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="12sp"
-            android:gravity="center_vertical"
+            android:layout_gravity="center_vertical"
             android:text="@string/confirm"
             android:textSize="12sp" />
-
     </LinearLayout>
-    
-	<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/container"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical" >
-        
-    <com.google.android.maps.MapView
+
+    <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/mapTaxiRoute"
+        android:id="@+id/container"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:apiKey="0GFJEPSerwjLp6q2Rcu8oLWI6Hb1W3SmdNnM-OQ"
-        android:clickable="true"/>
+        android:orientation="vertical" >
 
-    <ImageView
-        android:id="@+id/originImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/marker_ori"
-        android:visibility="gone" />
+        <com.google.android.maps.MapView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/mapTaxiRoute"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:apiKey="0GFJEPSerwjLp6q2Rcu8oLWI6Hb1W3SmdNnM-OQ"
+            android:clickable="true" />
 
-    <ImageView
-        android:id="@+id/destinationImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/marker_dest"
-        android:visibility="gone" />    
+        <ImageView
+            android:id="@+id/originImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/marker_ori"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/destinationImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/marker_dest"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/distanceDock"
+            android:layout_width="wrap_content"            
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:padding="6sp"
+            android:background="#FFFFFF">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="@string/distance"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/distance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text=" 0.0"
+                android:textStyle="bold" />
+        </LinearLayout>
     </RelativeLayout>
 
 </LinearLayout>

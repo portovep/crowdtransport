@@ -15,8 +15,8 @@ public class TaxiAvailableMap extends Activity {
 	    
 	    Bundle extras = getIntent().getExtras();
 	    
-	    int latO = extras.getInt(TaxiRouteSpecification.LAT_ORIGIN);
-	    int longO = extras.getInt(TaxiRouteSpecification.LONG_ORIGIN);
+	    int latO = extras.getInt(TaxiRouteSpecification.LAT_SOURCE);
+	    int longO = extras.getInt(TaxiRouteSpecification.LONG_SOURCE);
 	    int latD = extras.getInt(TaxiRouteSpecification.LAT_DESTINATION);
 	    int longD = extras.getInt(TaxiRouteSpecification.LONG_DESTINATION);
 	    
