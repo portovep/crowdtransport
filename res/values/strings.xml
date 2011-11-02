@@ -69,6 +69,7 @@
     <string name="buttonBack">Volver atrás</string>
 
     <!-- Messages -->
+    <string name="failInternetConnectionNotFound">No se ha podido establecer una conexión a internet. Conectese a una red WIFI o de datos</string>
     <string name="failServerNotFound">Lo sentimos, no se ha podido establecer conexión con el servidor</string>
     <string name="responseProblem">Se ha producido un error al recibir la respuesta del servidor</string>
     <string name="missingFields">Todos los campos son obligatorios</string>
@@ -94,12 +95,12 @@
     <string name="failLocationProviders">No hemos podido obtener su ubicación debido a la configuración de su teléfono. 
         Habilite la localización mediante GPS o mediante la red de datos</string>
     <string name="failUserLocationNotFound">No hemos podido obtener su ubicación. Vuelva a intentarlo</string>
-    
+
     <!-- Progress dialogs -->
     <string name="loadingCities">Obteniendo información de las ciudades disponibles</string>
     <string name="loadingLines">Obteniendo información de las líneas disponibles</string>
     <string name="obtainingUserLocation">Obteniendo su ubicación</string>
-    
+
     <!-- Notifications -->
     <string name="collaborationServiceStarted">El modo de seguimiento ha sido activado</string>
     <string name="collaborationServiceRunning">El modo de seguimiento está activado</string>

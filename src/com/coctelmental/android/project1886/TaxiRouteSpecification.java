@@ -24,6 +24,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.coctelmental.android.project1886.util.Tools;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.ItemizedOverlay;
 import com.google.android.maps.MapActivity;
@@ -96,7 +97,9 @@ public class TaxiRouteSpecification extends MapActivity {
 		});
 	    
 	    userLocationHelper = new UserLocationHelper(getApplicationContext());
-	    if(!userLocationHelper.setupListeners())
+	    if(!Tools.isConnectionAvailable(getApplicationContext()))
+	    	showBackAlertDialog(getString(R.string.failInternetConnectionNotFound));
+	    else if(!userLocationHelper.setupListeners())
 	    	showBackAlertDialog(getString(R.string.failLocationProviders));
 	    else{
 		    // setup timer to request user location
@@ -279,8 +282,7 @@ public class TaxiRouteSpecification extends MapActivity {
 			    Drawable defaultMarker = (Drawable) getResources().getDrawable(R.drawable.marker_ori);
 			    defaultMarker.setBounds(0, 0, defaultMarker.getIntrinsicWidth(), defaultMarker.getIntrinsicHeight());
 			    //add our custom overlays
-			    mapView.getOverlays().add(new RouteSpecificationItemizedOverlay(defaultMarker));
-			    
+			    mapView.getOverlays().add(new RouteSpecificationItemizedOverlay(defaultMarker));			    
 			}
 			else
 				showBackAlertDialog(getString(R.string.failUserLocationNotFound));				

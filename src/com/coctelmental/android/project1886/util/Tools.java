@@ -6,6 +6,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -50,6 +52,20 @@ public class Tools {
 	public static String getTime(long milliseconds) {
 		SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
 		return sdf.format(new Date(milliseconds)).toString();
+	}
+	
+	public static boolean isConnectionAvailable(Context context) {
+		ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo ni = cm.getActiveNetworkInfo();
+		// check connection status
+		if(ni == null)
+			// no connections available
+			return false;
+		if(!ni.isAvailable())
+			return false;
+		if(!ni.isConnected())
+			return false;
+		return true;
 	}
 
 }
