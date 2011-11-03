@@ -6,18 +6,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class MainActivity extends Activity{
-	
-	private static final int menuLogin = Menu.FIRST;
-    private static final int menuRegistration = Menu.FIRST + 1;
-    private static final int menuProfile = Menu.FIRST + 2;
-    private static final int menuExit = Menu.FIRST + 3;
-    
+public class MainActivity extends Activity{   
 
     private TextView tvProfileName;
     
@@ -90,16 +85,12 @@ public class MainActivity extends Activity{
 		// clear previous menu configuration
 		menu.clear();
 
-		if(!controllerU.existActiveUser())
-		{
-			menu.add(0, menuLogin, 0, R.string.option_menu_login);
-			menu.add(0, menuRegistration, 0, R.string.option_menu_register);
-		}
+		MenuInflater inflater = getMenuInflater();
+		if(!controllerU.existActiveUser())		
+			inflater.inflate(R.menu.main_activity_menu, menu);
 		else
-		{
-			menu.add(0, menuExit, 1, R.string.option_menu_exit);
-			menu.add(0, menuProfile, 0, R.string.option_menu_profile);
-		}			
+			inflater.inflate(R.menu.main_activity_logged_menu, menu);
+		
 		return super.onPrepareOptionsMenu(menu);
 	}
 
@@ -107,19 +98,18 @@ public class MainActivity extends Activity{
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {		
 		Intent intent;
 		
-		switch(item.getItemId())
-		{
-		case menuLogin:
+		switch(item.getItemId()) {
+		case R.id.menuLogin:
 			// Login panel launcher
 			intent = new Intent(this, Authentication.class);
 			startActivity(intent);
 			break;
-		case menuRegistration:
+		case R.id.menuRegistration:
 			// Registration panel launcher
 			intent = new Intent(this, Registration.class);
 			startActivity(intent);
 			break;
-		case menuExit:
+		case R.id.menuExit:
 			// logout and exit
 			controllerU.logOut();
 			moveTaskToBack(true);
