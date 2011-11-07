@@ -36,7 +36,7 @@ public class CollaborationTrackingService extends Service {
 	
 	private Location updatedLocation;
 	private PendingIntent pendingIntent;
-	private static Intent notificationIntent;
+	private  Intent notificationIntent;
 	
 	private ControllerUsers controllerU;
 	private ControllerLocations controllerL;
@@ -47,7 +47,6 @@ public class CollaborationTrackingService extends Service {
 		super.onCreate();
 		notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-		
 		controllerU = new ControllerUsers();
 		controllerL = new ControllerLocations();
 	}
@@ -59,8 +58,11 @@ public class CollaborationTrackingService extends Service {
         this.targetCity = extras != null ? extras.getString(CollaborationLineSelection.TARGET_CITY) : "";
         this.targetLine = extras != null ? extras.getString(CollaborationLineSelection.TARGET_LINE) : "";
         
-		// setup pending intent 
-		notificationIntent = new Intent(this, CollaborationInformationPanel.class);
+		// setup pending intent
+        if(extras.getInt(BusDriverInformationPanel.BUSDRIVER_SERVICE_EXTRA) == BusDriverInformationPanel.BUS_DRIVER_ACTIVITY)
+        	notificationIntent = new Intent(this, BusDriverInformationPanel.class);
+        else
+        	notificationIntent = new Intent(this, CollaborationInformationPanel.class);	
 		notificationIntent.putExtra(CollaborationLineSelection.TARGET_CITY, targetCity);
 		notificationIntent.putExtra(CollaborationLineSelection.TARGET_LINE, targetLine);
 		this.pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);		
@@ -173,8 +175,8 @@ public class CollaborationTrackingService extends Service {
 		return notification;		
 	}
 	
-	public static Intent getNotificationIntent() {
+	/*public Intent getNotificationIntent() {
 		return notificationIntent;
-	}
+	} */
 	
 }

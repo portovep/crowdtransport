@@ -65,6 +65,16 @@
     <string name="collaborationInfoCity">Ciudad: </string>
     <string name="collaborationInfoLine">Línea: </string>
 
+    <!-- Bus driver main -->
+    <string name="start">Empezar</string>
+
+    <!-- Bus driver line selection -->
+    <string name="busDriverMessage">Elija la línea que va a recorrer 
+        para poder empezar ha geoposicionar el autobús que conduce.</string>
+    <!-- Bus driver information panel -->
+    <string name="busDriverStatusMessage">Está enviando información que ayuda a otros
+         usuarios a localizar en un mapa el autobús que conduce. Gracias.</string>    
+
     <!-- Common buttons -->
     <string name="buttonBack">Volver atrás</string>
 

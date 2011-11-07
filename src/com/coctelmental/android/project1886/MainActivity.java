@@ -45,7 +45,8 @@ public class MainActivity extends Activity{
 				Intent intent;
 				// if collaborationTrackingService is running
 				if (MyApplication.getInstance().isServiceRunning(CollaborationTrackingService.class.getName())) {
-					intent = CollaborationTrackingService.getNotificationIntent();
+					//intent = CollaborationTrackingService.getNotificationIntent();
+					intent = new Intent(getApplicationContext(), CollaborationInformationPanel.class);
 				}
 				else
 					intent = new Intent(getApplicationContext(), CollaborationLineSelection.class);
@@ -99,23 +100,26 @@ public class MainActivity extends Activity{
 		Intent intent;
 		
 		switch(item.getItemId()) {
-		case R.id.menuLogin:
-			// Login panel launcher
-			intent = new Intent(this, Authentication.class);
-			startActivity(intent);
-			break;
-		case R.id.menuRegistration:
-			// Registration panel launcher
-			intent = new Intent(this, Registration.class);
-			startActivity(intent);
-			break;
-		case R.id.menuExit:
-			// logout and exit
-			controllerU.logOut();
-			moveTaskToBack(true);
-			break;
-		}
+			case R.id.menuLogin:
+				// Login panel launcher
+				intent = new Intent(this, Authentication.class);
+				startActivity(intent);
+				break;
+			case R.id.menuRegistration:
+				// Registration panel launcher
+				intent = new Intent(this, Registration.class);
+				startActivity(intent);
+				break;
+			case R.id.menuExit:
+				// logout and exit
+				controllerU.logOut();
+				moveTaskToBack(true);
+				break;
+			}
 		return super.onMenuItemSelected(featureId, item);
 	}
+
+	
+	
 	
 }

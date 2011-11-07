@@ -29,6 +29,8 @@ import android.widget.AdapterView.OnItemSelectedListener;
 
 public class Authentication extends Activity {
 	
+	public static final String SUCCESSFUL_TYPE = "S_TYPE";
+	
 	private EditText etUserName;
 	private EditText etPassword;
 	private Spinner spUserType;
@@ -194,11 +196,10 @@ public class Authentication extends Activity {
 						// information panel
 						Tools.buildToast(getApplicationContext(), getString(R.string.correctLogin),
 								Gravity.CENTER, Toast.LENGTH_SHORT).show();						
-						// go to main menu   ----------- CAMBIAR ---------------
-						Intent i = new Intent(Authentication.this, MainActivity.class);
-						// add flag to clear this activity from the top of Android activity stack
-						i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+						// go to bus driver main activity
+						Intent i = new Intent(Authentication.this, BusDriverMain.class);
 						startActivity(i);
+						finish();
 					}
 					else
 						// error: passwords don't match
