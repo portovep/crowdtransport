@@ -1,270 +1,56 @@
 package com.coctelmental.android.project1886;
 
-import java.net.HttpURLConnection;
-
-import com.coctelmental.android.project1886.common.BusDriver;
-import com.coctelmental.android.project1886.common.TaxiDriver;
-import com.coctelmental.android.project1886.common.User;
-import com.coctelmental.android.project1886.common.util.JsonHandler;
-import com.coctelmental.android.project1886.logic.ControllerUsers;
-import com.coctelmental.android.project1886.model.Credentials;
-import com.coctelmental.android.project1886.model.ResultBundle;
-import com.coctelmental.android.project1886.util.Tools;
-
-import android.app.Activity;
-import android.app.ProgressDialog;
+import android.app.TabActivity;
 import android.content.Intent;
-import android.os.AsyncTask;
+import android.content.res.Resources;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.Toast;
-import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.TabHost;
+import android.widget.TabHost.TabSpec;
 
-public class Authentication extends Activity {
-	
-	public static final String SUCCESSFUL_TYPE = "S_TYPE";
-	
-	private EditText etUserName;
-	private EditText etPassword;
-	private Spinner spUserType;
-	private Button bLogin;
-	
-	private String userID;
-	private String password;
-	
-	private static final String[] userTypes = {"Normal", "Taxi", "Bus"};
-	private String targetUserType;
-	private int restoredtargetUserType;
-	private String restoredUserName;
-	private String restoredPassword;
-	
-	private ControllerUsers controllerU;
+public class Authentication extends TabActivity {
 
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.authentication);
         
-        // get a instance of our controller
-        controllerU = new ControllerUsers();
+        // get resource manager
+        Resources res= getResources(); 
+        TabHost tabHost= getTabHost(); 
+        TabSpec	spec;				   
+        Intent intent;					   
         
-        // setting default values for fields which will be restored onResume() if needed
-        restoredUserName = "";
-        restoredPassword = "";
+        // setup an intent to launch user authentication activity
+        // USER TAB
+        intent = new Intent(this, UserAuthentication.class);
+        // setup TabSpec for each tab adding text, icon and content
+        spec = tabHost.newTabSpec("authenticationUser")
+		    		.setIndicator(
+		        		getString(R.string.tabUser),
+		        		res.getDrawable(R.drawable.statelist_tab_user))
+		        	.setContent(intent);
+        // adding new tab to our TabHost
+        tabHost.addTab(spec);
         
-        etUserName = (EditText) findViewById(R.id.userName);
-        etPassword = (EditText) findViewById(R.id.password);
-        spUserType = (Spinner) findViewById(R.id.userType);
-        bLogin = (Button) findViewById(R.id.buttonLogin);
+        // TAXI TAB
+        intent = new Intent(this, TaxiAuthentication.class);
+        spec = tabHost.newTabSpec("authenticationTaxi")
+					.setIndicator(
+			    		getString(R.string.tabTaxiDriver),
+			    		res.getDrawable(R.drawable.statelist_tab_taxi))
+			    	.setContent(intent);
+        tabHost.addTab(spec); 
+
+        // BUS DRIVER TAB
+        intent = new Intent(this, BusAuthentication.class);
+        spec = tabHost.newTabSpec("authenticationBus")
+					.setIndicator(
+			    		getString(R.string.tabBusDriver),
+			    		res.getDrawable(R.drawable.statelist_tab_bus))
+			    	.setContent(intent);
+        tabHost.addTab(spec); 
         
-        // fill spinner with user types available
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, userTypes);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // set adapter to spinner
-        spUserType.setAdapter(adapter);
-        // set our custom listener        
-        spUserType.setOnItemSelectedListener(new MySpinnerItemSelectedListener());
-                
-        bLogin.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				
-				// get data written by the user
-				userID = etUserName.getText().toString();
-				password = etPassword.getText().toString();
-				
-				// verify data
-				if(userID.equals("") || password.equals(""))
-					Tools.buildToast(getApplicationContext(), getString(R.string.missingFields),
-							Gravity.CENTER, Toast.LENGTH_LONG).show();	
-				else 
-					// launch Async Task to try to authenticate user
-					new AuthenticationAsyncTask().execute(userID);
-			}
-		});        
-    }
-	
-	private class AuthenticationAsyncTask extends AsyncTask<String, Void, ResultBundle> {
-		private ProgressDialog pdprocessingAuthentication;
-		
-		protected void onPreExecute () {
-			// show a progress dialog while data is retrieved from the server
-			pdprocessingAuthentication = ProgressDialog.show(Authentication.this, "", getString(R.string.processingUserAuthentication), true);
-		}
-	    /** The system calls this to perform work in a worker thread and
-	      * delivers it the parameters given to AsyncTask.execute() */		
-	    protected ResultBundle doInBackground(String... params) {
-			// send request to the server and return response code
-	        return tryAuthentication(params[0]);
-	    }	    
-	    /** The system calls this to perform work in the UI thread and delivers
-	      * the result from doInBackground() */
-	    protected void onPostExecute(ResultBundle rb) {
-	    	// disable the progress dialog
-	        pdprocessingAuthentication.dismiss();
-			// calculate password digest
-			String passwordDigest = controllerU.passwordToDigest(password);					
-			// check target user type
-			// TYPE = Normal User
-			if (targetUserType.equals(userTypes[0])) {
-				if (rb.getResultCode() == HttpURLConnection.HTTP_OK) {
-					String jsonUser = rb.getContent();
-					User user = JsonHandler.fromJson(jsonUser, User.class);
-					if (user.getPassword().equals(passwordDigest)) {
-						// setup new user credentials
-						Credentials credentials=new Credentials(userID, passwordDigest, Credentials.TYPE_USER);
-						// log in
-						controllerU.logIn(credentials);
-						// information panel
-						Tools.buildToast(getApplicationContext(), getString(R.string.correctLogin),
-								Gravity.CENTER, Toast.LENGTH_SHORT).show();					
-						// go to main menu
-						Intent i = new Intent(Authentication.this, MainActivity.class);
-						// add flag to clear this activity from the top of Android activity stack
-						i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-						startActivity(i);
-					}
-					else
-						// error: passwords don't match
-						Tools.buildToast(getApplicationContext(), getString(R.string.failLoginInvalidData),
-								Gravity.CENTER, Toast.LENGTH_LONG).show();	
-				}
-				else {
-					// default message = error server not found
-					String errorMessage = getString(R.string.failServerNotFound);
-					Log.e("Http error code", Integer.toString(rb.getResultCode()));
-					if (rb.getResultCode() == HttpURLConnection.HTTP_NOT_ACCEPTABLE)
-						// if response code = request not acceptable
-						errorMessage = getString(R.string.failLoginInvalidData);
-					Tools.buildToast(getApplicationContext(), errorMessage,
-							Gravity.CENTER, Toast.LENGTH_LONG).show();								
-				}				
-			}
-			// TYPE = Taxi
-			else if (targetUserType.equals(userTypes[1])) {
-				if (rb.getResultCode() == HttpURLConnection.HTTP_OK) {
-					String jsonUser = rb.getContent();
-					TaxiDriver taxiDriver = JsonHandler.fromJson(jsonUser, TaxiDriver.class);
-					if (taxiDriver.getPassword().equals(passwordDigest)) {
-						// setup new user credentials
-						Credentials credentials=new Credentials(userID, passwordDigest, Credentials.TYPE_TAXI);
-						// log in
-						controllerU.logIn(credentials);
-						// information panel
-						Tools.buildToast(getApplicationContext(), getString(R.string.correctLogin),
-								Gravity.CENTER, Toast.LENGTH_SHORT).show();						
-						// go to main menu   ----------- CAMBIAR ---------------
-						Intent i = new Intent(Authentication.this, MainActivity.class);
-						// add flag to clear this activity from the top of Android activity stack
-						i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-						startActivity(i);
-					}
-					else
-						// error: passwords don't match
-						Tools.buildToast(getApplicationContext(), getString(R.string.failLoginInvalidData),
-								Gravity.CENTER, Toast.LENGTH_LONG).show();	
-				}
-				else {
-					// default message = error server not found
-					String errorMessage = getString(R.string.failServerNotFound);
-					Log.e("Http error code", Integer.toString(rb.getResultCode()));
-					if (rb.getResultCode() == HttpURLConnection.HTTP_NOT_ACCEPTABLE)
-						// error: target user doesn't exist
-						errorMessage = getString(R.string.failLoginInvalidData);
-					Tools.buildToast(getApplicationContext(), errorMessage,
-							Gravity.CENTER, Toast.LENGTH_LONG).show();							
-				}					
-			}
-			// TYPE = Bus
-			else if (targetUserType.equals(userTypes[2])) {
-				if (rb.getResultCode() == HttpURLConnection.HTTP_OK) {
-					String jsonUser = rb.getContent();
-					BusDriver busDriver = JsonHandler.fromJson(jsonUser, BusDriver.class);
-					if (busDriver.getPassword().equals(passwordDigest)) {
-						// setup new user credentials
-						Credentials credentials=new Credentials(userID, passwordDigest, Credentials.TYPE_BUS);
-						// log in
-						controllerU.logIn(credentials);
-						// information panel
-						Tools.buildToast(getApplicationContext(), getString(R.string.correctLogin),
-								Gravity.CENTER, Toast.LENGTH_SHORT).show();						
-						// go to bus driver main activity
-						Intent i = new Intent(Authentication.this, BusDriverMain.class);
-						startActivity(i);
-						finish();
-					}
-					else
-						// error: passwords don't match
-						Tools.buildToast(getApplicationContext(), getString(R.string.failLoginInvalidData),
-								Gravity.CENTER, Toast.LENGTH_LONG).show();	
-				}
-				else {
-					// default message = error server not found
-					String errorMessage = getString(R.string.failServerNotFound);
-					Log.e("Http error code", Integer.toString(rb.getResultCode()));
-					if (rb.getResultCode() == HttpURLConnection.HTTP_NOT_ACCEPTABLE)
-						// error: target user doesn't exist
-						errorMessage = getString(R.string.failLoginInvalidData);
-					Tools.buildToast(getApplicationContext(), errorMessage,
-							Gravity.CENTER, Toast.LENGTH_LONG).show();							
-				}					
-			}
-
-	    }
-	}
-	
-	private ResultBundle tryAuthentication(String userID) {
-		ResultBundle rb = null;
-		// TYPE = Normal User
-		if (targetUserType.equals(userTypes[0]))
-			rb = controllerU.getUser(userID);
-		// TYPE = Taxi
-		else if (targetUserType.equals(userTypes[1]))
-			rb = controllerU.getTaxiDriver(userID);
-		// TYPE = Bus
-		else if (targetUserType.equals(userTypes[2]))
-			rb = controllerU.getBusDriver(userID);	
-		return rb;
-	}
-	
-    public class MySpinnerItemSelectedListener implements OnItemSelectedListener {
-		@Override
-		public void onItemSelected(AdapterView<?> parent, View view, int pos,
-				long id) {
-			// obtaining user type
-			targetUserType = parent.getItemAtPosition(pos).toString();		
-		}
-
-		@Override
-		public void onNothingSelected(AdapterView<?> arg0) {
-			// nothing	to do here
-		}		
-	}
-	
-	@Override
-	protected void onResume() {
-		// restoring form fields values
-		etUserName.setText(restoredUserName);
-		etPassword.setText(restoredPassword);
-		spUserType.setSelection(restoredtargetUserType);
-		super.onResume();
-	}
-	
-	@Override
-	protected void onPause() {
-		// saving form fields values
-		restoredUserName = etUserName.getText().toString();
-		restoredPassword = etPassword.getText().toString();
-		restoredtargetUserType = spUserType.getSelectedItemPosition();
-		super.onPause();
-	}
-
+        // set default tab
+        tabHost.setCurrentTab(0);         
+    }		
 }

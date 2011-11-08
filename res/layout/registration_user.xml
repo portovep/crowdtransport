@@ -24,7 +24,7 @@
 	  <TextView
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:text="@string/userName"/>
+		android:text="@string/userID"/>
 	  <EditText
 	  	android:id="@+id/userName"
 		android:layout_width="fill_parent"

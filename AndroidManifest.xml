@@ -30,6 +30,9 @@
             android:label="@string/loginActivity_name"
             android:name=".Authentication" >
         </activity>
+        <activity android:name=".UserAuthentication" />
+        <activity android:name=".TaxiAuthentication" />
+        <activity android:name=".BusAuthentication" />
         <activity android:name=".Registration" />
         <activity android:name=".RegistrationUser" />
         <activity android:name=".RegistrationTaxi" />

@@ -25,7 +25,7 @@ public class Registration extends TabActivity {
         // setup a TabSpec to each tab and add text, icon and content
         spec = tabHost.newTabSpec("registrationUser")
 		    		.setIndicator(
-		        		getString(R.string.tabUserRegister),
+		        		getString(R.string.tabUser),
 		        		res.getDrawable(R.drawable.statelist_tab_user))
 		        	.setContent(intent);
         // adding new tab to our TabHost
@@ -35,7 +35,7 @@ public class Registration extends TabActivity {
         intent = new Intent(this, RegistrationTaxi.class);
         spec = tabHost.newTabSpec("registrationTaxi")
 					.setIndicator(
-			    		getString(R.string.tabTaxiRegister),
+			    		getString(R.string.tabTaxiDriver),
 			    		res.getDrawable(R.drawable.statelist_tab_taxi))
 			    	.setContent(intent);
         tabHost.addTab(spec); 
@@ -44,7 +44,7 @@ public class Registration extends TabActivity {
         intent = new Intent(this, RegistrationBus.class);
         spec = tabHost.newTabSpec("registrationBus")
 					.setIndicator(
-			    		getString(R.string.tabBusRegister),
+			    		getString(R.string.tabBusDriver),
 			    		res.getDrawable(R.drawable.statelist_tab_bus))
 			    	.setContent(intent);
         tabHost.addTab(spec); 

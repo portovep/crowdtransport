@@ -12,17 +12,19 @@
     <string name="buttonTaxi">Taxis</string>
     <string name="buttonCollaborate">Colabora</string>
 
-    <!-- Authentication Activity -->
+    <!-- Tabs -->
+    <string name="tabUser">Usuarios</string>
+    <string name="tabTaxiDriver">Taxistas</string>
+    <string name="tabBusDriver">Conductores autobús</string>
+
+    <!-- Authentication -->
     <string name="loginActivity_name">Página de autenticación</string>
-    <string name="userName">ID usuario</string>
+    <string name="userID">Nombre de usuario</string>
     <string name="password">Contraseña</string>
     <string name="buttonLogin">Entrar</string>
     <string name="spinnerUserType">Tipo de usuario</string>
 
     <!-- Registration Activity -->
-    <string name="tabUserRegister">Usuarios</string>
-    <string name="tabTaxiRegister">Taxistas</string>
-    <string name="tabBusRegister">Conductores autobús</string>
     <string name="fullName">Nombre y apellidos</string>
     <string name="password2">Repita la contraseña</string>
     <string name="email">Email</string>
@@ -73,7 +75,7 @@
         para poder empezar ha geoposicionar el autobús que conduce.</string>
     <!-- Bus driver information panel -->
     <string name="busDriverStatusMessage">Está enviando información que ayuda a otros
-         usuarios a localizar en un mapa el autobús que conduce. Gracias.</string>    
+         usuarios a localizar en un mapa el autobús que conduce. Gracias.</string>
 
     <!-- Common buttons -->
     <string name="buttonBack">Volver atrás</string>
