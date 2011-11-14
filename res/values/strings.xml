@@ -8,6 +8,8 @@
     <string name="option_menu_register">Registrarse</string>
     <string name="option_menu_exit">Salir</string>
     <string name="option_menu_profile">Mi perfil</string>
+    <string name="option_menu_collaboratorPanel">Panel de colaboración</string>
+    <string name="option_menu_finishCollaborationService">Finalizar seguimiento</string>
     <string name="buttonBus">Autobuses</string>
     <string name="buttonTaxi">Taxis</string>
     <string name="buttonCollaborate">Colabora</string>

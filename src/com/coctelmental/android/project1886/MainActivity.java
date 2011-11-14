@@ -87,10 +87,15 @@ public class MainActivity extends Activity{
 		menu.clear();
 
 		MenuInflater inflater = getMenuInflater();
-		if(!controllerU.existActiveUser())		
-			inflater.inflate(R.menu.main_activity_menu, menu);
-		else
+		if(MyApplication.getInstance().isServiceRunning(TrackingService.class.getName())) {
+			inflater.inflate(R.menu.main_activity_service_started, menu);
+			if(!controllerU.existActiveUser())
+				menu.removeItem(R.id.menuProfile);
+		}
+		else if(controllerU.existActiveUser())
 			inflater.inflate(R.menu.main_activity_logged_menu, menu);
+		else
+			inflater.inflate(R.menu.main_activity_menu, menu);
 		
 		return super.onPrepareOptionsMenu(menu);
 	}
@@ -102,12 +107,12 @@ public class MainActivity extends Activity{
 		switch(item.getItemId()) {
 			case R.id.menuLogin:
 				// Login panel launcher
-				intent = new Intent(this, Authentication.class);
+				intent = new Intent(getApplicationContext(), Authentication.class);
 				startActivity(intent);
 				break;
 			case R.id.menuRegistration:
 				// Registration panel launcher
-				intent = new Intent(this, Registration.class);
+				intent = new Intent(getApplicationContext(), Registration.class);
 				startActivity(intent);
 				break;
 			case R.id.menuExit:
@@ -115,8 +120,18 @@ public class MainActivity extends Activity{
 				controllerU.logOut();
 				moveTaskToBack(true);
 				break;
+			case R.id.menuCollaboratorPanel:
+				// goto collaborator panel
+				intent = new Intent(getApplicationContext(), CollaboratorInformationPanel.class);
+				startActivity(intent);
+				break;
+			case R.id.menufinishService:
+				// finish location tracking service
+				Intent i = new Intent(getApplicationContext(), TrackingService.class);
+				stopService(i);
+				break;				
 			}
 		return super.onMenuItemSelected(featureId, item);
-	}	
+	}
 	
 }
