@@ -32,12 +32,12 @@
         </activity>
         <activity android:name=".UserAuthentication" />
         <activity android:name=".TaxiAuthentication" />
-        <activity android:name=".BusAuthentication" />
+        <activity android:name=".BusDriverAuthentication" />
         <activity android:name=".Registration" />
         <activity android:name=".RegistrationUser" />
-        <activity android:name=".RegistrationTaxi" />
-        <activity android:name=".RegistrationBus" />
-        <activity android:name=".BusLineSelection" />
+        <activity android:name=".TaxiDriverRegistration" />
+        <activity android:name=".BusDriverRegistration" />
+        <activity android:name=".UserBusLineSelection" />
         <activity android:name=".BusLocationMap" />
         <activity android:name=".CollaborationLineSelection" />
         <activity android:name=".CollaborationInformationPanel" />

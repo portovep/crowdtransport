@@ -24,7 +24,7 @@ import com.coctelmental.android.project1886.logic.ControllerAvailableData;
 import com.coctelmental.android.project1886.model.ResultBundle;
 import com.coctelmental.android.project1886.util.Tools;
 
-public class CollaborationLineSelection extends Activity {
+public class CollaboratorLineSelection extends Activity {
 	
 	private Button bStart;
 	private Spinner spCities;
@@ -38,7 +38,7 @@ public class CollaborationLineSelection extends Activity {
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.collaboration_line_selection);
+        setContentView(R.layout.collaborator_line_selection);
         
         // get a instance of our controller
         controllerAD = new ControllerAvailableData();
@@ -50,7 +50,7 @@ public class CollaborationLineSelection extends Activity {
 			@Override
 			public void onClick(View v) {
 				Intent intent;
-				intent= new Intent(CollaborationLineSelection.this, CollaborationInformationPanel.class);
+				intent= new Intent(CollaboratorLineSelection.this, CollaboratorInformationPanel.class);
 				intent.putExtra(TrackingService.TARGET_CITY, targetCity);
 				intent.putExtra(TrackingService.TARGET_LINE, targetLine);
 				startActivity(intent);
@@ -107,7 +107,7 @@ public class CollaborationLineSelection extends Activity {
 		
 		protected void onPreExecute () {
 			// show a progress dialog while data is retrieved from the server
-			pdLoadingCities = ProgressDialog.show(CollaborationLineSelection.this, "", getString(R.string.loadingCities), true);
+			pdLoadingCities = ProgressDialog.show(CollaboratorLineSelection.this, "", getString(R.string.loadingCities), true);
 		}
 	    /** The system calls this to perform work in a worker thread and
 	      * delivers it the parameters given to AsyncTask.execute() */		
@@ -125,7 +125,7 @@ public class CollaborationLineSelection extends Activity {
 	        	String jsonCities = rb.getContent();
 	        	String[] cities = JsonHandler.fromJson(jsonCities, String[].class);
 	        	// setup and add to the spinner a new adapter with available cities
-	            ArrayAdapter<String> adapter = new ArrayAdapter<String>(CollaborationLineSelection.this, android.R.layout.simple_spinner_item, cities);
+	            ArrayAdapter<String> adapter = new ArrayAdapter<String>(CollaboratorLineSelection.this, android.R.layout.simple_spinner_item, cities);
 	            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 	            spCities.setAdapter(adapter);  	   
 	        }				
@@ -149,7 +149,7 @@ public class CollaborationLineSelection extends Activity {
 			spLines.setEnabled(true);
 			bStart.setEnabled(true);
 			// show a progress dialog while data is retrieved from the server
-			pdLoadingLines = ProgressDialog.show(CollaborationLineSelection.this, "", getString(R.string.loadingLines), true);
+			pdLoadingLines = ProgressDialog.show(CollaboratorLineSelection.this, "", getString(R.string.loadingLines), true);
 		}
 	
 	    protected ResultBundle doInBackground(String... params) {
@@ -165,7 +165,7 @@ public class CollaborationLineSelection extends Activity {
 	        	String jsonLines = rb.getContent();
 	        	String[] lines = JsonHandler.fromJson(jsonLines, String[].class);
 	        	// setup and add to the spinner a new adapter with available cities
-	            ArrayAdapter<String> adapter = new ArrayAdapter<String>(CollaborationLineSelection.this, android.R.layout.simple_spinner_item, lines);
+	            ArrayAdapter<String> adapter = new ArrayAdapter<String>(CollaboratorLineSelection.this, android.R.layout.simple_spinner_item, lines);
 	            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 	            spLines.setAdapter(adapter);  	   
 	        }				
@@ -195,7 +195,7 @@ public class CollaborationLineSelection extends Activity {
     	       .setPositiveButton(getString(R.string.buttonBack), new DialogInterface.OnClickListener() {
     	           public void onClick(DialogInterface dialog, int id) {
    	       			// finish activity and go previous activity
-   	       			CollaborationLineSelection.super.onBackPressed();
+   	       			CollaboratorLineSelection.super.onBackPressed();
 	        	   }
     	       });
     	AlertDialog alert = builder.create();

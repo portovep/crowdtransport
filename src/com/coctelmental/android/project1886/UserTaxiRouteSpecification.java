@@ -32,7 +32,7 @@ import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.OverlayItem;
 
-public class TaxiRouteSpecification extends MapActivity {
+public class UserTaxiRouteSpecification extends MapActivity {
 
 	public static final String LAT_SOURCE = "LAT_SOURCE";
 	public static final String LONG_SOURCE = "LONG_SOURCE";
@@ -63,7 +63,7 @@ public class TaxiRouteSpecification extends MapActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
-	    setContentView(R.layout.taxi_route_specification);
+	    setContentView(R.layout.user_taxi_route_specification);
 	 
 	    // get layout and set invisible during setup
 	    layout = (LinearLayout) findViewById(R.id.container);
@@ -85,7 +85,7 @@ public class TaxiRouteSpecification extends MapActivity {
 	    bConfirm.setOnClickListener(new View.OnClickListener() {			
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(getApplicationContext(), TaxiAvailableMap.class);
+				Intent intent = new Intent(getApplicationContext(), UserTaxiAvailableMap.class);
 				Bundle bundle = new Bundle();
 				bundle.putInt(LAT_SOURCE, gpSource.getLatitudeE6());
 				bundle.putInt(LONG_SOURCE, gpSource.getLongitudeE6());
@@ -316,7 +316,7 @@ public class TaxiRouteSpecification extends MapActivity {
     	       .setPositiveButton(getString(R.string.buttonBack), new DialogInterface.OnClickListener() {
     	           public void onClick(DialogInterface dialog, int id) {
    	       			// finish activity and go previous activity
-   	       			TaxiRouteSpecification.super.onBackPressed();
+   	       			UserTaxiRouteSpecification.super.onBackPressed();
 	        	   }
     	       });
     	AlertDialog alert = builder.create();

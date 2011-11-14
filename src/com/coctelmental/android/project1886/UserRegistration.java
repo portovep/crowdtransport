@@ -3,7 +3,7 @@ package com.coctelmental.android.project1886;
 import java.net.HttpURLConnection;
 
 
-import com.coctelmental.android.project1886.common.TaxiDriver;
+import com.coctelmental.android.project1886.common.User;
 import com.coctelmental.android.project1886.logic.ControllerUsers;
 import com.coctelmental.android.project1886.model.Credentials;
 import com.coctelmental.android.project1886.util.Tools;
@@ -20,64 +20,51 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class RegistrationTaxi extends Activity {
+public class UserRegistration extends Activity {
 	
-	private EditText etDNI;
-	private EditText etFullName;
+	private EditText etUserName;
+	private EditText etName;
 	private EditText etPassword;
 	private EditText etPassword2;
 	private EditText etEmail;
-	private EditText etLicenceNumber;
-	private EditText etCarTradeMark;
-	private EditText etCarModel;
 	private Button bSend;
 	
-	private String fullName;
-	private String dni;
+	private String name;
+	private String userName;
 	private String password;
 	private String password2;
 	private String email;
-	private String licence;
-	private String carTradeMark;
-	private String carModel;
 	
 	private ControllerUsers controllerU;
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.registration_taxi);
+        setContentView(R.layout.user_registration);
         
         // get a instance of our controller
         controllerU = new ControllerUsers();
         
         // obtain views
-        etFullName= (EditText) findViewById(R.id.fullName);
-        etDNI= (EditText) findViewById(R.id.dni);
+        etName= (EditText) findViewById(R.id.fullName);
+        etUserName= (EditText) findViewById(R.id.userName);
         etPassword= (EditText) findViewById(R.id.password);
         etPassword2= (EditText) findViewById(R.id.password2);
         etEmail= (EditText) findViewById(R.id.email);
-        etLicenceNumber = (EditText) findViewById(R.id.licenceNumber);
-        etCarTradeMark = (EditText) findViewById(R.id.carTradeMark);
-        etCarModel = (EditText) findViewById(R.id.carModel);
         
-        bSend= (Button) findViewById(R.id.buttonRegisterTaxis);
+        bSend= (Button) findViewById(R.id.buttonRegisterUser);
         
         bSend.setOnClickListener(new View.OnClickListener() {			
 			@Override
 			public void onClick(View v) {
-				// get data from views
-				fullName= etFullName.getText().toString();
-				dni= etDNI.getText().toString();
+				name= etName.getText().toString();
+				userName= etUserName.getText().toString();
 				password= etPassword.getText().toString();
 				password2= etPassword2.getText().toString();
 				email= etEmail.getText().toString();
-				licence= etLicenceNumber.getText().toString();
-				carTradeMark= etCarTradeMark.getText().toString();
-				carModel= etCarModel.getText().toString();			
+				
 				// looking for invalid data
-				if(fullName.equals("") || dni.equals("") || password.equals("") || password2.equals("") || email.equals("") ||
-						licence.equals("") || carTradeMark.equals("") || carModel.equals(""))
+				if(name.equals("") || userName.equals("") || password.equals("") || password2.equals("") || email.equals(""))
 					Tools.buildToast(getApplicationContext(), getString(R.string.missingFields),
 							Gravity.CENTER, Toast.LENGTH_SHORT).show();
 				else if (!password.equals(password2))
@@ -86,43 +73,42 @@ public class RegistrationTaxi extends Activity {
 							Gravity.CENTER, Toast.LENGTH_SHORT).show();
 				else
 					// launch Async Task to try to register user
-					new RegistrationAsyncTask().execute();							
-			} 
+					new RegistrationAsyncTask().execute();
+			}
 		});
     }
 	
 	private class RegistrationAsyncTask extends AsyncTask<Void, Void, Integer> {
 		private ProgressDialog pdprocessingRegistration;
-		private TaxiDriver taxiDriver;
+		private User user;
 		
 		protected void onPreExecute () {
 			// show a progress dialog while data is retrieved from the server
-			pdprocessingRegistration = ProgressDialog.show(RegistrationTaxi.this, "", getString(R.string.processingUserRegistration), true);
+			pdprocessingRegistration = ProgressDialog.show(UserRegistration.this, "", getString(R.string.processingUserRegistration), true);
 		}
 	    /** The system calls this to perform work in a worker thread and
 	      * delivers it the parameters given to AsyncTask.execute() */		
 	    protected Integer doInBackground(Void... params) {
-			// create a taxiDriver instance with registration data
-			taxiDriver= new TaxiDriver(dni, fullName, controllerU.passwordToDigest(password), email,
-					licence, carTradeMark, carModel);
+			// create an user instance with registration data
+			user= new User(userName, name, controllerU.passwordToDigest(password), email);
 			// send request to the server and return response code
-	        return tryRegistration(taxiDriver);
+	        return tryRegistration(user);
 	    }	    
 	    /** The system calls this to perform work in the UI thread and delivers
 	      * the result from doInBackground() */
 	    protected void onPostExecute(Integer responseStatus) {
 	    	// disable the progress dialog
 	        pdprocessingRegistration.dismiss();
-	        // check response
+			// check response
 			if(responseStatus == HttpURLConnection.HTTP_OK) {
-				// add registered user as active user (auto log in after registration)
-				Credentials credentials = new Credentials(taxiDriver.getFullName(), taxiDriver.getPassword(), Credentials.TYPE_TAXI);
+				// add registered user as active user (log in)
+				Credentials credentials = new Credentials(user.getUserName(), user.getPassword(), Credentials.TYPE_USER);
 				controllerU.logIn(credentials);
-				// show message to the user
+				// information panel
 				Tools.buildToast(getApplicationContext(), getString(R.string.correctRegister),
 						Gravity.CENTER, Toast.LENGTH_SHORT).show();
-				// go to main menu ---- CAMBIAR ----- 
-				Intent i = new Intent(RegistrationTaxi.this, MainActivity.class);
+				// go to main menu
+				Intent i = new Intent(UserRegistration.this, MainActivity.class);
 				// add flag to clear this activity from the top of Android activity stack
 				i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(i);	
@@ -133,23 +119,18 @@ public class RegistrationTaxi extends Activity {
 				Log.e("Http error code", Integer.toString(responseStatus));
 				// setup the error message based on the server response state
 				if(responseStatus == HttpURLConnection.HTTP_CONFLICT)
-					 // there is a user with the same dni in the bbdd
-					 errorMessage = getString(R.string.failRegisterInvalidDNI);
-				else if(responseStatus == HttpURLConnection.HTTP_PRECON_FAILED)
-					// invalid licence number
-					errorMessage = getString(R.string.failRegisterInvalidLicence);
+					errorMessage = getString(R.string.failRegisterInvalidUserName);
 				else if (responseStatus == HttpURLConnection.HTTP_NOT_ACCEPTABLE)
-					// error in DB
 					errorMessage = getString(R.string.failRegister);
 				// show message to the user
 				Tools.buildToast(getApplicationContext(), errorMessage,
 						Gravity.CENTER, Toast.LENGTH_LONG).show();
 			}
-	    }
+	    }	
 	}
-
-	private int tryRegistration(TaxiDriver taxiDriver) {
-		return controllerU.registerTaxiDriver(taxiDriver);			
+	
+	private int tryRegistration(User user) {
+		return controllerU.registerUser(user);		
 	}
-
+	
 }

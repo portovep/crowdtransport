@@ -2,7 +2,7 @@ package com.coctelmental.android.project1886;
 
 import java.net.HttpURLConnection;
 
-import com.coctelmental.android.project1886.common.TaxiDriver;
+import com.coctelmental.android.project1886.common.BusDriver;
 import com.coctelmental.android.project1886.common.util.JsonHandler;
 import com.coctelmental.android.project1886.logic.ControllerUsers;
 import com.coctelmental.android.project1886.model.Credentials;
@@ -21,7 +21,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class TaxiAuthentication extends Activity {
+public class BusDriverAuthentication extends Activity {
 	
 	private EditText etUserID;
 	private EditText etPassword;
@@ -35,7 +35,7 @@ public class TaxiAuthentication extends Activity {
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.taxi_authentication);
+        setContentView(R.layout.bus_driver_authentication);
         
         // get a controller instance
         controllerU = new ControllerUsers();
@@ -66,7 +66,7 @@ public class TaxiAuthentication extends Activity {
 		
 		protected void onPreExecute () {
 			// show a progress dialog while data is retrieved from the server
-			pdprocessingAuthentication = ProgressDialog.show(TaxiAuthentication.this, "", getString(R.string.processingUserAuthentication), true);
+			pdprocessingAuthentication = ProgressDialog.show(BusDriverAuthentication.this, "", getString(R.string.processingUserAuthentication), true);
 		}
 	    /** The system calls this to perform work in a worker thread and
 	      * delivers it the parameters given to AsyncTask.execute() */		
@@ -84,20 +84,19 @@ public class TaxiAuthentication extends Activity {
 			// check result
 			if (rb.getResultCode() == HttpURLConnection.HTTP_OK) {
 				String jsonUser = rb.getContent();
-				TaxiDriver taxiDriver = JsonHandler.fromJson(jsonUser, TaxiDriver.class);
-				if (taxiDriver.getPassword().equals(passwordDigest)) {
+				BusDriver busDriver = JsonHandler.fromJson(jsonUser, BusDriver.class);
+				if (busDriver.getPassword().equals(passwordDigest)) {
 					// setup new user credentials
-					Credentials credentials=new Credentials(userID, passwordDigest, Credentials.TYPE_TAXI);
+					Credentials credentials=new Credentials(userID, passwordDigest, Credentials.TYPE_BUS);
 					// log in
 					controllerU.logIn(credentials);
 					// information panel
 					Tools.buildToast(getApplicationContext(), getString(R.string.correctLogin),
 							Gravity.CENTER, Toast.LENGTH_SHORT).show();						
-					// go to main menu   ----------- CAMBIAR ---------------
-					Intent i = new Intent(getApplicationContext(), MainActivity.class);
-					// add flag to clear this activity from the top of Android activity stack
-					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					// go to bus driver main activity
+					Intent i = new Intent(getApplicationContext(), BusDriverMain.class);
 					startActivity(i);
+					finish();
 				}
 				else
 					// error: passwords don't match
@@ -113,14 +112,14 @@ public class TaxiAuthentication extends Activity {
 					errorMessage = getString(R.string.failLoginInvalidData);
 				Tools.buildToast(getApplicationContext(), errorMessage,
 						Gravity.CENTER, Toast.LENGTH_LONG).show();							
-			}
-	    }
+			}					
+		}
 	}
 	
 	private ResultBundle tryAuthentication(String userID) {
 		ResultBundle rb = null;
-		rb = controllerU.getTaxiDriver(userID);
+		rb = controllerU.getBusDriver(userID);
 		return rb;
 	}
 	
-}
+}	

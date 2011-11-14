@@ -17,7 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class CollaborationInformationPanel extends Activity {
+public class CollaboratorInformationPanel extends Activity {
 	
 	private TextView tvCity;
 	private TextView tvLine;
@@ -32,7 +32,7 @@ public class CollaborationInformationPanel extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.collaboration_information_panel);	
+		setContentView(R.layout.collaborator_information_panel);	
 		
 	    // get data from intent
     	Bundle extras = getIntent().getExtras();

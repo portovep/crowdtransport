@@ -24,7 +24,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-public class BusLineSelection extends Activity {
+public class UserBusLineSelection extends Activity {
 	
 	public static final String TARGET_CITY="targetCity";
 	public static final String TARGET_LINE="targetLine";
@@ -42,7 +42,7 @@ public class BusLineSelection extends Activity {
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.bus_line_selection);
+        setContentView(R.layout.user_bus_line_selection);
         
         // get a instance of our controller
         controllerAD = new ControllerAvailableData();
@@ -54,7 +54,7 @@ public class BusLineSelection extends Activity {
 			@Override
 			public void onClick(View v) {
 				Intent intent;
-				intent= new Intent(BusLineSelection.this, BusLocationMap.class);
+				intent= new Intent(UserBusLineSelection.this, UserBusLocationMap.class);
 				intent.putExtra(TARGET_CITY, targetCity);
 				intent.putExtra(TARGET_LINE, targetLine);
 				startActivity(intent);
@@ -110,7 +110,7 @@ public class BusLineSelection extends Activity {
 		
 		protected void onPreExecute () {
 			// show a progress dialog while data is retrieved from the server
-			pdLoadingCities = ProgressDialog.show(BusLineSelection.this, "", getString(R.string.loadingCities), true);
+			pdLoadingCities = ProgressDialog.show(UserBusLineSelection.this, "", getString(R.string.loadingCities), true);
 		}
 	    /** The system calls this to perform work in a worker thread and
 	      * delivers it the parameters given to AsyncTask.execute() */		
@@ -128,7 +128,7 @@ public class BusLineSelection extends Activity {
 	        	String jsonCities = rb.getContent();
 	        	String[] cities = JsonHandler.fromJson(jsonCities, String[].class);
 	        	// setup and add to the spinner a new adapter with available cities
-	            ArrayAdapter<String> adapter = new ArrayAdapter<String>(BusLineSelection.this, android.R.layout.simple_spinner_item, cities);
+	            ArrayAdapter<String> adapter = new ArrayAdapter<String>(UserBusLineSelection.this, android.R.layout.simple_spinner_item, cities);
 	            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 	            spCities.setAdapter(adapter);  	   
 	        }				
@@ -152,7 +152,7 @@ public class BusLineSelection extends Activity {
 			spLines.setEnabled(true);
 			bSearch.setEnabled(true);
 			// show a progress dialog while data is retrieved from the server
-			pdLoadingLines = ProgressDialog.show(BusLineSelection.this, "", getString(R.string.loadingLines), true);
+			pdLoadingLines = ProgressDialog.show(UserBusLineSelection.this, "", getString(R.string.loadingLines), true);
 		}
 	
 	    protected ResultBundle doInBackground(String... params) {
@@ -168,7 +168,7 @@ public class BusLineSelection extends Activity {
 	        	String jsonLines = rb.getContent();
 	        	String[] lines = JsonHandler.fromJson(jsonLines, String[].class);
 	        	// setup and add to the spinner a new adapter with available cities
-	            ArrayAdapter<String> adapter = new ArrayAdapter<String>(BusLineSelection.this, android.R.layout.simple_spinner_item, lines);
+	            ArrayAdapter<String> adapter = new ArrayAdapter<String>(UserBusLineSelection.this, android.R.layout.simple_spinner_item, lines);
 	            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 	            spLines.setAdapter(adapter);  	   
 	        }				
@@ -198,7 +198,7 @@ public class BusLineSelection extends Activity {
     	       .setPositiveButton(getString(R.string.buttonBack), new DialogInterface.OnClickListener() {
     	           public void onClick(DialogInterface dialog, int id) {
    	       			// finish activity and go previous activity
-   	       			BusLineSelection.super.onBackPressed();
+   	       			UserBusLineSelection.super.onBackPressed();
 	        	   }
     	       });
     	AlertDialog alert = builder.create();

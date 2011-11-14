@@ -20,7 +20,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class RegistrationBus extends Activity {
+public class BusDriverRegistration extends Activity {
 	
 	private EditText etDNI;
 	private EditText etFullName;
@@ -44,7 +44,7 @@ public class RegistrationBus extends Activity {
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.registration_bus);
+        setContentView(R.layout.bus_driver_registration);
         
         // get a instance of our controller
         controllerU = new ControllerUsers();
@@ -94,7 +94,7 @@ public class RegistrationBus extends Activity {
 		
 		protected void onPreExecute () {
 			// show a progress dialog while data is retrieved from the server
-			pdprocessingRegistration = ProgressDialog.show(RegistrationBus.this, "", getString(R.string.processingUserRegistration), true);
+			pdprocessingRegistration = ProgressDialog.show(BusDriverRegistration.this, "", getString(R.string.processingUserRegistration), true);
 		}
 	    /** The system calls this to perform work in a worker thread and
 	      * delivers it the parameters given to AsyncTask.execute() */		
@@ -119,7 +119,7 @@ public class RegistrationBus extends Activity {
 				Tools.buildToast(getApplicationContext(), getString(R.string.correctRegister),
 						Gravity.CENTER, Toast.LENGTH_SHORT).show();
 				// go to main menu  ---- CAMBIAR -----
-				Intent i = new Intent(RegistrationBus.this, MainActivity.class);
+				Intent i = new Intent(BusDriverRegistration.this, MainActivity.class);
 				// add flag to clear this activity from the top of Android activity stack
 				i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(i);	

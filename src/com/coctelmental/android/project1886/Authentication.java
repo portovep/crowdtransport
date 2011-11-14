@@ -33,7 +33,7 @@ public class Authentication extends TabActivity {
         tabHost.addTab(spec);
         
         // TAXI TAB
-        intent = new Intent(this, TaxiAuthentication.class);
+        intent = new Intent(this, TaxiDriverAuthentication.class);
         spec = tabHost.newTabSpec("authenticationTaxi")
 					.setIndicator(
 			    		getString(R.string.tabTaxiDriver),
@@ -42,7 +42,7 @@ public class Authentication extends TabActivity {
         tabHost.addTab(spec); 
 
         // BUS DRIVER TAB
-        intent = new Intent(this, BusAuthentication.class);
+        intent = new Intent(this, BusDriverAuthentication.class);
         spec = tabHost.newTabSpec("authenticationBus")
 					.setIndicator(
 			    		getString(R.string.tabBusDriver),

@@ -71,7 +71,7 @@ public class TrackingService extends Service {
         
         // check destiny
         if(targetClassID == TRACKING_COLLABORATOR_ID)
-        	notificationIntent = new Intent(this, CollaborationInformationPanel.class);
+        	notificationIntent = new Intent(this, CollaboratorInformationPanel.class);
         else
         	notificationIntent = new Intent(this, BusDriverInformationPanel.class);
         // setup pending intent

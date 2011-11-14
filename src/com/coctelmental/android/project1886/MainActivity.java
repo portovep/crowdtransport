@@ -33,7 +33,7 @@ public class MainActivity extends Activity{
 			@Override
 			public void onClick(View v) {
 				Intent intent;
-				intent = new Intent(getApplicationContext(), BusLineSelection.class);
+				intent = new Intent(getApplicationContext(), UserBusLineSelection.class);
 				startActivity(intent);				
 			}
 		});
@@ -46,10 +46,10 @@ public class MainActivity extends Activity{
 				// if collaborationTrackingService is running
 				if (MyApplication.getInstance().isServiceRunning(TrackingService.class.getName())) {
 					//intent = CollaborationTrackingService.getNotificationIntent();
-					intent = new Intent(getApplicationContext(), CollaborationInformationPanel.class);
+					intent = new Intent(getApplicationContext(), CollaboratorInformationPanel.class);
 				}
 				else
-					intent = new Intent(getApplicationContext(), CollaborationLineSelection.class);
+					intent = new Intent(getApplicationContext(), CollaboratorLineSelection.class);
 					
 				startActivity(intent);
 			}
@@ -60,7 +60,7 @@ public class MainActivity extends Activity{
 			@Override
 			public void onClick(View v) {
 				Intent intent;
-				intent = new Intent(getApplicationContext(), TaxiRouteSpecification.class);
+				intent = new Intent(getApplicationContext(), UserTaxiRouteSpecification.class);
 				startActivity(intent);								
 			}
 		});

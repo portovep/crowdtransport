@@ -21,7 +21,7 @@ public class Registration extends TabActivity {
         Intent intent;					   
         
         // setup an intent to launch registration user activity
-        intent = new Intent(this, RegistrationUser.class);
+        intent = new Intent(this, UserRegistration.class);
         // setup a TabSpec to each tab and add text, icon and content
         spec = tabHost.newTabSpec("registrationUser")
 		    		.setIndicator(
@@ -32,7 +32,7 @@ public class Registration extends TabActivity {
         tabHost.addTab(spec);
         
 
-        intent = new Intent(this, RegistrationTaxi.class);
+        intent = new Intent(this, TaxiDriverRegistration.class);
         spec = tabHost.newTabSpec("registrationTaxi")
 					.setIndicator(
 			    		getString(R.string.tabTaxiDriver),
@@ -41,7 +41,7 @@ public class Registration extends TabActivity {
         tabHost.addTab(spec); 
 
         
-        intent = new Intent(this, RegistrationBus.class);
+        intent = new Intent(this, BusDriverRegistration.class);
         spec = tabHost.newTabSpec("registrationBus")
 					.setIndicator(
 			    		getString(R.string.tabBusDriver),

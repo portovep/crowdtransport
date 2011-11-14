@@ -31,7 +31,7 @@ import android.util.Log;
 import android.widget.TextView;
 
 
-public class BusLocationMap extends MapActivity {
+public class UserBusLocationMap extends MapActivity {
 	
 	private static final int TIME_BETWEEN_UPDATES = 5000;	
 	private Timer updaterTimer;
@@ -64,12 +64,12 @@ public class BusLocationMap extends MapActivity {
         
 	    // get data from intent
     	Bundle extras = getIntent().getExtras();	    
-        targetCity = extras != null ? extras.getString(BusLineSelection.TARGET_CITY) : null;
-        targetLine = extras != null ? extras.getString(BusLineSelection.TARGET_LINE) : null;      
+        targetCity = extras != null ? extras.getString(UserBusLineSelection.TARGET_CITY) : null;
+        targetLine = extras != null ? extras.getString(UserBusLineSelection.TARGET_LINE) : null;      
 	    
 	    Log.w(getString(R.string.app_name), "Request information to city: "+targetCity+" and line: "+targetLine);
 	        
-	    setContentView(R.layout.bus_location_map);
+	    setContentView(R.layout.user_bus_location_map);
 	    
 	    // setup information label at the top of view
 	    infoLabel = (TextView) findViewById(R.id.infoLabel);
@@ -200,7 +200,7 @@ public class BusLocationMap extends MapActivity {
     	       .setPositiveButton(getString(R.string.buttonBack), new DialogInterface.OnClickListener() {
     	           public void onClick(DialogInterface dialog, int id) {
     	       			// finish activity and go previous activity
-    	       			BusLocationMap.super.onBackPressed();
+    	       			UserBusLocationMap.super.onBackPressed();
     	           }
     	       });
     	// creating and showing the alert dialog
