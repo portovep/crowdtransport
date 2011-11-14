@@ -177,10 +177,10 @@ public class UserBusLocationMap extends MapActivity {
 	};
 	
 	private void stopUpdater() {
-    	// remove pending messages
-		handler.removeMessages(0);		
     	// cancel timer
     	updaterTimer.cancel();
+		// remove pending messages
+		handler.removeCallbacksAndMessages(null);
 	}
 
 	@Override
