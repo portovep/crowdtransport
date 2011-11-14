@@ -66,7 +66,7 @@ public class BusDriverInformationPanel extends Activity {
 			if(!MyApplication.getInstance().isServiceRunning(TrackingService.class.getName())) {
 			    // launch location tracking service
 			    Intent i = new Intent(this, TrackingService.class);
-			    i.putExtra(TrackingService.TARGET_ACTIVITY, TrackingService.TRACKING_BUS_ID);
+			    i.putExtra(TrackingService.TARGET_ACTIVITY, TrackingService.BUSDRIVER_ACTIVITY_ID);
 			    i.putExtra(TrackingService.TARGET_CITY, targetCity);
 			    i.putExtra(TrackingService.TARGET_LINE, targetLine);			    
 			    startService(i);

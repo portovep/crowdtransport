@@ -66,7 +66,7 @@ public class CollaboratorInformationPanel extends Activity {
 			if(!MyApplication.getInstance().isServiceRunning(TrackingService.class.getName())) {
 			    // launch location tracking service
 			    Intent i = new Intent(this, TrackingService.class);
-			    i.putExtra(TrackingService.TARGET_ACTIVITY, TrackingService.TRACKING_COLLABORATOR_ID);
+			    i.putExtra(TrackingService.TARGET_ACTIVITY, TrackingService.COLLABORATOR_ACTIVITY_ID);
 			    i.putExtra(TrackingService.TARGET_CITY, targetCity);
 			    i.putExtra(TrackingService.TARGET_LINE, targetLine);
 			    startService(i);

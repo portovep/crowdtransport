@@ -27,8 +27,8 @@ public class TrackingService extends Service {
 	public static final String TARGET_LINE="targetLine";	
 	public static final String TARGET_ACTIVITY = "targetActivity";
 	
-	public static final int TRACKING_COLLABORATOR_ID = 0;
-	public static final int TRACKING_BUS_ID = 1;
+	public static final int COLLABORATOR_ACTIVITY_ID = 0;
+	public static final int BUSDRIVER_ACTIVITY_ID = 1;
 	
 	private static final int NOTIFICATION_ID = 1;
 	private NotificationManager notificationManager;
@@ -70,7 +70,7 @@ public class TrackingService extends Service {
         int targetClassID = extras != null ? extras.getInt(TARGET_ACTIVITY) : 0;
         
         // check destiny
-        if(targetClassID == TRACKING_COLLABORATOR_ID)
+        if(targetClassID == COLLABORATOR_ACTIVITY_ID)
         	notificationIntent = new Intent(this, CollaboratorInformationPanel.class);
         else
         	notificationIntent = new Intent(this, BusDriverInformationPanel.class);
