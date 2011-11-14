@@ -1,11 +1,17 @@
 package com.coctelmental.android.project1886;
 
+import com.coctelmental.android.project1886.TrackingService.TrackingServiceBinder;
+
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
@@ -13,15 +19,15 @@ import android.widget.TextView;
 
 public class BusDriverInformationPanel extends Activity {
 	
-	public static final int BUS_DRIVER_ACTIVITY = 1;
-	public static final String BUSDRIVER_SERVICE_EXTRA = "BUSDRIVER_EXTRA";
-	
 	private TextView tvCity;
 	private TextView tvLine;
 	private Button bFinishService;
 	
 	private String targetCity = null;
-	private String targetLine = null;	
+	private String targetLine = null;
+	
+	private TrackingService trackingService = null;
+	private boolean isBound = false;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -31,20 +37,13 @@ public class BusDriverInformationPanel extends Activity {
 	    // get data from intent
     	Bundle extras = getIntent().getExtras();
     	if(targetCity == null | targetLine == null) {
-	        targetCity = extras != null ? extras.getString(CollaborationLineSelection.TARGET_CITY) : null;
-	        targetLine = extras != null ? extras.getString(CollaborationLineSelection.TARGET_LINE) : null;
+	        targetCity = extras != null ? extras.getString(TrackingService.TARGET_CITY) : null;
+	        targetLine = extras != null ? extras.getString(TrackingService.TARGET_LINE) : null;
     	}
         
-        if(savedInstanceState != null && (targetCity == null | targetLine == null)) {
-        	targetCity = savedInstanceState.getString(CollaborationLineSelection.TARGET_CITY);
-        	targetLine = savedInstanceState.getString(CollaborationLineSelection.TARGET_LINE);
-        }
-        
-        // setup collaboration info
+    	// get info labels
         tvCity = (TextView) findViewById(R.id.collaborationInfoCity);
-        tvCity.append(" "+targetCity);
         tvLine = (TextView) findViewById(R.id.collaborationInfoLine);
-        tvLine.append(" "+targetLine);
         
         // setup button to finish service
         bFinishService = (Button) findViewById(R.id.buttonFinishCollaboration);
@@ -58,33 +57,46 @@ public class BusDriverInformationPanel extends Activity {
 	}
 
 	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-		outState.putString(CollaborationLineSelection.TARGET_CITY, targetCity);
-		outState.putString(CollaborationLineSelection.TARGET_LINE, targetLine);
-		super.onSaveInstanceState(outState);
-	}
-	
-	@Override
 	protected void onResume() {
 		super.onResume();
 		
 		if (!isGPSEnabled())
 			showGPSDialog();
 		else {
-			if(!MyApplication.getInstance().isServiceRunning(CollaborationTrackingService.class.getName())) {
+			if(!MyApplication.getInstance().isServiceRunning(TrackingService.class.getName())) {
 			    // launch location tracking service
-			    Intent i = new Intent(this, CollaborationTrackingService.class);
-			    i.putExtra(CollaborationLineSelection.TARGET_CITY, targetCity);
-			    i.putExtra(CollaborationLineSelection.TARGET_LINE, targetLine);
-			    i.putExtra(BUSDRIVER_SERVICE_EXTRA, BUS_DRIVER_ACTIVITY);			    
+			    Intent i = new Intent(this, TrackingService.class);
+			    i.putExtra(TrackingService.TARGET_ACTIVITY, TrackingService.TRACKING_BUS_ID);
+			    i.putExtra(TrackingService.TARGET_CITY, targetCity);
+			    i.putExtra(TrackingService.TARGET_LINE, targetLine);			    
 			    startService(i);
+			}
+			if(!isBound) {
+		        // bind to TrackingService
+		        Intent intent = new Intent(this, TrackingService.class);
+		        bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
 			}
 		}
 	}
 	
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // unbind from the service
+        if(isBound) {
+            unbindService(serviceConnection);
+            isBound = false;
+        }
+    }
+    
 	@Override
 	public void onBackPressed() {
 		moveTaskToBack(true);
+	}
+	
+	private void goMainMenu() {
+		super.onBackPressed();
+		finish();
 	}
 
 	private boolean isGPSEnabled() {
@@ -101,9 +113,9 @@ public class BusDriverInformationPanel extends Activity {
     	       .setCancelable(false)
     	       .setPositiveButton(getString(R.string.enableGPS), new DialogInterface.OnClickListener() {
     	           public void onClick(DialogInterface dialog, int id) {
+    	        	   dialog.dismiss();
     	        	   Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
     	        	   intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-    	        	   dialog.dismiss();
     	        	   startActivity(intent);
 	        	   }
     	       })
@@ -120,14 +132,30 @@ public class BusDriverInformationPanel extends Activity {
 	
 	private void finishTrackingService() {
 		// finish location tracking service
-		Intent i = new Intent(getApplicationContext(), CollaborationTrackingService.class);
+		Intent i = new Intent(getApplicationContext(), TrackingService.class);
 		stopService(i);
 	}
 	
-	private void goMainMenu() {
-		Intent intent = new Intent(this, BusDriverMain.class);
-		//intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		startActivity(intent);
-	}
-
+    private ServiceConnection serviceConnection = new ServiceConnection() {
+    	// defines callbacks for service binding, passed to bindService()
+		@Override
+		public void onServiceConnected(ComponentName name, IBinder service) {
+			// We've bound to trackingService, cast the IBinder and get trackingService instance
+            TrackingServiceBinder binder = (TrackingServiceBinder) service;
+            trackingService = binder.getServiceInstance();            
+            isBound = true;
+            
+            String city = trackingService.getTargetCity();
+            String line = trackingService.getTargetLine();
+            if(city != null && line != null) {
+        		tvCity.setText(city);
+        		tvLine.setText(line);
+            }
+		}
+		
+		@Override
+		public void onServiceDisconnected(ComponentName name) {
+			 isBound = false;			
+		}
+	};
 }

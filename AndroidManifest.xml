@@ -43,13 +43,13 @@
         <activity android:name=".CollaborationInformationPanel" />
         <activity android:name=".TaxiRouteSpecification" />
         <activity android:name=".TaxiAvailableMap" />
-		<activity android:name=".BusDriverMain" />
-		<activity android:name=".BusDriverLineSelection" />
-		<activity android:name=".BusDriverInformationPanel" />
-		
+        <activity android:name=".BusDriverMain" />
+        <activity android:name=".BusDriverLineSelection" />
+        <activity android:name=".BusDriverInformationPanel" />
+
         <service
             android:exported="false"
-            android:name=".CollaborationTrackingService" >
+            android:name=".TrackingService" >
         </service>
     </application>
 

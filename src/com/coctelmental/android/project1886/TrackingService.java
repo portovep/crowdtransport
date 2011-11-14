@@ -14,13 +14,21 @@ import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Binder;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
 
-public class CollaborationTrackingService extends Service {
+public class TrackingService extends Service {
+	
+	public static final String TARGET_CITY="targetCity";
+	public static final String TARGET_LINE="targetLine";	
+	public static final String TARGET_ACTIVITY = "targetActivity";
+	
+	public static final int TRACKING_COLLABORATOR_ID = 0;
+	public static final int TRACKING_BUS_ID = 1;
 	
 	private static final int NOTIFICATION_ID = 1;
 	private NotificationManager notificationManager;
@@ -29,6 +37,8 @@ public class CollaborationTrackingService extends Service {
 	private static final int TIME_BETWEEN_UPDATES = 10000; // milliseconds
 	private static final int DISTANCE_BETWEEN_UPDATES = 50; // meters
 	
+    private final IBinder serviceBinder = new TrackingServiceBinder(); // Binder given to clients
+	
 	private LocationManager locationManager;
 	private String targetCity;
 	private String targetLine;
@@ -36,7 +46,7 @@ public class CollaborationTrackingService extends Service {
 	
 	private Location updatedLocation;
 	private PendingIntent pendingIntent;
-	private  Intent notificationIntent;
+	private Intent notificationIntent;
 	
 	private ControllerUsers controllerU;
 	private ControllerLocations controllerL;
@@ -55,17 +65,20 @@ public class CollaborationTrackingService extends Service {
 	public int onStartCommand(Intent intent, int flags, int startId) {
 	    // get data from intent
     	Bundle extras = intent.getExtras();	    
-        this.targetCity = extras != null ? extras.getString(CollaborationLineSelection.TARGET_CITY) : "";
-        this.targetLine = extras != null ? extras.getString(CollaborationLineSelection.TARGET_LINE) : "";
+        this.targetCity = extras != null ? extras.getString(TARGET_CITY) : "";
+        this.targetLine = extras != null ? extras.getString(TARGET_LINE) : "";
+        int targetClassID = extras != null ? extras.getInt(TARGET_ACTIVITY) : 0;
         
-		// setup pending intent
-        if(extras.getInt(BusDriverInformationPanel.BUSDRIVER_SERVICE_EXTRA) == BusDriverInformationPanel.BUS_DRIVER_ACTIVITY)
-        	notificationIntent = new Intent(this, BusDriverInformationPanel.class);
+        // check destiny
+        if(targetClassID == TRACKING_COLLABORATOR_ID)
+        	notificationIntent = new Intent(this, CollaborationInformationPanel.class);
         else
-        	notificationIntent = new Intent(this, CollaborationInformationPanel.class);	
-		notificationIntent.putExtra(CollaborationLineSelection.TARGET_CITY, targetCity);
-		notificationIntent.putExtra(CollaborationLineSelection.TARGET_LINE, targetLine);
-		this.pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);		
+        	notificationIntent = new Intent(this, BusDriverInformationPanel.class);
+        // setup pending intent
+        notificationIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+		//notificationIntent.putExtra(CollaborationLineSelection.TARGET_CITY, targetCity);
+		//notificationIntent.putExtra(CollaborationLineSelection.TARGET_LINE, targetLine);
+		this.pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);		
 		// setup new notification
 		Notification notification = setupNotification(R.drawable.icon, getString(R.string.collaborationServiceStarted),
 				getString(R.string.app_name), getString(R.string.collaborationServiceRunning), pendingIntent);		
@@ -157,10 +170,24 @@ public class CollaborationTrackingService extends Service {
 		stopSelf();
 	}
 	
+    public class TrackingServiceBinder extends Binder {
+        public TrackingService getServiceInstance() {
+            // Return this instance of LocalService so clients can call public methods
+            return TrackingService.this;
+        }
+    }
+	
 	@Override
 	public IBinder onBind(Intent arg0) {
-		// TODO Auto-generated method stub
-		return null;
+		return serviceBinder;
+	}
+	
+	public String getTargetCity() {
+		return targetCity;
+	}
+	
+	public String getTargetLine() {
+		return targetLine;
 	}
 	
 	private Notification setupNotification(int icon, CharSequence tickerText, CharSequence contentTitle, 
@@ -174,9 +201,5 @@ public class CollaborationTrackingService extends Service {
 		notification.setLatestEventInfo(getApplicationContext(), contentTitle, contentText, pendingIntent);		
 		return notification;		
 	}
-	
-	/*public Intent getNotificationIntent() {
-		return notificationIntent;
-	} */
-	
+		
 }

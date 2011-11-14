@@ -25,9 +25,6 @@ import com.coctelmental.android.project1886.model.ResultBundle;
 import com.coctelmental.android.project1886.util.Tools;
 
 public class CollaborationLineSelection extends Activity {
-
-	public static final String TARGET_CITY="targetCity";
-	public static final String TARGET_LINE="targetLine";
 	
 	private Button bStart;
 	private Spinner spCities;
@@ -54,9 +51,10 @@ public class CollaborationLineSelection extends Activity {
 			public void onClick(View v) {
 				Intent intent;
 				intent= new Intent(CollaborationLineSelection.this, CollaborationInformationPanel.class);
-				intent.putExtra(TARGET_CITY, targetCity);
-				intent.putExtra(TARGET_LINE, targetLine);
+				intent.putExtra(TrackingService.TARGET_CITY, targetCity);
+				intent.putExtra(TrackingService.TARGET_LINE, targetLine);
 				startActivity(intent);
+				finish();
 			}
 		});
         

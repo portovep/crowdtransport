@@ -1,48 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView 
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent"
-	android:layout_height="fill_parent"
-	android:orientation="vertical"
-	android:fillViewport="true">
-	
-	
-	<LinearLayout
-	  xmlns:android="http://schemas.android.com/apk/res/android"
-	  android:layout_width="fill_parent"
-	  android:layout_height="fill_parent"
-	  android:orientation="vertical">
-	  
-	  <TextView
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:text="@string/collaborationStatusMessage"
-        android:layout_marginTop="15dip"	            
-        android:layout_marginBottom="15dip"/>	
-      <TextView
-      	android:id="@+id/collaborationInfoCity"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:text="@string/collaborationInfoCity"
-		android:layout_marginBottom="5dip"/>  
-      <TextView
-      	android:id="@+id/collaborationInfoLine"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:text="@string/collaborationInfoLine"/>          
-	  <TextView
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_gravity="center"
-		android:layout_marginTop="50dip"
-		android:text="STATUS INFO"/>
-		
-	  <Button
-	  	android:id="@+id/buttonFinishCollaboration"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:text="@string/buttonFinishCollaboration"
-		android:layout_marginTop="15dip" 
-		android:layout_gravity="center"/> 
-	</LinearLayout>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dip"
+            android:layout_marginTop="15dip"
+            android:text="@string/collaborationStatusMessage" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dip"
+                android:text="@string/collaborationInfoCity" />
+
+            <TextView
+                android:id="@+id/collaborationInfoCity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginBottom="5dip" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/collaborationInfoLine" />
+
+            <TextView
+                android:id="@+id/collaborationInfoLine"
+                android:layout_marginLeft="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dip"
+            android:text="STATUS INFO" />
+
+        <Button
+            android:id="@+id/buttonFinishCollaboration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dip"
+            android:text="@string/buttonFinishCollaboration" />
+    </LinearLayout>
+
 </ScrollView>

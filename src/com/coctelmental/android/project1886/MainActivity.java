@@ -44,7 +44,7 @@ public class MainActivity extends Activity{
 			public void onClick(View arg0) {
 				Intent intent;
 				// if collaborationTrackingService is running
-				if (MyApplication.getInstance().isServiceRunning(CollaborationTrackingService.class.getName())) {
+				if (MyApplication.getInstance().isServiceRunning(TrackingService.class.getName())) {
 					//intent = CollaborationTrackingService.getNotificationIntent();
 					intent = new Intent(getApplicationContext(), CollaborationInformationPanel.class);
 				}
@@ -117,9 +117,6 @@ public class MainActivity extends Activity{
 				break;
 			}
 		return super.onMenuItemSelected(featureId, item);
-	}
-
-	
-	
+	}	
 	
 }

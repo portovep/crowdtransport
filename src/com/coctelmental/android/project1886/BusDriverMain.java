@@ -34,7 +34,7 @@ public class BusDriverMain extends Activity {
 			public void onClick(View v) {
 				Intent intent;
 				// if collaborationTrackingService is running
-				if (MyApplication.getInstance().isServiceRunning(CollaborationTrackingService.class.getName())) {
+				if (MyApplication.getInstance().isServiceRunning(TrackingService.class.getName())) {
 					intent = new Intent(getApplicationContext(), BusDriverInformationPanel.class);
 				}
 				else
@@ -53,6 +53,9 @@ public class BusDriverMain extends Activity {
         	// show user's name
         	tvProfileName.setText(getString(R.string.profile_welcome)+" "+userName);
         }
+        else
+        	// remove profile information from main panel
+            tvProfileName.setText("");
 	} 
 	
 	@Override
@@ -70,9 +73,10 @@ public class BusDriverMain extends Activity {
 			case R.id.menuExit:
 				// logout and exit
 				controllerU.logOut();
-				moveTaskToBack(true);
+				//moveTaskToBack(true);
 				// remove this activity from history
 				finish();
+				moveTaskToBack(true);
 				break;
 		}
 		return super.onMenuItemSelected(featureId, item);

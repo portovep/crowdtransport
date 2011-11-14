@@ -26,9 +26,6 @@ import android.widget.AdapterView.OnItemSelectedListener;
 
 public class BusDriverLineSelection extends Activity {
 	
-	public static final String TARGET_CITY="targetCity";
-	public static final String TARGET_LINE="targetLine";
-	
 	private Button bStart;
 	private Spinner spCities;
 	private Spinner spLines;
@@ -54,8 +51,8 @@ public class BusDriverLineSelection extends Activity {
 			public void onClick(View v) {
 				Intent intent;
 				intent= new Intent(getApplicationContext(), BusDriverInformationPanel.class);
-				intent.putExtra(TARGET_CITY, targetCity);
-				intent.putExtra(TARGET_LINE, targetLine);
+				intent.putExtra(TrackingService.TARGET_CITY, targetCity);
+				intent.putExtra(TrackingService.TARGET_LINE, targetLine);
 				startActivity(intent);
 				finish();
 			}
