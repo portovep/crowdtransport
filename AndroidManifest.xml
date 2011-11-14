@@ -31,18 +31,18 @@
             android:name=".Authentication" >
         </activity>
         <activity android:name=".UserAuthentication" />
-        <activity android:name=".TaxiAuthentication" />
+        <activity android:name=".TaxiDriverAuthentication" />
         <activity android:name=".BusDriverAuthentication" />
         <activity android:name=".Registration" />
-        <activity android:name=".RegistrationUser" />
+        <activity android:name=".UserRegistration" />
         <activity android:name=".TaxiDriverRegistration" />
         <activity android:name=".BusDriverRegistration" />
         <activity android:name=".UserBusLineSelection" />
-        <activity android:name=".BusLocationMap" />
-        <activity android:name=".CollaborationLineSelection" />
-        <activity android:name=".CollaborationInformationPanel" />
-        <activity android:name=".TaxiRouteSpecification" />
-        <activity android:name=".TaxiAvailableMap" />
+        <activity android:name=".UserBusLocationMap" />
+        <activity android:name=".CollaboratorLineSelection" />
+        <activity android:name=".CollaboratorInformationPanel" />
+        <activity android:name=".UserTaxiRouteSpecification" />
+        <activity android:name=".UserTaxiAvailableMap" />
         <activity android:name=".BusDriverMain" />
         <activity android:name=".BusDriverLineSelection" />
         <activity android:name=".BusDriverInformationPanel" />
