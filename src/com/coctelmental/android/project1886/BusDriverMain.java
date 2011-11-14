@@ -62,7 +62,7 @@ public class BusDriverMain extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		// set activity menu
-		inflater.inflate(R.menu.main_activity_logged_menu, menu);		
+		inflater.inflate(R.menu.main_activity_logged, menu);		
 		return super.onPrepareOptionsMenu(menu);
 	}
 	

@@ -93,9 +93,9 @@ public class MainActivity extends Activity{
 				menu.removeItem(R.id.menuProfile);
 		}
 		else if(controllerU.existActiveUser())
-			inflater.inflate(R.menu.main_activity_logged_menu, menu);
+			inflater.inflate(R.menu.main_activity_logged, menu);
 		else
-			inflater.inflate(R.menu.main_activity_menu, menu);
+			inflater.inflate(R.menu.main_activity, menu);
 		
 		return super.onPrepareOptionsMenu(menu);
 	}
