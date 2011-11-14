@@ -14,7 +14,9 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.provider.Settings;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class BusDriverInformationPanel extends Activity {
@@ -22,6 +24,7 @@ public class BusDriverInformationPanel extends Activity {
 	private TextView tvCity;
 	private TextView tvLine;
 	private Button bFinishService;
+	private ViewGroup backgroundLayout;
 	
 	private String targetCity = null;
 	private String targetLine = null;
@@ -33,6 +36,9 @@ public class BusDriverInformationPanel extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.bus_driver_information_panel);
+		
+	    // get layout
+		backgroundLayout = (LinearLayout) findViewById(R.id.containerBInformationPanel);
 				
 	    // get data from intent
     	Bundle extras = getIntent().getExtras();
@@ -60,9 +66,15 @@ public class BusDriverInformationPanel extends Activity {
 	protected void onResume() {
 		super.onResume();
 		
-		if (!isGPSEnabled())
+		if (!isGPSEnabled()) {
+			// hide content
+			backgroundLayout.setVisibility(ViewGroup.GONE);
 			showGPSDialog();
+		}
 		else {
+			if (backgroundLayout.getVisibility() != ViewGroup.VISIBLE)
+				// show content
+				backgroundLayout.setVisibility(ViewGroup.VISIBLE);
 			if(!MyApplication.getInstance().isServiceRunning(TrackingService.class.getName())) {
 			    // launch location tracking service
 			    Intent i = new Intent(this, TrackingService.class);
