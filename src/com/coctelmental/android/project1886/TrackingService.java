@@ -46,7 +46,6 @@ public class TrackingService extends Service {
 	
 	private Location updatedLocation;
 	private PendingIntent pendingIntent;
-	private Intent notificationIntent;
 	
 	private ControllerUsers controllerU;
 	private ControllerLocations controllerL;
@@ -67,25 +66,25 @@ public class TrackingService extends Service {
     	Bundle extras = intent.getExtras();	    
         this.targetCity = extras != null ? extras.getString(TARGET_CITY) : "";
         this.targetLine = extras != null ? extras.getString(TARGET_LINE) : "";
-        int targetClassID = extras != null ? extras.getInt(TARGET_ACTIVITY) : 0;
+        int targetActivityID = extras != null ? extras.getInt(TARGET_ACTIVITY) : 0;
         
-        // check destiny
-        if(targetClassID == COLLABORATOR_ACTIVITY_ID)
+        Intent notificationIntent;
+        // get destiny
+        if(targetActivityID == COLLABORATOR_ACTIVITY_ID)
         	notificationIntent = new Intent(this, CollaboratorInformationPanel.class);
         else
         	notificationIntent = new Intent(this, BusDriverInformationPanel.class);
+        
         // setup pending intent
         notificationIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-		//notificationIntent.putExtra(CollaborationLineSelection.TARGET_CITY, targetCity);
-		//notificationIntent.putExtra(CollaborationLineSelection.TARGET_LINE, targetLine);
 		this.pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);		
 		// setup new notification
 		Notification notification = setupNotification(R.drawable.icon, getString(R.string.collaborationServiceStarted),
 				getString(R.string.app_name), getString(R.string.collaborationServiceRunning), pendingIntent);		
 		// launch notification
 		notificationManager.notify(NOTIFICATION_ID, notification);
-		
-        // get active user if exists
+	
+		// get userID
 	    if(controllerU.existActiveUser())
 	    	userID = controllerU.getActiveUser().getId();
 	    else
@@ -142,14 +141,13 @@ public class TrackingService extends Service {
 	};
 	
 	private void sendNewLocation(Location location) {
-		if (location != null) {			
+		if (location != null) {
 			// setup new location
 			CollaboratorBusLocation cBusLocation = new CollaboratorBusLocation(this.userID);
 			Double latitude = location.getLatitude()*1E6;
 			Double longitude = location.getLongitude()*1E6;
 			cBusLocation.setLatitude(latitude.intValue());
-			cBusLocation.setLongitude(longitude.intValue());
-			
+			cBusLocation.setLongitude(longitude.intValue());			
 			// sending new location
 			controllerL.sendLocation(targetCity, targetLine, cBusLocation);
 			
