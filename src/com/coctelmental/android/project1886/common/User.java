@@ -6,7 +6,7 @@ import com.coctelmental.android.project1886.common.util.JsonHandler;
 public class User {
 	
 	private String userName;
-	private String name;
+	private String fullName;
 	private String password;
 	private String email;
 	
@@ -14,7 +14,7 @@ public class User {
 	
 	public User(String userName, String name, String password, String email) {
 		this.userName = userName;
-		this.name = name;
+		this.fullName = name;
 		this.password = password;
 		this.email = email;
 	}
@@ -24,7 +24,7 @@ public class User {
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.fullName = name;
 	}
 
 	public void setPassword(String password) {
@@ -39,8 +39,8 @@ public class User {
 		return userName;
 	}	
 	
-	public String getName() {
-		return name;
+	public String getFullName() {
+		return fullName;
 	}
 
 	public String getPassword() {
@@ -53,8 +53,8 @@ public class User {
 
 	public String toString() {
 		return String.format("userName: %s\n" +
-							 "name: %s\n" +
-							 "email: %s", userName, name, email );
+							 "fullName: %s\n" +
+							 "email: %s", userName, fullName, email );
 	}
 
 	public String toJson() {
