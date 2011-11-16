@@ -12,7 +12,7 @@ import com.coctelmental.android.project1886.model.ResultBundle;
 
 public class ConnectionsHandler {
 	
-	private static final String SERVER_ADDRESS = "http://192.168.1.140:8085/UserManagerServer";
+	private static final String SERVER_ADDRESS = "http://project1886.servehttp.com:8085/UserManagerServer";
 
 	public static ResultBundle get(String targetURL) {
 		// create new result bundle and add default response code as 404
@@ -26,10 +26,10 @@ public class ConnectionsHandler {
 			e.printStackTrace();
 			result.setContent("");
 		}
-		// release connection resources
-		cr.release();
 		// get response code and add it in the bundle to specify the cause
 		result.setResultCode(cr.getResponse().getStatus().getCode());
+		// release connection resources
+		cr.release();
 		return result;
 	}
 	
