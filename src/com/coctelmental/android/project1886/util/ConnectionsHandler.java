@@ -26,6 +26,8 @@ public class ConnectionsHandler {
 			e.printStackTrace();
 			result.setContent("");
 		}
+		// release connection resources
+		cr.release();
 		// get response code and add it in the bundle to specify the cause
 		result.setResultCode(cr.getResponse().getStatus().getCode());
 		return result;
@@ -43,6 +45,8 @@ public class ConnectionsHandler {
 			e.printStackTrace();			
 			responseStatus = cr.getResponse().getStatus().getCode();
 		}
+		// release connection resources
+		cr.release();
 		return responseStatus;	
 	}
 }
