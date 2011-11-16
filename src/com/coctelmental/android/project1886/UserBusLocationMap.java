@@ -48,6 +48,8 @@ public class UserBusLocationMap extends MapActivity {
 	private List<Overlay> mapOverlays;	
 	private Drawable drawableBusMarker;
 	
+	private boolean flagFirstLaunch = true;
+	
 	private ControllerLocations controllerL;
 	
 	@Override
@@ -100,8 +102,17 @@ public class UserBusLocationMap extends MapActivity {
 	protected void onResume() {
 	    // start a timer witch allow us to obtain the location from the server at regular intervals
 		updaterTimer = new Timer();
-	    updaterTimer.schedule(new updaterTimerTask(), 0, TIME_BETWEEN_UPDATES);		
+	    updaterTimer.schedule(new updaterTimerTask(), 0, TIME_BETWEEN_UPDATES);
 		super.onResume();
+	}
+	
+	@Override
+	protected void onPause() {
+		// dismiss alert dialog if it's needed
+		if (this.alertDialogLocationNotFound != null)
+			this.alertDialogLocationNotFound.cancel();
+		stopUpdater();
+		super.onPause();
 	}
 
 	private void showUpdatedLocation(ResultBundle rb)
@@ -120,9 +131,8 @@ public class UserBusLocationMap extends MapActivity {
 	    	CustomItemizedOverlay busItemizedOverlays = new CustomItemizedOverlay(drawableBusMarker, this);    
 	    	
 	    	GeoPoint geopoint = null;
-	    	for(int i=0; i<newLocations.size(); i++) {
+	    	for(BusLocation busLocation : newLocations) {
 		    	// setup a Android GeoPoint with received position and add it to the new overlay item
-	    		BusLocation busLocation = newLocations.get(i);
 			    geopoint = new GeoPoint(busLocation.getLatitude(), busLocation.getLongitude());
 			    // setup overlay item
 			    OverlayItem overlayItem = new OverlayItem(geopoint, busLocation.getBusLocationID(),
@@ -133,8 +143,11 @@ public class UserBusLocationMap extends MapActivity {
 	    	}
 	    	busItemizedOverlays.populateNow();
 	    	
-		    // focus map's center on the geopoint
-	    	//mc.animateTo(geopoint);
+		    // focus map's center on the last geopoint at first launch
+	    	if(flagFirstLaunch) {
+	    		mc.animateTo(geopoint);
+	    		flagFirstLaunch = false;
+	    	}
 	    	
 	    	// clear previous overlays
 	    	mapOverlays.clear();
@@ -182,30 +195,27 @@ public class UserBusLocationMap extends MapActivity {
 		// remove pending messages
 		handler.removeCallbacksAndMessages(null);
 	}
-
-	@Override
-	protected void onPause() {
-		// dismiss alert dialog if it's needed
-		if (this.alertDialogLocationNotFound != null)
-			this.alertDialogLocationNotFound.dismiss();
-		stopUpdater();
-		super.onPause();
-	}
 	
 	private void goPreviousActivity(String message){
-    	// setup and show a alert dialog
-    	AlertDialog.Builder builder = new AlertDialog.Builder(this);
-    	builder.setMessage(message)
-    	       .setCancelable(false)
-    	       .setPositiveButton(getString(R.string.buttonBack), new DialogInterface.OnClickListener() {
-    	           public void onClick(DialogInterface dialog, int id) {
-    	       			// finish activity and go previous activity
-    	       			UserBusLocationMap.super.onBackPressed();
-    	           }
-    	       });
-    	// creating and showing the alert dialog
-    	alertDialogLocationNotFound = builder.create();
-    	alertDialogLocationNotFound.show();
+		if(alertDialogLocationNotFound == null) {
+	    	// setup and show a alert dialog
+	    	AlertDialog.Builder builder = new AlertDialog.Builder(this);
+	    	builder.setMessage(message)
+	    	       .setCancelable(false)
+	    	       .setPositiveButton(getString(R.string.buttonBack), new DialogInterface.OnClickListener() {
+	    	           public void onClick(DialogInterface dialog, int id) {
+	    	        	    dialog.dismiss();
+	    	       			// finish activity and go previous activity
+	    	       			UserBusLocationMap.super.onBackPressed();
+	    	           }
+	    	       });
+	    	// creating the alert dialog
+	    	alertDialogLocationNotFound = builder.create();
+		}
+		if(!alertDialogLocationNotFound.isShowing()) {
+			alertDialogLocationNotFound.setMessage(message);
+	    	alertDialogLocationNotFound.show();
+		}
 	}
 	
 }	
