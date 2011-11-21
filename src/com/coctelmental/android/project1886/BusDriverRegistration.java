@@ -118,11 +118,10 @@ public class BusDriverRegistration extends Activity {
 				// show message to the user
 				Tools.buildToast(getApplicationContext(), getString(R.string.correctRegister),
 						Gravity.CENTER, Toast.LENGTH_SHORT).show();
-				// go to main menu  ---- CAMBIAR -----
-				Intent i = new Intent(BusDriverRegistration.this, MainActivity.class);
-				// add flag to clear this activity from the top of Android activity stack
-				i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				startActivity(i);	
+				// go to bus driver main activity
+				Intent i = new Intent(getApplicationContext(), BusDriverMain.class);
+				startActivity(i);
+				finish();
 			}
 			// no valid registration
 			else {
