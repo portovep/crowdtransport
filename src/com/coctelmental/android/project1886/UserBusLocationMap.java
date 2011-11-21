@@ -95,7 +95,7 @@ public class UserBusLocationMap extends MapActivity {
 	    
 
 	    // get reference for our marker custom icon
-        drawableBusMarker = this.getResources().getDrawable(R.drawable.temp_marker_bus);    
+        drawableBusMarker = this.getResources().getDrawable(R.drawable.marker_bus);    
 	}
 	
 	@Override

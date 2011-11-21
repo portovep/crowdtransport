@@ -79,7 +79,7 @@ public class TrackingService extends Service {
         notificationIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 		this.pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);		
 		// setup new notification
-		Notification notification = setupNotification(R.drawable.icon, getString(R.string.collaborationServiceStarted),
+		Notification notification = setupNotification(R.drawable.ic_stat_notify_tracking, getString(R.string.collaborationServiceStarted),
 				getString(R.string.app_name), getString(R.string.collaborationServiceRunning), pendingIntent);		
 		// launch notification
 		notificationManager.notify(NOTIFICATION_ID, notification);
@@ -111,7 +111,7 @@ public class TrackingService extends Service {
 		public void onProviderEnabled(String arg0) {
 			// update notification to alert user
 			// setup notification
-			Notification notification = setupNotification(R.drawable.icon, getString(R.string.collaborationServiceRunning),
+			Notification notification = setupNotification(R.drawable.ic_stat_notify_tracking, getString(R.string.collaborationServiceRunning),
 					getString(R.string.app_name), getString(R.string.collaborationServiceRunning), pendingIntent);
 			// update current showed notification
 			notificationManager.notify(NOTIFICATION_ID, notification);
@@ -121,7 +121,7 @@ public class TrackingService extends Service {
 		public void onProviderDisabled(String arg0) {			
 			// update notification to alert user
 			// setup notification
-			Notification notification = setupNotification(R.drawable.icon_error, getString(R.string.collaborationServiceGPSDisabled), 
+			Notification notification = setupNotification(R.drawable.ic_stat_notify_tracking_error, getString(R.string.collaborationServiceGPSDisabled), 
 					getString(R.string.app_name), getString(R.string.collaborationServiceGPSDisabled), pendingIntent);
 			// update current showed notification
 			notificationManager.notify(NOTIFICATION_ID, notification);
