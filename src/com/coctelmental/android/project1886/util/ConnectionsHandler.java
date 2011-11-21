@@ -12,7 +12,7 @@ import com.coctelmental.android.project1886.model.ResultBundle;
 
 public class ConnectionsHandler {
 	
-	private static final String SERVER_ADDRESS = "http://project1886.servehttp.com:8085/UserManagerServer";
+	private static final String SERVER_ADDRESS = "http://project1886.servehttp.com:8085/webservice";
 
 	public static ResultBundle get(String targetURL) {
 		// create new result bundle and add default response code as 404
