@@ -12,7 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class BusDriverMain extends Activity {
+public class TaxiDriverMain extends Activity {
 	
 	private TextView tvProfileName;
 	
@@ -21,7 +21,7 @@ public class BusDriverMain extends Activity {
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.bus_driver_main);
+        setContentView(R.layout.taxi_driver_main);
         
         // get a instance of our user controller
         controllerU = new ControllerUsers();
@@ -47,10 +47,10 @@ public class BusDriverMain extends Activity {
 	@Override
 	public void onResume() {
 		super.onResume();		
-		// check if exist a user logged into the application 
+		// check if exist user logged into the application 
         if(controllerU.existActiveUser()) {
         	String userName = controllerU.getActiveUser().getId();
-        	// show user's name
+        	// show user name
         	tvProfileName.setText(getString(R.string.profile_welcome)+" "+userName);
         }
         else

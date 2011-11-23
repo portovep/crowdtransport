@@ -46,7 +46,8 @@
         <activity android:name=".BusDriverMain" />
         <activity android:name=".BusDriverLineSelection" />
         <activity android:name=".BusDriverInformationPanel" />
-
+		<activity android:name=".TaxiDriverMain" />
+        
         <service
             android:exported="false"
             android:name=".TrackingService" >

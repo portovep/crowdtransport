@@ -113,7 +113,7 @@ public class BusDriverRegistration extends Activity {
 			// check response
 			if(responseStatus == HttpURLConnection.HTTP_OK) {
 				// add registered user as active user (auto log in after registration)
-				Credentials credentials = new Credentials(busDriver.getFullName(), busDriver.getPassword(), Credentials.TYPE_BUS);
+				Credentials credentials = new Credentials(busDriver.getDni(), busDriver.getPassword(), Credentials.TYPE_BUS);
 				controllerU.logIn(credentials);
 				// show message to the user
 				Tools.buildToast(getApplicationContext(), getString(R.string.correctRegister),

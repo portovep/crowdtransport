@@ -116,16 +116,15 @@ public class TaxiDriverRegistration extends Activity {
 	        // check response
 			if(responseStatus == HttpURLConnection.HTTP_OK) {
 				// add registered user as active user (auto log in after registration)
-				Credentials credentials = new Credentials(taxiDriver.getFullName(), taxiDriver.getPassword(), Credentials.TYPE_TAXI);
+				Credentials credentials = new Credentials(taxiDriver.getDni(), taxiDriver.getPassword(), Credentials.TYPE_TAXI);
 				controllerU.logIn(credentials);
 				// show message to the user
 				Tools.buildToast(getApplicationContext(), getString(R.string.correctRegister),
 						Gravity.CENTER, Toast.LENGTH_SHORT).show();
-				// go to main menu ---- CAMBIAR ----- 
-				Intent i = new Intent(TaxiDriverRegistration.this, MainActivity.class);
-				// add flag to clear this activity from the top of Android activity stack
-				i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				startActivity(i);	
+				// go to taxi driver main activity
+				Intent i = new Intent(getApplicationContext(), TaxiDriverMain.class);
+				startActivity(i);
+				finish();
 			}
 			// no valid registration
 			else {

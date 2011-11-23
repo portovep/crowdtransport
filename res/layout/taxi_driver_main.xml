@@ -18,11 +18,11 @@
             android:textStyle="bold" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="284dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="65dip"
-            android:text="@string/busDriverMainInfo" />
+            android:text="@string/taxiDriverMainInfo" />
 
         <Button
             android:id="@+id/buttonStart"
@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="35dip"
-            android:text="@string/start" />
+            android:text="@string/startTracking" />
     </LinearLayout>
 
 </ScrollView>

@@ -71,7 +71,7 @@
 
     <!-- Bus driver main -->
     <string name="start">Empezar</string>
-
+    <string name="busDriverMainInfo">"El modo de seguimiento está deshabilitado."</string>
     <!-- Bus driver line selection -->
     <string name="busDriverMessage">Elija la línea que va a recorrer 
         para poder empezar ha geoposicionar el autobús que conduce.</string>
@@ -79,6 +79,11 @@
     <string name="busDriverStatusMessage">Está enviando información que ayuda a otros
          usuarios a localizar en un mapa el autobús que conduce. Gracias.</string>
 
+    <!-- Taxi driver main -->
+    <string name="taxiDriverMainInfo">Usted está libre en estos momentos y quiere
+        habilitar el modo de seguimiento."</string>
+	<string name="startTracking">Iniciar seguimiento</string>
+        
     <!-- Common buttons -->
     <string name="buttonBack">Volver atrás</string>
 

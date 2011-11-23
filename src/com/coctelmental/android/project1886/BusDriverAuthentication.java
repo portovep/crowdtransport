@@ -87,7 +87,7 @@ public class BusDriverAuthentication extends Activity {
 				BusDriver busDriver = JsonHandler.fromJson(jsonUser, BusDriver.class);
 				if (busDriver.getPassword().equals(passwordDigest)) {
 					// setup new user credentials
-					Credentials credentials=new Credentials(userID, passwordDigest, Credentials.TYPE_BUS);
+					Credentials credentials=new Credentials(busDriver.getDni(), passwordDigest, Credentials.TYPE_BUS);
 					// log in
 					controllerU.logIn(credentials);
 					// information panel

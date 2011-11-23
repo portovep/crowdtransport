@@ -87,17 +87,16 @@ public class TaxiDriverAuthentication extends Activity {
 				TaxiDriver taxiDriver = JsonHandler.fromJson(jsonUser, TaxiDriver.class);
 				if (taxiDriver.getPassword().equals(passwordDigest)) {
 					// setup new user credentials
-					Credentials credentials=new Credentials(userID, passwordDigest, Credentials.TYPE_TAXI);
+					Credentials credentials=new Credentials(taxiDriver.getDni(), passwordDigest, Credentials.TYPE_TAXI);
 					// log in
 					controllerU.logIn(credentials);
 					// information panel
 					Tools.buildToast(getApplicationContext(), getString(R.string.correctLogin),
 							Gravity.CENTER, Toast.LENGTH_SHORT).show();						
-					// go to main menu   ----------- CAMBIAR ---------------
-					Intent i = new Intent(getApplicationContext(), MainActivity.class);
-					// add flag to clear this activity from the top of Android activity stack
-					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					// go to taxi driver main activity
+					Intent i = new Intent(getApplicationContext(), TaxiDriverMain.class);
 					startActivity(i);
+					finish();
 				}
 				else
 					// error: passwords don't match
