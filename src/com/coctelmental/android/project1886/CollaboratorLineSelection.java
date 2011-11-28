@@ -49,10 +49,10 @@ public class CollaboratorLineSelection extends Activity {
 			
 			@Override
 			public void onClick(View v) {
+				// save selected targets
+				MyApplication.getInstance().storeTrackingInfo(targetCity, targetLine);
 				Intent intent;
 				intent= new Intent(CollaboratorLineSelection.this, CollaboratorInformationPanel.class);
-				intent.putExtra(TrackingService.TARGET_CITY, targetCity);
-				intent.putExtra(TrackingService.TARGET_LINE, targetLine);
 				startActivity(intent);
 				finish();
 			}
@@ -70,8 +70,7 @@ public class CollaboratorLineSelection extends Activity {
         
     }
 
-	public class CitiesSpinnerItemSelectedListener implements OnItemSelectedListener
-	{
+	public class CitiesSpinnerItemSelectedListener implements OnItemSelectedListener {
 		@Override
 		public void onItemSelected(AdapterView<?> parent, View view, int pos,
 				long id) {
@@ -87,8 +86,7 @@ public class CollaboratorLineSelection extends Activity {
 		}		
 	}
 	
-	public class LinesSpinnerItemSelectedListener implements OnItemSelectedListener
-	{
+	public class LinesSpinnerItemSelectedListener implements OnItemSelectedListener {
 		@Override
 		public void onItemSelected(AdapterView<?> parent, View view, int pos,
 				long id) {

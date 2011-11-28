@@ -49,10 +49,10 @@ public class BusDriverLineSelection extends Activity {
 			
 			@Override
 			public void onClick(View v) {
+				// save selected targets
+				MyApplication.getInstance().storeTrackingInfo(targetCity, targetLine);
 				Intent intent;
 				intent= new Intent(getApplicationContext(), BusDriverInformationPanel.class);
-				intent.putExtra(TrackingService.TARGET_CITY, targetCity);
-				intent.putExtra(TrackingService.TARGET_LINE, targetLine);
 				startActivity(intent);
 				finish();
 			}

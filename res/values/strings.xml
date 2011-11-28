@@ -83,7 +83,10 @@
     <string name="taxiDriverMainInfo">Usted está libre en estos momentos y quiere
         habilitar el modo de seguimiento."</string>
 	<string name="startTracking">Iniciar seguimiento</string>
-        
+    <!-- Taxi driver information panel -->
+    <string name="taxiDriverStatusMessage">El modo de seguimiento está activado, por lo que su
+        posición será mostrada a los usuarios sobre un mapa y éstos podrán enviarle solicitudes de servicio.</string>
+         	    
     <!-- Common buttons -->
     <string name="buttonBack">Volver atrás</string>
 

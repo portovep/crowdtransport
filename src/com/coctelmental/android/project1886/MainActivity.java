@@ -45,7 +45,6 @@ public class MainActivity extends Activity{
 				Intent intent;
 				// if collaborationTrackingService is running
 				if (MyApplication.getInstance().isServiceRunning(TrackingService.class.getName())) {
-					//intent = CollaborationTrackingService.getNotificationIntent();
 					intent = new Intent(getApplicationContext(), CollaboratorInformationPanel.class);
 				}
 				else

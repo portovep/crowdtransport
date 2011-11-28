@@ -10,36 +10,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
-public class CollaboratorInformationPanel extends Activity {
+
+public class TaxiDriverInformationPanel extends Activity{
 	
-	private TextView tvCity;
-	private TextView tvLine;
 	private Button bFinishService;
-	private ViewGroup backgroundLayout;	
-	
+	private ViewGroup backgroundLayout;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.collaborator_information_panel);	
+		setContentView(R.layout.taxi_driver_information_panel);
 		
 	    // get layout
-		backgroundLayout = (LinearLayout) findViewById(R.id.containerCInformationPanel);
-        
-        // get info labels
-        tvCity = (TextView) findViewById(R.id.collaborationInfoCity);
-        tvLine = (TextView) findViewById(R.id.collaborationInfoLine);
-        
-        // get saved info
-        String[] storedInfo = MyApplication.getInstance().getStoredTrackingInfo();
-        String city = storedInfo[0];
-        String line = storedInfo[1];
-        // fill info labels
-        if(city != null && line != null) {
-    		tvCity.setText(city);
-    		tvLine.setText(line);
-        }
+		backgroundLayout = (LinearLayout) findViewById(R.id.containerBInformationPanel);
         
         // setup button to finish service
         bFinishService = (Button) findViewById(R.id.buttonFinishCollaboration);
@@ -49,7 +33,7 @@ public class CollaboratorInformationPanel extends Activity {
 				finishTrackingService();
 				goMainMenu();
 			}
-		}); 
+		});
 	}
 
 	@Override
@@ -68,16 +52,21 @@ public class CollaboratorInformationPanel extends Activity {
 			if(!MyApplication.getInstance().isServiceRunning(TrackingService.class.getName())) {
 			    // launch location tracking service
 			    Intent i = new Intent(this, TrackingService.class);
-			    i.putExtra(TrackingService.CALLER_ACTIVITY, TrackingService.COLLABORATOR_ACTIVITY_ID);
+			    i.putExtra(TrackingService.CALLER_ACTIVITY, TrackingService.TAXIDRIVER_ACTIVITY_ID);			    
 			    startService(i);
 			}
 		}
 	}
-
+    
+	@Override
+	public void onBackPressed() {
+		moveTaskToBack(true);
+	}
+	
 	private void goMainMenu() {
 		super.onBackPressed();
 		finish();
-	} 
+	}
 	
 	private void showGPSDialog() {
     	AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -106,6 +95,6 @@ public class CollaboratorInformationPanel extends Activity {
 		// finish location tracking service
 		Intent i = new Intent(getApplicationContext(), TrackingService.class);
 		stopService(i);
-	}	   
+	}
 
 }

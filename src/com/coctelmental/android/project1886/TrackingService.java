@@ -1,8 +1,8 @@
 package com.coctelmental.android.project1886;
 
-import com.coctelmental.android.project1886.common.CollaboratorBusLocation;
 import com.coctelmental.android.project1886.logic.ControllerLocations;
 import com.coctelmental.android.project1886.logic.ControllerUsers;
+import com.coctelmental.android.project1886.model.Credentials;
 import com.coctelmental.android.project1886.util.Tools;
 
 import android.app.Notification;
@@ -17,7 +17,6 @@ import android.location.LocationManager;
 import android.os.Binder;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
 
@@ -25,10 +24,11 @@ public class TrackingService extends Service {
 	
 	public static final String TARGET_CITY="targetCity";
 	public static final String TARGET_LINE="targetLine";	
-	public static final String TARGET_ACTIVITY = "targetActivity";
+	public static final String CALLER_ACTIVITY = "targetActivity";
 	
 	public static final int COLLABORATOR_ACTIVITY_ID = 0;
 	public static final int BUSDRIVER_ACTIVITY_ID = 1;
+	public static final int TAXIDRIVER_ACTIVITY_ID = 2;
 	
 	private static final int NOTIFICATION_ID = 1;
 	private NotificationManager notificationManager;
@@ -40,9 +40,8 @@ public class TrackingService extends Service {
     private final IBinder serviceBinder = new TrackingServiceBinder(); // Binder given to clients
 	
 	private LocationManager locationManager;
-	private String targetCity;
-	private String targetLine;
 	private String userID;
+	private int userType;
 	
 	private Location updatedLocation;
 	private PendingIntent pendingIntent;
@@ -62,22 +61,23 @@ public class TrackingService extends Service {
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-	    // get data from intent
+	    // get intent data
     	Bundle extras = intent.getExtras();	    
-        this.targetCity = extras != null ? extras.getString(TARGET_CITY) : "";
-        this.targetLine = extras != null ? extras.getString(TARGET_LINE) : "";
-        int targetActivityID = extras != null ? extras.getInt(TARGET_ACTIVITY) : 0;
+        int targetActivityID = extras != null ? extras.getInt(CALLER_ACTIVITY) : 0;
         
         Intent notificationIntent;
-        // get destiny
-        if(targetActivityID == COLLABORATOR_ACTIVITY_ID)
-        	notificationIntent = new Intent(this, CollaboratorInformationPanel.class);
-        else
+        // check destiny
+        if(targetActivityID == TAXIDRIVER_ACTIVITY_ID)
+        	notificationIntent = new Intent(this, TaxiDriverInformationPanel.class);
+        else if(targetActivityID == BUSDRIVER_ACTIVITY_ID)
         	notificationIntent = new Intent(this, BusDriverInformationPanel.class);
+        else
+        	notificationIntent = new Intent(this, CollaboratorInformationPanel.class);
         
         // setup pending intent
         notificationIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-		this.pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);		
+		this.pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);	
+		
 		// setup new notification
 		Notification notification = setupNotification(R.drawable.ic_stat_notify_tracking, getString(R.string.collaborationServiceStarted),
 				getString(R.string.app_name), getString(R.string.collaborationServiceRunning), pendingIntent);		
@@ -85,11 +85,15 @@ public class TrackingService extends Service {
 		notificationManager.notify(NOTIFICATION_ID, notification);
 	
 		// get userID
-	    if(controllerU.existActiveUser())
+	    if(controllerU.existActiveUser()) {
 	    	userID = controllerU.getActiveUser().getId();
-	    else
-	    	// if no user logged on, use unique id as identification of this installation
+	    	userType = controllerU.getActiveUser().getType();
+	    }
+	    else {
+	    	// if no user logged, use unique id as identification of this app installation
 	    	userID = MyApplication.getInstance().id();
+	    	userType = Credentials.TYPE_USER;
+	    }
         
 	    // registering location listener with target settings
         locationManager.requestLocationUpdates(PROVIDER, TIME_BETWEEN_UPDATES, DISTANCE_BETWEEN_UPDATES, collaboratorLocationListener);
@@ -141,18 +145,16 @@ public class TrackingService extends Service {
 	};
 	
 	private void sendNewLocation(Location location) {
-		if (location != null) {
-			// setup new location
-			CollaboratorBusLocation cBusLocation = new CollaboratorBusLocation(this.userID);
-			Double latitude = location.getLatitude()*1E6;
-			Double longitude = location.getLongitude()*1E6;
-			cBusLocation.setLatitude(latitude.intValue());
-			cBusLocation.setLongitude(longitude.intValue());			
-			// sending new location
-			controllerL.sendLocation(targetCity, targetLine, cBusLocation);
-			
-			String newLocation = location.getLatitude() + " - " + location.getLongitude();
-			Log.e("New location found", newLocation + " - " + cBusLocation.getUserID());
+		switch(userType) {
+		case Credentials.TYPE_USER:
+			controllerL.sendCollaboratorLocation(userID, location);
+			break;
+		case Credentials.TYPE_BUS:
+			controllerL.sendBusDriverLocation(userID, location);
+			break;
+		case Credentials.TYPE_TAXI:
+			controllerL.sendTaxiDriverLocation(userID, location);
+			break;
 		}
 	}
 	
@@ -178,14 +180,6 @@ public class TrackingService extends Service {
 	@Override
 	public IBinder onBind(Intent arg0) {
 		return serviceBinder;
-	}
-	
-	public String getTargetCity() {
-		return targetCity;
-	}
-	
-	public String getTargetLine() {
-		return targetLine;
 	}
 	
 	private Notification setupNotification(int icon, CharSequence tickerText, CharSequence contentTitle, 

@@ -10,6 +10,7 @@ import android.app.ActivityManager.RunningServiceInfo;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.location.LocationManager;
 
 public class MyApplication extends Application {
 	
@@ -17,6 +18,9 @@ public class MyApplication extends Application {
 	
 	private static String uniqueID = null;
 	private static final String PREF_UNIQ_ID = "PREF_UNIQ_ID";
+	
+	private String targetCity;
+	private String targetLine;
 	
 	private Credentials activeUser;
 	
@@ -35,6 +39,16 @@ public class MyApplication extends Application {
 
 	public synchronized void setActiveUser(Credentials activeUser) {
 		this.activeUser = activeUser;
+	}
+	
+	public void storeTrackingInfo(String targetCity, String targetLine) {
+		this.targetCity = targetCity;
+		this.targetLine = targetLine;
+	}
+	
+	public String[] getStoredTrackingInfo() {
+		String result[] = {targetCity, targetLine};
+		return result;
 	}
 	
 	public synchronized String id() {
@@ -62,6 +76,14 @@ public class MyApplication extends Application {
 	        }
 	    }
 	    return false;
+	}
+	
+	public boolean isGPSEnabled() {
+		LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+		if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+			return false;
+		}
+		return true;
 	}
 	
 }

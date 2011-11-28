@@ -32,13 +32,7 @@ public class TaxiDriverMain extends Activity {
         bStart.setOnClickListener(new View.OnClickListener() {			
 			@Override
 			public void onClick(View v) {
-				Intent intent;
-				// if collaborationTrackingService is running
-				if (MyApplication.getInstance().isServiceRunning(TrackingService.class.getName())) {
-					intent = new Intent(getApplicationContext(), BusDriverInformationPanel.class);
-				}
-				else
-					intent = new Intent(getApplicationContext(), BusDriverLineSelection.class);				
+				Intent intent = new Intent(getApplicationContext(), TaxiDriverInformationPanel.class);				
 				startActivity(intent);
 			}
 		});
