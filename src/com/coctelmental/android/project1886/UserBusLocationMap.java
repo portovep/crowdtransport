@@ -168,8 +168,8 @@ public class UserBusLocationMap extends MapActivity {
 			
 			if (rb.getResultCode() == HttpURLConnection.HTTP_NOT_ACCEPTABLE)
 				// if response code = request not acceptable
-				errorMessage = getString(R.string.locationNotFound);			
-	    	
+				errorMessage = getString(R.string.busLocationsNotFound);
+			
 	    	goPreviousActivity(errorMessage);
 	    }
 	}
