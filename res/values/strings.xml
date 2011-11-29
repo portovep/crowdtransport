@@ -57,6 +57,9 @@
     <string name="confirm">Confirmar</string>
     <string name="distance">Distancia: </string>
 
+    <!-- Taxi available map -->
+    <string name="availableTaxis">Taxistas disponibles a su alrededor</string>
+
     <!-- Collaboration line selection -->
     <string name="buttonStart">Comenzar seguimiento</string>
     <string name="collaborationMessage">Elija la línea de autobús en la que viaja
@@ -82,11 +85,11 @@
     <!-- Taxi driver main -->
     <string name="taxiDriverMainInfo">Usted está libre en estos momentos y quiere
         habilitar el modo de seguimiento."</string>
-	<string name="startTracking">Iniciar seguimiento</string>
+    <string name="startTracking">Iniciar seguimiento</string>
     <!-- Taxi driver information panel -->
     <string name="taxiDriverStatusMessage">El modo de seguimiento está activado, por lo que su
         posición será mostrada a los usuarios sobre un mapa y éstos podrán enviarle solicitudes de servicio.</string>
-         	    
+
     <!-- Common buttons -->
     <string name="buttonBack">Volver atrás</string>
 
@@ -107,7 +110,8 @@
   				Si cree que han suplantado su identidad, contacte con nosotros.</string>
     <string name="failRegisterInvalidLicence">El número de licencia introducido no es válido</string>
     <string name="failRegisterInvalidCompanyAuthCode">El código de autorización de registro no es válido para la compañía especificada</string>
-    <string name="locationNotFound">Lo sentimos, pero no tenemos información sobre los autobuses que recorren esta línea</string>
+    <string name="busLocationsNotFound">Lo sentimos, pero no tenemos información sobre los autobuses que recorren esta línea</string>
+    <string name="taxiLocationsNotFound">Lo sentimos, pero en este momento no hay ningún taxista disponible en su zona.</string>
     <string name="failLoadingCities">No hay ciudades disponibles en estos momentos, vuelva a intentarlo más tarde</string>
     <string name="failLoadingLines">No existen líneas disponibles para la ciudad especificada</string>
     <string name="failRestoringCollaborationStatusPanel">No se ha encontrado la información asociada al modo de colaboración</string>

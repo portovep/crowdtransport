@@ -42,7 +42,7 @@
         <activity android:name=".CollaboratorLineSelection" />
         <activity android:name=".CollaboratorInformationPanel" />
         <activity android:name=".UserTaxiRouteSpecification" />
-        <activity android:name=".UserTaxiAvailableMap" />
+        <activity android:name=".UserTaxiLocationMap" />
         <activity android:name=".BusDriverMain" />
         <activity android:name=".BusDriverLineSelection" />
         <activity android:name=".BusDriverInformationPanel" />

@@ -1,25 +1,21 @@
 package com.coctelmental.android.project1886.common;
 
-
-public class TaxiDriverLocation {
+public class TaxiLocation {
 
 	private String taxiDriverID;
-	private GeoPointInfo geopoint;
-
+	private LocationInfo location;
+	
 	public String getTaxiDriverID() {
 		return taxiDriverID;
 	}
-
 	public void setTaxiDriverID(String taxiDriverID) {
 		this.taxiDriverID = taxiDriverID;
 	}
-
-	public GeoPointInfo getGeopoint() {
-		return geopoint;
+	public LocationInfo getLocation() {
+		return location;
 	}
-
-	public void setGeopoint(GeoPointInfo geopoint) {
-		this.geopoint = geopoint;
+	public void setLocation(LocationInfo location) {
+		this.location = location;
 	}
 	
 }

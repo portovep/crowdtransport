@@ -5,7 +5,7 @@ import android.util.Log;
 
 import com.coctelmental.android.project1886.MyApplication;
 import com.coctelmental.android.project1886.common.CollaboratorBusLocation;
-import com.coctelmental.android.project1886.common.MyGeoPoint;
+import com.coctelmental.android.project1886.common.GeoPointInfo;
 import com.coctelmental.android.project1886.common.TaxiDriverLocation;
 import com.coctelmental.android.project1886.common.util.JsonHandler;
 import com.coctelmental.android.project1886.model.ResultBundle;
@@ -20,6 +20,13 @@ public class ControllerLocations {
 		String resourceID = city + line;
 		String targetURL = LOCATION_RESOURCE + "/" + resourceID;
 		// REST request to specific resource
+		return ConnectionsHandler.get(targetURL);
+	}
+	
+	public ResultBundle obtainTaxiLocation(GeoPointInfo gpOrigin) {
+		String jsonGpOrigin = JsonHandler.toJson(gpOrigin);
+		
+		String targetURL = TAXI_LOCATION_RESOURCE + "/" + jsonGpOrigin;
 		return ConnectionsHandler.get(targetURL);
 	}
 	
@@ -88,7 +95,7 @@ public class ControllerLocations {
 			taxiDriverLocation.setTaxiDriverID(taxiDriverID);
 			Double latitude = location.getLatitude()*1E6;
 			Double longitude = location.getLongitude()*1E6;
-			MyGeoPoint gp = new MyGeoPoint(latitude.intValue(), longitude.intValue());
+			GeoPointInfo gp = new GeoPointInfo(latitude.intValue(), longitude.intValue());
 			taxiDriverLocation.setGeopoint(gp);
 			
 			

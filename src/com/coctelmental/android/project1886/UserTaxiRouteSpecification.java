@@ -24,6 +24,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.coctelmental.android.project1886.common.GeoPointInfo;
 import com.coctelmental.android.project1886.util.Tools;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.ItemizedOverlay;
@@ -34,10 +35,9 @@ import com.google.android.maps.OverlayItem;
 
 public class UserTaxiRouteSpecification extends MapActivity {
 
-	public static final String LAT_SOURCE = "LAT_SOURCE";
-	public static final String LONG_SOURCE = "LONG_SOURCE";
-	public static final String LAT_DESTINATION = "LAT_DESTINATION";
-	public static final String LONG_DESTINATION = "LONG_DESTINATION";
+	public static final String GP_ORIGIN = "GP_ORIGIN";
+	public static final String GP_DESTINATION = "GP_DEST";
+	public static final String GP_USER_LOC = "USER_LOC";
 	
 	private static final String ORIGIN_ID = "ORIGIN";
 	private static final String DESTINATION_ID = "DESTINATION";
@@ -45,7 +45,8 @@ public class UserTaxiRouteSpecification extends MapActivity {
 	private MapView mapView = null;
 	private static final int ZOOM_LEVEL = 17;
 	
-	private GeoPoint gpSource = null;
+	private GeoPoint gpUserLocation = null;
+	private GeoPoint gpOrigin = null;
 	private GeoPoint gpDestination = null;
 	
 	private LinearLayout layout;
@@ -85,12 +86,11 @@ public class UserTaxiRouteSpecification extends MapActivity {
 	    bConfirm.setOnClickListener(new View.OnClickListener() {			
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(getApplicationContext(), UserTaxiAvailableMap.class);
+				Intent intent = new Intent(getApplicationContext(), UserTaxiLocationMap.class);
 				Bundle bundle = new Bundle();
-				bundle.putInt(LAT_SOURCE, gpSource.getLatitudeE6());
-				bundle.putInt(LONG_SOURCE, gpSource.getLongitudeE6());
-				bundle.putInt(LAT_DESTINATION, gpDestination.getLatitudeE6());
-				bundle.putInt(LONG_DESTINATION, gpDestination.getLongitudeE6());
+				bundle.putSerializable(GP_ORIGIN, new GeoPointInfo(gpOrigin));
+				bundle.putSerializable(GP_DESTINATION, new GeoPointInfo(gpDestination));
+				bundle.putSerializable(GP_USER_LOC, new GeoPointInfo(gpUserLocation));
 				intent.putExtras(bundle);
 				startActivity(intent);
 			}
@@ -131,8 +131,8 @@ public class UserTaxiRouteSpecification extends MapActivity {
 			selectedImage = null;
 			
 			// create origin overlay
-			if(gpSource != null) {
-				OverlayItem origin = new OverlayItem(gpSource, ORIGIN_ID, "");
+			if(gpOrigin != null) {
+				OverlayItem origin = new OverlayItem(gpOrigin, ORIGIN_ID, "");
 				aOverlays.add(origin);
 			}
 			// create destination overlay
@@ -233,7 +233,7 @@ public class UserTaxiRouteSpecification extends MapActivity {
 					gpDestination = gp;
 				}
 				else
-					gpSource = gp;				
+					gpOrigin = gp;				
 				aOverlays.add(oi);
 				populate();
 				// no overlay selected
@@ -271,12 +271,15 @@ public class UserTaxiRouteSpecification extends MapActivity {
 				Location l = userLocationHelper.getBestLocation();
 				Double lat = l.getLatitude() * 1E6;
 				Double lng = l.getLongitude() * 1E6;
-				gpSource = new GeoPoint(lat.intValue(), lng.intValue());
-			    gpDestination = new GeoPoint(gpSource.getLatitudeE6()+1150, gpSource.getLongitudeE6()+1150);
+				gpUserLocation = new GeoPoint(lat.intValue(), lng.intValue());
+				// initial origin point = current user location
+				gpOrigin = new GeoPoint(lat.intValue(), lng.intValue());
+				// initial destination point = displaced point of origin
+			    gpDestination = new GeoPoint(gpOrigin.getLatitudeE6()+1150, gpOrigin.getLongitudeE6()+1150);
 			    
 			    MapController mc = mapView.getController();
 			    // center to origin geopoint
-			    mc.setCenter(gpSource);
+			    mc.setCenter(gpOrigin);
 			    mc.setZoom(ZOOM_LEVEL);
 			    
 			    Drawable defaultMarker = (Drawable) getResources().getDrawable(R.drawable.marker_ori);
@@ -291,7 +294,7 @@ public class UserTaxiRouteSpecification extends MapActivity {
 	
 	private void updateDistanceLabel() {
 		// calculating distance
-		Double distance = calculateDistanceInMeters(gpSource, gpDestination);
+		Double distance = calculateDistanceInMeters(gpOrigin, gpDestination);
 		DecimalFormat df = new DecimalFormat("#######0.0#");
 		// update label
 		tvDistance.setText(" "+df.format(distance)+"m");
