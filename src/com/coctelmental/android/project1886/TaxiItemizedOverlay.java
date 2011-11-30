@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.view.LayoutInflater;
@@ -28,6 +29,9 @@ public class TaxiItemizedOverlay extends ItemizedOverlay<OverlayItem>{
 	
 	private AlertDialog dialog;
 	private View layoutInformationOverlay;
+	
+	private String selectedTaxiDriverID = null;
+	private String selectedTaxiDriverName = null;
 		
 	public TaxiItemizedOverlay(Drawable defaultMarker, Context context) {
 		super(boundCenter(defaultMarker));
@@ -44,6 +48,11 @@ public class TaxiItemizedOverlay extends ItemizedOverlay<OverlayItem>{
 			@Override
 			public void onClick(View v) {
 				dialog.dismiss();
+				Intent intent = new Intent(mContext, UserTaxiRequestConfirmation.class);
+				// attach selected taxi driver ID and name to intent
+				intent.putExtra(UserTaxiLocationMap.TAXI_DRIVER_ID, selectedTaxiDriverID);
+				intent.putExtra(UserTaxiLocationMap.TAXI_DRIVER_NAME, selectedTaxiDriverName);
+				mContext.startActivity(intent);
 			}
 		});
 		
@@ -71,15 +80,17 @@ public class TaxiItemizedOverlay extends ItemizedOverlay<OverlayItem>{
 	@Override
 	protected boolean onTap(int index) {
 		OverlayItem item = aOverlays.get(index);
+		String TaxiDriverId = item.getTitle();
 		// show overlay dialog
 		dialog.show();
 		
 		// cancel previous launched async task if it's running
 		if (taxiDriverInfoAsyncTask != null)
 			taxiDriverInfoAsyncTask.cancel(true);
-		// launch async task adding taxi driver id as param
+		
 		taxiDriverInfoAsyncTask = new TaxiDriverInfoAsyncTask();
-		taxiDriverInfoAsyncTask.execute(item.getTitle());
+		// launch async task adding taxi driver id as param
+		taxiDriverInfoAsyncTask.execute(TaxiDriverId);
 		return true;
 	}
 	
@@ -107,6 +118,11 @@ public class TaxiItemizedOverlay extends ItemizedOverlay<OverlayItem>{
 			if (rb.getResultCode() == HttpURLConnection.HTTP_OK) {
 				String jsonUser = rb.getContent();
 				TaxiDriver taxiDriver = JsonHandler.fromJson(jsonUser, TaxiDriver.class);
+				
+				// set selected taxi driver ID
+				selectedTaxiDriverID = taxiDriver.getDni();
+				// set selected taxi driver name
+				selectedTaxiDriverName = taxiDriver.getFullName();
 				
 				// get overlay textviews
 				TextView tvTaxiDriverName = (TextView) layoutInformationOverlay.findViewById(R.id.labelTaxiDriverName);

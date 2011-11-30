@@ -3,6 +3,7 @@ package com.coctelmental.android.project1886;
 import java.util.UUID;
 
 import com.coctelmental.android.project1886.model.Credentials;
+import com.coctelmental.android.project1886.model.ServiceRequestInfo;
 
 import android.app.ActivityManager;
 import android.app.Application;
@@ -21,6 +22,8 @@ public class MyApplication extends Application {
 	
 	private String targetCity;
 	private String targetLine;
+	
+	private ServiceRequestInfo serviceRequestInfo;
 	
 	private Credentials activeUser;
 	
@@ -49,6 +52,14 @@ public class MyApplication extends Application {
 	public String[] getStoredTrackingInfo() {
 		String result[] = {targetCity, targetLine};
 		return result;
+	}
+	
+	public synchronized void storeServiceRequestInfo(ServiceRequestInfo serviceRequestInfo) {
+		this.serviceRequestInfo = serviceRequestInfo;
+	}
+	
+	public synchronized ServiceRequestInfo getServiceRequestInfo() {
+		return serviceRequestInfo;
 	}
 	
 	public synchronized String id() {

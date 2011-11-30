@@ -65,6 +65,11 @@
     <string name="failNoInfoTaxi">No se ha podido obtener información del taxista</string>
     <string name="labelTaxiName">Nombre:</string>
     <string name="labelCar">Coche:</string>
+    <string name="bSelectTaxiDriver">Seleccionar taxista</string>
+
+    <!-- Taxi request confirmation -->
+    <string name="addclarificationCommnet">Añadir aclaración:</string>
+    <string name="requestLifeTime">Tiempo de vida de la solicitud:</string>
 
     <!-- Collaboration line selection -->
     <string name="buttonStart">Comenzar seguimiento</string>
@@ -138,6 +143,5 @@
     <string name="collaborationServiceRunning">El modo de seguimiento está activado</string>
     <string name="collaborationServiceGPSDisabled">GPS deshabilitado. Habilitelo para poder enviar información de la posición del autobús</string>
     <string name="collaborationServiceFinished">El modo de seguimiento ha sido deshabilitado</string>
-    <string name="bSelectTaxiDriver">Seleccionar taxista</string>
 
 </resources>

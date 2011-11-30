@@ -12,6 +12,7 @@ import com.coctelmental.android.project1886.common.GeoPointInfo;
 import com.coctelmental.android.project1886.common.TaxiLocation;
 import com.coctelmental.android.project1886.common.util.JsonHandler;
 import com.coctelmental.android.project1886.logic.ControllerLocations;
+import com.coctelmental.android.project1886.logic.ControllerServiceRequests;
 import com.coctelmental.android.project1886.model.ResultBundle;
 import com.coctelmental.android.project1886.util.Tools;
 import com.google.android.maps.GeoPoint;
@@ -33,6 +34,9 @@ import android.util.Log;
 
 public class UserTaxiLocationMap extends MapActivity {
 	
+	public static final String TAXI_DRIVER_ID = "TAXI_DRIVER_ID";
+	public static final String TAXI_DRIVER_NAME = "TAXI_DRIVER_NAME";
+	
 	private static final int TIME_BETWEEN_UPDATES = 5000;	
 	private Timer updaterTimer;
 	
@@ -47,6 +51,7 @@ public class UserTaxiLocationMap extends MapActivity {
 	private Drawable drawableTaxiMarker;
 	
 	private ControllerLocations controllerL;
+	private ControllerServiceRequests controllerSR;
 	
 	@Override
 	protected boolean isRouteDisplayed() {
@@ -60,11 +65,10 @@ public class UserTaxiLocationMap extends MapActivity {
 	    
         // get a instance of our controller
         controllerL = new ControllerLocations();
+        controllerSR = new ControllerServiceRequests();
         
-	    // get data from intent
-    	Bundle extras = getIntent().getExtras();	    
-        if (extras != null)
-        	gpOrigin = (GeoPointInfo) extras.getSerializable(UserTaxiRouteSpecification.GP_ORIGIN);           
+	    // get origin geopoint from service request info
+    	gpOrigin = controllerSR.getServiceRequest().getGpOrigin();        
 	    
 	    Log.w(getString(R.string.app_name), "User loc: "+gpOrigin.getLatitudeE6()+" : "+gpOrigin.getLongitudeE6());
 	    

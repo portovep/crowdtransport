@@ -25,6 +25,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.coctelmental.android.project1886.common.GeoPointInfo;
+import com.coctelmental.android.project1886.logic.ControllerServiceRequests;
 import com.coctelmental.android.project1886.util.Tools;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.ItemizedOverlay;
@@ -34,10 +35,6 @@ import com.google.android.maps.MapView;
 import com.google.android.maps.OverlayItem;
 
 public class UserTaxiRouteSpecification extends MapActivity {
-
-	public static final String GP_ORIGIN = "GP_ORIGIN";
-	public static final String GP_DESTINATION = "GP_DEST";
-	public static final String GP_USER_LOC = "USER_LOC";
 	
 	private static final String ORIGIN_ID = "ORIGIN";
 	private static final String DESTINATION_ID = "DESTINATION";
@@ -45,7 +42,6 @@ public class UserTaxiRouteSpecification extends MapActivity {
 	private MapView mapView = null;
 	private static final int ZOOM_LEVEL = 17;
 	
-	private GeoPoint gpUserLocation = null;
 	private GeoPoint gpOrigin = null;
 	private GeoPoint gpDestination = null;
 	
@@ -54,6 +50,8 @@ public class UserTaxiRouteSpecification extends MapActivity {
 	private ProgressDialog pdLookingLocation = null;	
 	private Timer timer = null;
 	private UserLocationHelper userLocationHelper = null;
+	
+	private ControllerServiceRequests controllerSR;
 
 	@Override
 	protected boolean isRouteDisplayed() {
@@ -66,6 +64,8 @@ public class UserTaxiRouteSpecification extends MapActivity {
 	    super.onCreate(savedInstanceState);
 	    setContentView(R.layout.user_taxi_route_specification);
 	 
+	    controllerSR = new ControllerServiceRequests();
+	    
 	    // get layout and set invisible during setup
 	    layout = (LinearLayout) findViewById(R.id.container);
 	    layout.setVisibility(ViewGroup.GONE);
@@ -86,12 +86,13 @@ public class UserTaxiRouteSpecification extends MapActivity {
 	    bConfirm.setOnClickListener(new View.OnClickListener() {			
 			@Override
 			public void onClick(View v) {
+				// create new service request
+				controllerSR.createServiceRequest();
+				// add route info to service request
+				controllerSR.getServiceRequest().setGpOrigin(new GeoPointInfo(gpOrigin));
+				controllerSR.getServiceRequest().setGpDestination(new GeoPointInfo(gpDestination));
+				
 				Intent intent = new Intent(getApplicationContext(), UserTaxiLocationMap.class);
-				Bundle bundle = new Bundle();
-				bundle.putSerializable(GP_ORIGIN, new GeoPointInfo(gpOrigin));
-				bundle.putSerializable(GP_DESTINATION, new GeoPointInfo(gpDestination));
-				bundle.putSerializable(GP_USER_LOC, new GeoPointInfo(gpUserLocation));
-				intent.putExtras(bundle);
 				startActivity(intent);
 			}
 		});
@@ -271,10 +272,9 @@ public class UserTaxiRouteSpecification extends MapActivity {
 				Location l = userLocationHelper.getBestLocation();
 				Double lat = l.getLatitude() * 1E6;
 				Double lng = l.getLongitude() * 1E6;
-				gpUserLocation = new GeoPoint(lat.intValue(), lng.intValue());
-				// initial origin point = current user location
+				// default origin point = current user location
 				gpOrigin = new GeoPoint(lat.intValue(), lng.intValue());
-				// initial destination point = displaced point of origin
+				// default destination point = displaced point of origin
 			    gpDestination = new GeoPoint(gpOrigin.getLatitudeE6()+1150, gpOrigin.getLongitudeE6()+1150);
 			    
 			    MapController mc = mapView.getController();
