@@ -121,7 +121,7 @@ public class UserTaxiLocationMap extends MapActivity {
 	    			" long="+newLocations.get(0).getLocation().getGeopoint().getLatitudeE6());
 
 	    	// remove previous overlays
-	    	CustomItemizedOverlay taxiItemizedOverlays = new CustomItemizedOverlay(drawableTaxiMarker, this);    
+	    	TaxiItemizedOverlay taxiItemizedOverlays = new TaxiItemizedOverlay(drawableTaxiMarker, this);    
 	    	
 	    	GeoPoint geopoint = null;
 	    	for(TaxiLocation taxiLocation : newLocations) {

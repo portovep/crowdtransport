@@ -60,6 +60,12 @@
     <!-- Taxi available map -->
     <string name="availableTaxis">Taxistas disponibles a su alrededor</string>
 
+    <!-- Taxi location map -->
+    <string name="taxiDriverInformation">Información del taxista</string>
+    <string name="failNoInfoTaxi">No se ha podido obtener información del taxista</string>
+    <string name="labelTaxiName">Nombre:</string>
+    <string name="labelCar">Coche:</string>
+
     <!-- Collaboration line selection -->
     <string name="buttonStart">Comenzar seguimiento</string>
     <string name="collaborationMessage">Elija la línea de autobús en la que viaja
@@ -132,5 +138,6 @@
     <string name="collaborationServiceRunning">El modo de seguimiento está activado</string>
     <string name="collaborationServiceGPSDisabled">GPS deshabilitado. Habilitelo para poder enviar información de la posición del autobús</string>
     <string name="collaborationServiceFinished">El modo de seguimiento ha sido deshabilitado</string>
+    <string name="bSelectTaxiDriver">Seleccionar taxista</string>
 
 </resources>
