@@ -1,5 +1,6 @@
 package com.coctelmental.android.project1886;
 
+import com.coctelmental.android.project1886.c2dm.C2DMRegistrationReceiver;
 import com.coctelmental.android.project1886.logic.ControllerUsers;
 
 import android.app.Activity;
@@ -32,6 +33,9 @@ public class TaxiDriverMain extends Activity {
         bStart.setOnClickListener(new View.OnClickListener() {			
 			@Override
 			public void onClick(View v) {
+				// C2DM register to receive push notifications from web service
+				C2DMRegistrationReceiver.register(getApplicationContext());
+				
 				Intent intent = new Intent(getApplicationContext(), TaxiDriverInformationPanel.class);				
 				startActivity(intent);
 			}

@@ -1,5 +1,6 @@
 package com.coctelmental.android.project1886;
 
+import com.coctelmental.android.project1886.c2dm.C2DMRegistrationReceiver;
 import com.coctelmental.android.project1886.logic.ControllerServiceRequests;
 
 import android.app.Activity;
@@ -89,6 +90,8 @@ public class UserTaxiRequestConfirmation extends Activity{
 		        		"\n lifetime: "+
 		        		controllerSR.getServiceRequest().getRequestLifeTime());
 		        
+				// C2DM register to receive push notifications from web service
+				C2DMRegistrationReceiver.register(getApplicationContext());
 			}
 		});
         	
