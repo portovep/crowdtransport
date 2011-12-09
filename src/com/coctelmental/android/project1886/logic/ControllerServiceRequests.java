@@ -40,6 +40,19 @@ public class ControllerServiceRequests {
 		return MyApplication.getInstance().getServiceRequestInfo();
 	}
 	
+	public static int sendServiceRequest(){
+		int result = -1;
+
+		ServiceRequestInfo serviceRequest = MyApplication.getInstance().getServiceRequestInfo();
+		if (serviceRequest != null) {
+			// convert to json
+			String jsonServiceRequest = JsonHandler.toJson(serviceRequest);
+			result = ConnectionsHandler.put(SERVICE_REQUEST_RESOURCE, jsonServiceRequest);
+		}
+		
+		return result;		
+	}
+	
 	public static int sendRegistrationIdToServer(String registrationID) {
 		int result = -1;
 		if (registrationID != null && registrationID != "") {

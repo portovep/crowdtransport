@@ -1,9 +1,12 @@
 package com.coctelmental.android.project1886;
 
+import java.net.HttpURLConnection;
+
 import com.coctelmental.android.project1886.c2dm.C2DMRegistrationReceiver;
 import com.coctelmental.android.project1886.logic.ControllerServiceRequests;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -92,11 +95,29 @@ public class UserTaxiRequestConfirmation extends Activity{
 		        
 				// C2DM register to receive push notifications from web service
 				C2DMRegistrationReceiver.register(getApplicationContext());
+				// Send service request
+		        new SendServiceRequestTask().execute();
 			}
 		});
         	
     }
     
+	private class SendServiceRequestTask extends AsyncTask<Void, Void, Integer> {
+		
+	    protected Integer doInBackground(Void... params) {
+	    	// send service request to server
+	        return ControllerServiceRequests.sendServiceRequest();
+	    }
 
-
+	    protected void onPostExecute(Integer result) {
+	        // check result
+	        if(result == HttpURLConnection.HTTP_OK) {
+	        	Log.w("ServiceRequest", "ServiceRequest sent to server");
+	        }				
+	        else {
+	        	Log.e("ServiceRequest", "Error trying send ServiceRequest to server" +
+	        			"Error code -> (" + result + ")");
+	        }
+	    }
+	}
 }
