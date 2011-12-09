@@ -13,7 +13,8 @@ import com.coctelmental.android.project1886.model.ResultBundle;
 public class ConnectionsHandler {
 	
 	private static final String SERVER_ADDRESS = "http://project1886.servehttp.com:8085/webservice";
-
+	//private static final String SERVER_ADDRESS = "http://192.168.43.253:8085/webservice";
+	
 	public static ResultBundle get(String targetURL) {
 		// create new result bundle and add default response code as 404
 		ResultBundle result = new ResultBundle();
@@ -40,6 +41,23 @@ public class ConnectionsHandler {
 		try{
 			JsonRepresentation jsonRepresentation = new JsonRepresentation(jsonString);
 			cr.put(jsonRepresentation, MediaType.APPLICATION_JSON);
+			responseStatus = cr.getResponse().getStatus().getCode();
+		}catch(Exception e){
+			e.printStackTrace();			
+			responseStatus = cr.getResponse().getStatus().getCode();
+		}
+		// release connection resources
+		cr.release();
+		return responseStatus;	
+	}
+	
+	public static int post(String targetURL, String jsonString) {
+		ClientResource cr = new ClientResource(SERVER_ADDRESS+targetURL);
+		// set default response status as 404
+		int responseStatus = Status.CLIENT_ERROR_NOT_FOUND.getCode();
+		try{
+			JsonRepresentation jsonRepresentation = new JsonRepresentation(jsonString);
+			cr.post(jsonRepresentation, MediaType.APPLICATION_JSON);
 			responseStatus = cr.getResponse().getStatus().getCode();
 		}catch(Exception e){
 			e.printStackTrace();			
