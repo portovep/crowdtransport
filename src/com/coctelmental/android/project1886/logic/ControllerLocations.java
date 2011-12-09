@@ -89,9 +89,11 @@ public class ControllerLocations {
 	public int sendTaxiDriverLocation(String taxiDriverID, Location location) {
 		int result = -1;
 		
-		if (location != null) {			
+		if (location != null) {		
+			// get installation UUID 
+			String taxiDriverUUID = MyApplication.getInstance().id();
 			// setup location info
-			TaxiDriverLocation taxiDriverLocation = new TaxiDriverLocation();
+			TaxiDriverLocation taxiDriverLocation = new TaxiDriverLocation(taxiDriverID, taxiDriverUUID);
 			taxiDriverLocation.setTaxiDriverID(taxiDriverID);
 			Double latitude = location.getLatitude()*1E6;
 			Double longitude = location.getLongitude()*1E6;

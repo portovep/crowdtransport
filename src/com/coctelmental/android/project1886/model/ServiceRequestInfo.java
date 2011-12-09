@@ -4,15 +4,25 @@ import com.coctelmental.android.project1886.common.GeoPointInfo;
 
 public class ServiceRequestInfo {
 
+	private String userUUID;
 	private String userID;
 	private GeoPointInfo gpOrigin;
 	private GeoPointInfo gpDestination;
 	private String taxiDriverID;
+	private String taxiDriverUUID;
 	private String clarificationComment;
 	private int requestLifeTime;
 	
-	public ServiceRequestInfo(String userID) {
-		this.userID = userID;
+	public ServiceRequestInfo(String userUUID) {
+		this.userUUID = userUUID;
+	}
+	
+	public String getUserUUID() {
+		return userUUID;
+	}
+
+	public void setUserUUID(String userUUID) {
+		this.userUUID = userUUID;
 	}
 
 	public String getUserID() {
@@ -45,6 +55,14 @@ public class ServiceRequestInfo {
 
 	public void setTaxiDriverID(String taxiDriverID) {
 		this.taxiDriverID = taxiDriverID;
+	}
+
+	public String getTaxiDriverUUID() {
+		return taxiDriverUUID;
+	}
+
+	public void setTaxiDriverUUID(String taxiDriverUUID) {
+		this.taxiDriverUUID = taxiDriverUUID;
 	}
 
 	public String getClarificationComment() {

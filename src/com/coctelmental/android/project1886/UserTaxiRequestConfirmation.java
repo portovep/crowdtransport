@@ -14,6 +14,10 @@ import android.widget.TextView;
 
 public class UserTaxiRequestConfirmation extends Activity{
 	
+	public static final String TAXI_DRIVER_ID = "TAXI_DRIVER_ID";
+	public static final String TAXI_DRIVER_UUID = "TAXI_DRIVER_UUID";
+	public static final String TAXI_DRIVER_NAME = "TAXI_DRIVER_NAME";
+	
 	private static final Integer availableLifeTimes[] = {5, 10, 15};
 	
 	private EditText etClarificationComment;
@@ -30,10 +34,13 @@ public class UserTaxiRequestConfirmation extends Activity{
         
         String targetTaxiDriverID = null;
         String targetTaxiDriverName = null;
+        String targetTaxiDriverUUID = null;
+        
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-        	targetTaxiDriverID = extras.getString(UserTaxiLocationMap.TAXI_DRIVER_ID);
-        	targetTaxiDriverName = extras.getString(UserTaxiLocationMap.TAXI_DRIVER_NAME);
+        	targetTaxiDriverID = extras.getString(TAXI_DRIVER_ID);
+        	targetTaxiDriverUUID = extras.getString(TAXI_DRIVER_UUID);
+        	targetTaxiDriverName = extras.getString(TAXI_DRIVER_NAME);
         }
         
         // fill taxi driver name label
@@ -42,7 +49,9 @@ public class UserTaxiRequestConfirmation extends Activity{
         
     	// add taxi driver id to request info
     	controllerSR.getServiceRequest().setTaxiDriverID(targetTaxiDriverID);
-        
+    	// add taxi driver UUID to request info
+    	controllerSR.getServiceRequest().setTaxiDriverUUID(targetTaxiDriverUUID);
+    	
         // get edit text view
         etClarificationComment = (EditText) findViewById(R.id.etClarificationComment);
         
@@ -69,6 +78,8 @@ public class UserTaxiRequestConfirmation extends Activity{
 				
 		        Log.d("Service request info"," TaxiDriver ID: "
 		        		+controllerSR.getServiceRequest().getTaxiDriverID()+
+		        		"\n TaxiDriver UUID: "
+		        		+controllerSR.getServiceRequest().getTaxiDriverUUID()+
 		        		"\n gpORI: "+
 		        		controllerSR.getServiceRequest().getGpOrigin().getLatitudeE6()+
 		        		"\n gpDEST: "+
@@ -77,9 +88,12 @@ public class UserTaxiRequestConfirmation extends Activity{
 		        		controllerSR.getServiceRequest().getClarificationComment()+
 		        		"\n lifetime: "+
 		        		controllerSR.getServiceRequest().getRequestLifeTime());
+		        
 			}
 		});
         	
     }
+    
+
 
 }

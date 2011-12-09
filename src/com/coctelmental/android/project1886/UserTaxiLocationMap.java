@@ -14,7 +14,6 @@ import com.coctelmental.android.project1886.common.util.JsonHandler;
 import com.coctelmental.android.project1886.logic.ControllerLocations;
 import com.coctelmental.android.project1886.logic.ControllerServiceRequests;
 import com.coctelmental.android.project1886.model.ResultBundle;
-import com.coctelmental.android.project1886.util.Tools;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
@@ -33,9 +32,6 @@ import android.util.Log;
 
 
 public class UserTaxiLocationMap extends MapActivity {
-	
-	public static final String TAXI_DRIVER_ID = "TAXI_DRIVER_ID";
-	public static final String TAXI_DRIVER_NAME = "TAXI_DRIVER_NAME";
 	
 	private static final int TIME_BETWEEN_UPDATES = 5000;	
 	private Timer updaterTimer;
@@ -133,8 +129,11 @@ public class UserTaxiLocationMap extends MapActivity {
 	    		GeoPointInfo gpInfo = taxiLocation.getLocation().getGeopoint();
 			    geopoint = new GeoPoint(gpInfo.getLatitudeE6(), gpInfo.getLongitudeE6());
 			    // setup overlay item
-			    OverlayItem overlayItem = new OverlayItem(geopoint, taxiLocation.getTaxiDriverID(),
-			    		getString(R.string.whenReceived)+": "+Tools.getTime(taxiLocation.getLocation().getWhen())+"\n");    
+			    /* NOTE: 
+			     * 		Overlay title = taxiDriverID
+			     * 		Overlay comment = taxiDriverUUID
+			     */
+			    OverlayItem overlayItem = new OverlayItem(geopoint, taxiLocation.getTaxiDriverID(), taxiLocation.getUUID());    
 			    // add new overlay to the list
 			    taxiItemizedOverlays.addOverlay(overlayItem);
 	    	}

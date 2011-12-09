@@ -31,6 +31,7 @@ public class TaxiItemizedOverlay extends ItemizedOverlay<OverlayItem>{
 	private View layoutInformationOverlay;
 	
 	private String selectedTaxiDriverID = null;
+	private String selectedTaxiDriverUUID = null;
 	private String selectedTaxiDriverName = null;
 		
 	public TaxiItemizedOverlay(Drawable defaultMarker, Context context) {
@@ -49,9 +50,10 @@ public class TaxiItemizedOverlay extends ItemizedOverlay<OverlayItem>{
 			public void onClick(View v) {
 				dialog.dismiss();
 				Intent intent = new Intent(mContext, UserTaxiRequestConfirmation.class);
-				// attach selected taxi driver ID and name to intent
-				intent.putExtra(UserTaxiLocationMap.TAXI_DRIVER_ID, selectedTaxiDriverID);
-				intent.putExtra(UserTaxiLocationMap.TAXI_DRIVER_NAME, selectedTaxiDriverName);
+				// attach selected taxi driver ID, UUID and name to intent
+				intent.putExtra(UserTaxiRequestConfirmation.TAXI_DRIVER_ID, selectedTaxiDriverID);
+				intent.putExtra(UserTaxiRequestConfirmation.TAXI_DRIVER_UUID, selectedTaxiDriverUUID);
+				intent.putExtra(UserTaxiRequestConfirmation.TAXI_DRIVER_NAME, selectedTaxiDriverName);
 				mContext.startActivity(intent);
 			}
 		});
@@ -81,6 +83,10 @@ public class TaxiItemizedOverlay extends ItemizedOverlay<OverlayItem>{
 	protected boolean onTap(int index) {
 		OverlayItem item = aOverlays.get(index);
 		String TaxiDriverId = item.getTitle();
+		
+		// retrieve taxi driver UUID from overlay snippet text
+		selectedTaxiDriverUUID = item.getSnippet();
+		
 		// show overlay dialog
 		dialog.show();
 		
