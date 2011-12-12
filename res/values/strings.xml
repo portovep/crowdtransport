@@ -100,6 +100,7 @@
     <!-- Taxi driver information panel -->
     <string name="taxiDriverStatusMessage">El modo de seguimiento está activado, por lo que su
         posición será mostrada a los usuarios sobre un mapa y éstos podrán enviarle solicitudes de servicio.</string>
+    <string name="incomingRequest">Solicitudes recibidas:</string>
 
     <!-- Common buttons -->
     <string name="buttonBack">Volver atrás</string>

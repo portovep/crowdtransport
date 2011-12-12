@@ -2,21 +2,29 @@ package com.coctelmental.android.project1886;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 
 public class TaxiDriverInformationPanel extends Activity{
 	
+	public static final String ACTION_RECEIVER_REQUEST = "RECEIVER_REQUEST";
+	
 	private Button bFinishService;
 	private ViewGroup backgroundLayout;
+	private TextView tvNumberOfRequest;
 
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -24,6 +32,8 @@ public class TaxiDriverInformationPanel extends Activity{
 		
 	    // get layout
 		backgroundLayout = (LinearLayout) findViewById(R.id.containerBInformationPanel);
+		
+		tvNumberOfRequest = (TextView) findViewById(R.id.numberOfrequest);
         
         // setup button to finish service
         bFinishService = (Button) findViewById(R.id.buttonFinishCollaboration);
@@ -55,9 +65,19 @@ public class TaxiDriverInformationPanel extends Activity{
 			    i.putExtra(TrackingService.CALLER_ACTIVITY, TrackingService.TAXIDRIVER_ACTIVITY_ID);			    
 			    startService(i);
 			}
+			// activarte broadcast receiver
+			registerReceiver(serviceRequestReceiver, new IntentFilter(ACTION_RECEIVER_REQUEST));
+			
 		}
-	}
+	}	
     
+	@Override
+	protected void onPause() {
+		super.onPause();
+		// shutdown receiver
+		unregisterReceiver(serviceRequestReceiver);
+	}
+
 	@Override
 	public void onBackPressed() {
 		moveTaskToBack(true);
@@ -96,5 +116,18 @@ public class TaxiDriverInformationPanel extends Activity{
 		Intent i = new Intent(getApplicationContext(), TrackingService.class);
 		stopService(i);
 	}
+	
+	private BroadcastReceiver serviceRequestReceiver = new BroadcastReceiver() {
+				
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			// get number of request
+			int nRequest = Integer.parseInt(tvNumberOfRequest.getText().toString());
+			// update it
+			nRequest += 1;
+			// update in UI
+			tvNumberOfRequest.setText(String.valueOf(nRequest));
+		}
+	};
 
 }

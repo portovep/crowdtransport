@@ -1,5 +1,7 @@
 package com.coctelmental.android.project1886.c2dm;
 
+import com.coctelmental.android.project1886.TaxiDriverInformationPanel;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -23,11 +25,11 @@ public class C2DMessageReceiver extends BroadcastReceiver{
 			String userNotificationData = intent.getStringExtra(USER_NOTIFICATION_PAYLOAD);
 			// check notification type
 			if (taxiNotificationData != null) {
-				Log.d("C2DM", "Message type -> Notification to taxi driver");
+				Log.d("C2DM", "Message type -> Notify to taxi driver");
 				handleTaxiNotification(context);
 			}
 			else if (userNotificationData != null) {
-				Log.d("C2DM", "Message type -> Notification to user");
+				Log.d("C2DM", "Message type -> Notify to user");
 				handleUserNotification(context);
 			}
 		}
@@ -35,7 +37,11 @@ public class C2DMessageReceiver extends BroadcastReceiver{
 	}
 	
 	private void handleTaxiNotification(Context context) {
-		// TO-DO	
+		// TO-DO
+		
+		// notify activity
+		Intent intent = new Intent(TaxiDriverInformationPanel.ACTION_RECEIVER_REQUEST);
+		context.sendBroadcast(intent);
 	}
 	
 	private void handleUserNotification(Context context) {

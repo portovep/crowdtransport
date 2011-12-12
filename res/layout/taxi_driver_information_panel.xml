@@ -19,19 +19,33 @@
             android:layout_marginTop="15dip"
             android:text="@string/taxiDriverStatusMessage" />
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/containerBInformationPanel"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:layout_marginTop="50dip"
-            android:text="STATUS INFO" />
+            android:orientation="horizontal"
+            android:gravity="center_horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/incomingRequest" />
+
+            <TextView
+                android:id="@+id/numberOfrequest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dip"
+                android:text="0" />
+        </LinearLayout>
 
         <Button
             android:id="@+id/buttonFinishCollaboration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="15dip"
+            android:layout_marginTop="75dip"
             android:text="@string/buttonFinishCollaboration" />
     </LinearLayout>
 
