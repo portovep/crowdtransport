@@ -144,5 +144,8 @@
     <string name="collaborationServiceRunning">El modo de seguimiento está activado</string>
     <string name="collaborationServiceGPSDisabled">GPS deshabilitado. Habilitelo para poder enviar información de la posición del autobús</string>
     <string name="collaborationServiceFinished">El modo de seguimiento ha sido deshabilitado</string>
+    
+    <!-- TTS messages (tex-to-speech) -->    
+    <string name="newIncomingRequestTTS">"Ha recibido una nueva solicitud de servicio."</string>
 
 </resources>

@@ -1,5 +1,7 @@
 package com.coctelmental.android.project1886;
 
+import com.coctelmental.android.project1886.c2dm.C2DMRegistrationReceiver;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
@@ -9,6 +11,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.speech.tts.TextToSpeech;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -19,6 +23,8 @@ import android.widget.TextView;
 public class TaxiDriverInformationPanel extends Activity{
 	
 	public static final String ACTION_RECEIVER_REQUEST = "RECEIVER_REQUEST";
+
+	private static final int TTS_CHECK_CODE = 0;
 	
 	private Button bFinishService;
 	private ViewGroup backgroundLayout;
@@ -30,6 +36,11 @@ public class TaxiDriverInformationPanel extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.taxi_driver_information_panel);
 		
+		// check TTS (Text to speech) capability
+		Intent checkIntent = new Intent();
+		checkIntent.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
+		startActivityForResult(checkIntent, TTS_CHECK_CODE);
+		
 	    // get layout
 		backgroundLayout = (LinearLayout) findViewById(R.id.containerBInformationPanel);
 		
@@ -40,6 +51,9 @@ public class TaxiDriverInformationPanel extends Activity{
         bFinishService.setOnClickListener(new View.OnClickListener() {			
 			@Override
 			public void onClick(View arg0) {
+				// unregister C2DM
+				C2DMRegistrationReceiver.register(getApplicationContext());
+				
 				finishTrackingService();
 				goMainMenu();
 			}
@@ -65,7 +79,7 @@ public class TaxiDriverInformationPanel extends Activity{
 			    i.putExtra(TrackingService.CALLER_ACTIVITY, TrackingService.TAXIDRIVER_ACTIVITY_ID);			    
 			    startService(i);
 			}
-			// activarte broadcast receiver
+			// activate broadcast receiver
 			registerReceiver(serviceRequestReceiver, new IntentFilter(ACTION_RECEIVER_REQUEST));
 			
 		}
@@ -74,7 +88,6 @@ public class TaxiDriverInformationPanel extends Activity{
 	@Override
 	protected void onPause() {
 		super.onPause();
-		// shutdown receiver
 		unregisterReceiver(serviceRequestReceiver);
 	}
 
@@ -115,6 +128,22 @@ public class TaxiDriverInformationPanel extends Activity{
 		// finish location tracking service
 		Intent i = new Intent(getApplicationContext(), TrackingService.class);
 		stopService(i);
+	}
+	
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		/*
+		 *  Check Text to speech capability
+		 *  If any language/voice package is needed, send request to install it.
+		 */
+	    if(requestCode == TTS_CHECK_CODE) {
+	        if(resultCode != TextToSpeech.Engine.CHECK_VOICE_DATA_PASS) {
+	        	Log.w("TTS", "Missing TTS data");
+	            // missing TTS data, install it
+	            Intent installIntent = new Intent();
+	            installIntent.setAction(TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA);
+	            startActivity(installIntent);
+	        }
+	    }
 	}
 	
 	private BroadcastReceiver serviceRequestReceiver = new BroadcastReceiver() {

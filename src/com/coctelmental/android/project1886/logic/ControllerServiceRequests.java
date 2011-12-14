@@ -4,6 +4,7 @@ package com.coctelmental.android.project1886.logic;
 import com.coctelmental.android.project1886.MyApplication;
 import com.coctelmental.android.project1886.common.DeviceInfo;
 import com.coctelmental.android.project1886.common.util.JsonHandler;
+import com.coctelmental.android.project1886.model.ResultBundle;
 import com.coctelmental.android.project1886.model.ServiceRequestInfo;
 import com.coctelmental.android.project1886.util.ConnectionsHandler;
 
@@ -52,6 +53,12 @@ public class ControllerServiceRequests {
 		
 		return result;		
 	}
+	
+	public static ResultBundle getNewServiceRequest(String requestID){
+		String taxiUUID = MyApplication.getInstance().id();
+		String targetURL = SERVICE_REQUEST_RESOURCE + "/" + taxiUUID + "/request/" + requestID;
+		return ConnectionsHandler.get(targetURL);	
+	}	
 	
 	public static int sendRegistrationIdToServer(String registrationID) {
 		int result = -1;
