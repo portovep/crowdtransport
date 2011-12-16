@@ -101,6 +101,8 @@
     <string name="taxiDriverStatusMessage">El modo de seguimiento está activado, por lo que su
         posición será mostrada a los usuarios sobre un mapa y éstos podrán enviarle solicitudes de servicio.</string>
     <string name="incomingRequest">Solicitudes recibidas:</string>
+    <string name="serviceRequestsNotFound">En estos momentos no tiene solicitudes de servicio activas</string>
+    <string name="chooseServiceRequest">Elija una solicitud</string>
 
     <!-- Common buttons -->
     <string name="buttonBack">Volver atrás</string>
@@ -138,14 +140,15 @@
     <string name="loadingCities">Obteniendo información de las ciudades disponibles</string>
     <string name="loadingLines">Obteniendo información de las líneas disponibles</string>
     <string name="obtainingUserLocation">Obteniendo su ubicación</string>
+    <string name="loadingRequests">Obteniendo solicitudes de servicio</string>
 
     <!-- Notifications -->
     <string name="collaborationServiceStarted">El modo de seguimiento ha sido activado</string>
     <string name="collaborationServiceRunning">El modo de seguimiento está activado</string>
     <string name="collaborationServiceGPSDisabled">GPS deshabilitado. Habilitelo para poder enviar información de la posición del autobús</string>
     <string name="collaborationServiceFinished">El modo de seguimiento ha sido deshabilitado</string>
-    
-    <!-- TTS messages (tex-to-speech) -->    
+
+    <!-- TTS messages (tex-to-speech) -->
     <string name="newIncomingRequestTTS">"Ha recibido una nueva solicitud de servicio."</string>
 
 </resources>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:padding="5dp" >
+
+    <TextView
+        android:id="@+id/adapterlocationInfo"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Calle rosalía" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/adapterlocationComment"
+        android:layout_width="fill_parent"
+        android:textStyle="italic"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:text="al lado del semáforo"
+        android:textSize="9dp" >
+
+    </TextView>
+
+</LinearLayout>

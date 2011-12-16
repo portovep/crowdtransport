@@ -58,7 +58,13 @@ public class ControllerServiceRequests {
 		String taxiUUID = MyApplication.getInstance().id();
 		String targetURL = SERVICE_REQUEST_RESOURCE + "/" + taxiUUID + "/request/" + requestID;
 		return ConnectionsHandler.get(targetURL);	
-	}	
+	}
+	
+	public static ResultBundle getAllServiceRequest(){
+		String taxiUUID = MyApplication.getInstance().id();
+		String targetURL = SERVICE_REQUEST_RESOURCE + "/" + taxiUUID;
+		return ConnectionsHandler.get(targetURL);	
+	}
 	
 	public static int sendRegistrationIdToServer(String registrationID) {
 		int result = -1;
