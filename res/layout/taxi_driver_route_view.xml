@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/container"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <com.google.android.maps.MapView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/mapTaxiRoute"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:apiKey="0GFJEPSerwjLp6q2Rcu8oLWI6Hb1W3SmdNnM-OQ"
+        android:clickable="true" />
+
+    <LinearLayout
+        android:id="@+id/dock"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#65000000"
+        android:orientation="horizontal"
+        android:padding="4sp" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4sp"
+            android:layout_marginLeft="4sp"
+            android:layout_marginRight="2sp"
+            android:layout_marginTop="5sp"
+            android:src="@drawable/marker_ori" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="4sp"
+            android:text="@string/origin"
+            android:textSize="18dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4sp"
+            android:layout_marginLeft="12sp"
+            android:layout_marginRight="2sp"
+            android:layout_marginTop="5sp"
+            android:src="@drawable/marker_dest" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="4sp"
+            android:text="@string/destination"
+            android:textSize="18dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4sp"
+            android:layout_marginLeft="12sp"
+            android:layout_marginRight="4sp"
+            android:layout_marginTop="5sp"
+            android:src="@drawable/market_my_location" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="4sp"
+            android:text="@string/labelYourLocation"
+            android:textSize="18dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/distanceDock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dock"
+        android:layout_centerHorizontal="true"
+        android:background="#65000000"
+        android:orientation="vertical"
+        android:padding="6sp" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="@string/distance"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/distance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text=" 0.0"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/bAcceptRequest"
+            android:layout_width="114dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="5dp"
+            android:text="@string/bAcceptRequest"
+            android:textSize="10dp" />
+    </LinearLayout>
+
+</RelativeLayout>

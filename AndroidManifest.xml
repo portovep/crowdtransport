@@ -58,6 +58,7 @@
         <activity android:name=".BusDriverInformationPanel" />
         <activity android:name=".TaxiDriverMain" />
         <activity android:name=".TaxiDriverInformationPanel" />
+        <activity android:name=".TaxiDriverRouteView" />
 
         <receiver
             android:name=".c2dm.C2DMRegistrationReceiver"
@@ -82,7 +83,7 @@
             android:exported="false"
             android:name=".TrackingService" >
         </service>
-                <service
+        <service
             android:exported="false"
             android:name=".tts.TextToSpeechService" >
         </service>

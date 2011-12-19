@@ -78,7 +78,7 @@ public class TaxiDriverInformationPanel extends Activity{
 			public void onClick(View arg0) {
 				// unregister C2DM
 				C2DMRegistrationReceiver.unregister(getApplicationContext());
-				
+				// stop service
 				finishTrackingService();
 				goMainMenu();
 			}
@@ -99,22 +99,13 @@ public class TaxiDriverInformationPanel extends Activity{
 				// show content
 				backgroundLayout.setVisibility(ViewGroup.VISIBLE);
 			if(!MyApplication.getInstance().isServiceRunning(TrackingService.class.getName())) {
+				// C2DM register to receive push notifications from web service
+				C2DMRegistrationReceiver.register(getApplicationContext());
 			    // launch location tracking service
-			    Intent i = new Intent(this, TrackingService.class);
-			    i.putExtra(TrackingService.CALLER_ACTIVITY, TrackingService.TAXIDRIVER_ACTIVITY_ID);			    
-			    startService(i);
+				startTrackingService();
 			}
-			// activate broadcast receiver
-			registerReceiver(serviceRequestReceiver, new IntentFilter(ACTION_RECEIVER_REQUEST));
-			
 		}
 	}	
-    
-	@Override
-	protected void onPause() {
-		super.onPause();
-		unregisterReceiver(serviceRequestReceiver);
-	}
 
 	@Override
 	public void onBackPressed() {
@@ -149,7 +140,17 @@ public class TaxiDriverInformationPanel extends Activity{
     	alert.show();
 	}
 	
+	private void startTrackingService() {
+	    Intent i = new Intent(this, TrackingService.class);
+	    i.putExtra(TrackingService.CALLER_ACTIVITY, TrackingService.TAXIDRIVER_ACTIVITY_ID);			    
+	    startService(i);
+		// activate broadcast receiver
+		registerReceiver(serviceRequestReceiver, new IntentFilter(ACTION_RECEIVER_REQUEST));
+	}
+	
 	private void finishTrackingService() {
+		// stop broadcast receiver
+		unregisterReceiver(serviceRequestReceiver);
 		// finish location tracking service
 		Intent i = new Intent(getApplicationContext(), TrackingService.class);
 		stopService(i);
@@ -220,7 +221,14 @@ public class TaxiDriverInformationPanel extends Activity{
 		    		
 		    		builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
 		    		    public void onClick(DialogInterface dialog, int item) {
-		    		        Toast.makeText(getApplicationContext(), requests.get(item).getUserUUID(), Toast.LENGTH_SHORT).show();
+		    		    	// parse data to send with intent
+		    		    	ServiceRequestInfo selectedRequest = requests.get(item);
+		    		    	String jsonServiceRequest = JsonHandler.toJson(selectedRequest);
+
+		    		    	Intent intent = new Intent(getApplicationContext(), TaxiDriverRouteView.class);
+		    		    	// attach JSON data to intent
+		    		    	intent.putExtra(TaxiDriverRouteView.SERVICE_REQUEST, jsonServiceRequest);
+		    		    	startActivity(intent);
 		    		    }
 		    		});
 		    		

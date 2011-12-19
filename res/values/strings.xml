@@ -103,6 +103,9 @@
     <string name="incomingRequest">Solicitudes recibidas:</string>
     <string name="serviceRequestsNotFound">En estos momentos no tiene solicitudes de servicio activas</string>
     <string name="chooseServiceRequest">Elija una solicitud</string>
+    <!-- Taxi driver route view -->
+    <string name="labelYourLocation">Tú</string>
+    <string name="bAcceptRequest">Aceptar solicitud</string>
 
     <!-- Common buttons -->
     <string name="buttonBack">Volver atrás</string>
@@ -135,6 +138,7 @@
     <string name="failLocationProviders">No hemos podido obtener su ubicación debido a la configuración de su teléfono. 
         Habilite la localización mediante GPS o mediante la red de datos</string>
     <string name="failUserLocationNotFound">No hemos podido obtener su ubicación. Vuelva a intentarlo</string>
+    <string name="errorGettingServiceRequestInfo">Error al intentar obtener la información de la solicitud de servicio.</string>
 
     <!-- Progress dialogs -->
     <string name="loadingCities">Obteniendo información de las ciudades disponibles</string>
