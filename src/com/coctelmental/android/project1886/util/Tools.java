@@ -5,7 +5,10 @@ import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.google.android.maps.GeoPoint;
+
 import android.content.Context;
+import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
@@ -66,6 +69,18 @@ public class Tools {
 		if(!ni.isConnected())
 			return false;
 		return true;
+	}
+	
+	public static double calculateDistanceInMeters(GeoPoint from, GeoPoint to) {
+		// setup aux source location
+		Location locationFrom = new Location("");  
+		locationFrom.setLatitude(from.getLatitudeE6() / 1E6);  
+		locationFrom.setLongitude(from.getLongitudeE6() / 1E6);  
+		// setup aux destination location
+		Location locationTo = new Location("");  
+		locationTo.setLatitude(to.getLatitudeE6() / 1E6);  
+		locationTo.setLongitude(to.getLongitudeE6() / 1E6);  
+		return locationFrom.distanceTo(locationTo);
 	}
 
 }

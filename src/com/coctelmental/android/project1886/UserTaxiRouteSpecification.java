@@ -294,22 +294,10 @@ public class UserTaxiRouteSpecification extends MapActivity {
 	
 	private void updateDistanceLabel() {
 		// calculating distance
-		Double distance = calculateDistanceInMeters(gpOrigin, gpDestination);
+		Double distance = Tools.calculateDistanceInMeters(gpOrigin, gpDestination);
 		DecimalFormat df = new DecimalFormat("#######0.0#");
 		// update label
 		tvDistance.setText(" "+df.format(distance)+"m");
-	}
-	
-	private double calculateDistanceInMeters(GeoPoint from, GeoPoint to) {
-		// setup aux source location
-		Location locationFrom = new Location("");  
-		locationFrom.setLatitude(from.getLatitudeE6() / 1E6);  
-		locationFrom.setLongitude(from.getLongitudeE6() / 1E6);  
-		// setup aux destination location
-		Location locationTo = new Location("");  
-		locationTo.setLatitude(to.getLatitudeE6() / 1E6);  
-		locationTo.setLongitude(to.getLongitudeE6() / 1E6);  
-		return locationFrom.distanceTo(locationTo);
 	}
 	
 	private void showBackAlertDialog(String textToShow) {
