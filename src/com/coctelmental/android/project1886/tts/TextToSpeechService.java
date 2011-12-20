@@ -29,7 +29,7 @@ public class TextToSpeechService extends Service implements TextToSpeech.OnInitL
     			ttsMessage = message;
     			// start TTS engine
     	    	tts = new TextToSpeech(this, this);
-    	    	return START_STICKY;
+    	    	return START_REDELIVER_INTENT;
     		}
     	}
     	// log error with received data
@@ -42,14 +42,13 @@ public class TextToSpeechService extends Service implements TextToSpeech.OnInitL
 	@Override
 	public void onInit(int status) {
 		if (status == TextToSpeech.SUCCESS) {
-			// set listener to stop service when work is done
-			tts.setOnUtteranceCompletedListener(this);
 			// try setup the default language as tts language
 			int result = tts.setLanguage(Locale.getDefault());
 			// check if it's supported
 			if (result != TextToSpeech.LANG_MISSING_DATA &&
 					result != TextToSpeech.LANG_NOT_SUPPORTED) {
-				
+				// set listener to stop service when work is done
+				tts.setOnUtteranceCompletedListener(this);
 				HashMap<String, String> ttsParams = new HashMap<String, String>();
 				ttsParams.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, UTTERANCE_ID );
 				tts.speak(ttsMessage, TextToSpeech.QUEUE_FLUSH, ttsParams);
@@ -67,9 +66,10 @@ public class TextToSpeechService extends Service implements TextToSpeech.OnInitL
 
 	@Override
 	public void onUtteranceCompleted(String utteranceId) {
-		if (utteranceId.equals(UTTERANCE_ID))
+		if (utteranceId.equals(UTTERANCE_ID)){ 
 			// stop service
 			stopSelf();
+		}
 	}
 	
 	@Override
