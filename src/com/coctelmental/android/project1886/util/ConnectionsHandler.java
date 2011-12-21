@@ -15,8 +15,8 @@ import com.coctelmental.android.project1886.model.ResultBundle;
 public class ConnectionsHandler {
 	
 	//private static final String SERVER_ADDRESS = "http://project1886.servehttp.com:8085/webservice";
-	//private static final String SERVER_ADDRESS = "http://192.168.1.140:8085/webservice";	
-	private static final String SERVER_ADDRESS = "http://192.168.43.253:8085/webservice";
+	private static final String SERVER_ADDRESS = "http://192.168.1.140:8085/webservice";	
+	//private static final String SERVER_ADDRESS = "http://192.168.43.253:8085/webservice";
 	
 	public static ResultBundle get(String targetURL) {
 		// create new result bundle
@@ -24,7 +24,7 @@ public class ConnectionsHandler {
 		// setup connector
 		Client client = new Client(Protocol.HTTP);
 		client.setConnectTimeout(5000); // 5s
-		ClientResource cr = new ClientResource(SERVER_ADDRESS+targetURL);
+		ClientResource cr = new ClientResource(SERVER_ADDRESS + targetURL);
 		// attach client connector
 		cr.setNext(client);
 		try {
@@ -69,6 +69,22 @@ public class ConnectionsHandler {
 		try{
 			JsonRepresentation jsonRepresentation = new JsonRepresentation(jsonString);
 			cr.post(jsonRepresentation, MediaType.APPLICATION_JSON);
+			responseStatus = cr.getResponse().getStatus().getCode();
+		}catch(Exception e){
+			e.printStackTrace();			
+			responseStatus = cr.getResponse().getStatus().getCode();
+		}
+		// release connection resources
+		cr.release();
+		return responseStatus;	
+	}
+	
+	public static int delete(String targetURL) {
+		ClientResource cr = new ClientResource(SERVER_ADDRESS+targetURL);
+		// set default response status as 404
+		int responseStatus = Status.CLIENT_ERROR_NOT_FOUND.getCode();
+		try{
+			cr.delete(MediaType.APPLICATION_JSON);
 			responseStatus = cr.getResponse().getStatus().getCode();
 		}catch(Exception e){
 			e.printStackTrace();			
