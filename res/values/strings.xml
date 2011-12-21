@@ -107,6 +107,11 @@
     <string name="labelYourLocation">Tú</string>
     <string name="bAcceptRequest">Aceptar solicitud</string>
 
+    <!-- User taxi waiting panel -->
+    <string name="labelWaitingConfirmation">Esperando confirmación del taxista</string>
+    <string name="bCancelRequest">Cancelar solicitud</string>
+    <string name="requestCanceled">Solicitud cancelada</string>
+
     <!-- Common buttons -->
     <string name="buttonBack">Volver atrás</string>
 
@@ -139,12 +144,17 @@
         Habilite la localización mediante GPS o mediante la red de datos</string>
     <string name="failUserLocationNotFound">No hemos podido obtener su ubicación. Vuelva a intentarlo</string>
     <string name="errorGettingServiceRequestInfo">Error al intentar obtener la información de la solicitud de servicio.</string>
+    <string name="failSendingRequest">Error al intentar enviar la solicitud, vuelva a intentarlo.</string>
+    <string name="failCancelRequest">Error al intentar cancelar la solicitud, vuelva a intentarlo.</string>
+    <string name="failMalformedServiceRequest">Alguno de los datos asociados a la solicitud no es válido. Vuelva a introducirlos.</string>
 
     <!-- Progress dialogs -->
     <string name="loadingCities">Obteniendo información de las ciudades disponibles</string>
     <string name="loadingLines">Obteniendo información de las líneas disponibles</string>
     <string name="obtainingUserLocation">Obteniendo su ubicación</string>
     <string name="loadingRequests">Obteniendo solicitudes de servicio</string>
+    <string name="sendingRequest">Enviando solicitud de servicio</string>
+    <string name="cancelRequestInProgress">Cancelando solicitud..</string>
 
     <!-- Notifications -->
     <string name="collaborationServiceStarted">El modo de seguimiento ha sido activado</string>

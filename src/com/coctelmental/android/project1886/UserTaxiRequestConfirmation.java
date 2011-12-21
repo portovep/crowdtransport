@@ -4,17 +4,22 @@ import java.net.HttpURLConnection;
 
 import com.coctelmental.android.project1886.c2dm.C2DMRegistrationReceiver;
 import com.coctelmental.android.project1886.logic.ControllerServiceRequests;
+import com.coctelmental.android.project1886.util.Tools;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class UserTaxiRequestConfirmation extends Activity{
 	
@@ -103,6 +108,12 @@ public class UserTaxiRequestConfirmation extends Activity{
     }
     
 	private class SendServiceRequestTask extends AsyncTask<Void, Void, Integer> {
+		private ProgressDialog pdSendingRequests;
+		
+		protected void onPreExecute () {
+			// show a progress dialog while data is retrieved from server
+			pdSendingRequests = ProgressDialog.show(UserTaxiRequestConfirmation.this, "", getString(R.string.sendingRequest), true);
+		}
 		
 	    protected Integer doInBackground(Void... params) {
 	    	// send service request to server
@@ -110,12 +121,27 @@ public class UserTaxiRequestConfirmation extends Activity{
 	    }
 
 	    protected void onPostExecute(Integer result) {
+	    	pdSendingRequests.dismiss();
 	        // check result
-	        if(result == HttpURLConnection.HTTP_OK) {
+	        if(result == HttpURLConnection.HTTP_OK) {	        	
 	        	Log.w("ServiceRequest", "ServiceRequest sent to server");
+	        	
+	        	Intent intent = new Intent(getApplicationContext(), UserTaxiWaitingPanel.class);
+	        	startActivity(intent);
+	        	finish();
 	        }				
 	        else {
-	        	Log.e("ServiceRequest", "Error trying send ServiceRequest to server" +
+				// default message = server not found
+				String message = getString(R.string.failServerNotFound);
+				if (result == HttpURLConnection.HTTP_NOT_ACCEPTABLE) {
+					message = getString(R.string.failSendingRequest);
+				}
+				else if (result == ControllerServiceRequests.ERROR_MALFORMED_REQUEST) {
+					message = getString(R.string.failMalformedServiceRequest);
+				}
+				Toast toast = Tools.buildToast(UserTaxiRequestConfirmation.this, message, Gravity.CENTER, Toast.LENGTH_SHORT);
+				toast.show();	
+	        	Log.w("ServiceRequest", "Error trying send ServiceRequest to server" +
 	        			"Error code -> (" + result + ")");
 	        }
 	    }
