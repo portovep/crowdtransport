@@ -10,6 +10,8 @@ import com.coctelmental.android.project1886.util.ConnectionsHandler;
 
 public class ControllerServiceRequests {
 	
+	public static final int ERROR_MALFORMED_REQUEST = -1;
+	
 	private static final String C2DM_REGISTRATION_RESOURCE = "/c2dm-registration";
 	private static final String SERVICE_REQUEST_RESOURCE = "/service-request";
 	
@@ -42,13 +44,30 @@ public class ControllerServiceRequests {
 	}
 	
 	public static int sendServiceRequest(){
-		int result = -1;
+		int result = ERROR_MALFORMED_REQUEST;
 
 		ServiceRequestInfo serviceRequest = MyApplication.getInstance().getServiceRequestInfo();
 		if (serviceRequest != null) {
 			// convert to json
 			String jsonServiceRequest = JsonHandler.toJson(serviceRequest);
 			result = ConnectionsHandler.put(SERVICE_REQUEST_RESOURCE, jsonServiceRequest);
+		}
+		
+		return result;		
+	}
+	
+	public static int cancelSentServiceRequest(){
+		int result = ERROR_MALFORMED_REQUEST;
+		
+		ServiceRequestInfo serviceRequest = MyApplication.getInstance().getServiceRequestInfo();
+		if (serviceRequest != null) {
+			String taxiUUID = serviceRequest.getTaxiDriverUUID();
+			String requestID = serviceRequest.getUserUUID();
+			
+			if (taxiUUID != null && requestID != null) {
+				String targetURL = SERVICE_REQUEST_RESOURCE + "/" + taxiUUID + "/request/" + requestID;
+				result = ConnectionsHandler.delete(targetURL);
+			}
 		}
 		
 		return result;		
