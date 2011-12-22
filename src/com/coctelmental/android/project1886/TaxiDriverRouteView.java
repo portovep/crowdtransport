@@ -1,9 +1,12 @@
 package com.coctelmental.android.project1886;
 
+import java.net.HttpURLConnection;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+import android.app.ProgressDialog;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -14,6 +17,7 @@ import android.widget.Toast;
 
 import com.coctelmental.android.project1886.common.GeoPointInfo;
 import com.coctelmental.android.project1886.common.util.JsonHandler;
+import com.coctelmental.android.project1886.logic.ControllerServiceRequests;
 import com.coctelmental.android.project1886.model.ServiceRequestInfo;
 import com.coctelmental.android.project1886.util.Tools;
 import com.google.android.maps.GeoPoint;
@@ -30,6 +34,7 @@ public class TaxiDriverRouteView extends MapActivity {
 
 	private MyLocationOverlay myLocationOverlay;
 	
+	private ServiceRequestInfo serviceRequest;
 	
 	@Override
 	protected boolean isRouteDisplayed() {
@@ -55,7 +60,7 @@ public class TaxiDriverRouteView extends MapActivity {
         if (extras != null)
         	jsonServiceRequest = extras.getString(SERVICE_REQUEST);
         
-        ServiceRequestInfo serviceRequest = null;
+        serviceRequest = null;
         if (jsonServiceRequest == null) {
         	Tools.buildToast(this, getString(R.string.errorGettingServiceRequestInfo), Gravity.CENTER, Toast.LENGTH_SHORT).show();
         	finish();
@@ -104,8 +109,8 @@ public class TaxiDriverRouteView extends MapActivity {
 	        bAcceptServiceRequest.setOnClickListener(new View.OnClickListener() {			
 				@Override
 				public void onClick(View v) {
-					// TO-DO
-					Tools.buildToast(getApplicationContext(), "TO-DO", Gravity.CENTER, Toast.LENGTH_SHORT).show();
+					// launch async task
+					new AcceptServiceRequestTask().execute();
 				}
 			});
 	        
@@ -157,4 +162,41 @@ public class TaxiDriverRouteView extends MapActivity {
 		}
 	}
 
+	private class AcceptServiceRequestTask extends AsyncTask<Void, Void, Integer> {
+		private ProgressDialog pdAcceptingRequest;
+		
+		protected void onPreExecute () {
+			// show a progress dialog while data is retrieved from server
+			pdAcceptingRequest = ProgressDialog.show(TaxiDriverRouteView.this, "", getString(R.string.sendingRequest), true);
+		}
+		
+	    protected Integer doInBackground(Void... params) {
+	    	// send request to server
+	        return ControllerServiceRequests.acceptServiceRequest(serviceRequest.getUserUUID());
+	    }
+
+	    protected void onPostExecute(Integer result) {
+	    	pdAcceptingRequest.dismiss();
+	        // check result
+	        if(result == HttpURLConnection.HTTP_OK) {	        	
+	        	Log.d("ServiceRequest", "ServiceRequest accepted");
+	        	
+				Tools.buildToast(getApplicationContext(), "TO-DO ACCEPTED", Gravity.CENTER, Toast.LENGTH_SHORT).show();
+	        	
+				// TO-DO
+	        }				
+	        else {
+				// default message = server not found
+				String message = getString(R.string.failServerNotFound);
+				if (result == HttpURLConnection.HTTP_NOT_ACCEPTABLE) {
+					message = getString(R.string.failAcceptingRequest);
+				}
+				
+				Toast toast = Tools.buildToast(TaxiDriverRouteView.this, message, Gravity.CENTER, Toast.LENGTH_SHORT);
+				toast.show();	
+	        	Log.d("ServiceRequest", "Error trying accept ServiceRequest in server" +
+	        			"Error code -> (" + result + ")");
+	        }
+	    }
+	}
 }

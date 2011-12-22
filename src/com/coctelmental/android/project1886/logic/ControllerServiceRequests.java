@@ -14,6 +14,7 @@ public class ControllerServiceRequests {
 	
 	private static final String C2DM_REGISTRATION_RESOURCE = "/c2dm-registration";
 	private static final String SERVICE_REQUEST_RESOURCE = "/service-request";
+	private static final String CONFIRMATION_REQUEST_RESOURCE = "/confirmation-request";
 	
 	private ControllerUsers controllerU;
 	
@@ -51,6 +52,21 @@ public class ControllerServiceRequests {
 			// convert to json
 			String jsonServiceRequest = JsonHandler.toJson(serviceRequest);
 			result = ConnectionsHandler.put(SERVICE_REQUEST_RESOURCE, jsonServiceRequest);
+		}
+		
+		return result;		
+	}
+
+	public static int acceptServiceRequest(String requestID){
+		int result = -1;
+	
+		if (requestID != null) {
+		    String taxiUUID = MyApplication.getInstance().id();
+		    // build data
+		    String[] request = {"accept", taxiUUID};
+		    String jsonRequest = JsonHandler.toJson(request);
+			String targetURL = CONFIRMATION_REQUEST_RESOURCE + "/" + requestID;
+			result = ConnectionsHandler.post(targetURL, jsonRequest);	
 		}
 		
 		return result;		

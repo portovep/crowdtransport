@@ -147,7 +147,8 @@
     <string name="failSendingRequest">Error al intentar enviar la solicitud, vuelva a intentarlo.</string>
     <string name="failCancelRequest">Error al intentar cancelar la solicitud, vuelva a intentarlo.</string>
     <string name="failMalformedServiceRequest">Alguno de los datos asociados a la solicitud no es válido. Vuelva a introducirlos.</string>
-
+	<string name="failAcceptingRequest">Error al intentar aceptar la solicitud, vuelva a intentarlo.</string>
+        
     <!-- Progress dialogs -->
     <string name="loadingCities">Obteniendo información de las ciudades disponibles</string>
     <string name="loadingLines">Obteniendo información de las líneas disponibles</string>
