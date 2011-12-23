@@ -31,18 +31,53 @@ public class ConnectionsHandler {
 			Representation r = cr.get(MediaType.APPLICATION_JSON);
 			// add response content to result bundle
 			result.setContent(r.getText());
-			
-			client.stop();
-			
 		}catch(Exception e){
 			e.printStackTrace();
 			result.setContent("");
 		}
+		
+		// close connection
+		try {
+			client.stop();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		// get response code and add it in the bundle to specify the cause
 		result.setResultCode(cr.getResponse().getStatus().getCode());
 		// release connection resources
 		cr.release();
 		return result;
+	}
+	
+	public static int post(String targetURL, String jsonString) {
+		// set default response status as 404
+		int responseStatus = Status.CLIENT_ERROR_NOT_FOUND.getCode();
+		// setup connector
+		Client client = new Client(Protocol.HTTP);
+		client.setConnectTimeout(10000); // 10s
+		ClientResource cr = new ClientResource(SERVER_ADDRESS+targetURL);
+		// attach client connector
+		cr.setNext(client);
+		try{
+			JsonRepresentation jsonRepresentation = new JsonRepresentation(jsonString);
+			cr.post(jsonRepresentation, MediaType.APPLICATION_JSON);
+			
+			responseStatus = cr.getResponse().getStatus().getCode();
+		}catch(Exception e){
+			e.printStackTrace();			
+			responseStatus = cr.getResponse().getStatus().getCode();
+		}
+		
+		// close connection
+		try {
+			client.stop();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		// release connection resources
+		cr.release();
+		return responseStatus;	
 	}
 	
 	public static int put(String targetURL, String jsonString) {
@@ -52,24 +87,9 @@ public class ConnectionsHandler {
 		try{
 			JsonRepresentation jsonRepresentation = new JsonRepresentation(jsonString);
 			cr.put(jsonRepresentation, MediaType.APPLICATION_JSON);
+			
 			responseStatus = cr.getResponse().getStatus().getCode();
-		}catch(Exception e){
-			e.printStackTrace();			
-			responseStatus = cr.getResponse().getStatus().getCode();
-		}
-		// release connection resources
-		cr.release();
-		return responseStatus;	
-	}
-	
-	public static int post(String targetURL, String jsonString) {
-		ClientResource cr = new ClientResource(SERVER_ADDRESS+targetURL);
-		// set default response status as 404
-		int responseStatus = Status.CLIENT_ERROR_NOT_FOUND.getCode();
-		try{
-			JsonRepresentation jsonRepresentation = new JsonRepresentation(jsonString);
-			cr.post(jsonRepresentation, MediaType.APPLICATION_JSON);
-			responseStatus = cr.getResponse().getStatus().getCode();
+			
 		}catch(Exception e){
 			e.printStackTrace();			
 			responseStatus = cr.getResponse().getStatus().getCode();
