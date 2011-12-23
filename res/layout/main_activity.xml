@@ -21,16 +21,29 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/text"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dip"
+            android:gravity="center"
+            android:text="@string/app_name"
+            android:textSize="16sp"
+            android:textStyle="italic"
+            android:typeface="serif"
+            versión="" >
+        </TextView>
+
+        <TextView
+            android:id="@+id/versionLabel"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="35dip"
-            android:layout_marginTop="35dip"
+            android:layout_marginTop="5dip"
             android:gravity="center"
-            android:text="(versión pre-alpha..)"
+            android:text="@string/versionText"
             android:textSize="14sp"
             android:textStyle="italic"
-            android:typeface="serif" >
+            android:typeface="serif"
+            versión="" >
         </TextView>
 
         <Button

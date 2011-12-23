@@ -4,7 +4,9 @@ import com.coctelmental.android.project1886.logic.ControllerUsers;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -27,6 +29,16 @@ public class MainActivity extends Activity{
         controllerU = new ControllerUsers();
         
         tvProfileName = (TextView) findViewById(R.id.profileName);
+        
+        // fill versión label
+        try {
+        	String versionName = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+        	TextView tvVersion = (TextView) findViewById(R.id.versionLabel);
+        	tvVersion.append(versionName);
+        	tvVersion.append(")");
+    	}catch (NameNotFoundException e) {
+			Log.w("APP_VERSION", "Version name not found");
+		}        
         
         Button bBusLocation = (Button) findViewById(R.id.buttonBus);
         bBusLocation.setOnClickListener(new View.OnClickListener() {		
