@@ -4,6 +4,7 @@ import java.net.HttpURLConnection;
 
 import com.coctelmental.android.project1886.R;
 import com.coctelmental.android.project1886.TaxiDriverInformationPanel;
+import com.coctelmental.android.project1886.UserTaxiWaitingPanel;
 import com.coctelmental.android.project1886.common.util.JsonHandler;
 import com.coctelmental.android.project1886.logic.ControllerServiceRequests;
 import com.coctelmental.android.project1886.model.ResultBundle;
@@ -22,6 +23,8 @@ public class C2DMessageReceiver extends BroadcastReceiver{
 	
 	private static final String TAXI_NOTIFICATION_PAYLOAD = "notify_taxiDriver";
 	private static final String USER_NOTIFICATION_PAYLOAD = "notify_user";
+	
+	private static final String USER_PAYLOAD_ACCEPT = "accept";
 	
 	private Context mContext;
 	
@@ -43,7 +46,7 @@ public class C2DMessageReceiver extends BroadcastReceiver{
 			}
 			else if (userNotificationData != null) {
 				Log.d("C2DM", "Message type -> User notification");
-				handleUserNotification(context);
+				handleUserNotification(context, userNotificationData);
 			}
 		}		
 	}
@@ -62,8 +65,20 @@ public class C2DMessageReceiver extends BroadcastReceiver{
 		context.sendBroadcast(intent);
 	}
 	
-	private void handleUserNotification(Context context) {
-		// TO-DO	
+	private void handleUserNotification(Context context, String payloadData) {
+		
+		// check payload data
+		if (payloadData.equals(USER_PAYLOAD_ACCEPT)) {
+			Log.d("C2DM", "TaxiDriver accept request");
+			// notify activity
+			Intent intent = new Intent(UserTaxiWaitingPanel.ACTION_REQUEST_RESPONSE_RECEIVER);
+			context.sendBroadcast(intent);
+		}
+		else {
+			Log.d("C2DM", "Unknown data");
+			// TO-DO
+			
+		}
 	}
 	
 	private class GetNewServiceRequestTask extends AsyncTask<String, Void, ResultBundle> {
