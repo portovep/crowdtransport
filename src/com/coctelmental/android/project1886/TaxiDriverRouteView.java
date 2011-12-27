@@ -2,10 +2,9 @@ package com.coctelmental.android.project1886;
 
 import java.net.HttpURLConnection;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 
 import android.app.ProgressDialog;
-import android.graphics.drawable.Drawable;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,7 +20,6 @@ import com.coctelmental.android.project1886.logic.ControllerServiceRequests;
 import com.coctelmental.android.project1886.model.ServiceRequestInfo;
 import com.coctelmental.android.project1886.util.Tools;
 import com.google.android.maps.GeoPoint;
-import com.google.android.maps.ItemizedOverlay;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
@@ -86,7 +84,7 @@ public class TaxiDriverRouteView extends MapActivity {
 			tvDistance.setText(" "+df.format(distance)+"m");
 	        
 	        // add overlays
-	        MyItemizedOverlay itemizedOverlay = new MyItemizedOverlay(getResources().getDrawable(R.drawable.marker_ori));
+	        RouteItemizedOverlay itemizedOverlay = new RouteItemizedOverlay(getResources().getDrawable(R.drawable.marker_ori));
 	        itemizedOverlay.addOverlay(overlayOri);
 	        itemizedOverlay.addOverlay(overlayDest, getResources().getDrawable(R.drawable.marker_dest));
 	        itemizedOverlay.populateNow();
@@ -128,39 +126,6 @@ public class TaxiDriverRouteView extends MapActivity {
 		myLocationOverlay.disableMyLocation();
 		super.onPause();
 	}
-	
-	private class MyItemizedOverlay extends ItemizedOverlay<OverlayItem> {
-		private ArrayList<OverlayItem> overlays;
-		
-		public MyItemizedOverlay(Drawable defaultMarker) {
-			super(boundCenterBottom(defaultMarker));
-			overlays = new ArrayList<OverlayItem>();
-		}
-
-		@Override
-		protected OverlayItem createItem(int i) {
-			return overlays.get(i);
-		}
-
-		@Override
-		public int size() {
-			return overlays.size();
-		}
-		
-		public void addOverlay(OverlayItem overlay) {
-			overlays.add(overlay);
-		}
-		
-		public void addOverlay(OverlayItem overlay, Drawable  marker) {
-			marker.setBounds(0, 0, marker.getIntrinsicWidth(), marker.getIntrinsicHeight());
-			overlay.setMarker(boundCenterBottom(marker));
-			overlays.add(overlay);
-		}
-		
-		public void populateNow() {
-			populate();
-		}
-	}
 
 	private class AcceptServiceRequestTask extends AsyncTask<Void, Void, Integer> {
 		private ProgressDialog pdAcceptingRequest;
@@ -181,9 +146,21 @@ public class TaxiDriverRouteView extends MapActivity {
 	        if(result == HttpURLConnection.HTTP_OK) {	        	
 	        	Log.d("ServiceRequest", "ServiceRequest accepted");
 	        	
-				Tools.buildToast(getApplicationContext(), "TO-DO ACCEPTED", Gravity.CENTER, Toast.LENGTH_SHORT).show();
-	        	
-				// TO-DO
+				Tools.buildToast(getApplicationContext(), "Ha aceptado la solicitud de servicio!", Gravity.CENTER, Toast.LENGTH_SHORT).show();
+				
+				// finish tracking service
+				Intent i = new Intent(getApplicationContext(), TrackingService.class);
+				stopService(i);
+				
+		    	// parse data to send into intent
+		    	String jsonServiceRequest = JsonHandler.toJson(serviceRequest);
+				
+				// goto new activity
+				Intent intent = new Intent(getApplicationContext(), TaxiDriverUserLocationView.class);
+		    	// attach JSON data to intent
+		    	intent.putExtra(SERVICE_REQUEST, jsonServiceRequest);
+	        	startActivity(intent);
+	        	finish();
 	        }				
 	        else {
 				// default message = server not found
