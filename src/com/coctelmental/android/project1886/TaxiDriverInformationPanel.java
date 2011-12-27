@@ -123,7 +123,7 @@ public class TaxiDriverInformationPanel extends Activity{
     	       .setCancelable(false)
     	       .setPositiveButton(getString(R.string.enableGPS), new DialogInterface.OnClickListener() {
     	           public void onClick(DialogInterface dialog, int id) {
-    	        	   dialog.dismiss();
+    	        	   dialog.cancel();
     	        	   Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
     	        	   intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     	        	   startActivity(intent);
@@ -132,7 +132,9 @@ public class TaxiDriverInformationPanel extends Activity{
 	           .setNegativeButton(getString(R.string.noEnableGPS), new DialogInterface.OnClickListener() {
 		           public void onClick(DialogInterface dialog, int id) {
 						dialog.cancel();
-						finishTrackingService();
+						if(MyApplication.getInstance().isServiceRunning(TrackingService.class.getName())) {
+							finishTrackingService();
+						}
 						goMainMenu();
 	        	   }
 	           });	
@@ -170,6 +172,7 @@ public class TaxiDriverInformationPanel extends Activity{
 	            startActivity(installIntent);
 	        }
 	    }
+	    super.onActivityResult(requestCode, resultCode, data);
 	}
 	
 	private BroadcastReceiver serviceRequestReceiver = new BroadcastReceiver() {
