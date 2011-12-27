@@ -60,7 +60,8 @@
         <activity android:name=".TaxiDriverMain" />
         <activity android:name=".TaxiDriverInformationPanel" />
         <activity android:name=".TaxiDriverRouteView" />
-		<activity android:name=".TaxiDriverUserLocationView" />
+		<activity android:name=".TaxiDriverRouteReminder" />
+		<activity android:name=".TaxiDriverAttendingServiceRequest" />
 		
         <receiver
             android:name=".c2dm.C2DMRegistrationReceiver"

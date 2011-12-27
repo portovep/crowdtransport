@@ -108,6 +108,14 @@
     <string name="labelYourLocation">Tú</string>
     <string name="bAcceptRequest">Aceptar solicitud</string>
 
+    <!-- Taxi driver user location reminder -->
+    <string name="timeSinceAcceptation">Tiempo transcurrido:</string>
+    <string name="bPickedUp">He recogido al cliente</string>
+
+    <!-- Taxi driver attending service request -->
+    <string name="messageAttendingRequest">Usted está atendiendo una solicitud en estos momentos.</string>
+    <string name="bServiceCompleted">Solicitud atendida</string>
+
     <!-- User taxi waiting panel -->
     <string name="labelWaitingConfirmation">Esperando confirmación del taxista..</string>
     <string name="bCancelRequest">Cancelar solicitud</string>

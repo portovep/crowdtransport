@@ -156,7 +156,7 @@ public class TaxiDriverRouteView extends MapActivity {
 		    	String jsonServiceRequest = JsonHandler.toJson(serviceRequest);
 				
 				// goto new activity
-				Intent intent = new Intent(getApplicationContext(), TaxiDriverUserLocationView.class);
+				Intent intent = new Intent(getApplicationContext(), TaxiDriverRouteReminder.class);
 		    	// attach JSON data to intent
 		    	intent.putExtra(SERVICE_REQUEST, jsonServiceRequest);
 	        	startActivity(intent);
