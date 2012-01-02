@@ -44,9 +44,10 @@ public class TaxiDriverInformationPanel extends Activity{
 	private Button bFinishService;
 	private ViewGroup backgroundLayout;
 	private TextView tvNumberOfRequest;
-
-	private ArrayList<ServiceRequestInfo> requests;
+	private AlertDialog gpsAlertDialog;
 	
+	private ArrayList<ServiceRequestInfo> requests;
+		
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -120,28 +121,31 @@ public class TaxiDriverInformationPanel extends Activity{
 	}
 	
 	private void showGPSDialog() {
-    	AlertDialog.Builder builder = new AlertDialog.Builder(this);
-    	builder.setMessage(getString(R.string.failGPSNotFound))
-    	       .setCancelable(false)
-    	       .setPositiveButton(getString(R.string.enableGPS), new DialogInterface.OnClickListener() {
-    	           public void onClick(DialogInterface dialog, int id) {
-    	        	   dialog.cancel();
-    	        	   Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-    	        	   intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-    	        	   startActivity(intent);
-	        	   }
-    	       })
-	           .setNegativeButton(getString(R.string.noEnableGPS), new DialogInterface.OnClickListener() {
-		           public void onClick(DialogInterface dialog, int id) {
-						dialog.cancel();
-						if(MyApplication.getInstance().isServiceRunning(TrackingService.class.getName())) {
-							finishTrackingService();
-						}
-						goMainMenu();
-	        	   }
-	           });	
-    	AlertDialog alert = builder.create();
-    	alert.show();
+		if (gpsAlertDialog == null) {
+			// build new alert dialog
+	    	AlertDialog.Builder builder = new AlertDialog.Builder(this);
+	    	builder.setMessage(getString(R.string.failGPSNotFound))
+	    	       .setCancelable(false)
+	    	       .setPositiveButton(getString(R.string.enableGPS), new DialogInterface.OnClickListener() {
+	    	           public void onClick(DialogInterface dialog, int id) {
+	    	        	   dialog.cancel();
+	    	        	   Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+	    	        	   intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+	    	        	   startActivity(intent);
+		        	   }
+	    	       })
+		           .setNegativeButton(getString(R.string.noEnableGPS), new DialogInterface.OnClickListener() {
+			           public void onClick(DialogInterface dialog, int id) {
+							dialog.cancel();
+							if(MyApplication.getInstance().isServiceRunning(TrackingService.class.getName())) {
+								finishTrackingService();
+							}
+							goMainMenu();
+		        	   }
+		           });	
+	    	gpsAlertDialog = builder.create();
+		}
+		gpsAlertDialog.show();
 	}
 	
 	private void startTrackingService() {
