@@ -76,6 +76,8 @@ public class TaxiDriverInformationPanel extends Activity{
         bFinishService.setOnClickListener(new View.OnClickListener() {			
 			@Override
 			public void onClick(View arg0) {
+				// launch cancellation async task
+				new RejectAllServiceRequestTask().execute();
 				// unregister C2DM
 				C2DMRegistrationReceiver.unregister(getApplicationContext());
 				// stop service
@@ -238,9 +240,6 @@ public class TaxiDriverInformationPanel extends Activity{
 		    		AlertDialog alert = builder.create();
 		    		alert.show();
 		    	}
-		    	else {
-
-		    	}
 	        }				
 	        else {
 				// default message = error server not found
@@ -255,6 +254,24 @@ public class TaxiDriverInformationPanel extends Activity{
 				}
 				Toast toast = Tools.buildToast(TaxiDriverInformationPanel.this, message, Gravity.CENTER, Toast.LENGTH_SHORT);
 				toast.show();				
+	        }
+	    }
+	}
+	
+	private class RejectAllServiceRequestTask extends AsyncTask<Void, Void, Integer> {
+		
+	    protected Integer doInBackground(Void... params) {
+	        return ControllerServiceRequests.rejectAllServiceRequest();
+	    }
+
+	    protected void onPostExecute(Integer result) {    	
+	        // check result
+	        if(result == HttpURLConnection.HTTP_OK) {
+	        	Log.w("TaxiServiceRequests", "All service request cancelled");
+	        }				
+	        else {
+	        	Log.w("TaxiServiceRequests", "Error trying cancel all service request" +
+	        			"Error code -> (" + result + ")");
 	        }
 	    }
 	}
