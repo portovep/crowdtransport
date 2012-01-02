@@ -1,20 +1,13 @@
 package com.coctelmental.android.project1886.c2dm;
 
-import java.net.HttpURLConnection;
-
 import com.coctelmental.android.project1886.R;
 import com.coctelmental.android.project1886.TaxiDriverInformationPanel;
 import com.coctelmental.android.project1886.UserTaxiWaitingPanel;
-import com.coctelmental.android.project1886.common.util.JsonHandler;
-import com.coctelmental.android.project1886.logic.ControllerServiceRequests;
-import com.coctelmental.android.project1886.model.ResultBundle;
-import com.coctelmental.android.project1886.model.ServiceRequestInfo;
 import com.coctelmental.android.project1886.tts.TextToSpeechService;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.util.Log;
 
 public class C2DMessageReceiver extends BroadcastReceiver{
@@ -22,12 +15,14 @@ public class C2DMessageReceiver extends BroadcastReceiver{
 	public static final String C2DM_RECEIVE_INTENT = "com.google.android.c2dm.intent.RECEIVE";
 	
 	private static final String TAXI_NOTIFICATION_PAYLOAD = "notify_taxiDriver";
+	private static final String TAXI_NUMBER_REQUESTS_PAYLOAD = "taxiDriver_number_requests";
 	private static final String USER_NOTIFICATION_PAYLOAD = "notify_user";
 	
 	public static final String USER_PAYLOAD_ACCEPT = "accept";
 	public static final String USER_PAYLOAD_CANCEL = "cancel";
 	
-	public static final String EXTRA_TAXI_RESPONSE = "e_taxi_response";
+	public static final String EXTRA_NUMBER_REQUESTS = "e_number_of_requests";
+	public static final String EXTRA_TAXI_RESPONSE = "e_taxi_response";	
 	
 	private Context mContext;
 	
@@ -44,8 +39,14 @@ public class C2DMessageReceiver extends BroadcastReceiver{
 			
 			// check notification type
 			if (taxiNotificationData != null) {
+				// get number of request
+				int nRequests = 0;
+				String sNumberRequests = intent.getStringExtra(TAXI_NUMBER_REQUESTS_PAYLOAD);
+				if (sNumberRequests != null && !sNumberRequests.equals(""))
+					nRequests = Integer.parseInt(sNumberRequests);
 				Log.d("C2DM", "Message type -> Taxi Driver notification");
-				handleTaxiNotification(context, taxiNotificationData);
+				Log.d("C2DM", "Number of requests -> " + nRequests);
+				handleTaxiNotification(context, taxiNotificationData, nRequests);
 			}
 			else if (userNotificationData != null) {
 				Log.d("C2DM", "Message type -> User notification");
@@ -54,17 +55,16 @@ public class C2DMessageReceiver extends BroadcastReceiver{
 		}		
 	}
 	
-	private void handleTaxiNotification(Context context, String requestID) {
-		// TO-DO
-		
-		// save context to use it in async task
+	private void handleTaxiNotification(Context context, String serviceRequestData, int nRequests) {
+		// save context
 		mContext = context;
 		
-		// launch async task to retrieve request info
-		new GetNewServiceRequestTask().execute(requestID);
+		// launch TTS
+		textToSpeech(serviceRequestData);
 		
 		// notify activity
 		Intent intent = new Intent(TaxiDriverInformationPanel.ACTION_RECEIVER_REQUEST);
+		intent.putExtra(EXTRA_NUMBER_REQUESTS, nRequests);
 		context.sendBroadcast(intent);
 	}
 	
@@ -89,40 +89,15 @@ public class C2DMessageReceiver extends BroadcastReceiver{
 		}
 	}
 	
-	private class GetNewServiceRequestTask extends AsyncTask<String, Void, ResultBundle> {
-	
-	    protected ResultBundle doInBackground(String... params) {
-	    	// retrieving new request from webservice
-	        return ControllerServiceRequests.getNewServiceRequest(params[0]);
-	    }
+	private void textToSpeech(String serviceRequestDATA) {
+		// setup TTS message
+		String ttsMessage = mContext.getString(R.string.newIncomingRequestTTS);
 
-	    protected void onPostExecute(ResultBundle rb) {
-	        // check result
-	        if(rb.getResultCode() == HttpURLConnection.HTTP_OK) {
-		    	String jsonServiceRequest = rb.getContent();
-		    	Log.d("GETTING SERVICE REQUEST", "Json request ->" + jsonServiceRequest);
-				// parse JSON data	
-		    	ServiceRequestInfo newServiceRequest = JsonHandler.fromJson(jsonServiceRequest, ServiceRequestInfo.class);
-		    			    	
-		    	if (newServiceRequest != null) {
-					Intent ttsIntent = new Intent(mContext, TextToSpeechService.class);
-					
-					// setup TTS message
-					String ttsMessage = mContext.getString(R.string.newIncomingRequestTTS);
-					
-					// attach TTS message
-					ttsIntent.putExtra(TextToSpeechService.TTS_MESSAGE, ttsMessage);
-					// call service to launch TTS (text to speech) task
-					mContext.startService(ttsIntent);	
-		    	}
-		    	else {
-		    		Log.w("GETTING SERVICE REQUEST", "Error retrieving service request data");
-		    	}
-	        }				
-	        else {
-				Log.w("GETTING SERVICE REQUEST", "Http error code -> " +Integer.toString(rb.getResultCode()));
-	        }
-	    }
+		Intent ttsIntent = new Intent(mContext, TextToSpeechService.class);
+		// attach TTS message
+		ttsIntent.putExtra(TextToSpeechService.TTS_MESSAGE, ttsMessage);
+		// call service to launch TTS (text to speech) task
+		mContext.startService(ttsIntent);
 	}
 	
 }

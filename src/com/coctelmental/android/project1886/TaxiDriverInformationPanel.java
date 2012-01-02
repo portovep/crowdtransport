@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.coctelmental.android.project1886.c2dm.C2DMRegistrationReceiver;
+import com.coctelmental.android.project1886.c2dm.C2DMessageReceiver;
 import com.coctelmental.android.project1886.common.util.JsonHandler;
 import com.coctelmental.android.project1886.logic.ControllerServiceRequests;
 import com.coctelmental.android.project1886.model.ResultBundle;
@@ -43,7 +44,7 @@ public class TaxiDriverInformationPanel extends Activity{
 	
 	private Button bFinishService;
 	private ViewGroup backgroundLayout;
-	private TextView tvNumberOfRequest;
+	private TextView tvNumberOfRequests;
 	private AlertDialog gpsAlertDialog;
 	
 	private ArrayList<ServiceRequestInfo> requests;
@@ -61,7 +62,7 @@ public class TaxiDriverInformationPanel extends Activity{
 	    // get layout
 		backgroundLayout = (LinearLayout) findViewById(R.id.containerBInformationPanel);
 		
-		tvNumberOfRequest = (TextView) findViewById(R.id.numberOfrequest);
+		tvNumberOfRequests = (TextView) findViewById(R.id.numberOfrequest);
 		
 		// setup layout as clickable
 		LinearLayout numberOfRequestLayout = (LinearLayout) findViewById(R.id.containerNumberRequests);
@@ -185,12 +186,13 @@ public class TaxiDriverInformationPanel extends Activity{
 				
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			// get number of request
-			int nRequest = Integer.parseInt(tvNumberOfRequest.getText().toString());
-			// update it
-			nRequest += 1;
-			// update in UI
-			tvNumberOfRequest.setText(String.valueOf(nRequest));
+			// get number of requests
+			int nRequests = intent.getIntExtra(C2DMessageReceiver.EXTRA_NUMBER_REQUESTS, -1);
+			if (nRequests > 0) {
+				// update UI
+				tvNumberOfRequests.setText(String.valueOf(nRequests));
+			}
+
 		}
 	};
 	
@@ -219,7 +221,7 @@ public class TaxiDriverInformationPanel extends Activity{
 		    	if (requests != null && !requests.isEmpty()) {
 		    		// update UI label
 		    		String nRequest = String.valueOf(requests.size());
-		    		tvNumberOfRequest.setText(nRequest);
+		    		tvNumberOfRequests.setText(nRequest);
 		    		
 		    		// setup adapter and dialog
 		    		AlertDialog.Builder builder = new AlertDialog.Builder(TaxiDriverInformationPanel.this);
@@ -253,7 +255,7 @@ public class TaxiDriverInformationPanel extends Activity{
 					// no request available
 		    		message = getString(R.string.serviceRequestsNotFound);
 		    		// reset label
-		    		tvNumberOfRequest.setText("0");
+		    		tvNumberOfRequests.setText("0");
 		    		Log.d("SERVICE REQUESTS", "Service requests found -> 0");
 				}
 				Toast toast = Tools.buildToast(TaxiDriverInformationPanel.this, message, Gravity.CENTER, Toast.LENGTH_SHORT);
