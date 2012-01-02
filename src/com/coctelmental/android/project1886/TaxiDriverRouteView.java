@@ -146,7 +146,7 @@ public class TaxiDriverRouteView extends MapActivity {
 	        if(result == HttpURLConnection.HTTP_OK) {	        	
 	        	Log.d("ServiceRequest", "ServiceRequest accepted");
 	        	
-				Tools.buildToast(getApplicationContext(), "Ha aceptado la solicitud de servicio!", Gravity.CENTER, Toast.LENGTH_SHORT).show();
+				Tools.buildToast(getApplicationContext(), getString(R.string.taxiDriverAcceptRequest), Gravity.CENTER, Toast.LENGTH_SHORT).show();
 				
 				// finish tracking service
 				Intent i = new Intent(getApplicationContext(), TrackingService.class);
@@ -176,4 +176,5 @@ public class TaxiDriverRouteView extends MapActivity {
 	        }
 	    }
 	}
+	
 }
