@@ -89,6 +89,12 @@ public class ControllerServiceRequests {
 		return result;		
 	}
 	
+	public static int rejectAllServiceRequest(){
+		String taxiUUID = MyApplication.getInstance().id();
+		String targetURL = SERVICE_REQUEST_RESOURCE + "/" + taxiUUID;
+		return ConnectionsHandler.delete(targetURL);		
+	}
+	
 	public static ResultBundle getNewServiceRequest(String requestID){
 		String taxiUUID = MyApplication.getInstance().id();
 		String targetURL = SERVICE_REQUEST_RESOURCE + "/" + taxiUUID + "/request/" + requestID;
