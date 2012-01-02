@@ -24,7 +24,10 @@ public class C2DMessageReceiver extends BroadcastReceiver{
 	private static final String TAXI_NOTIFICATION_PAYLOAD = "notify_taxiDriver";
 	private static final String USER_NOTIFICATION_PAYLOAD = "notify_user";
 	
-	private static final String USER_PAYLOAD_ACCEPT = "accept";
+	public static final String USER_PAYLOAD_ACCEPT = "accept";
+	public static final String USER_PAYLOAD_CANCEL = "cancel";
+	
+	public static final String EXTRA_TAXI_RESPONSE = "e_taxi_response";
 	
 	private Context mContext;
 	
@@ -65,19 +68,24 @@ public class C2DMessageReceiver extends BroadcastReceiver{
 		context.sendBroadcast(intent);
 	}
 	
-	private void handleUserNotification(Context context, String payloadData) {
-		
+	private void handleUserNotification(Context context, String payloadData) {		
 		// check payload data
 		if (payloadData.equals(USER_PAYLOAD_ACCEPT)) {
-			Log.d("C2DM", "TaxiDriver accept request");
+			Log.d("C2DM", "Message: Service request accepted");
 			// notify activity
 			Intent intent = new Intent(UserTaxiWaitingPanel.ACTION_REQUEST_RESPONSE_RECEIVER);
+			intent.putExtra(EXTRA_TAXI_RESPONSE, USER_PAYLOAD_ACCEPT);
+			context.sendBroadcast(intent);
+		}
+		else if (payloadData.equals(USER_PAYLOAD_CANCEL)) {
+			Log.d("C2DM", "Message: Service request canceled");
+			// notify activity
+			Intent intent = new Intent(UserTaxiWaitingPanel.ACTION_REQUEST_RESPONSE_RECEIVER);
+			intent.putExtra(EXTRA_TAXI_RESPONSE, USER_PAYLOAD_CANCEL);
 			context.sendBroadcast(intent);
 		}
 		else {
-			Log.d("C2DM", "Unknown data");
-			// TO-DO
-			
+			Log.d("C2DM", "Message: unknow");			
 		}
 	}
 	
