@@ -3,6 +3,7 @@ package com.coctelmental.android.project1886;
 import java.net.HttpURLConnection;
 
 import com.coctelmental.android.project1886.c2dm.C2DMRegistrationReceiver;
+import com.coctelmental.android.project1886.c2dm.C2DMessageReceiver;
 import com.coctelmental.android.project1886.logic.ControllerServiceRequests;
 import com.coctelmental.android.project1886.model.ServiceRequestInfo;
 import com.coctelmental.android.project1886.util.Tools;
@@ -89,9 +90,12 @@ public class UserTaxiWaitingPanel extends Activity {
             }
 
             public void onFinish() {
-            	progressBar.setVisibility(View.GONE);
-            	Tools.buildToast(getApplicationContext(), "DONE", Gravity.CENTER, Toast.LENGTH_SHORT).show();
-            	// TO-DO cancel request?
+            	unregisterAndShowResponse(getString(R.string.requestExpired));
+            	
+            	Tools.buildToast(getApplicationContext(), getString(R.string.requestExpiredMessage), Gravity.CENTER, Toast.LENGTH_SHORT).show();
+				
+            	// cancel expired request in webservice
+				new CancelExpiredServiceRequestTask().execute();
             }
          };
          
@@ -107,28 +111,52 @@ public class UserTaxiWaitingPanel extends Activity {
 		
 		@Override
 		public void onReceive(Context context, Intent intent) {			
-			// stop broadcast receiver
-			unregisterReceiver(responseToRequestReceiver);
-			// unregister C2DM
-			C2DMRegistrationReceiver.unregister(getApplicationContext());
-			// stop countDown
-			countDown.cancel();
+		
+			// check response
+			String response = intent.getStringExtra(C2DMessageReceiver.EXTRA_TAXI_RESPONSE);
+			if (response != null) {				
+				// request accepted
+				if (response.equals(C2DMessageReceiver.USER_PAYLOAD_ACCEPT)) {
+					
+					unregisterAndShowResponse(getString(R.string.requestAccepted));
+					// notify user
+					Tools.buildToast(getApplicationContext(), context.getString(R.string.requestAcceptedMessage),
+							Gravity.CENTER, Toast.LENGTH_SHORT).show();
+				}
+				// request canceled
+				else if (response.equals(C2DMessageReceiver.USER_PAYLOAD_CANCEL)) {
+					unregisterAndShowResponse(getString(R.string.requestNoAccepted));
+					// notify user
+					Tools.buildToast(getApplicationContext(), context.getString(R.string.requestCanceledMessage),
+							Gravity.CENTER, Toast.LENGTH_SHORT).show();
+				}				
+			}
 			
-			// fill UI label
-			TextView tvResponse = (TextView) findViewById(R.id.labelResponse);
-			tvResponse.setText(getString(R.string.requestAccepted));
-			
-			// switch panels
-			LinearLayout waitingContainer = (LinearLayout) findViewById(R.id.containerWaiting);
-			LinearLayout responseContainer = (LinearLayout) findViewById(R.id.containerResponse);
-			waitingContainer.setVisibility(View.GONE);
-			responseContainer.setVisibility(View.VISIBLE);
-			
-			// notify user
-			Tools.buildToast(getApplicationContext(), context.getString(R.string.requestAcceptedMessage),
-					Gravity.CENTER, Toast.LENGTH_SHORT).show();
 		}
 	};
+	
+	private void unregisterAndShowResponse(String responseMessage) {
+		
+		// stop countDown
+		countDown.cancel();
+		// stop broadcast receiver
+		unregisterReceiver(responseToRequestReceiver);
+		// unregister C2DM
+		C2DMRegistrationReceiver.unregister(getApplicationContext());
+		
+		
+		// get UI resources
+		TextView tvResponse = (TextView) findViewById(R.id.labelResponse);
+		LinearLayout waitingContainer = (LinearLayout) findViewById(R.id.containerWaiting);
+		LinearLayout responseContainer = (LinearLayout) findViewById(R.id.containerResponse);
+		
+		// fill text
+		tvResponse.setText(responseMessage);
+		
+		// switch panels
+		waitingContainer.setVisibility(View.GONE);
+		responseContainer.setVisibility(View.VISIBLE);
+	}
 	
 	private class CancelServiceRequestTask extends AsyncTask<Void, Void, Integer> {
 		private ProgressDialog pdSendingRequests;
@@ -175,6 +203,26 @@ public class UserTaxiWaitingPanel extends Activity {
 	        	Log.w("ServiceRequest", "Error trying cancel serviceRequest in webservice" +
 	        			"Error code -> (" + result + ")");
 	        }
+	    }
+	}
+	
+	private class CancelExpiredServiceRequestTask extends AsyncTask<Void, Void, Integer> {
+		
+	    protected Integer doInBackground(Void... params) {
+	        return ControllerServiceRequests.cancelSentServiceRequest();
+	    }
+
+	    protected void onPostExecute(Integer result) {
+	        // check result
+	        if(result == HttpURLConnection.HTTP_OK) {
+	        	Log.w("ServiceRequest", "Expired service request cancelled");
+	        }				
+	        else {
+	        	Log.w("ServiceRequest", "Error trying cancel expired service request in webservice" +
+	        			"Error code -> (" + result + ")");
+	        	
+	        	// TO-DO retry!
+	        }	
 	    }
 	}
 	

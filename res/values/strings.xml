@@ -107,6 +107,7 @@
     <!-- Taxi driver route view -->
     <string name="labelYourLocation">Tú</string>
     <string name="bAcceptRequest">Aceptar solicitud</string>
+    <string name="taxiDriverAcceptRequest">Ha aceptado la solicitud de servicio!</string>
 
     <!-- Taxi driver user location reminder -->
     <string name="timeSinceAcceptation">Tiempo transcurrido:</string>
@@ -119,11 +120,15 @@
     <!-- User taxi waiting panel -->
     <string name="labelWaitingConfirmation">Esperando confirmación del taxista..</string>
     <string name="bCancelRequest">Cancelar solicitud</string>
-    <string name="requestCanceled">Solicitud cancelada</string>
     <string name="bGoMainMenu">Volver al menú</string>
     <string name="requestAccepted">Solicitud aceptada!</string>
+    <string name="requestCanceled">Solicitud cancelada</string>
+    <string name="requestNoAccepted">Solicitud no aceptada.</string>
+    <string name="requestExpired">La solicitud ha caducado.</string>
     <string name="requestAcceptedMessage">Su solicitud de servicio ha sido aceptada</string>
-
+    <string name="requestCanceledMessage">Lo sentimos. Su solicitud de servicio no ha sido aceptada</string>
+	<string name="requestExpiredMessage">Lo sentimos. Su solicitud de servicio ha caducado</string>
+    
     <!-- Common buttons -->
     <string name="buttonBack">Volver atrás</string>
 
@@ -165,7 +170,7 @@
     <string name="loadingCities">Obteniendo información de las ciudades disponibles..</string>
     <string name="loadingLines">Obteniendo información de las líneas disponibles..</string>
     <string name="obtainingUserLocation">Obteniendo su ubicación..</string>
-    <string name="loadingRequests">Obteniendo solicitudes de servicio..</string>
+    <string name="loadingRequests">Obteniendo sus solicitudes de servicio..</string>
     <string name="sendingRequest">Enviando solicitud de servicio..</string>
     <string name="cancelRequestInProgress">Cancelando solicitud..</string>
 
