@@ -36,7 +36,9 @@ public class UserTaxiLocationMap extends MapActivity {
 	private static final int TIME_BETWEEN_UPDATES = 5000;	
 	private Timer updaterTimer;
 	
-	private AlertDialog alertDialogLocationNotFound; 	
+	private AlertDialog alertDialogLocationNotFound;
+	
+	private TaxiItemizedOverlay taxiItemizedOverlays;
 	
 	private ResultBundle updatedLocation;
     private GeoPointInfo gpOrigin = null;
@@ -87,8 +89,13 @@ public class UserTaxiLocationMap extends MapActivity {
         // focus map's center on origin geopoint
         mc.animateTo(new GeoPoint(gpOrigin.getLatitudeE6(), gpOrigin.getLongitudeE6()));
 	    
-	    // get reference for our marker custom icon
+	    // get custom marker icon
         drawableTaxiMarker = this.getResources().getDrawable(R.drawable.marker_taxi);    
+		
+		// setup custom overlays
+		taxiItemizedOverlays = new TaxiItemizedOverlay(drawableTaxiMarker, this);
+	    // add our custom overlay to the map
+        mapOverlays.add(taxiItemizedOverlays);
 	}
 	
 	@Override
@@ -121,7 +128,7 @@ public class UserTaxiLocationMap extends MapActivity {
 	    			" long="+newLocations.get(0).getLocation().getGeopoint().getLatitudeE6());
 
 	    	// remove previous overlays
-	    	TaxiItemizedOverlay taxiItemizedOverlays = new TaxiItemizedOverlay(drawableTaxiMarker, this);    
+	    	taxiItemizedOverlays.clear();   
 	    	
 	    	GeoPoint geopoint = null;
 	    	for(TaxiLocation taxiLocation : newLocations) {
@@ -138,38 +145,38 @@ public class UserTaxiLocationMap extends MapActivity {
 			    taxiItemizedOverlays.addOverlay(overlayItem);
 	    	}
 	    	taxiItemizedOverlays.populateNow();
-	    	
-	    	
-	    	// clear previous overlays
-	    	mapOverlays.clear();
-		    // adding our custom overlay to the list of the map
-	        mapOverlays.add(taxiItemizedOverlays);
+
 	        // re-draw the map with new overlays
 	        mapView.invalidate();
 	    }
 	    // no new locations
 		else {
-	    	// stop updaterTimer
-	    	stopUpdater();			
-	    	
-			// default message = error server not found
-			String errorMessage = getString(R.string.failServerNotFound);
-			
-			Log.e("Http error code", Integer.toString(rb.getResultCode()));
-			
-			if (rb.getResultCode() == HttpURLConnection.HTTP_NOT_ACCEPTABLE)
-				// if response code = request not acceptable
-				errorMessage = getString(R.string.taxiLocationsNotFound);			
-	    	
-	    	goPreviousActivity(errorMessage);
+			if (!taxiItemizedOverlays.isOverlayDialogVisible()) {
+		    	// stop updaterTimer
+		    	stopUpdater();			
+		    	
+				// default message = error server not found
+				String errorMessage = getString(R.string.failServerNotFound);
+				
+				Log.e("Http error code", Integer.toString(rb.getResultCode()));
+				
+				if (rb.getResultCode() == HttpURLConnection.HTTP_NOT_ACCEPTABLE)
+					// if response code = request not acceptable
+					errorMessage = getString(R.string.taxiLocationsNotFound);			
+		    	
+		    	goPreviousActivity(errorMessage);
+			}
 	    }
 	}
 
 	private class updaterTimerTask extends TimerTask {		
 		public void run() {
-			updatedLocation = controllerL.obtainTaxiLocation(gpOrigin);
-			// notify the handler
-			handler.sendEmptyMessage(0);
+
+			if (!taxiItemizedOverlays.isOverlayDialogVisible()) {
+				updatedLocation = controllerL.obtainTaxiLocation(gpOrigin);
+				// notify the handler
+				handler.sendEmptyMessage(0);
+			}
 		}
 	}
 	

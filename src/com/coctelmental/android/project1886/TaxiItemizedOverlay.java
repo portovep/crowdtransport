@@ -27,7 +27,7 @@ public class TaxiItemizedOverlay extends ItemizedOverlay<OverlayItem>{
 	
 	private TaxiDriverInfoAsyncTask taxiDriverInfoAsyncTask;
 	
-	private AlertDialog dialog;
+	private AlertDialog overlayDialog;
 	private View layoutInformationOverlay;
 	
 	private String selectedTaxiDriverID = null;
@@ -41,14 +41,14 @@ public class TaxiItemizedOverlay extends ItemizedOverlay<OverlayItem>{
 		
 		// get custom overlay layout
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		layoutInformationOverlay = (View) inflater.inflate(R.layout.user_taxi_information_overlay, null);;
+		layoutInformationOverlay = (View) inflater.inflate(R.layout.user_taxi_information_overlay, null);
 		Button bSelectTaxiDriver = (Button) layoutInformationOverlay.findViewById(R.id.buttonSelectTaxi);
 		
 		// setup button
 		bSelectTaxiDriver.setOnClickListener(new View.OnClickListener() {		
 			@Override
 			public void onClick(View v) {
-				dialog.dismiss();
+				overlayDialog.dismiss();
 				Intent intent = new Intent(mContext, UserTaxiRequestConfirmation.class);
 				// attach selected taxi driver ID, UUID and name to intent
 				intent.putExtra(UserTaxiRequestConfirmation.TAXI_DRIVER_ID, selectedTaxiDriverID);
@@ -62,7 +62,7 @@ public class TaxiItemizedOverlay extends ItemizedOverlay<OverlayItem>{
 		AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(mContext);
 		dialogBuilder.setTitle(R.string.taxiDriverInformation);
 		dialogBuilder.setView(layoutInformationOverlay);
-		dialog = dialogBuilder.create();
+		overlayDialog = dialogBuilder.create();
 	}
 	
 	public void addOverlay(OverlayItem overlay) {
@@ -88,7 +88,7 @@ public class TaxiItemizedOverlay extends ItemizedOverlay<OverlayItem>{
 		selectedTaxiDriverUUID = item.getSnippet();
 		
 		// show overlay dialog
-		dialog.show();
+		overlayDialog.show();
 		
 		// cancel previous launched async task if it's running
 		if (taxiDriverInfoAsyncTask != null)
@@ -102,6 +102,18 @@ public class TaxiItemizedOverlay extends ItemizedOverlay<OverlayItem>{
 	
 	public void populateNow() {
 		populate();
+	}
+	
+	public void clear() {
+		// clear array
+		aOverlays = new ArrayList<OverlayItem>();
+		populate();
+	}
+	
+	public boolean isOverlayDialogVisible() {
+		if (overlayDialog != null && overlayDialog.isShowing())
+			return true;
+		return false;
 	}
 	
 	private class TaxiDriverInfoAsyncTask extends AsyncTask<String, Void, ResultBundle> {
