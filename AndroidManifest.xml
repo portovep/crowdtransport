@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.coctelmental.android.project1886"
-    android:versionCode="2"
-    android:versionName="0.4.1" >
+    android:versionCode="3"
+    android:versionName="0.4.5" >
 
     <!-- C2DM service requires level 8 -->
     <uses-sdk android:minSdkVersion="8" />
@@ -20,53 +20,88 @@
     <uses-permission android:name="com.coctelmental.android.project1886.permission.C2D_MESSAGE" />
 
     <application
+        android:name="MyApplication"
         android:debuggable="true"
         android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
-        android:name="MyApplication" >
+        android:label="@string/app_name" >
         <uses-library android:name="com.google.android.maps" />
 
         <activity
+            android:name=".MainActivity"
             android:label="@string/app_name"
-            android:name=".MainActivity" >
-            <intent-filter >
+            android:screenOrientation="portrait" >
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
+            android:name=".Authentication"
             android:label="@string/loginActivity_name"
-            android:name=".Authentication" >
-        </activity>
+            android:screenOrientation="portrait" />
         <activity android:name=".UserAuthentication" />
         <activity android:name=".TaxiDriverAuthentication" />
         <activity android:name=".BusDriverAuthentication" />
-        <activity android:name=".Registration" />
+        <activity
+            android:name=".Registration"
+            android:screenOrientation="portrait" />
         <activity android:name=".UserRegistration" />
         <activity android:name=".TaxiDriverRegistration" />
         <activity android:name=".BusDriverRegistration" />
-        <activity android:name=".UserBusLineSelection" />
-        <activity android:name=".UserBusLocationMap" />
-        <activity android:name=".CollaboratorLineSelection" />
-        <activity android:name=".CollaboratorInformationPanel" />
-        <activity android:name=".UserTaxiRouteSpecification" />
-        <activity android:name=".UserTaxiLocationMap" />
-        <activity android:name=".UserTaxiRequestConfirmation" />
-        <activity android:name=".UserTaxiWaitingPanel" />
-        <activity android:name=".BusDriverMain" />
-        <activity android:name=".BusDriverLineSelection" />
-        <activity android:name=".BusDriverInformationPanel" />
-        <activity android:name=".TaxiDriverMain" />
-        <activity android:name=".TaxiDriverInformationPanel" />
-        <activity android:name=".TaxiDriverRouteView" />
-		<activity android:name=".TaxiDriverRouteReminder" />
-		<activity android:name=".TaxiDriverAttendingServiceRequest" />
-		
+        <activity
+            android:name=".UserBusLineSelection"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".UserBusLocationMap"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".CollaboratorLineSelection"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".CollaboratorInformationPanel"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".UserTaxiRouteSpecification"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".UserTaxiLocationMap"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".UserTaxiRequestConfirmation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".UserTaxiWaitingPanel"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".BusDriverMain"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".BusDriverLineSelection"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".BusDriverInformationPanel"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".TaxiDriverMain"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".TaxiDriverInformationPanel"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".TaxiDriverRouteView"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".TaxiDriverRouteReminder"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".TaxiDriverAttendingServiceRequest"
+            android:screenOrientation="portrait" />
+
         <receiver
             android:name=".c2dm.C2DMRegistrationReceiver"
             android:permission="com.google.android.c2dm.permission.SEND" >
-            <intent-filter >
+            <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
 
                 <category android:name="com.coctelmental.android.project1886" />
@@ -75,7 +110,7 @@
         <receiver
             android:name=".c2dm.C2DMessageReceiver"
             android:permission="com.google.android.c2dm.permission.SEND" >
-            <intent-filter >
+            <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
 
                 <category android:name="com.coctelmental.android.project1886" />
@@ -83,12 +118,12 @@
         </receiver>
 
         <service
-            android:exported="false"
-            android:name=".TrackingService" >
+            android:name=".TrackingService"
+            android:exported="false" >
         </service>
         <service
-            android:exported="false"
-            android:name=".tts.TextToSpeechService" >
+            android:name=".tts.TextToSpeechService"
+            android:exported="false" >
         </service>
     </application>
 

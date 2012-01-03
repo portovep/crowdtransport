@@ -34,7 +34,7 @@ public class MainActivity extends Activity{
         try {
         	String versionName = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
         	TextView tvVersion = (TextView) findViewById(R.id.versionLabel);
-        	tvVersion.append(versionName);
+        	tvVersion.append(" " + versionName);
         	tvVersion.append(")");
     	}catch (NameNotFoundException e) {
 			Log.w("APP_VERSION", "Version name not found");
