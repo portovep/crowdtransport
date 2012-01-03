@@ -1,5 +1,7 @@
 package com.coctelmental.android.project1886;
 
+import java.util.List;
+
 import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
@@ -17,6 +19,30 @@ public class UserLocationHelper {
 	public UserLocationHelper(Context context) {
 		// get location manager
 		lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+	}
+
+	public Location getValidLastKnownLocation(long maxTime, float minAccuracy) {
+		Location bestLocation = null;
+		long bestTime = maxTime;
+		float bestAccuracy = minAccuracy;
+		long now = System.currentTimeMillis();
+		
+		List<String> providers = lm.getAllProviders();
+		for(String provider : providers) {
+			Location location = lm.getLastKnownLocation(provider);
+			if (location != null) {
+				float accuracy = location.getAccuracy();
+				long time = now - location.getTime();
+				
+				if((time > 0 && time <= bestTime && accuracy <= bestAccuracy)) {
+					// time > 0 to elude a problem with some GPS time information
+					bestLocation = location;
+					bestAccuracy = accuracy;
+					bestTime = time;
+				}
+		  }
+		}
+		return bestLocation;
 	}
 	
 	public boolean setupListeners() {
@@ -38,10 +64,13 @@ public class UserLocationHelper {
 		public void onStatusChanged(String provider, int status, Bundle extras) {}
 		
 		@Override
-		public void onProviderEnabled(String provider) {}
-		
+		public void onProviderEnabled(String provider) {
+			gpsEnabled = true;
+		}
 		@Override
-		public void onProviderDisabled(String provider) {}
+		public void onProviderDisabled(String provider) {
+			gpsEnabled = false;
+		}
 		
 		@Override
 		public void onLocationChanged(Location location) {
@@ -58,10 +87,14 @@ public class UserLocationHelper {
 		public void onStatusChanged(String provider, int status, Bundle extras) {}
 		
 		@Override
-		public void onProviderEnabled(String provider) {}
+		public void onProviderEnabled(String provider) {
+			netEnabled = true;
+		}
 		
 		@Override
-		public void onProviderDisabled(String provider) {}
+		public void onProviderDisabled(String provider) {
+			netEnabled = false;
+		}
 		
 		@Override
 		public void onLocationChanged(Location location) {
@@ -72,6 +105,12 @@ public class UserLocationHelper {
 			lm.removeUpdates(gpsLocationListener);
 		}
 	};
+	
+	public boolean areProvidersEnabled() {
+		if(netEnabled || gpsEnabled)
+			return true;
+		return false;
+	}
 	
 	public boolean isLocationAvailable() {		
 		if(gpsLocation != null || netLocation != null)

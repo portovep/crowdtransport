@@ -36,8 +36,14 @@ import com.google.android.maps.OverlayItem;
 
 public class UserTaxiRouteSpecification extends MapActivity {
 	
+	private static final long LAST_LOCATION_MAX_TIME = 120000; // get last know location within last two minutes
+	private static final float LAST_LOCATION_MIN_ACCURACY = 500; // accuracy in meters
+	
 	private static final String ORIGIN_ID = "ORIGIN";
 	private static final String DESTINATION_ID = "DESTINATION";
+	
+	private static final int TIME_BETWEEN_EXECUTIONS = 2000; // 2s
+	private static final int MAX_TIME_LOOKING_FOR_LOCATION = 50000; // 50s
 	
 	private MapView mapView = null;
 	private static final int ZOOM_LEVEL = 17;
@@ -52,6 +58,8 @@ public class UserTaxiRouteSpecification extends MapActivity {
 	private UserLocationHelper userLocationHelper = null;
 	
 	private ControllerServiceRequests controllerSR;
+	
+	private int executions = 0;
 
 	@Override
 	protected boolean isRouteDisplayed() {
@@ -98,14 +106,21 @@ public class UserTaxiRouteSpecification extends MapActivity {
 		});
 	    
 	    userLocationHelper = new UserLocationHelper(getApplicationContext());
-	    if(!Tools.isConnectionAvailable(getApplicationContext()))
+	    // looking for a location which matches with given criteria
+	    Location validLastKnowUserLocation = userLocationHelper.getValidLastKnownLocation(LAST_LOCATION_MAX_TIME,
+	    		LAST_LOCATION_MIN_ACCURACY);
+	    if(validLastKnowUserLocation != null) {
+	    	setupOverlays(validLastKnowUserLocation);
+	    } 
+	    else if(!Tools.isConnectionAvailable(getApplicationContext()))
 	    	showBackAlertDialog(getString(R.string.failInternetConnectionNotFound));
 	    else if(!userLocationHelper.setupListeners())
 	    	showBackAlertDialog(getString(R.string.failLocationProviders));
 	    else{
 		    // setup timer to request user location
 		    timer = new Timer();
-		    timer.schedule(new GetUserLocationTask(), 6000);
+		    // check user location every 2 seconds
+		    timer.scheduleAtFixedRate(new GetUserLocationTask(), 0, TIME_BETWEEN_EXECUTIONS);
 		    
 		    // show progress dialog
 		    pdLookingLocation = ProgressDialog.show(this, "", getString(R.string.obtainingUserLocation), true);	
@@ -253,8 +268,9 @@ public class UserTaxiRouteSpecification extends MapActivity {
 		}
 	}
 	
-	private class GetUserLocationTask extends TimerTask {		
+	private class GetUserLocationTask extends TimerTask {
 		public void run() {
+			executions++;
 			// notify the handler
 			handler.sendEmptyMessage(0);
 		}
@@ -263,34 +279,53 @@ public class UserTaxiRouteSpecification extends MapActivity {
 	private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
-        	// cancel progress dialog
-        	pdLookingLocation.dismiss();
         	if(userLocationHelper.isLocationAvailable()) {
-				// show layout
-        		layout.setVisibility(View.VISIBLE);
+            	// cancel progress dialog
+            	pdLookingLocation.dismiss();
         		
-				Location l = userLocationHelper.getBestLocation();
-				Double lat = l.getLatitude() * 1E6;
-				Double lng = l.getLongitude() * 1E6;
-				// default origin point = current user location
-				gpOrigin = new GeoPoint(lat.intValue(), lng.intValue());
-				// default destination point = displaced point of origin
-			    gpDestination = new GeoPoint(gpOrigin.getLatitudeE6()+1150, gpOrigin.getLongitudeE6()+1150);
-			    
-			    MapController mc = mapView.getController();
-			    // center to origin geopoint
-			    mc.setCenter(gpOrigin);
-			    mc.setZoom(ZOOM_LEVEL);
-			    
-			    Drawable defaultMarker = (Drawable) getResources().getDrawable(R.drawable.marker_ori);
-			    defaultMarker.setBounds(0, 0, defaultMarker.getIntrinsicWidth(), defaultMarker.getIntrinsicHeight());
-			    //add our custom overlays
-			    mapView.getOverlays().add(new RouteSpecificationItemizedOverlay(defaultMarker));			    
+				Location userLocation = userLocationHelper.getBestLocation();
+				setupOverlays(userLocation);
+							    
 			}
-			else
-				showBackAlertDialog(getString(R.string.failUserLocationNotFound));				
+			else if ((executions * TIME_BETWEEN_EXECUTIONS) > MAX_TIME_LOOKING_FOR_LOCATION || !userLocationHelper.areProvidersEnabled()) {
+				// stop timer
+				timer.cancel();
+				// remove pending messages
+				handler.removeMessages(0);
+            	// hide progress dialog
+            	pdLookingLocation.dismiss();
+            	// get cause
+            	if (!userLocationHelper.areProvidersEnabled())
+            		// providers have been deactivated
+            		showBackAlertDialog(getString(R.string.failLocationProviders));
+            	else
+            		// no location found
+            		showBackAlertDialog(getString(R.string.failUserLocationNotFound));
+			}				
         }
 	};
+	
+	private void setupOverlays(Location userLocation) {
+		// show layout
+		layout.setVisibility(View.VISIBLE);
+		
+		Double lat = userLocation.getLatitude() * 1E6;
+		Double lng = userLocation.getLongitude() * 1E6;
+		// default origin point = current user location
+		gpOrigin = new GeoPoint(lat.intValue(), lng.intValue());
+		// default destination point = displaced point of origin
+	    gpDestination = new GeoPoint(gpOrigin.getLatitudeE6()+1150, gpOrigin.getLongitudeE6()+1150);
+	    
+	    MapController mc = mapView.getController();
+	    // center to origin geopoint
+	    mc.setCenter(gpOrigin);
+	    mc.setZoom(ZOOM_LEVEL);
+	    
+	    Drawable defaultMarker = (Drawable) getResources().getDrawable(R.drawable.marker_ori);
+	    defaultMarker.setBounds(0, 0, defaultMarker.getIntrinsicWidth(), defaultMarker.getIntrinsicHeight());
+	    //add our custom overlays
+	    mapView.getOverlays().add(new RouteSpecificationItemizedOverlay(defaultMarker));
+	}
 	
 	private void updateDistanceLabel() {
 		// calculating distance
