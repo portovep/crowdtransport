@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.coctelmental.android.project1886"
-    android:versionCode="3"
-    android:versionName="0.4.5" >
+    android:versionCode="4"
+    android:versionName="0.4.6" >
 
     <!-- C2DM service requires level 8 -->
     <uses-sdk android:minSdkVersion="8" />
@@ -28,8 +28,8 @@
 
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" >
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -38,65 +38,55 @@
         </activity>
         <activity
             android:name=".Authentication"
-            android:label="@string/loginActivity_name"
-            android:screenOrientation="portrait" />
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/loginActivity_name" />
         <activity android:name=".UserAuthentication" />
         <activity android:name=".TaxiDriverAuthentication" />
         <activity android:name=".BusDriverAuthentication" />
         <activity
             android:name=".Registration"
-            android:screenOrientation="portrait" />
+            android:configChanges="orientation|keyboardHidden" />
         <activity android:name=".UserRegistration" />
         <activity android:name=".TaxiDriverRegistration" />
         <activity android:name=".BusDriverRegistration" />
         <activity
             android:name=".UserBusLineSelection"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".UserBusLocationMap"
-            android:screenOrientation="portrait" />
+            android:configChanges="orientation|keyboardHidden" />
+        <activity android:name=".UserBusLocationMap" />
         <activity
             android:name=".CollaboratorLineSelection"
-            android:screenOrientation="portrait" />
+            android:configChanges="orientation|keyboardHidden" />
         <activity
             android:name=".CollaboratorInformationPanel"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".UserTaxiRouteSpecification"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".UserTaxiLocationMap"
-            android:screenOrientation="portrait" />
+            android:configChanges="orientation|keyboardHidden" />
+        <activity android:name=".UserTaxiRouteSpecification" />
+        <activity android:name=".UserTaxiLocationMap" />
         <activity
             android:name=".UserTaxiRequestConfirmation"
-            android:screenOrientation="portrait" />
+            android:configChanges="orientation|keyboardHidden" />
         <activity
             android:name=".UserTaxiWaitingPanel"
-            android:screenOrientation="portrait" />
+            android:configChanges="orientation|keyboardHidden" />
         <activity
             android:name=".BusDriverMain"
-            android:screenOrientation="portrait" />
+            android:configChanges="orientation|keyboardHidden" />
         <activity
             android:name=".BusDriverLineSelection"
-            android:screenOrientation="portrait" />
+            android:configChanges="orientation|keyboardHidden" />
         <activity
             android:name=".BusDriverInformationPanel"
-            android:screenOrientation="portrait" />
+            android:configChanges="orientation|keyboardHidden" />
         <activity
             android:name=".TaxiDriverMain"
-            android:screenOrientation="portrait" />
+            android:configChanges="orientation|keyboardHidden" />
         <activity
             android:name=".TaxiDriverInformationPanel"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".TaxiDriverRouteView"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".TaxiDriverRouteReminder"
-            android:screenOrientation="portrait" />
+            android:configChanges="orientation|keyboardHidden" />
+        <activity android:name=".TaxiDriverRouteView" />
+        <activity android:name=".TaxiDriverRouteReminder" />
         <activity
             android:name=".TaxiDriverAttendingServiceRequest"
-            android:screenOrientation="portrait" />
+            android:configChanges="orientation|keyboardHidden" />
 
         <receiver
             android:name=".c2dm.C2DMRegistrationReceiver"
