@@ -43,7 +43,7 @@ public class UserTaxiRouteSpecification extends MapActivity {
 	private static final String DESTINATION_ID = "DESTINATION";
 	
 	private static final int TIME_BETWEEN_EXECUTIONS = 2000; // 2s
-	private static final int MAX_TIME_LOOKING_FOR_LOCATION = 50000; // 50s
+	private static final int MAX_TIME_LOOKING_FOR_LOCATION = 60000; // 60s
 	
 	private MapView mapView = null;
 	private static final int ZOOM_LEVEL = 17;
