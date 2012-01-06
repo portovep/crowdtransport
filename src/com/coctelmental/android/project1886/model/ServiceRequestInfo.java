@@ -6,8 +6,8 @@ public class ServiceRequestInfo {
 
 	private String userUUID;
 	private String userID;
-	private GeoPointInfo gpOrigin;
-	private GeoPointInfo gpDestination;
+	private GeoPointInfo gpFrom;
+	private GeoPointInfo gpTo;
 	private String taxiDriverID;
 	private String taxiDriverUUID;
 	private String comment;
@@ -35,20 +35,20 @@ public class ServiceRequestInfo {
 		this.userID = userID;
 	}
 
-	public GeoPointInfo getGpOrigin() {
-		return gpOrigin;
+	public GeoPointInfo getGpFrom() {
+		return gpFrom;
 	}
 
-	public void setGpOrigin(GeoPointInfo gpOrigin) {
-		this.gpOrigin = gpOrigin;
+	public void setGpFrom(GeoPointInfo gpFrom) {
+		this.gpFrom = gpFrom;
 	}
 
-	public GeoPointInfo getGpDestination() {
-		return gpDestination;
+	public GeoPointInfo getGpTo() {
+		return gpTo;
 	}
 
-	public void setGpDestination(GeoPointInfo gpDestination) {
-		this.gpDestination = gpDestination;
+	public void setGpTo(GeoPointInfo gpTo) {
+		this.gpTo = gpTo;
 	}
 
 	public String getTaxiDriverID() {
@@ -82,7 +82,7 @@ public class ServiceRequestInfo {
 	public void setRequestLifeTime(int requestLifeTime) {
 		this.requestLifeTime = requestLifeTime;
 	}
-
+	
 	public String getAddressFrom() {
 		return addressFrom;
 	}

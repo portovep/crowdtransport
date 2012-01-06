@@ -97,8 +97,8 @@ public class UserTaxiRouteSpecification extends MapActivity {
 				// create new service request
 				controllerSR.createServiceRequest();
 				// add route info to service request
-				controllerSR.getServiceRequest().setGpOrigin(new GeoPointInfo(gpOrigin));
-				controllerSR.getServiceRequest().setGpDestination(new GeoPointInfo(gpDestination));
+				controllerSR.getServiceRequest().setGpFrom(new GeoPointInfo(gpOrigin));
+				controllerSR.getServiceRequest().setGpTo(new GeoPointInfo(gpDestination));
 				
 				Intent intent = new Intent(getApplicationContext(), UserTaxiLocationMap.class);
 				startActivity(intent);

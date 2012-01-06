@@ -66,7 +66,7 @@ public class UserTaxiLocationMap extends MapActivity {
         controllerSR = new ControllerServiceRequests();
         
 	    // get origin geopoint from service request info
-    	gpOrigin = controllerSR.getServiceRequest().getGpOrigin();        
+    	gpOrigin = controllerSR.getServiceRequest().getGpFrom();        
 	    
 	    Log.w(getString(R.string.app_name), "User loc: "+gpOrigin.getLatitudeE6()+" : "+gpOrigin.getLongitudeE6());
 	    

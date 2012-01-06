@@ -58,8 +58,8 @@ public class TaxiDriverRouteReminder extends MapActivity {
         else {
 	        serviceRequest = JsonHandler.fromJson(jsonServiceRequest, ServiceRequestInfo.class);
 	
-	        GeoPointInfo gpOri = serviceRequest.getGpOrigin();
-	        GeoPointInfo gpDest = serviceRequest.getGpDestination();
+	        GeoPointInfo gpOri = serviceRequest.getGpFrom();
+	        GeoPointInfo gpDest = serviceRequest.getGpTo();
 	        
 	        // setup overlays
 	        OverlayItem overlayOri = new OverlayItem(new GeoPoint(gpOri.getLatitudeE6(), gpOri.getLongitudeE6()),

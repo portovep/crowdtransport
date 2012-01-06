@@ -113,9 +113,9 @@ public class UserTaxiRequestConfirmation extends Activity{
 	    protected Integer doInBackground(Void... params) {
 	        
 			// get address name form origin and destination geopoints.
-			String addressName = getAddressFromGeoPointInfo(controllerSR.getServiceRequest().getGpOrigin());
+			String addressName = getAddressFromGeoPointInfo(controllerSR.getServiceRequest().getGpFrom());
 			controllerSR.getServiceRequest().setAddressFrom(addressName);
-			addressName = getAddressFromGeoPointInfo(controllerSR.getServiceRequest().getGpDestination());
+			addressName = getAddressFromGeoPointInfo(controllerSR.getServiceRequest().getGpTo());
 			controllerSR.getServiceRequest().setAddressTo(addressName);
 	        
 	        Log.d("Service request info"," TaxiDriver ID: "
@@ -123,9 +123,9 @@ public class UserTaxiRequestConfirmation extends Activity{
 	        		"\n TaxiDriver UUID: "
 	        		+controllerSR.getServiceRequest().getTaxiDriverUUID()+
 	        		"\n gpORI: "+
-	        		controllerSR.getServiceRequest().getGpOrigin().getLatitudeE6()+
+	        		controllerSR.getServiceRequest().getGpFrom().getLatitudeE6()+
 	        		"\n gpDEST: "+
-	        		controllerSR.getServiceRequest().getGpDestination().getLatitudeE6()+
+	        		controllerSR.getServiceRequest().getGpTo().getLatitudeE6()+
 	        		"\n commnet: "+
 	        		controllerSR.getServiceRequest().getComment()+
 	        		"\n lifetime: "+
