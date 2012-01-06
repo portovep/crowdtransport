@@ -104,6 +104,7 @@
     <string name="incomingRequest">Solicitudes recibidas:</string>
     <string name="serviceRequestsNotFound">En estos momentos no tiene solicitudes de servicio activas</string>
     <string name="chooseServiceRequest">Elija una solicitud</string>
+    <string name="unknownLocation">Localización desconocida</string>
     <!-- Taxi driver route view -->
     <string name="labelYourLocation">Tú</string>
     <string name="bAcceptRequest">Aceptar solicitud</string>

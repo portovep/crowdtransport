@@ -28,8 +28,8 @@ public class ServiceRequestAdapter extends ArrayAdapter<ServiceRequestInfo>{
 		ServiceRequestInfo request = getItem(position);
 		
 		// get data
-		String locationInfo = request.getUserID();
-		String locationComment = request.getComment();
+		String requestAddressInfo = request.getAddressFrom();
+		String requestComment = request.getComment();
 		
 		if (convertView == null){
 			// create new view
@@ -43,13 +43,21 @@ public class ServiceRequestAdapter extends ArrayAdapter<ServiceRequestInfo>{
 			requestView = (LinearLayout) convertView; 
 		}
 			
-		// fill list's row
-		TextView tvLocationInfo = (TextView) requestView.findViewById(R.id.adapterlocationInfo);
-		TextView tvLocationComment= (TextView) requestView.findViewById(R.id.adapterlocationComment);
+		// fill list rows
+		TextView tvRequestInfo = (TextView) requestView.findViewById(R.id.adapterlocationInfo);
+		TextView tvRequestComment= (TextView) requestView.findViewById(R.id.adapterlocationComment);
 		
-		tvLocationInfo.setText(locationInfo);
-		if (locationComment != null)
-			tvLocationComment.setText(locationComment);
+		// check if addressFrom name is available
+		if (requestAddressInfo != null && !requestAddressInfo.equals(""))
+			// show address name
+			tvRequestInfo.setText(requestAddressInfo);
+		else
+			// show default message
+			tvRequestInfo.setText(R.string.unknownLocation);
+		
+		// check if clarification comment is available
+		if (requestComment != null && !requestComment.equals(""))
+			tvRequestComment.setText(requestComment);
 		
 		return requestView;
 	}
