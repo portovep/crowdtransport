@@ -182,5 +182,8 @@
 
     <!-- TTS messages (tex-to-speech) -->
     <string name="newIncomingRequestTTS">"Ha recibido una nueva solicitud de servicio."</string>
+    <string name="originTTS">"Punto de recogida: "</string>
+    <string name="destinationTTS">"Destino: "</string>
+    <string name="clarificationCommentTTS">"Aclaración del usuario: "</string>
 
 </resources>
