@@ -280,7 +280,11 @@ public class UserTaxiRouteSpecification extends MapActivity {
         @Override
         public void handleMessage(Message msg) {
         	if(userLocationHelper.isLocationAvailable()) {
-            	// cancel progress dialog
+				// stop timer
+				timer.cancel();
+				// remove pending messages
+				handler.removeMessages(0);
+            	// hide progress dialog
             	pdLookingLocation.dismiss();
         		
 				Location userLocation = userLocationHelper.getBestLocation();
