@@ -127,8 +127,9 @@
     <string name="requestExpired">La solicitud ha caducado.</string>
     <string name="requestAcceptedMessage">Su solicitud de servicio ha sido aceptada</string>
     <string name="requestCanceledMessage">Lo sentimos. Su solicitud de servicio no ha sido aceptada</string>
-	<string name="requestExpiredMessage">Lo sentimos. Su solicitud de servicio ha caducado</string>
-    
+    <string name="requestExpiredMessage">Lo sentimos. Su solicitud de servicio ha caducado</string>
+    <string name="labelAddressInfo">"Punto de recogida: "</string>
+
     <!-- Common buttons -->
     <string name="buttonBack">Volver atrás</string>
 

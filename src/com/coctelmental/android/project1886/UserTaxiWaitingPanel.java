@@ -33,6 +33,8 @@ public class UserTaxiWaitingPanel extends Activity {
 	private ProgressBar progressBar;
 	private CountDownTimer countDown;
 	
+	private String addressFrom;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -42,6 +44,7 @@ public class UserTaxiWaitingPanel extends Activity {
 		ControllerServiceRequests controllerSR = new ControllerServiceRequests();
 		ServiceRequestInfo serviceRequest = controllerSR.getServiceRequest();
 		String targetTaxiDriverName = serviceRequest.getTaxiDriverID();
+		addressFrom = serviceRequest.getAddressFrom();
         
         // fill taxi driver name label
         TextView tvTaxiDriverName = (TextView) findViewById(R.id.tvTaxiDriverName);
@@ -117,7 +120,15 @@ public class UserTaxiWaitingPanel extends Activity {
 			if (response != null) {				
 				// request accepted
 				if (response.equals(C2DMessageReceiver.USER_PAYLOAD_ACCEPT)) {
-					
+			        // fill address info label
+			        TextView labelAddressInfo = (TextView) findViewById(R.id.labelAddressInfo);
+			        TextView tvAddressName = (TextView) findViewById(R.id.tvAddressName);
+			        if(addressFrom != null && !addressFrom.equals("")) {
+			        	tvAddressName.setText(addressFrom);
+			        	// show label and text
+			        	labelAddressInfo.setVisibility(View.VISIBLE);
+			        	tvAddressName.setVisibility(View.VISIBLE);
+		        	}
 					unregisterAndShowResponse(getString(R.string.requestAccepted));
 					// notify user
 					Tools.buildToast(getApplicationContext(), context.getString(R.string.requestAcceptedMessage),
