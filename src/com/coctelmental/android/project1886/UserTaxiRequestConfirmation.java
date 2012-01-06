@@ -1,14 +1,21 @@
 package com.coctelmental.android.project1886;
 
+import java.io.IOException;
 import java.net.HttpURLConnection;
+import java.util.List;
+import java.util.Locale;
 
 import com.coctelmental.android.project1886.c2dm.C2DMRegistrationReceiver;
+import com.coctelmental.android.project1886.common.GeoPointInfo;
 import com.coctelmental.android.project1886.logic.ControllerServiceRequests;
 import com.coctelmental.android.project1886.util.Tools;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -60,7 +67,7 @@ public class UserTaxiRequestConfirmation extends Activity{
     	controllerSR.getServiceRequest().setTaxiDriverID(targetTaxiDriverID);
     	// add taxi driver UUID to request info
     	controllerSR.getServiceRequest().setTaxiDriverUUID(targetTaxiDriverUUID);
-    	
+		
         // get edit text view
         etClarificationComment = (EditText) findViewById(R.id.etClarificationComment);
         
@@ -79,24 +86,12 @@ public class UserTaxiRequestConfirmation extends Activity{
 				// get clarification comment if there
 				String clarificationComment = etClarificationComment.getText().toString();
 				// add comment to service request info
-				controllerSR.getServiceRequest().setClarificationComment(clarificationComment);
+				controllerSR.getServiceRequest().setComment(clarificationComment);
 				// get request time life
 				int selectedPosition = spRequestLifeTime.getSelectedItemPosition();
 				// add selected time life to service request info
 				controllerSR.getServiceRequest().setRequestLifeTime(availableLifeTimes[selectedPosition]);
 				
-		        Log.d("Service request info"," TaxiDriver ID: "
-		        		+controllerSR.getServiceRequest().getTaxiDriverID()+
-		        		"\n TaxiDriver UUID: "
-		        		+controllerSR.getServiceRequest().getTaxiDriverUUID()+
-		        		"\n gpORI: "+
-		        		controllerSR.getServiceRequest().getGpOrigin().getLatitudeE6()+
-		        		"\n gpDEST: "+
-		        		controllerSR.getServiceRequest().getGpDestination().getLatitudeE6()+
-		        		"\n commnet: "+
-		        		controllerSR.getServiceRequest().getClarificationComment()+
-		        		"\n lifetime: "+
-		        		controllerSR.getServiceRequest().getRequestLifeTime());
 		        
 				// C2DM register to receive push notifications from web service
 				C2DMRegistrationReceiver.register(getApplicationContext());
@@ -116,6 +111,30 @@ public class UserTaxiRequestConfirmation extends Activity{
 		}
 		
 	    protected Integer doInBackground(Void... params) {
+	        
+			// get address name form origin and destination geopoints.
+			String addressName = getAddressFromGeoPointInfo(controllerSR.getServiceRequest().getGpOrigin());
+			controllerSR.getServiceRequest().setAddressFrom(addressName);
+			addressName = getAddressFromGeoPointInfo(controllerSR.getServiceRequest().getGpDestination());
+			controllerSR.getServiceRequest().setAddressTo(addressName);
+	        
+	        Log.d("Service request info"," TaxiDriver ID: "
+	        		+controllerSR.getServiceRequest().getTaxiDriverID()+
+	        		"\n TaxiDriver UUID: "
+	        		+controllerSR.getServiceRequest().getTaxiDriverUUID()+
+	        		"\n gpORI: "+
+	        		controllerSR.getServiceRequest().getGpOrigin().getLatitudeE6()+
+	        		"\n gpDEST: "+
+	        		controllerSR.getServiceRequest().getGpDestination().getLatitudeE6()+
+	        		"\n commnet: "+
+	        		controllerSR.getServiceRequest().getComment()+
+	        		"\n lifetime: "+
+	        		controllerSR.getServiceRequest().getRequestLifeTime() +
+	        		"\n addressFrom: "+
+	        		controllerSR.getServiceRequest().getAddressFrom() +
+	        		"\n addressTo: "+
+	        		controllerSR.getServiceRequest().getAddressTo());
+			
 	    	// send service request to server
 	        return ControllerServiceRequests.sendServiceRequest();
 	    }
@@ -145,5 +164,38 @@ public class UserTaxiRequestConfirmation extends Activity{
 	        			"Error code -> (" + result + ")");
 	        }
 	    }
+	}
+	
+	private String getAddressFromGeoPointInfo(GeoPointInfo geopoint) {
+		String addressName = null;
+		
+		if (geopoint == null)
+			return null;
+		
+		// setup location
+		Location location = new Location("");  
+		location.setLatitude(geopoint.getLatitudeE6() / 1E6);  
+		location.setLongitude(geopoint.getLongitudeE6() / 1E6);
+		
+		Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
+		try {
+			List<Address> addressList = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+			
+			if (addressList.size() == 1) {
+				Address address = addressList.get(0);
+				Log.d("Geocoder", "Address found");
+				addressName = address.getAddressLine(0);
+				if (addressName != null && !addressName.equals("")) {
+					// parse address to get address name only
+					int indexOfComma = addressName.indexOf(',');
+					addressName = addressName.substring(0, indexOfComma);
+					Log.d("Geocoder", addressName);
+				}
+			}
+		}catch (IOException ioe) {
+			Log.w("Geocoder", "Error trying get address from location");
+		}
+		
+		return addressName;
 	}
 }

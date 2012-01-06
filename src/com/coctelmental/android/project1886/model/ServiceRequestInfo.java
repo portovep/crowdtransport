@@ -10,8 +10,10 @@ public class ServiceRequestInfo {
 	private GeoPointInfo gpDestination;
 	private String taxiDriverID;
 	private String taxiDriverUUID;
-	private String clarificationComment;
+	private String comment;
 	private int requestLifeTime;
+	private String addressFrom;
+	private String addressTo;
 	
 	public ServiceRequestInfo(String userUUID) {
 		this.userUUID = userUUID;
@@ -65,12 +67,12 @@ public class ServiceRequestInfo {
 		this.taxiDriverUUID = taxiDriverUUID;
 	}
 
-	public String getClarificationComment() {
-		return clarificationComment;
+	public String getComment() {
+		return comment;
 	}
 
-	public void setClarificationComment(String comment) {
-		this.clarificationComment = comment;
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
 
 	public int getRequestLifeTime() {
@@ -79,6 +81,22 @@ public class ServiceRequestInfo {
 
 	public void setRequestLifeTime(int requestLifeTime) {
 		this.requestLifeTime = requestLifeTime;
+	}
+
+	public String getAddressFrom() {
+		return addressFrom;
+	}
+
+	public void setAddressFrom(String addressFrom) {
+		this.addressFrom = addressFrom;
+	}
+
+	public String getAddressTo() {
+		return addressTo;
+	}
+
+	public void setAddressTo(String addressTo) {
+		this.addressTo = addressTo;
 	}
 	
 }

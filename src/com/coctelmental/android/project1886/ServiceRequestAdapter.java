@@ -29,7 +29,7 @@ public class ServiceRequestAdapter extends ArrayAdapter<ServiceRequestInfo>{
 		
 		// get data
 		String locationInfo = request.getUserID();
-		String locationComment = request.getClarificationComment();
+		String locationComment = request.getComment();
 		
 		if (convertView == null){
 			// create new view
