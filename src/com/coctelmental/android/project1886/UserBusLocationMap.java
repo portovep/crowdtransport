@@ -75,7 +75,11 @@ public class UserBusLocationMap extends MapActivity {
 	    
 	    // setup information label at the top of view
 	    infoLabel = (TextView) findViewById(R.id.infoLabel);
-	    infoLabel.append(targetCity+" -> "+targetLine);
+	    infoLabel.append(targetCity);
+	    infoLabel.append(": ");
+	    infoLabel.append(getString(R.string.line));
+	    infoLabel.append(" ");
+	    infoLabel.append(targetLine);
 	    
 	    // setup map configuration
 	    mapView = (MapView) findViewById(R.id.mapBusLocation);
@@ -125,7 +129,7 @@ public class UserBusLocationMap extends MapActivity {
 	    	ArrayList<BusLocation> newLocations = JsonHandler.fromJson(jsonLocations, listType);
 
 	    	Log.w(getString(R.string.app_name), "New location received ("+newLocations.size()+")," +
-	    			" lat="+newLocations.get(0).getLatitude()+" long="+newLocations.get(0).getLongitude());
+	    			" lat="+newLocations.get(0).getGeopoint().getLatitudeE6()+" long="+newLocations.get(0).getGeopoint().getLongitudeE6());
 
 	    	// remove previous overlays
 	    	CustomItemizedOverlay busItemizedOverlays = new CustomItemizedOverlay(drawableBusMarker, this);    
@@ -133,7 +137,7 @@ public class UserBusLocationMap extends MapActivity {
 	    	GeoPoint geopoint = null;
 	    	for(BusLocation busLocation : newLocations) {
 		    	// setup a Android GeoPoint with received position and add it to the new overlay item
-			    geopoint = new GeoPoint(busLocation.getLatitude(), busLocation.getLongitude());
+			    geopoint = new GeoPoint(busLocation.getGeopoint().getLatitudeE6(), busLocation.getGeopoint().getLongitudeE6());
 			    // setup overlay item
 			    OverlayItem overlayItem = new OverlayItem(geopoint, busLocation.getBusLocationID(),
 			    		getString(R.string.whenReceived)+": "+Tools.getTime(busLocation.getWhen())+"\n"+
