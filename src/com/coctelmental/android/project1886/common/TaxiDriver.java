@@ -9,19 +9,19 @@ public class TaxiDriver {
 	private String password;
 	private String email;
 	private String licenceNumber;
-	private String carTradeMark;
+	private String carBrand;
 	private String carModel;
 	
 	public TaxiDriver() {}
 	
 	public TaxiDriver(String dni, String fullName, String password, String email, String licenceNumber,
-			String carTradeMark, String carModel) {
+			String carBrand, String carModel) {
 		this.dni = dni;
 		this.fullName = fullName;
 		this.password = password;
 		this.email = email;
 		this.licenceNumber = licenceNumber;
-		this.carTradeMark = carTradeMark;
+		this.carBrand = carBrand;
 		this.carModel = carModel;
 	}
 
@@ -57,12 +57,12 @@ public class TaxiDriver {
 		this.licenceNumber = licenceNumber;
 	}
 
-	public String getCarTradeMark() {
-		return carTradeMark;
+	public String getCarBrand() {
+		return carBrand;
 	}
 
-	public void setCarTradeMark(String carTradeMark) {
-		this.carTradeMark = carTradeMark;
+	public void setCarBrand(String carBrand) {
+		this.carBrand = carBrand;
 	}
 
 	public String getCarModel() {
@@ -87,7 +87,7 @@ public class TaxiDriver {
 							 "email: %s\n" +
 							 "licence: %s\n" +
 							 "carTradeMark: %s\n" +
-							 "carModel: %s", dni, fullName, email, licenceNumber, carTradeMark, carModel );
+							 "carModel: %s", dni, fullName, email, licenceNumber, carBrand, carModel );
 	}
 
 	public String toJson() {
