@@ -38,8 +38,8 @@ public class ControllerLocations {
 			CollaboratorBusLocation cBusLocation = new CollaboratorBusLocation(userID);
 			Double latitude = location.getLatitude()*1E6;
 			Double longitude = location.getLongitude()*1E6;
-			cBusLocation.setLatitude(latitude.intValue());
-			cBusLocation.setLongitude(longitude.intValue());	
+			GeoPointInfo gp = new GeoPointInfo(latitude.intValue(), longitude.intValue());
+			cBusLocation.setGeopoint(gp);	
 			
 	        // get targets
 	        String[] storedInfo = MyApplication.getInstance().getStoredTrackingInfo();
@@ -48,7 +48,7 @@ public class ControllerLocations {
 			
 			String resourceID = city + line;
 			String targetURL = LOCATION_RESOURCE + "/" + resourceID;
-			result = ConnectionsHandler.put(targetURL, cBusLocation.toJson());
+			result = ConnectionsHandler.put(targetURL, JsonHandler.toJson(cBusLocation));
 			
 			// Log
 			String newLocation = location.getLatitude() + " - " + location.getLongitude();
@@ -66,8 +66,8 @@ public class ControllerLocations {
 			CollaboratorBusLocation cBusLocation = new CollaboratorBusLocation(busDriverID);
 			Double latitude = location.getLatitude()*1E6;
 			Double longitude = location.getLongitude()*1E6;
-			cBusLocation.setLatitude(latitude.intValue());
-			cBusLocation.setLongitude(longitude.intValue());	
+			GeoPointInfo gp = new GeoPointInfo(latitude.intValue(), longitude.intValue());
+			cBusLocation.setGeopoint(gp);		
 			
 	        // get targets
 	        String[] storedInfo = MyApplication.getInstance().getStoredTrackingInfo();
@@ -76,7 +76,7 @@ public class ControllerLocations {
 			
 			String resourceID = city + line;
 			String targetURL = LOCATION_RESOURCE + "/" + resourceID;
-			result = ConnectionsHandler.put(targetURL, cBusLocation.toJson());
+			result = ConnectionsHandler.put(targetURL, JsonHandler.toJson(cBusLocation));
 			
 			// Log
 			String newLocation = location.getLatitude() + " - " + location.getLongitude();
