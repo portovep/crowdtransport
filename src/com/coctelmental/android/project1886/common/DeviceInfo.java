@@ -12,8 +12,8 @@ public class DeviceInfo {
 	public String getUUID() {
 		return UUID;
 	}
-	public void setUUID(String uUID) {
-		UUID = uUID;
+	public void setUUID(String UUID) {
+		this.UUID = UUID;
 	}
 	
 	public String getRegistrationID() {
