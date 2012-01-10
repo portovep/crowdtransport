@@ -14,7 +14,7 @@ public class ControllerServiceRequests {
 	
 	private static final String C2DM_REGISTRATION_RESOURCE = "/c2dm-registration";
 	private static final String SERVICE_REQUEST_RESOURCE = "/service-request";
-	private static final String CONFIRMATION_REQUEST_RESOURCE = "/confirmation-request";
+	private static final String CONFIRMATION_REQUEST_RESOURCE = "/request-response";
 	
 	private ControllerUsers controllerU;
 	
