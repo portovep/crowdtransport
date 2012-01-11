@@ -14,19 +14,19 @@ import android.util.Log;
 
 public class C2DMRegistrationReceiver extends BroadcastReceiver{
 	
-	public static final String C2DM_REGISTRATION_ACTION = "com.google.android.c2dm.intent.REGISTRATION";
-	public static final String C2DM_REGISTRATION_INTENT = "com.google.android.c2dm.intent.REGISTER";
-	public static final String C2DM_UNREGISTRATION_INTENT = "com.google.android.c2dm.intent.UNREGISTER";
+	private static final String C2DM_REGISTRATION_ACTION = "com.google.android.c2dm.intent.REGISTRATION";
+	private static final String C2DM_REGISTRATION_INTENT = "com.google.android.c2dm.intent.REGISTER";
+	private static final String C2DM_UNREGISTRATION_INTENT = "com.google.android.c2dm.intent.UNREGISTER";
 	
-    // extras in the registration callback intents.
-    public static final String EXTRA_REGISTRATION_ID = "registration_id";
-    public static final String EXTRA_UNREGISTERED = "unregistered";
-    public static final String EXTRA_ERROR = "error";
+    // extras in registration callback intents.
+    private static final String EXTRA_REGISTRATION_ID = "registration_id";
+    private static final String EXTRA_UNREGISTERED = "unregistered";
+    private static final String EXTRA_ERROR = "error";
     
     // extras in registration intents
-    public static final String EXTRA_SENDER = "sender";
-    public static final String EXTRA_APPLICATION_PENDING_INTENT = "app";
-    public static final String SENDER_ID = "project1886@gmail.com";
+    private static final String EXTRA_SENDER = "sender";
+    private static final String EXTRA_APPLICATION_PENDING_INTENT = "app";
+    private static final String SENDER_ID = "project1886@gmail.com";
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
@@ -35,7 +35,7 @@ public class C2DMRegistrationReceiver extends BroadcastReceiver{
 	    }
 	}
 	
-	protected void handleRegistration(Context context, Intent intent) {
+	private void handleRegistration(Context context, Intent intent) {
 		 String registrationID = intent.getStringExtra(EXTRA_REGISTRATION_ID);
 		 
 		 if (intent.getStringExtra(EXTRA_ERROR) != null)

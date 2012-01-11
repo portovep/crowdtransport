@@ -117,7 +117,7 @@ public class UserTaxiWaitingPanel extends Activity {
 			String response = intent.getStringExtra(C2DMessageReceiver.EXTRA_TAXI_RESPONSE);
 			if (response != null) {				
 				// request accepted
-				if (response.equals(C2DMessageReceiver.USER_PAYLOAD_ACCEPT)) {
+				if (response.equals(C2DMessageReceiver.PAYLOAD_USER_RESPONSE_ACCEPT)) {
 			        // fill address info label
 			        TextView labelAddressInfo = (TextView) findViewById(R.id.labelAddressInfo);
 			        TextView tvAddressName = (TextView) findViewById(R.id.tvAddressName);
@@ -133,7 +133,7 @@ public class UserTaxiWaitingPanel extends Activity {
 							Gravity.CENTER, Toast.LENGTH_SHORT).show();
 				}
 				// request canceled
-				else if (response.equals(C2DMessageReceiver.USER_PAYLOAD_CANCEL)) {
+				else if (response.equals(C2DMessageReceiver.PAYLOAD_USER_RESPONSE_CANCEL)) {
 					unregisterAndShowResponse(getString(R.string.requestNoAccepted));
 					// notify user
 					Tools.buildToast(getApplicationContext(), context.getString(R.string.requestCanceledMessage),
