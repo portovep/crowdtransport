@@ -3,7 +3,7 @@ package com.coctelmental.android.project1886.c2dm;
 import com.coctelmental.android.project1886.R;
 import com.coctelmental.android.project1886.TaxiDriverInformationPanel;
 import com.coctelmental.android.project1886.UserTaxiWaitingPanel;
-import com.coctelmental.android.project1886.tts.TextToSpeechService;
+import com.coctelmental.android.project1886.tts.TextToSpeechMain;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -95,7 +95,7 @@ public class C2DMessageReceiver extends BroadcastReceiver{
 		String ttsMessage = sb.toString();
 		
 		// launch TTS
-		textToSpeech(ttsMessage);
+		TextToSpeechMain.playMessage(mContext, ttsMessage);
 		
 		// notify activity
 		Intent intent = new Intent(TaxiDriverInformationPanel.ACTION_RECEIVER_REQUEST);
@@ -124,12 +124,5 @@ public class C2DMessageReceiver extends BroadcastReceiver{
 		}
 	}
 	
-	private void textToSpeech(String ttsMessage) {
-		Intent ttsIntent = new Intent(mContext, TextToSpeechService.class);
-		// attach TTS message
-		ttsIntent.putExtra(TextToSpeechService.TTS_MESSAGE, ttsMessage);
-		// call service to launch TTS (text to speech) task
-		mContext.startService(ttsIntent);
-	}
 	
 }

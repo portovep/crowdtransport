@@ -4,8 +4,8 @@ import java.net.HttpURLConnection;
 
 import com.coctelmental.android.project1886.c2dm.C2DMRegistrationReceiver;
 import com.coctelmental.android.project1886.c2dm.C2DMessageReceiver;
+import com.coctelmental.android.project1886.common.ServiceRequestInfo;
 import com.coctelmental.android.project1886.logic.ControllerServiceRequests;
-import com.coctelmental.android.project1886.model.ServiceRequestInfo;
 import com.coctelmental.android.project1886.util.Tools;
 
 import android.app.Activity;

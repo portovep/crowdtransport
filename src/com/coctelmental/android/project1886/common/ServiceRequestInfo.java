@@ -1,6 +1,5 @@
-package com.coctelmental.android.project1886.model;
+package com.coctelmental.android.project1886.common;
 
-import com.coctelmental.android.project1886.common.GeoPointInfo;
 
 public class ServiceRequestInfo {
 

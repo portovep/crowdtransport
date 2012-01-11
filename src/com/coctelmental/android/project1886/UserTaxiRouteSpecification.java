@@ -51,7 +51,7 @@ public class UserTaxiRouteSpecification extends MapActivity {
 	private GeoPoint gpOrigin = null;
 	private GeoPoint gpDestination = null;
 	
-	private LinearLayout layout;
+	private RelativeLayout layout;
 	private TextView tvDistance;
 	private ProgressDialog pdLookingLocation = null;	
 	private Timer timer = null;
@@ -75,7 +75,7 @@ public class UserTaxiRouteSpecification extends MapActivity {
 	    controllerSR = new ControllerServiceRequests();
 	    
 	    // get layout and set invisible during setup
-	    layout = (LinearLayout) findViewById(R.id.container);
+	    layout = (RelativeLayout) findViewById(R.id.container);
 	    layout.setVisibility(ViewGroup.GONE);
 	    
         // get distance label

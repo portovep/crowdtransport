@@ -28,7 +28,7 @@ public class TaxiDriverRegistration extends Activity {
 	private EditText etPassword2;
 	private EditText etEmail;
 	private EditText etLicenceNumber;
-	private EditText etCarTradeMark;
+	private EditText etCarBrand;
 	private EditText etCarModel;
 	private Button bSend;
 	
@@ -38,7 +38,7 @@ public class TaxiDriverRegistration extends Activity {
 	private String password2;
 	private String email;
 	private String licence;
-	private String carTradeMark;
+	private String carBrand;
 	private String carModel;
 	
 	private ControllerUsers controllerU;
@@ -58,7 +58,7 @@ public class TaxiDriverRegistration extends Activity {
         etPassword2= (EditText) findViewById(R.id.password2);
         etEmail= (EditText) findViewById(R.id.email);
         etLicenceNumber = (EditText) findViewById(R.id.licenceNumber);
-        etCarTradeMark = (EditText) findViewById(R.id.carTradeMark);
+        etCarBrand = (EditText) findViewById(R.id.carBrand);
         etCarModel = (EditText) findViewById(R.id.carModel);
         
         bSend= (Button) findViewById(R.id.buttonRegisterTaxis);
@@ -73,11 +73,11 @@ public class TaxiDriverRegistration extends Activity {
 				password2= etPassword2.getText().toString();
 				email= etEmail.getText().toString();
 				licence= etLicenceNumber.getText().toString();
-				carTradeMark= etCarTradeMark.getText().toString();
+				carBrand= etCarBrand.getText().toString();
 				carModel= etCarModel.getText().toString();			
 				// looking for invalid data
 				if(fullName.equals("") || dni.equals("") || password.equals("") || password2.equals("") || email.equals("") ||
-						licence.equals("") || carTradeMark.equals("") || carModel.equals(""))
+						licence.equals("") || carBrand.equals("") || carModel.equals(""))
 					Tools.buildToast(getApplicationContext(), getString(R.string.missingFields),
 							Gravity.CENTER, Toast.LENGTH_SHORT).show();
 				else if (!password.equals(password2))
@@ -104,7 +104,7 @@ public class TaxiDriverRegistration extends Activity {
 	    protected Integer doInBackground(Void... params) {
 			// create a taxiDriver instance with registration data
 			taxiDriver= new TaxiDriver(dni, fullName, controllerU.passwordToDigest(password), email,
-					licence, carTradeMark, carModel);
+					licence, carBrand, carModel);
 			// send request to the server and return response code
 	        return tryRegistration(taxiDriver);
 	    }	    

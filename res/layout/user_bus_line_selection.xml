@@ -1,40 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView 
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent"
-	android:layout_height="fill_parent"
-	android:orientation="vertical"
-	android:fillViewport="true">
-	
-	
-	<LinearLayout
-	  xmlns:android="http://schemas.android.com/apk/res/android"
-	  android:layout_width="fill_parent"
-	  android:layout_height="fill_parent"
-	  android:orientation="vertical">
-	
-	  <TextView
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:text="@string/city"/>
-	  <Spinner
-	  	android:id="@+id/targetCity"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:prompt="@string/spinnerCities"/> 
-	  <TextView
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:text="@string/line"/>
-	  <Spinner
-	  	android:id="@+id/targetLine"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:prompt="@string/spinnerLines"/> 
-	  <Button
-	  	android:id="@+id/buttonSearch"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:text="@string/buttonSearch"/> 
-	</LinearLayout>
-</ScrollView>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <include layout="@layout/actionbar" />
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:fillViewport="true"
+        android:orientation="vertical" >
+
+        <LinearLayout style="@style/normal_vertical_panel" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="35dp"
+                android:orientation="vertical" >
+
+                <include layout="@layout/spinners_line_selection" />
+
+                <Button
+                    android:id="@+id/buttonSearch"
+                    style="@style/buttonSpinners"
+                    android:padding="20dp"
+                    android:text="@string/buttonSearch" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

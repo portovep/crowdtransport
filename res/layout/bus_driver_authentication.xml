@@ -5,51 +5,32 @@
     android:fillViewport="true"
     android:orientation="vertical" >
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:background="#3A505E"
-        android:gravity="center"
-        android:orientation="vertical" >
+    <LinearLayout style="@style/form_auth_panel" >
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <TextView
+            style="@style/formAuthText"
+            android:text="@string/dni" />
+
+        <EditText
+            android:id="@+id/userID"
+            style="@style/formDNIEt"
+            android:layout_width="181dp"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            style="@style/formAuthText"
+            android:text="@string/password" />
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="180dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="#3A505E"
-            android:orientation="vertical" >
+            android:password="true" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="@string/dni" />
-
-            <EditText
-                android:id="@+id/userID"
-                android:layout_width="181dp"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="@string/password" />
-
-            <EditText
-                android:id="@+id/password"
-                android:layout_width="180dp"
-                android:layout_height="wrap_content"
-                android:password="true" />
-
-            <Button
-                android:id="@+id/buttonLogin"
-                android:layout_width="94dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_margin="6dp"
-                android:text="@string/buttonLogin" />
-        </LinearLayout>
+        <Button
+            android:id="@+id/buttonLogin"
+            style="@style/buttonLogin"
+            android:text="@string/buttonLogin" />
     </LinearLayout>
 
 </ScrollView>

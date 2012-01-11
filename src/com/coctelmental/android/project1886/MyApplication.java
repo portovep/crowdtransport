@@ -2,8 +2,8 @@ package com.coctelmental.android.project1886;
 
 import java.util.UUID;
 
+import com.coctelmental.android.project1886.common.ServiceRequestInfo;
 import com.coctelmental.android.project1886.model.Credentials;
-import com.coctelmental.android.project1886.model.ServiceRequestInfo;
 
 import android.app.ActivityManager;
 import android.app.Application;

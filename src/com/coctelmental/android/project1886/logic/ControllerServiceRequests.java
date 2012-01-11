@@ -3,9 +3,9 @@ package com.coctelmental.android.project1886.logic;
 
 import com.coctelmental.android.project1886.MyApplication;
 import com.coctelmental.android.project1886.common.DeviceInfo;
+import com.coctelmental.android.project1886.common.ServiceRequestInfo;
 import com.coctelmental.android.project1886.common.util.JsonHandler;
 import com.coctelmental.android.project1886.model.ResultBundle;
-import com.coctelmental.android.project1886.model.ServiceRequestInfo;
 import com.coctelmental.android.project1886.util.ConnectionsHandler;
 
 public class ControllerServiceRequests {

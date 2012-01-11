@@ -1,77 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/container"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/dock"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="#FFFFFF"
-        android:padding="4sp"
-        android:orientation="horizontal" >
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4sp"
-            android:layout_marginLeft="4sp"
-            android:layout_marginRight="2sp"
-            android:layout_marginTop="5sp"
-            android:src="@drawable/marker_ori" />
-
-        <TextView
-            android:id="@+id/tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_margin="4sp"
-            android:text="@string/origin"
-            android:textSize="18dp" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4sp"
-            android:layout_marginLeft="12sp"
-            android:layout_marginRight="2sp"
-            android:layout_marginTop="5sp"
-            android:src="@drawable/marker_dest" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_margin="4sp"
-            android:text="@string/destination"
-            android:textSize="18dp" />
-
-        <Button
-            android:id="@+id/bConfirmRoute"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="12sp"
-            android:layout_gravity="center_vertical"
-            android:text="@string/confirm"
-            android:textSize="12sp" />
-    </LinearLayout>
+    <include layout="@layout/actionbar" />
 
     <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/container"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical" >
 
         <com.google.android.maps.MapView
-            xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/mapTaxiRoute"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:apiKey="0GFJEPSerwjLp6q2Rcu8oLWI6Hb1W3SmdNnM-OQ"
             android:clickable="true" />
+
+        <LinearLayout
+            android:id="@+id/dock"
+            style="@style/dock_map" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4sp"
+                android:layout_marginLeft="4sp"
+                android:layout_marginRight="2sp"
+                android:layout_marginTop="5sp"
+                android:src="@drawable/marker_ori" />
+
+            <TextView
+                android:id="@+id/tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="4sp"
+                android:text="@string/origin"
+                android:textSize="18dp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4sp"
+                android:layout_marginLeft="12sp"
+                android:layout_marginRight="2sp"
+                android:layout_marginTop="5sp"
+                android:src="@drawable/marker_dest" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="4sp"
+                android:text="@string/destination"
+                android:textSize="18dp" />
+
+            <Button
+                android:id="@+id/bConfirmRoute"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="12sp"
+                android:text="@string/confirm"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/distanceDock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/dock"
+            android:layout_centerHorizontal="true"
+            android:background="@color/dock_map"
+            android:padding="6sp" >
+
+            <include layout="@layout/distance_label" />
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/originImage"
@@ -86,31 +93,6 @@
             android:layout_height="wrap_content"
             android:src="@drawable/marker_dest"
             android:visibility="gone" />
-
-        <LinearLayout
-            android:id="@+id/distanceDock"
-            android:layout_width="wrap_content"            
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:padding="6sp"
-            android:background="#FFFFFF">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:text="@string/distance"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/distance"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:text=" 0.0"
-                android:textStyle="bold" />
-        </LinearLayout>
     </RelativeLayout>
 
 </LinearLayout>

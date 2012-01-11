@@ -12,8 +12,7 @@ public class Credentials {
 	
 	public Credentials(){}
 	
-	public Credentials(String id, String password, int type)
-	{
+	public Credentials(String id, String password, int type) {
 		this.id = id;
 		this.password = password;
 		this.type = type;

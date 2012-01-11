@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="background">#ffffffff</color>
+    <color name="actionbar_text">#ffffffff</color>
+    <color name="dash_button_text">#ff29549f</color>
+    <color name="panel_normal_text">#8d8e8f</color>
+    <color name="spinner_text">#ff29549f</color>
+    <color name="form_text">#ff29549f</color>
+    <color name="dock_map">#65000000</color>
+
+</resources>

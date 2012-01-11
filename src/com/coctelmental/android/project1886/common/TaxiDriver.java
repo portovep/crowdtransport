@@ -86,7 +86,7 @@ public class TaxiDriver {
 							 "fullName: %s\n" +
 							 "email: %s\n" +
 							 "licence: %s\n" +
-							 "carTradeMark: %s\n" +
+							 "carBrand: %s\n" +
 							 "carModel: %s", dni, fullName, email, licenceNumber, carBrand, carModel );
 	}
 

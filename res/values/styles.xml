@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="ActionBarCompat">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:background">@drawable/actionbar_background</item>
+    </style>
+
+    <style name="ActionBarButton">
+        <item name="android:layout_width">@dimen/actionbar_button_height</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:layout_marginRight">4dp</item>
+    </style>
+
+    <style name="ActionBarText">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:paddingLeft">12dip</item>
+        <item name="android:paddingRight">12dip</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/actionbar_text</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="DashboardButton">
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:drawablePadding">2dp</item>
+        <item name="android:textSize">16dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/dash_button_text</item>
+        <item name="android:background">@null</item>
+    </style>
+
+    <style name="DashBoardTableRow">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="DashBoardActionWrapSecondRow">
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="DashBoardActionWrap">
+        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="PanelText">
+        <item name="android:layout_margin">20dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textColor">@color/panel_normal_text</item>
+        <item name="android:textSize">16dp</item>
+    </style>
+
+    <style name="SpinnerText">
+        <item name="android:textColor">@color/spinner_text</item>
+        <item name="android:textSize">18dp</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">3dp</item>
+        <item name="android:layout_marginTop">20dp</item>
+    </style>
+
+    <style name="buttonSpinners">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_marginTop">45dp</item>
+        <item name="android:textSize">18dp</item>
+    </style>
+
+    <style name="buttonLogin">
+        <item name="android:layout_width">94dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">20dp</item>
+    </style>
+
+    <style name="buttonRegistration">
+        <item name="android:layout_width">124dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">15dp</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+
+    <style name="normal_vertical_panel">
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:background">@color/background</item>
+        <item name="android:gravity">center_horizontal</item>
+    </style>
+
+    <style name="dock_map">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/dock_map</item>
+        <item name="android:padding">4dp</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="dock_text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">4dp</item>
+        <item name="android:layout_marginLeft">4dp</item>
+        <item name="android:layout_marginRight">2dp</item>
+        <item name="android:layout_marginTop">5dp</item>
+    </style>
+
+    <style name="tab_panel">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:padding">3dp</item>
+    </style>
+
+    <style name="form_auth_panel">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:background">@color/background</item>
+        <item name="android:gravity">center</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="form_registration_panel">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:background">@color/background</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="formAuthText">
+        <item name="android:textColor">@color/form_text</item>
+        <item name="android:textSize">18dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">3dp</item>
+    </style>
+
+    <style name="formRegistrationFirstText">
+        <item name="android:textColor">@color/form_text</item>
+        <item name="android:textSize">18dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/form_registration_et_margin</item>
+        <item name="android:layout_marginBottom">3dp</item>
+        <item name="android:layout_marginLeft">@dimen/form_registration_tv_margin</item>
+    </style>
+    
+    <style name="formDNIEt">
+        <item name="android:inputType">textCapCharacters</item>
+    </style>
+
+    <style name="formRegistrationText">
+        <item name="android:textColor">@color/form_text</item>
+        <item name="android:textSize">18dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginBottom">3dp</item>
+        <item name="android:layout_marginLeft">@dimen/form_registration_tv_margin</item>
+    </style>
+
+    <style name="formRegistrationEditText">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">@dimen/form_registration_et_margin</item>
+        <item name="android:layout_marginRight">@dimen/form_registration_et_margin</item>
+    </style>
+
+</resources>

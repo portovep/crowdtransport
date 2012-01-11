@@ -1,65 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView 
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent"
-	android:layout_height="fill_parent"
-	android:orientation="vertical"
-	android:fillViewport="true">
-	
-	
-	<LinearLayout
-	  xmlns:android="http://schemas.android.com/apk/res/android"
-	  android:layout_width="fill_parent"
-	  android:layout_height="fill_parent"
-	  android:orientation="vertical">
-	
-	  <TextView
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:text="@string/fullName"/>
-	  <EditText
-	  	android:id="@+id/fullName"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"/> 
-	  <TextView
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:text="@string/userID"/>
-	  <EditText
-	  	android:id="@+id/userName"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"/> 
-	  <TextView
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:text="@string/password"/>
-	  <EditText
-	  	android:id="@+id/password"
-	 	android:password="true"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"/>
-	  <TextView
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:text="@string/password2"/>
-	  <EditText
-	  	android:id="@+id/password2"
-	 	android:password="true"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"/>		
-	  <TextView
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:text="@string/email"/>		
-	  <EditText
-	  	android:id="@+id/email"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"/>
-	  <Button
-	  	android:id="@+id/buttonRegisterUser"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:text="@string/buttonRegister"/>  	 	 	  	  
-	  	    
-	</LinearLayout>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true"
+    android:orientation="vertical" >
+
+    <LinearLayout style="@style/form_registration_panel" >
+
+        <TextView
+            style="@style/formRegistrationFirstText"
+            android:text="@string/fullName" />
+
+        <EditText
+            android:id="@+id/fullName"
+            style="@style/formRegistrationEditText" />
+
+        <TextView
+            style="@style/formRegistrationText"
+            android:text="@string/userID" />
+
+        <EditText
+            android:id="@+id/userName"
+            style="@style/formRegistrationEditText" />
+
+        <TextView
+            style="@style/formRegistrationText"
+            android:text="@string/password" />
+
+        <EditText
+            android:id="@+id/password"
+            style="@style/formRegistrationEditText"
+            android:password="true" />
+
+        <TextView
+            style="@style/formRegistrationText"
+            android:text="@string/password2" />
+
+        <EditText
+            android:id="@+id/password2"
+            style="@style/formRegistrationEditText"
+            android:password="true" />
+
+        <TextView
+            style="@style/formRegistrationText"
+            android:text="@string/email" />
+
+        <EditText
+            android:id="@+id/email"
+            style="@style/formRegistrationEditText" />
+
+        <Button
+            android:id="@+id/buttonRegisterUser"
+            style="@style/buttonRegistration"
+            android:text="@string/buttonRegister" />
+    </LinearLayout>
+
 </ScrollView>

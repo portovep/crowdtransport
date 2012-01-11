@@ -4,17 +4,30 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/availableTaxis" />
+    <include layout="@layout/actionbar" />
 
-    <com.google.android.maps.MapView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/mapTaxiLocation"
+    <RelativeLayout
+        android:id="@+id/container"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:apiKey="0GFJEPSerwjLp6q2Rcu8oLWI6Hb1W3SmdNnM-OQ"
-        android:clickable="true" />
+        android:orientation="vertical" >
+
+        <com.google.android.maps.MapView
+            android:id="@+id/mapTaxiLocation"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:apiKey="0GFJEPSerwjLp6q2Rcu8oLWI6Hb1W3SmdNnM-OQ"
+            android:clickable="true" />
+
+        <LinearLayout
+            android:id="@+id/dock"
+            style="@style/dock_map"
+            android:gravity="center_horizontal" >
+
+            <TextView
+                style="@style/dock_text"
+                android:text="@string/availableTaxis" />
+        </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>

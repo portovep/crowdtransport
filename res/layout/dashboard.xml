@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/background"
+    android:orientation="vertical" >
+
+    <include layout="@layout/actionbar_with_buttons" />
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/profileName"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dip"
+            android:gravity="center"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <TableLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center" >
+
+        <TableRow style="@style/DashBoardTableRow" >
+
+            <LinearLayout style="@style/DashBoardActionWrap" >
+
+                <Button
+                    style="@style/DashboardButton"
+                    android:drawableTop="@drawable/statelist_dash_bus"
+                    android:onClick="onBusAction"
+                    android:text="@string/dash_bus" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/DashBoardActionWrap" >
+
+                <Button
+                    style="@style/DashboardButton"
+                    android:drawableTop="@drawable/statelist_dash_collaboration"
+                    android:onClick="onCollaborationAction"
+                    android:text="@string/dash_collaboration" />
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow style="@style/DashBoardTableRow" >
+
+            <LinearLayout style="@style/DashBoardActionWrapSecondRow" >
+
+                <Button
+                    style="@style/DashboardButton"
+                    android:drawableTop="@drawable/statelist_dash_taxi"
+                    android:onClick="onTaxiAction"
+                    android:text="@string/dash_taxi" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/DashBoardActionWrapSecondRow" >
+
+                <Button
+                    style="@style/DashboardButton"
+                    android:drawableTop="@drawable/statelist_dash_preferences"
+                    android:onClick="onPreferencesAction"
+                    android:text="@string/dash_preferences" />
+            </LinearLayout>
+        </TableRow>
+    </TableLayout>
+
+</LinearLayout>

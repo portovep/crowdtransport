@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/ActionBarCompat" >
+
+    <TextView
+        style="@style/ActionBarText"
+        android:text="@string/app_name" />
+
+    <ImageView
+        style="@style/ActionBarButton"
+        android:onClick="onAboutAction"
+        android:src="@drawable/actionbar_ic_about_white" />
+
+</LinearLayout>

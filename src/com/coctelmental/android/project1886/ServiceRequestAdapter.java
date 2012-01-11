@@ -2,7 +2,7 @@ package com.coctelmental.android.project1886;
 
 import java.util.List;
 
-import com.coctelmental.android.project1886.model.ServiceRequestInfo;
+import com.coctelmental.android.project1886.common.ServiceRequestInfo;
 
 import android.content.Context;
 import android.view.LayoutInflater;

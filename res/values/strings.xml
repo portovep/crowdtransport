@@ -2,7 +2,7 @@
 <resources>
 
     <!-- Main Activity -->
-    <string name="app_name">project1886</string>
+    <string name="app_name">Crowdtransport</string>
     <string name="versionText">(versión PETA: </string>
     <string name="profile_welcome">Bienvenido</string>
     <string name="option_menu_login">Log in</string>
@@ -11,9 +11,12 @@
     <string name="option_menu_profile">Mi perfil</string>
     <string name="option_menu_collaboratorPanel">Panel de colaboración</string>
     <string name="option_menu_finishCollaborationService">Finalizar seguimiento</string>
-    <string name="buttonBus">Autobuses</string>
-    <string name="buttonTaxi">Taxis</string>
-    <string name="buttonCollaborate">Colabora</string>
+    <string name="dash_bus">Autobuses</string>
+    <string name="dash_taxi">Taxis</string>
+    <string name="dash_collaboration">Colabora</string>
+    <string name="dash_preferences">Opciones</string>
+    <string name="titleAboutDialog">Información de la aplicación</string>
+    <string name="versionLabelText">versión</string>
 
     <!-- Tabs -->
     <string name="tabUser">Usuarios</string>
@@ -26,17 +29,20 @@
     <string name="password">Contraseña</string>
     <string name="buttonLogin">Entrar</string>
     <string name="spinnerUserType">Tipo de usuario</string>
+    <string name="spinnerUsera">Tipo de usuario</string>
 
     <!-- Registration Activity -->
     <string name="fullName">Nombre y apellidos</string>
     <string name="password2">Repita la contraseña</string>
     <string name="email">Email</string>
     <string name="buttonRegister">Registrar</string>
+
     <!-- Taxi driver -->
     <string name="dni">DNI</string>
     <string name="licenceNumber">Nº licencia</string>
-    <string name="carTradeMark">Marca de coche</string>
+    <string name="carBrand">Marca de coche</string>
     <string name="carModel">Modelo de coche</string>
+
     <!-- Bus driver -->
     <string name="cif">CIF empresa</string>
     <string name="authCode">Código de autorización</string>
@@ -89,7 +95,7 @@
     <string name="busDriverMainInfo">"El modo de seguimiento está deshabilitado."</string>
     <!-- Bus driver line selection -->
     <string name="busDriverMessage">Elija la línea que va a recorrer 
-        para poder empezar ha geoposicionar el autobús que conduce.</string>
+        para poder empezar a geoposicionar el autobús que conduce.</string>
     <!-- Bus driver information panel -->
     <string name="busDriverStatusMessage">Está enviando información que ayuda a otros
          usuarios a localizar en un mapa el autobús que conduce. Gracias.</string>
@@ -174,6 +180,7 @@
     <string name="obtainingUserLocation">Obteniendo su ubicación..</string>
     <string name="loadingRequests">Obteniendo sus solicitudes de servicio..</string>
     <string name="sendingRequest">Enviando solicitud de servicio..</string>
+    <string name="acceptingRequest">Enviando aceptación..</string>
     <string name="cancelRequestInProgress">Cancelando solicitud..</string>
 
     <!-- Notifications -->

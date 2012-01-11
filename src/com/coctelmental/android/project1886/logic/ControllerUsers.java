@@ -64,7 +64,7 @@ public class ControllerUsers {
 	}
 	
 	public String passwordToDigest(String password) {
-		return Tools.digestFromPassword(password);
+		return Tools.getPasswordDigest(password);
 	}
 	
 }

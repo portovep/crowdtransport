@@ -12,7 +12,7 @@ import android.util.Log;
 
 public class TextToSpeechService extends Service implements TextToSpeech.OnInitListener, TextToSpeech.OnUtteranceCompletedListener{
 
-	public static final String TTS_MESSAGE = "tts_message";
+	public static final String EXTRA_TTS_MESSAGE = "tts_message";
 	
 	private static final String UTTERANCE_ID = "serviceRequestUtterance";
 	private TextToSpeech tts;
@@ -23,7 +23,7 @@ public class TextToSpeechService extends Service implements TextToSpeech.OnInitL
     	// get message
     	Bundle extras = intent.getExtras();
     	if (extras != null) {
-    		String message = extras.getString(TTS_MESSAGE);
+    		String message = extras.getString(EXTRA_TTS_MESSAGE);
     		if (message != null && !message.equals("")) {
     			// save msg
     			ttsMessage = message;

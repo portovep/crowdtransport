@@ -147,7 +147,7 @@ public class TaxiItemizedOverlay extends ItemizedOverlay<OverlayItem>{
 				TextView tvCarName = (TextView) layoutInformationOverlay.findViewById(R.id.labelTaxiDriverCar);
 				// fill textviews
 				tvTaxiDriverName.setText(taxiDriver.getFullName());
-				tvCarName.setText(taxiDriver.getCarTradeMark() + " " + taxiDriver.getCarModel());
+				tvCarName.setText(taxiDriver.getCarBrand() + " " + taxiDriver.getCarModel());
 				
 				// hide progress bar
 				layoutInformationOverlay.findViewById(R.id.labelLoadingBar).setVisibility(View.GONE);

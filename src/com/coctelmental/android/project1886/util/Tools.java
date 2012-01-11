@@ -17,14 +17,14 @@ import android.widget.Toast;
 
 public class Tools {
 	
-	private static final String TARGET_ALGORITHM = "SHA-1";
+	private static final String DIGEST_ALGORITHM = "SHA-1";
 	private static final String DATE_FORMAT = "HH:mm:ss";
 	
-	public static String digestFromPassword(String password) {
+	public static String getPasswordDigest(String password) {
 		String hash = "";
 		
 		try{
-			MessageDigest digester = MessageDigest.getInstance(TARGET_ALGORITHM);
+			MessageDigest digester = MessageDigest.getInstance(DIGEST_ALGORITHM);
 			digester.update(password.getBytes());
 			byte[] bytes=digester.digest();			
 	        // making hex string from byte array
