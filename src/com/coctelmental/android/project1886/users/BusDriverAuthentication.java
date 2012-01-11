@@ -25,11 +25,11 @@ import android.widget.Toast;
 
 public class BusDriverAuthentication extends Activity {
 	
-	private EditText etUserID;
+	private EditText etBusDriverID;
 	private EditText etPassword;
 	private Button bLogin;
 	
-	private String userID;
+	private String busDriverID;
 	private String password;
 
 	@Override
@@ -37,7 +37,7 @@ public class BusDriverAuthentication extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bus_driver_authentication);
         
-        etUserID = (EditText) findViewById(R.id.userID);
+        etBusDriverID = (EditText) findViewById(R.id.userID);
         etPassword = (EditText) findViewById(R.id.password);
         
         bLogin = (Button) findViewById(R.id.buttonLogin);
@@ -45,15 +45,15 @@ public class BusDriverAuthentication extends Activity {
 			@Override
 			public void onClick(View v) {				
 				// get written data
-				userID = etUserID.getText().toString();
+				busDriverID = etBusDriverID.getText().toString();
 				password = etPassword.getText().toString();				
 				// check data
-				if(userID.equals("") || password.equals(""))
+				if(busDriverID.equals("") || password.equals(""))
 					Tools.buildToast(getApplicationContext(), getString(R.string.missingFields),
 							Gravity.CENTER, Toast.LENGTH_LONG).show();	
 				else 
 					// launch Async Task to attempt to authenticate the user
-					new AuthenticationAsyncTask().execute(userID);
+					new AuthenticationAsyncTask().execute(busDriverID);
 			}
 		});        
     }
@@ -113,9 +113,9 @@ public class BusDriverAuthentication extends Activity {
 		}
 	}
 	
-	private ResultBundle tryAuthentication(String userID) {
+	private ResultBundle tryAuthentication(String busDriverID) {
 		ResultBundle rb = null;
-		rb = UsersHelper.getBusDriver(userID);
+		rb = UsersHelper.getBusDriver(busDriverID);
 		return rb;
 	}
 	

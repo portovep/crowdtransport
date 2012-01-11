@@ -25,14 +25,14 @@ import android.widget.Toast;
 public class UserRegistration extends Activity {
 	
 	private EditText etUserName;
-	private EditText etName;
+	private EditText etFullName;
 	private EditText etPassword;
 	private EditText etPassword2;
 	private EditText etEmail;
 	private Button bSend;
 	
-	private String name;
-	private String userName;
+	private String userName;	
+	private String fullName;
 	private String password;
 	private String password2;
 	private String email;
@@ -44,7 +44,7 @@ public class UserRegistration extends Activity {
         setContentView(R.layout.user_registration);
 
         // get views
-        etName= (EditText) findViewById(R.id.fullName);
+        etFullName= (EditText) findViewById(R.id.fullName);
         etUserName= (EditText) findViewById(R.id.userName);
         etPassword= (EditText) findViewById(R.id.password);
         etPassword2= (EditText) findViewById(R.id.password2);
@@ -55,14 +55,14 @@ public class UserRegistration extends Activity {
         bSend.setOnClickListener(new View.OnClickListener() {			
 			@Override
 			public void onClick(View v) {
-				name= etName.getText().toString();
+				fullName= etFullName.getText().toString();
 				userName= etUserName.getText().toString();
 				password= etPassword.getText().toString();
 				password2= etPassword2.getText().toString();
 				email= etEmail.getText().toString();
 				
 				// looking for invalid data
-				if(name.equals("") || userName.equals("") || password.equals("") || password2.equals("") || email.equals(""))
+				if(fullName.equals("") || userName.equals("") || password.equals("") || password2.equals("") || email.equals(""))
 					Tools.buildToast(getApplicationContext(), getString(R.string.missingFields),
 							Gravity.CENTER, Toast.LENGTH_SHORT).show();
 				else if (!password.equals(password2))
@@ -88,7 +88,7 @@ public class UserRegistration extends Activity {
 	      * delivers it the parameters given to AsyncTask.execute() */		
 	    protected Integer doInBackground(Void... params) {
 			// create an user instance with registration data
-			user= new User(userName, name, UsersHelper.passwordToDigest(password), email);
+			user= new User(userName, fullName, UsersHelper.passwordToDigest(password), email);
 			// send request to the server and return response code
 	        return tryRegistration(user);
 	    }	    
