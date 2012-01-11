@@ -1,8 +1,8 @@
 package com.coctelmental.android.project1886.c2dm;
 
 import com.coctelmental.android.project1886.R;
-import com.coctelmental.android.project1886.TaxiDriverInformationPanel;
-import com.coctelmental.android.project1886.UserTaxiWaitingPanel;
+import com.coctelmental.android.project1886.taxis.TaxiDriverInformationPanel;
+import com.coctelmental.android.project1886.taxis.UserTaxiWaitingPanel;
 import com.coctelmental.android.project1886.tts.TextToSpeechMain;
 
 import android.content.BroadcastReceiver;

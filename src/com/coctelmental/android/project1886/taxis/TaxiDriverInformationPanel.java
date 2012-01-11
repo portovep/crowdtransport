@@ -1,10 +1,16 @@
-package com.coctelmental.android.project1886;
+package com.coctelmental.android.project1886.taxis;
 
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.coctelmental.android.project1886.MyApplication;
+import com.coctelmental.android.project1886.R;
+import com.coctelmental.android.project1886.TrackingService;
+import com.coctelmental.android.project1886.R.id;
+import com.coctelmental.android.project1886.R.layout;
+import com.coctelmental.android.project1886.R.string;
 import com.coctelmental.android.project1886.c2dm.C2DMRegistrationReceiver;
 import com.coctelmental.android.project1886.c2dm.C2DMessageReceiver;
 import com.coctelmental.android.project1886.common.ServiceRequestInfo;

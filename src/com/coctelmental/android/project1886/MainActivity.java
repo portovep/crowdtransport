@@ -1,6 +1,12 @@
 package com.coctelmental.android.project1886;
 
+import com.coctelmental.android.project1886.buses.CollaboratorInformationPanel;
+import com.coctelmental.android.project1886.buses.CollaboratorLineSelection;
+import com.coctelmental.android.project1886.buses.UserBusLineSelection;
 import com.coctelmental.android.project1886.helpers.UsersHelper;
+import com.coctelmental.android.project1886.taxis.UserTaxiRouteSpecification;
+import com.coctelmental.android.project1886.users.Authentication;
+import com.coctelmental.android.project1886.users.Registration;
 import com.coctelmental.android.project1886.util.Tools;
 
 import android.app.Activity;

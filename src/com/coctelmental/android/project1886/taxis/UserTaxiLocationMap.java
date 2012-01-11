@@ -1,4 +1,4 @@
-package com.coctelmental.android.project1886;
+package com.coctelmental.android.project1886.taxis;
 
 
 import java.lang.reflect.Type;
@@ -8,6 +8,11 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import com.coctelmental.android.project1886.R;
+import com.coctelmental.android.project1886.R.drawable;
+import com.coctelmental.android.project1886.R.id;
+import com.coctelmental.android.project1886.R.layout;
+import com.coctelmental.android.project1886.R.string;
 import com.coctelmental.android.project1886.common.GeoPointInfo;
 import com.coctelmental.android.project1886.common.TaxiLocation;
 import com.coctelmental.android.project1886.common.util.JsonHandler;

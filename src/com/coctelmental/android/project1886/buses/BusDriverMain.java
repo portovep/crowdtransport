@@ -1,5 +1,8 @@
-package com.coctelmental.android.project1886;
+package com.coctelmental.android.project1886.buses;
 
+import com.coctelmental.android.project1886.MyApplication;
+import com.coctelmental.android.project1886.R;
+import com.coctelmental.android.project1886.TrackingService;
 import com.coctelmental.android.project1886.helpers.UsersHelper;
 
 import android.app.Activity;

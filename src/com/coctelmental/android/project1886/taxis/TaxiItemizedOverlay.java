@@ -1,4 +1,4 @@
-package com.coctelmental.android.project1886;
+package com.coctelmental.android.project1886.taxis;
 
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
@@ -13,6 +13,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.coctelmental.android.project1886.R;
+import com.coctelmental.android.project1886.R.id;
+import com.coctelmental.android.project1886.R.layout;
+import com.coctelmental.android.project1886.R.string;
 import com.coctelmental.android.project1886.common.TaxiDriver;
 import com.coctelmental.android.project1886.common.util.JsonHandler;
 import com.coctelmental.android.project1886.helpers.UsersHelper;

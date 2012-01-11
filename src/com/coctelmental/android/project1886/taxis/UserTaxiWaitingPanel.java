@@ -1,7 +1,12 @@
-package com.coctelmental.android.project1886;
+package com.coctelmental.android.project1886.taxis;
 
 import java.net.HttpURLConnection;
 
+import com.coctelmental.android.project1886.MainActivity;
+import com.coctelmental.android.project1886.R;
+import com.coctelmental.android.project1886.R.id;
+import com.coctelmental.android.project1886.R.layout;
+import com.coctelmental.android.project1886.R.string;
 import com.coctelmental.android.project1886.c2dm.C2DMRegistrationReceiver;
 import com.coctelmental.android.project1886.c2dm.C2DMessageReceiver;
 import com.coctelmental.android.project1886.common.ServiceRequestInfo;

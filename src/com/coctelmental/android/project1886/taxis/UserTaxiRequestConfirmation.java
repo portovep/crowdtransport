@@ -1,10 +1,14 @@
-package com.coctelmental.android.project1886;
+package com.coctelmental.android.project1886.taxis;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.util.List;
 import java.util.Locale;
 
+import com.coctelmental.android.project1886.R;
+import com.coctelmental.android.project1886.R.id;
+import com.coctelmental.android.project1886.R.layout;
+import com.coctelmental.android.project1886.R.string;
 import com.coctelmental.android.project1886.c2dm.C2DMRegistrationReceiver;
 import com.coctelmental.android.project1886.common.GeoPointInfo;
 import com.coctelmental.android.project1886.common.ServiceRequestInfo;

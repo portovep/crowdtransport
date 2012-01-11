@@ -1,8 +1,11 @@
 package com.coctelmental.android.project1886;
 
+import com.coctelmental.android.project1886.buses.BusDriverInformationPanel;
+import com.coctelmental.android.project1886.buses.CollaboratorInformationPanel;
 import com.coctelmental.android.project1886.helpers.LocationsHelper;
 import com.coctelmental.android.project1886.helpers.UsersHelper;
 import com.coctelmental.android.project1886.model.Credentials;
+import com.coctelmental.android.project1886.taxis.TaxiDriverInformationPanel;
 import com.coctelmental.android.project1886.util.Tools;
 
 import android.app.Notification;

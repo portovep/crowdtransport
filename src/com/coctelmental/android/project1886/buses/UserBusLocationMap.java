@@ -1,4 +1,4 @@
-package com.coctelmental.android.project1886;
+package com.coctelmental.android.project1886.buses;
 
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import com.coctelmental.android.project1886.R;
 import com.coctelmental.android.project1886.common.BusLocation;
 import com.coctelmental.android.project1886.common.util.JsonHandler;
 import com.coctelmental.android.project1886.helpers.LocationsHelper;

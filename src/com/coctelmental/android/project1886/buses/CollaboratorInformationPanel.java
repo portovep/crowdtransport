@@ -1,4 +1,8 @@
-package com.coctelmental.android.project1886;
+package com.coctelmental.android.project1886.buses;
+
+import com.coctelmental.android.project1886.MyApplication;
+import com.coctelmental.android.project1886.R;
+import com.coctelmental.android.project1886.TrackingService;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -12,25 +16,25 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class BusDriverInformationPanel extends Activity {
+public class CollaboratorInformationPanel extends Activity {
 	
 	private TextView tvCity;
 	private TextView tvLine;
 	private Button bFinishService;
-	private ViewGroup backgroundLayout;
-
+	private ViewGroup backgroundLayout;	
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.bus_driver_information_panel);
+		setContentView(R.layout.collaborator_information_panel);	
 		
 	    // get layout
-		backgroundLayout = (LinearLayout) findViewById(R.id.containerBInformationPanel);
-				   
-    	// get info labels
+		backgroundLayout = (LinearLayout) findViewById(R.id.containerCInformationPanel);
+        
+        // get info labels
         tvCity = (TextView) findViewById(R.id.collaborationInfoCity);
         tvLine = (TextView) findViewById(R.id.collaborationInfoLine);
-
+        
         // get saved info
         String[] storedInfo = MyApplication.getInstance().getStoredTrackingInfo();
         String city = storedInfo[0];
@@ -49,7 +53,7 @@ public class BusDriverInformationPanel extends Activity {
 				finishTrackingService();
 				goMainMenu();
 			}
-		});
+		}); 
 	}
 
 	@Override
@@ -68,21 +72,16 @@ public class BusDriverInformationPanel extends Activity {
 			if(!MyApplication.getInstance().isServiceRunning(TrackingService.class.getName())) {
 			    // launch location tracking service
 			    Intent i = new Intent(this, TrackingService.class);
-			    i.putExtra(TrackingService.CALLER_ACTIVITY, TrackingService.BUSDRIVER_ACTIVITY_ID);			    
+			    i.putExtra(TrackingService.CALLER_ACTIVITY, TrackingService.COLLABORATOR_ACTIVITY_ID);
 			    startService(i);
 			}
 		}
 	}
-    
-	@Override
-	public void onBackPressed() {
-		moveTaskToBack(true);
-	}
-	
+
 	private void goMainMenu() {
 		super.onBackPressed();
 		finish();
-	}
+	} 
 	
 	private void showGPSDialog() {
     	AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -111,6 +110,6 @@ public class BusDriverInformationPanel extends Activity {
 		// finish location tracking service
 		Intent i = new Intent(getApplicationContext(), TrackingService.class);
 		stopService(i);
-	}
-	
+	}	   
+
 }

@@ -1,4 +1,4 @@
-package com.coctelmental.android.project1886;
+package com.coctelmental.android.project1886.buses;
 import java.util.ArrayList;
 
 import android.app.AlertDialog;

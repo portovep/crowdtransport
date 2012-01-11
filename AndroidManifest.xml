@@ -37,65 +37,65 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Authentication"
+            android:name=".users.Authentication"
             android:label="@string/loginActivity_name"
             android:screenOrientation="portrait" />
-        <activity android:name=".UserAuthentication" />
-        <activity android:name=".TaxiDriverAuthentication" />
-        <activity android:name=".BusDriverAuthentication" />
+        <activity android:name=".users.UserAuthentication" />
+        <activity android:name=".users.TaxiDriverAuthentication" />
+        <activity android:name=".users.BusDriverAuthentication" />
         <activity
-            android:name=".Registration"
+            android:name=".users.Registration"
             android:screenOrientation="portrait" />
-        <activity android:name=".UserRegistration" />
-        <activity android:name=".TaxiDriverRegistration" />
-        <activity android:name=".BusDriverRegistration" />
+        <activity android:name=".users.UserRegistration" />
+        <activity android:name=".users.TaxiDriverRegistration" />
+        <activity android:name=".users.BusDriverRegistration" />
         <activity
-            android:name=".UserBusLineSelection"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".UserBusLocationMap"
+            android:name=".buses.UserBusLineSelection"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".CollaboratorLineSelection"
+            android:name=".buses.UserBusLocationMap"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".CollaboratorInformationPanel"
+            android:name=".buses.CollaboratorLineSelection"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".UserTaxiRouteSpecification"
+            android:name=".buses.CollaboratorInformationPanel"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".UserTaxiLocationMap"
+            android:name=".taxis.UserTaxiRouteSpecification"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".UserTaxiRequestConfirmation"
+            android:name=".taxis.UserTaxiLocationMap"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".UserTaxiWaitingPanel"
+            android:name=".taxis.UserTaxiRequestConfirmation"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".BusDriverMain"
+            android:name=".taxis.UserTaxiWaitingPanel"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".BusDriverLineSelection"
+            android:name=".buses.BusDriverMain"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".BusDriverInformationPanel"
+            android:name=".buses.BusDriverLineSelection"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".TaxiDriverMain"
+            android:name=".buses.BusDriverInformationPanel"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".TaxiDriverInformationPanel"
+            android:name=".taxis.TaxiDriverMain"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".TaxiDriverRouteView"
+            android:name=".taxis.TaxiDriverInformationPanel"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".TaxiDriverRouteReminder"
+            android:name=".taxis.TaxiDriverRouteView"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".TaxiDriverAttendingServiceRequest"
+            android:name=".taxis.TaxiDriverRouteReminder"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".taxis.TaxiDriverAttendingServiceRequest"
             android:screenOrientation="portrait" />
 
         <receiver

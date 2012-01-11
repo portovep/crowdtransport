@@ -1,6 +1,13 @@
-package com.coctelmental.android.project1886;
+package com.coctelmental.android.project1886.buses;
 
 import java.net.HttpURLConnection;
+
+import com.coctelmental.android.project1886.MyApplication;
+import com.coctelmental.android.project1886.R;
+import com.coctelmental.android.project1886.common.util.JsonHandler;
+import com.coctelmental.android.project1886.helpers.AvailableDataHelper;
+import com.coctelmental.android.project1886.model.ResultBundle;
+import com.coctelmental.android.project1886.util.Tools;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -19,12 +26,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemSelectedListener;
 
-import com.coctelmental.android.project1886.common.util.JsonHandler;
-import com.coctelmental.android.project1886.helpers.AvailableDataHelper;
-import com.coctelmental.android.project1886.model.ResultBundle;
-import com.coctelmental.android.project1886.util.Tools;
-
-public class CollaboratorLineSelection extends Activity {
+public class BusDriverLineSelection extends Activity {
 	
 	private Button bStart;
 	private Spinner spCities;
@@ -36,7 +38,7 @@ public class CollaboratorLineSelection extends Activity {
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.collaborator_line_selection);
+        setContentView(R.layout.bus_driver_line_selection);
         
         // Setup start button
         bStart = (Button) findViewById(R.id.buttonStart);
@@ -47,7 +49,7 @@ public class CollaboratorLineSelection extends Activity {
 				// save selected targets
 				MyApplication.getInstance().storeTrackingInfo(targetCity, targetLine);
 				Intent intent;
-				intent= new Intent(CollaboratorLineSelection.this, CollaboratorInformationPanel.class);
+				intent= new Intent(getApplicationContext(), BusDriverInformationPanel.class);
 				startActivity(intent);
 				finish();
 			}
@@ -65,7 +67,8 @@ public class CollaboratorLineSelection extends Activity {
         
     }
 
-	public class CitiesSpinnerItemSelectedListener implements OnItemSelectedListener {
+	public class CitiesSpinnerItemSelectedListener implements OnItemSelectedListener
+	{
 		@Override
 		public void onItemSelected(AdapterView<?> parent, View view, int pos,
 				long id) {
@@ -81,7 +84,8 @@ public class CollaboratorLineSelection extends Activity {
 		}		
 	}
 	
-	public class LinesSpinnerItemSelectedListener implements OnItemSelectedListener {
+	public class LinesSpinnerItemSelectedListener implements OnItemSelectedListener
+	{
 		@Override
 		public void onItemSelected(AdapterView<?> parent, View view, int pos,
 				long id) {
@@ -100,7 +104,7 @@ public class CollaboratorLineSelection extends Activity {
 		
 		protected void onPreExecute () {
 			// show a progress dialog while data is retrieved from the server
-			pdLoadingCities = ProgressDialog.show(CollaboratorLineSelection.this, "", getString(R.string.loadingCities), true);
+			pdLoadingCities = ProgressDialog.show(BusDriverLineSelection.this, "", getString(R.string.loadingCities), true);
 		}
 	    /** The system calls this to perform work in a worker thread and
 	      * delivers it the parameters given to AsyncTask.execute() */		
@@ -118,7 +122,7 @@ public class CollaboratorLineSelection extends Activity {
 	        	String jsonCities = rb.getContent();
 	        	String[] cities = JsonHandler.fromJson(jsonCities, String[].class);
 	        	// setup and add to the spinner a new adapter with available cities
-	            ArrayAdapter<String> adapter = new ArrayAdapter<String>(CollaboratorLineSelection.this, android.R.layout.simple_spinner_item, cities);
+	            ArrayAdapter<String> adapter = new ArrayAdapter<String>(BusDriverLineSelection.this, android.R.layout.simple_spinner_item, cities);
 	            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 	            spCities.setAdapter(adapter);  	   
 	        }				
@@ -142,11 +146,11 @@ public class CollaboratorLineSelection extends Activity {
 			spLines.setEnabled(true);
 			bStart.setEnabled(true);
 			// show a progress dialog while data is retrieved from the server
-			pdLoadingLines = ProgressDialog.show(CollaboratorLineSelection.this, "", getString(R.string.loadingLines), true);
+			pdLoadingLines = ProgressDialog.show(BusDriverLineSelection.this, "", getString(R.string.loadingLines), true);
 		}
 	
 	    protected ResultBundle doInBackground(String... params) {
-	    	// retrieving available lines from server
+	    	// retrieving available lines form server
 	        return AvailableDataHelper.getAvailableLines(params[0]);
 	    }
 
@@ -158,7 +162,7 @@ public class CollaboratorLineSelection extends Activity {
 	        	String jsonLines = rb.getContent();
 	        	String[] lines = JsonHandler.fromJson(jsonLines, String[].class);
 	        	// setup and add to the spinner a new adapter with available cities
-	            ArrayAdapter<String> adapter = new ArrayAdapter<String>(CollaboratorLineSelection.this, android.R.layout.simple_spinner_item, lines);
+	            ArrayAdapter<String> adapter = new ArrayAdapter<String>(BusDriverLineSelection.this, android.R.layout.simple_spinner_item, lines);
 	            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 	            spLines.setAdapter(adapter);  	   
 	        }				
@@ -173,7 +177,7 @@ public class CollaboratorLineSelection extends Activity {
 					spLines.setEnabled(false);
 					bStart.setEnabled(false);
 					// show error message
-					Tools.buildToast(getApplicationContext(), errorMessage, Gravity.CENTER, Toast.LENGTH_LONG).show();
+					Tools.buildToast(BusDriverLineSelection.this, errorMessage, Gravity.CENTER, Toast.LENGTH_LONG).show();
 				}
 				else
 					showBackAlertDialog(errorMessage);
@@ -188,11 +192,10 @@ public class CollaboratorLineSelection extends Activity {
     	       .setPositiveButton(getString(R.string.buttonBack), new DialogInterface.OnClickListener() {
     	           public void onClick(DialogInterface dialog, int id) {
    	       			// finish activity and go previous activity
-   	       			CollaboratorLineSelection.super.onBackPressed();
+   	       			BusDriverLineSelection.super.onBackPressed();
 	        	   }
     	       });
     	AlertDialog alert = builder.create();
     	alert.show();
 	}
-
 }

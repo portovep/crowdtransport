@@ -1,7 +1,10 @@
-package com.coctelmental.android.project1886;
+package com.coctelmental.android.project1886.taxis;
 
 import java.util.List;
 
+import com.coctelmental.android.project1886.R;
+import com.coctelmental.android.project1886.R.id;
+import com.coctelmental.android.project1886.R.string;
 import com.coctelmental.android.project1886.common.ServiceRequestInfo;
 
 import android.content.Context;

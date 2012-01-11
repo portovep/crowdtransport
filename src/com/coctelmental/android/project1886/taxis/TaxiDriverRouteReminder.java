@@ -1,5 +1,10 @@
-package com.coctelmental.android.project1886;
+package com.coctelmental.android.project1886.taxis;
 
+import com.coctelmental.android.project1886.R;
+import com.coctelmental.android.project1886.R.drawable;
+import com.coctelmental.android.project1886.R.id;
+import com.coctelmental.android.project1886.R.layout;
+import com.coctelmental.android.project1886.R.string;
 import com.coctelmental.android.project1886.common.GeoPointInfo;
 import com.coctelmental.android.project1886.common.ServiceRequestInfo;
 import com.coctelmental.android.project1886.common.util.JsonHandler;

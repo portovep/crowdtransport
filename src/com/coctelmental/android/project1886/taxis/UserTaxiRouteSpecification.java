@@ -1,4 +1,4 @@
-package com.coctelmental.android.project1886;
+package com.coctelmental.android.project1886.taxis;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -23,8 +23,14 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.coctelmental.android.project1886.R;
+import com.coctelmental.android.project1886.R.drawable;
+import com.coctelmental.android.project1886.R.id;
+import com.coctelmental.android.project1886.R.layout;
+import com.coctelmental.android.project1886.R.string;
 import com.coctelmental.android.project1886.common.GeoPointInfo;
 import com.coctelmental.android.project1886.helpers.ServiceRequestsHelper;
+import com.coctelmental.android.project1886.helpers.UserLocationHelper;
 import com.coctelmental.android.project1886.util.Tools;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.ItemizedOverlay;

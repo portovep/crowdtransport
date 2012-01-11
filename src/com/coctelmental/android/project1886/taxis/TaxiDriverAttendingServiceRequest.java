@@ -1,4 +1,8 @@
-package com.coctelmental.android.project1886;
+package com.coctelmental.android.project1886.taxis;
+
+import com.coctelmental.android.project1886.R;
+import com.coctelmental.android.project1886.R.id;
+import com.coctelmental.android.project1886.R.layout;
 
 import android.app.Activity;
 import android.content.Intent;
