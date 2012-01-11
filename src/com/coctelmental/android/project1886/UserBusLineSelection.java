@@ -3,7 +3,7 @@ package com.coctelmental.android.project1886;
 import java.net.HttpURLConnection;
 
 import com.coctelmental.android.project1886.common.util.JsonHandler;
-import com.coctelmental.android.project1886.logic.ControllerAvailableData;
+import com.coctelmental.android.project1886.helpers.AvailableDataHelper;
 import com.coctelmental.android.project1886.model.ResultBundle;
 import com.coctelmental.android.project1886.util.Tools;
 
@@ -36,16 +36,10 @@ public class UserBusLineSelection extends Activity {
 	private String targetCity;
 	private String targetLine;
 	
-	private ControllerAvailableData controllerAD;
-	
-	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_bus_line_selection);
-        
-        // get a instance of our controller
-        controllerAD = new ControllerAvailableData();
         
         // Setup search button
         bSearch = (Button) findViewById(R.id.buttonSearch);
@@ -116,7 +110,7 @@ public class UserBusLineSelection extends Activity {
 	      * delivers it the parameters given to AsyncTask.execute() */		
 	    protected ResultBundle doInBackground(Void... params) {
 	    	// retrieving available cities form server
-	        return controllerAD.getAvailableCities();
+	        return AvailableDataHelper.getAvailableCities();
 	    }	    
 	    /** The system calls this to perform work in the UI thread and delivers
 	      * the result from doInBackground() */
@@ -157,7 +151,7 @@ public class UserBusLineSelection extends Activity {
 	
 	    protected ResultBundle doInBackground(String... params) {
 	    	// retrieving available lines form server
-	        return controllerAD.getAvailableLines(params[0]);
+	        return AvailableDataHelper.getAvailableLines(params[0]);
 	    }
 
 	    protected void onPostExecute(ResultBundle rb) {

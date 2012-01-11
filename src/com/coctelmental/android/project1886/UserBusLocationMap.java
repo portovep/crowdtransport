@@ -9,7 +9,7 @@ import java.util.TimerTask;
 
 import com.coctelmental.android.project1886.common.BusLocation;
 import com.coctelmental.android.project1886.common.util.JsonHandler;
-import com.coctelmental.android.project1886.logic.ControllerLocations;
+import com.coctelmental.android.project1886.helpers.LocationsHelper;
 import com.coctelmental.android.project1886.model.ResultBundle;
 import com.coctelmental.android.project1886.util.Tools;
 import com.google.android.maps.GeoPoint;
@@ -50,7 +50,6 @@ public class UserBusLocationMap extends MapActivity {
 	
 	private boolean flagFirstLaunch = true;
 	
-	private ControllerLocations controllerL;
 	
 	@Override
 	protected boolean isRouteDisplayed() {
@@ -60,9 +59,6 @@ public class UserBusLocationMap extends MapActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
-	    
-        // get a instance of our controller
-        controllerL = new ControllerLocations();
         
 	    // get data from intent
     	Bundle extras = getIntent().getExtras();	    
@@ -180,7 +176,7 @@ public class UserBusLocationMap extends MapActivity {
 
 	private class updaterTimerTask extends TimerTask {		
 		public void run() {
-			updatedLocation = controllerL.obtainLocation(targetCity, targetLine);
+			updatedLocation = LocationsHelper.obtainBusLocations(targetCity, targetLine);
 			// notify the handler
 			handler.sendEmptyMessage(0);
 		}

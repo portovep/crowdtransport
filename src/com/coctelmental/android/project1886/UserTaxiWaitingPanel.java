@@ -5,7 +5,7 @@ import java.net.HttpURLConnection;
 import com.coctelmental.android.project1886.c2dm.C2DMRegistrationReceiver;
 import com.coctelmental.android.project1886.c2dm.C2DMessageReceiver;
 import com.coctelmental.android.project1886.common.ServiceRequestInfo;
-import com.coctelmental.android.project1886.logic.ControllerServiceRequests;
+import com.coctelmental.android.project1886.helpers.ServiceRequestsHelper;
 import com.coctelmental.android.project1886.util.Tools;
 
 import android.app.Activity;
@@ -40,9 +40,7 @@ public class UserTaxiWaitingPanel extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.user_taxi_waiting_panel);		
 		
-		// get request info
-		ControllerServiceRequests controllerSR = new ControllerServiceRequests();
-		ServiceRequestInfo serviceRequest = controllerSR.getServiceRequest();
+		ServiceRequestInfo serviceRequest = ServiceRequestsHelper.getServiceRequest();
 		String targetTaxiDriverName = serviceRequest.getTaxiDriverID();
 		addressFrom = serviceRequest.getAddressFrom();
         
@@ -178,7 +176,7 @@ public class UserTaxiWaitingPanel extends Activity {
 		}
 		
 	    protected Integer doInBackground(Void... params) {
-	        return ControllerServiceRequests.cancelSentServiceRequest();
+	        return ServiceRequestsHelper.cancelSentServiceRequest();
 	    }
 
 	    protected void onPostExecute(Integer result) {
@@ -206,7 +204,7 @@ public class UserTaxiWaitingPanel extends Activity {
 				if (result == HttpURLConnection.HTTP_NOT_ACCEPTABLE) {
 					message = getString(R.string.failCancelRequest);
 				}
-				else if (result == ControllerServiceRequests.ERROR_MALFORMED_REQUEST) {
+				else if (result == ServiceRequestsHelper.ERROR_MALFORMED_REQUEST) {
 					message = getString(R.string.failMalformedServiceRequest);
 				}
 				Toast toast = Tools.buildToast(UserTaxiWaitingPanel.this, message, Gravity.CENTER, Toast.LENGTH_SHORT);
@@ -220,7 +218,7 @@ public class UserTaxiWaitingPanel extends Activity {
 	private class CancelExpiredServiceRequestTask extends AsyncTask<Void, Void, Integer> {
 		
 	    protected Integer doInBackground(Void... params) {
-	        return ControllerServiceRequests.cancelSentServiceRequest();
+	        return ServiceRequestsHelper.cancelSentServiceRequest();
 	    }
 
 	    protected void onPostExecute(Integer result) {

@@ -4,7 +4,7 @@ import java.net.HttpURLConnection;
 
 import com.coctelmental.android.project1886.common.User;
 import com.coctelmental.android.project1886.common.util.JsonHandler;
-import com.coctelmental.android.project1886.logic.ControllerUsers;
+import com.coctelmental.android.project1886.helpers.UsersHelper;
 import com.coctelmental.android.project1886.model.Credentials;
 import com.coctelmental.android.project1886.model.ResultBundle;
 import com.coctelmental.android.project1886.util.Tools;
@@ -29,16 +29,11 @@ public class UserAuthentication extends Activity {
 	
 	private String userID;
 	private String password;
-	
-	private ControllerUsers controllerU;
 
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_authentication);
-        
-        // get a controller instance
-        controllerU = new ControllerUsers();
         
         etUserID = (EditText) findViewById(R.id.userID);
         etPassword = (EditText) findViewById(R.id.password);
@@ -80,7 +75,7 @@ public class UserAuthentication extends Activity {
 	    	// disable the progress dialog
 	        pdprocessingAuthentication.dismiss();
 			// calculate password digest
-			String passwordDigest = controllerU.passwordToDigest(password);					
+			String passwordDigest = UsersHelper.passwordToDigest(password);					
 			// check result
 			if (rb.getResultCode() == HttpURLConnection.HTTP_OK) {
 				String jsonUser = rb.getContent();
@@ -89,7 +84,7 @@ public class UserAuthentication extends Activity {
 					// setup new user credentials
 					Credentials credentials=new Credentials(userID, passwordDigest, Credentials.TYPE_USER);
 					// log in
-					controllerU.logIn(credentials);
+					UsersHelper.logIn(credentials);
 					// information panel
 					Tools.buildToast(getApplicationContext(), getString(R.string.correctLogin),
 							Gravity.CENTER, Toast.LENGTH_SHORT).show();					
@@ -119,7 +114,7 @@ public class UserAuthentication extends Activity {
 	
 	private ResultBundle tryAuthentication(String userID) {
 		ResultBundle rb = null;
-		rb = controllerU.getUser(userID);
+		rb = UsersHelper.getUser(userID);
 		return rb;
 	}
 	

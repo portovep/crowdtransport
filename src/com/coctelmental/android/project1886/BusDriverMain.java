@@ -1,6 +1,6 @@
 package com.coctelmental.android.project1886;
 
-import com.coctelmental.android.project1886.logic.ControllerUsers;
+import com.coctelmental.android.project1886.helpers.UsersHelper;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -16,15 +16,10 @@ public class BusDriverMain extends Activity {
 	
 	private TextView tvProfileName;
 	
-	private ControllerUsers controllerU;
-	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bus_driver_main);
-        
-        // get a instance of our user controller
-        controllerU = new ControllerUsers();
         
         tvProfileName = (TextView) findViewById(R.id.profileName);
         
@@ -48,8 +43,8 @@ public class BusDriverMain extends Activity {
 	public void onResume() {
 		super.onResume();		
 		// check if exist a user logged into the application 
-        if(controllerU.existActiveUser()) {
-        	String userName = controllerU.getActiveUser().getId();
+        if(UsersHelper.existActiveUser()) {
+        	String userName = UsersHelper.getActiveUser().getId();
         	// show user's name
         	tvProfileName.setText(getString(R.string.profile_welcome)+" "+userName);
         }
@@ -72,7 +67,7 @@ public class BusDriverMain extends Activity {
 		switch(item.getItemId()) {
 			case R.id.menuExit:
 				// logout and exit
-				controllerU.logOut();
+				UsersHelper.logOut();
 				// remove this activity from history
 				finish();
 				moveTaskToBack(true);

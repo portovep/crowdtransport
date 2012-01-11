@@ -1,7 +1,7 @@
 package com.coctelmental.android.project1886;
 
-import com.coctelmental.android.project1886.logic.ControllerLocations;
-import com.coctelmental.android.project1886.logic.ControllerUsers;
+import com.coctelmental.android.project1886.helpers.LocationsHelper;
+import com.coctelmental.android.project1886.helpers.UsersHelper;
 import com.coctelmental.android.project1886.model.Credentials;
 import com.coctelmental.android.project1886.util.Tools;
 
@@ -45,9 +45,6 @@ public class TrackingService extends Service {
 	
 	private Location updatedLocation;
 	private PendingIntent pendingIntent;
-	
-	private ControllerUsers controllerU;
-	private ControllerLocations controllerL;
 			
 	
 	@Override
@@ -55,8 +52,6 @@ public class TrackingService extends Service {
 		super.onCreate();
 		notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-		controllerU = new ControllerUsers();
-		controllerL = new ControllerLocations();
 	}
 
 	@Override
@@ -85,9 +80,9 @@ public class TrackingService extends Service {
 		notificationManager.notify(NOTIFICATION_ID, notification);
 	
 		// get userID
-	    if(controllerU.existActiveUser()) {
-	    	userID = controllerU.getActiveUser().getId();
-	    	userType = controllerU.getActiveUser().getType();
+	    if(UsersHelper.existActiveUser()) {
+	    	userID = UsersHelper.getActiveUser().getId();
+	    	userType = UsersHelper.getActiveUser().getType();
 	    }
 	    else {
 	    	// if no user logged, use unique id as identification of this app installation
@@ -147,13 +142,13 @@ public class TrackingService extends Service {
 	private void sendNewLocation(Location location) {
 		switch(userType) {
 		case Credentials.TYPE_USER:
-			controllerL.sendCollaboratorLocation(userID, location);
+			LocationsHelper.sendCollaboratorLocation(userID, location);
 			break;
 		case Credentials.TYPE_BUS:
-			controllerL.sendBusDriverLocation(userID, location);
+			LocationsHelper.sendBusDriverLocation(userID, location);
 			break;
 		case Credentials.TYPE_TAXI:
-			controllerL.sendTaxiDriverLocation(userID, location);
+			LocationsHelper.sendTaxiDriverLocation(userID, location);
 			break;
 		}
 	}

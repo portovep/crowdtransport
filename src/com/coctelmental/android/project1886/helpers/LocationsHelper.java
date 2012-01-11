@@ -1,4 +1,4 @@
-package com.coctelmental.android.project1886.logic;
+package com.coctelmental.android.project1886.helpers;
 
 import android.location.Location;
 import android.util.Log;
@@ -11,26 +11,26 @@ import com.coctelmental.android.project1886.common.util.JsonHandler;
 import com.coctelmental.android.project1886.model.ResultBundle;
 import com.coctelmental.android.project1886.util.ConnectionsHandler;
 
-public class ControllerLocations {
+public class LocationsHelper {
 	
-	private static final String LOCATION_RESOURCE = "/location";
-	private static final String TAXI_LOCATION_RESOURCE = "/location-taxi";
+	private static final String URI_BUS_LOCATION_RESOURCE = "/location";
+	private static final String URI_TAXI_LOCATION_RESOURCE = "/location-taxi";
 	
-	public ResultBundle obtainLocation(String city, String line) {
+	public static ResultBundle obtainBusLocations(String city, String line) {
 		String resourceID = city + line;
-		String targetURL = LOCATION_RESOURCE + "/" + resourceID;
-		// REST request to specific resource
+		String targetURL = URI_BUS_LOCATION_RESOURCE + "/" + resourceID;
+		// request to target resource
 		return ConnectionsHandler.get(targetURL);
 	}
 	
-	public ResultBundle obtainTaxiLocation(GeoPointInfo gpOrigin) {
+	public static ResultBundle obtainTaxiLocations(GeoPointInfo gpOrigin) {
 		String jsonGpOrigin = JsonHandler.toJson(gpOrigin);
 		
-		String targetURL = TAXI_LOCATION_RESOURCE + "/" + jsonGpOrigin;
+		String targetURL = URI_TAXI_LOCATION_RESOURCE + "/" + jsonGpOrigin;
 		return ConnectionsHandler.get(targetURL);
 	}
 	
-	public int sendCollaboratorLocation(String userID, Location location) {
+	public static int sendCollaboratorLocation(String userID, Location location) {
 		int result = -1;
 		
 		if (location != null) {			
@@ -47,7 +47,7 @@ public class ControllerLocations {
 	        String line = storedInfo[1];
 			
 			String resourceID = city + line;
-			String targetURL = LOCATION_RESOURCE + "/" + resourceID;
+			String targetURL = URI_BUS_LOCATION_RESOURCE + "/" + resourceID;
 			result = ConnectionsHandler.put(targetURL, JsonHandler.toJson(cBusLocation));
 			
 			// Log
@@ -58,7 +58,7 @@ public class ControllerLocations {
 		return result;
 	}
 
-	public int sendBusDriverLocation(String busDriverID, Location location) {
+	public static int sendBusDriverLocation(String busDriverID, Location location) {
 		int result = -1;
 		
 		if (location != null) {			
@@ -75,7 +75,7 @@ public class ControllerLocations {
 	        String line = storedInfo[1];
 			
 			String resourceID = city + line;
-			String targetURL = LOCATION_RESOURCE + "/" + resourceID;
+			String targetURL = URI_BUS_LOCATION_RESOURCE + "/" + resourceID;
 			result = ConnectionsHandler.put(targetURL, JsonHandler.toJson(cBusLocation));
 			
 			// Log
@@ -86,7 +86,7 @@ public class ControllerLocations {
 		return result;
 	}
 	
-	public int sendTaxiDriverLocation(String taxiDriverID, Location location) {
+	public static int sendTaxiDriverLocation(String taxiDriverID, Location location) {
 		int result = -1;
 		
 		if (location != null) {		
@@ -101,7 +101,7 @@ public class ControllerLocations {
 			taxiDriverLocation.setGeopoint(gp);
 			
 			
-			String targetURL = TAXI_LOCATION_RESOURCE;
+			String targetURL = URI_TAXI_LOCATION_RESOURCE;
 			String jsonLocation = JsonHandler.toJson(taxiDriverLocation);
 			result = ConnectionsHandler.put(targetURL, jsonLocation);
 			

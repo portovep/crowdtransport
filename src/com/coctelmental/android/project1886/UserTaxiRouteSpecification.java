@@ -20,12 +20,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.coctelmental.android.project1886.common.GeoPointInfo;
-import com.coctelmental.android.project1886.logic.ControllerServiceRequests;
+import com.coctelmental.android.project1886.helpers.ServiceRequestsHelper;
 import com.coctelmental.android.project1886.util.Tools;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.ItemizedOverlay;
@@ -57,8 +56,6 @@ public class UserTaxiRouteSpecification extends MapActivity {
 	private Timer timer = null;
 	private UserLocationHelper userLocationHelper = null;
 	
-	private ControllerServiceRequests controllerSR;
-	
 	private int executions = 0;
 
 	@Override
@@ -71,8 +68,6 @@ public class UserTaxiRouteSpecification extends MapActivity {
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 	    setContentView(R.layout.user_taxi_route_specification);
-	 
-	    controllerSR = new ControllerServiceRequests();
 	    
 	    // get layout and set invisible during setup
 	    layout = (RelativeLayout) findViewById(R.id.container);
@@ -95,10 +90,10 @@ public class UserTaxiRouteSpecification extends MapActivity {
 			@Override
 			public void onClick(View v) {
 				// create new service request
-				controllerSR.createServiceRequest();
+				ServiceRequestsHelper.createNewServiceRequest();
 				// add route info to service request
-				controllerSR.getServiceRequest().setGpFrom(new GeoPointInfo(gpOrigin));
-				controllerSR.getServiceRequest().setGpTo(new GeoPointInfo(gpDestination));
+				ServiceRequestsHelper.getServiceRequest().setGpFrom(new GeoPointInfo(gpOrigin));
+				ServiceRequestsHelper.getServiceRequest().setGpTo(new GeoPointInfo(gpDestination));
 				
 				Intent intent = new Intent(getApplicationContext(), UserTaxiLocationMap.class);
 				startActivity(intent);

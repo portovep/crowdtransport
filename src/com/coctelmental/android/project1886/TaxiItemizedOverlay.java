@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.coctelmental.android.project1886.common.TaxiDriver;
 import com.coctelmental.android.project1886.common.util.JsonHandler;
-import com.coctelmental.android.project1886.logic.ControllerUsers;
+import com.coctelmental.android.project1886.helpers.UsersHelper;
 import com.coctelmental.android.project1886.model.ResultBundle;
 import com.google.android.maps.ItemizedOverlay;
 import com.google.android.maps.OverlayItem;
@@ -165,8 +165,7 @@ public class TaxiItemizedOverlay extends ItemizedOverlay<OverlayItem>{
 	
 	private ResultBundle getTaxiDriverInfo(String taxiDriverID) {
 		ResultBundle rb = null;
-		ControllerUsers controllerU = new ControllerUsers();
-		rb = controllerU.getTaxiDriver(taxiDriverID);
+		rb = UsersHelper.getTaxiDriver(taxiDriverID);
 		return rb;
 	}
 

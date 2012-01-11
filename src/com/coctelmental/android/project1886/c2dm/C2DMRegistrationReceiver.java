@@ -2,7 +2,7 @@ package com.coctelmental.android.project1886.c2dm;
 
 import java.net.HttpURLConnection;
 
-import com.coctelmental.android.project1886.logic.ControllerServiceRequests;
+import com.coctelmental.android.project1886.helpers.ServiceRequestsHelper;
 
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -73,7 +73,7 @@ public class C2DMRegistrationReceiver extends BroadcastReceiver{
 	
 	    protected Integer doInBackground(String... params) {
 	    	// send device info to server
-	        return ControllerServiceRequests.sendRegistrationIdToServer(params[0]);
+	        return ServiceRequestsHelper.sendRegistrationID(params[0]);
 	    }
 
 	    protected void onPostExecute(Integer result) {

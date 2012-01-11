@@ -4,7 +4,7 @@ import java.net.HttpURLConnection;
 
 import com.coctelmental.android.project1886.common.BusDriver;
 import com.coctelmental.android.project1886.common.util.JsonHandler;
-import com.coctelmental.android.project1886.logic.ControllerUsers;
+import com.coctelmental.android.project1886.helpers.UsersHelper;
 import com.coctelmental.android.project1886.model.Credentials;
 import com.coctelmental.android.project1886.model.ResultBundle;
 import com.coctelmental.android.project1886.util.Tools;
@@ -29,16 +29,11 @@ public class BusDriverAuthentication extends Activity {
 	
 	private String userID;
 	private String password;
-	
-	private ControllerUsers controllerU;
 
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bus_driver_authentication);
-        
-        // get a controller instance
-        controllerU = new ControllerUsers();
         
         etUserID = (EditText) findViewById(R.id.userID);
         etPassword = (EditText) findViewById(R.id.password);
@@ -80,7 +75,7 @@ public class BusDriverAuthentication extends Activity {
 	    	// disable the progress dialog
 	        pdprocessingAuthentication.dismiss();
 			// calculate password digest
-			String passwordDigest = controllerU.passwordToDigest(password);					
+			String passwordDigest = UsersHelper.passwordToDigest(password);					
 			// check result
 			if (rb.getResultCode() == HttpURLConnection.HTTP_OK) {
 				String jsonUser = rb.getContent();
@@ -89,7 +84,7 @@ public class BusDriverAuthentication extends Activity {
 					// setup new user credentials
 					Credentials credentials=new Credentials(busDriver.getDni(), passwordDigest, Credentials.TYPE_BUS);
 					// log in
-					controllerU.logIn(credentials);
+					UsersHelper.logIn(credentials);
 					// information panel
 					Tools.buildToast(getApplicationContext(), getString(R.string.correctLogin),
 							Gravity.CENTER, Toast.LENGTH_SHORT).show();						
@@ -118,7 +113,7 @@ public class BusDriverAuthentication extends Activity {
 	
 	private ResultBundle tryAuthentication(String userID) {
 		ResultBundle rb = null;
-		rb = controllerU.getBusDriver(userID);
+		rb = UsersHelper.getBusDriver(userID);
 		return rb;
 	}
 	

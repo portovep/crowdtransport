@@ -4,7 +4,7 @@ import java.net.HttpURLConnection;
 
 
 import com.coctelmental.android.project1886.common.TaxiDriver;
-import com.coctelmental.android.project1886.logic.ControllerUsers;
+import com.coctelmental.android.project1886.helpers.UsersHelper;
 import com.coctelmental.android.project1886.model.Credentials;
 import com.coctelmental.android.project1886.util.Tools;
 
@@ -41,15 +41,10 @@ public class TaxiDriverRegistration extends Activity {
 	private String carBrand;
 	private String carModel;
 	
-	private ControllerUsers controllerU;
-	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.taxi_driver_registration);
-        
-        // get a instance of our controller
-        controllerU = new ControllerUsers();
         
         // obtain views
         etFullName= (EditText) findViewById(R.id.fullName);
@@ -103,7 +98,7 @@ public class TaxiDriverRegistration extends Activity {
 	      * delivers it the parameters given to AsyncTask.execute() */		
 	    protected Integer doInBackground(Void... params) {
 			// create a taxiDriver instance with registration data
-			taxiDriver= new TaxiDriver(dni, fullName, controllerU.passwordToDigest(password), email,
+			taxiDriver= new TaxiDriver(dni, fullName, UsersHelper.passwordToDigest(password), email,
 					licence, carBrand, carModel);
 			// send request to the server and return response code
 	        return tryRegistration(taxiDriver);
@@ -117,7 +112,7 @@ public class TaxiDriverRegistration extends Activity {
 			if(responseStatus == HttpURLConnection.HTTP_OK) {
 				// add registered user as active user (auto log in after registration)
 				Credentials credentials = new Credentials(taxiDriver.getDni(), taxiDriver.getPassword(), Credentials.TYPE_TAXI);
-				controllerU.logIn(credentials);
+				UsersHelper.logIn(credentials);
 				// show message to the user
 				Tools.buildToast(getApplicationContext(), getString(R.string.correctRegister),
 						Gravity.CENTER, Toast.LENGTH_SHORT).show();
@@ -148,7 +143,7 @@ public class TaxiDriverRegistration extends Activity {
 	}
 
 	private int tryRegistration(TaxiDriver taxiDriver) {
-		return controllerU.registerTaxiDriver(taxiDriver);			
+		return UsersHelper.registerTaxiDriver(taxiDriver);			
 	}
 
 }

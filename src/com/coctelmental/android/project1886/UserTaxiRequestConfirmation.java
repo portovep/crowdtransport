@@ -7,7 +7,8 @@ import java.util.Locale;
 
 import com.coctelmental.android.project1886.c2dm.C2DMRegistrationReceiver;
 import com.coctelmental.android.project1886.common.GeoPointInfo;
-import com.coctelmental.android.project1886.logic.ControllerServiceRequests;
+import com.coctelmental.android.project1886.common.ServiceRequestInfo;
+import com.coctelmental.android.project1886.helpers.ServiceRequestsHelper;
 import com.coctelmental.android.project1886.util.Tools;
 
 import android.app.Activity;
@@ -39,14 +40,10 @@ public class UserTaxiRequestConfirmation extends Activity{
 	private EditText etClarificationComment;
 	private Spinner spRequestLifeTime;
 	
-	private ControllerServiceRequests controllerSR;
-	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_taxi_request_confirmation);
-        
-        controllerSR = new ControllerServiceRequests();
         
         String targetTaxiDriverID = null;
         String targetTaxiDriverName = null;
@@ -64,9 +61,9 @@ public class UserTaxiRequestConfirmation extends Activity{
         tvTaxiDriverName.setText(targetTaxiDriverName);
         
     	// add taxi driver id to request info
-    	controllerSR.getServiceRequest().setTaxiDriverID(targetTaxiDriverID);
+        ServiceRequestsHelper.getServiceRequest().setTaxiDriverID(targetTaxiDriverID);
     	// add taxi driver UUID to request info
-    	controllerSR.getServiceRequest().setTaxiDriverUUID(targetTaxiDriverUUID);
+    	ServiceRequestsHelper.getServiceRequest().setTaxiDriverUUID(targetTaxiDriverUUID);
 		
         // get edit text view
         etClarificationComment = (EditText) findViewById(R.id.etClarificationComment);
@@ -86,11 +83,11 @@ public class UserTaxiRequestConfirmation extends Activity{
 				// get clarification comment if there
 				String clarificationComment = etClarificationComment.getText().toString();
 				// add comment to service request info
-				controllerSR.getServiceRequest().setComment(clarificationComment);
+				ServiceRequestsHelper.getServiceRequest().setComment(clarificationComment);
 				// get request time life
 				int selectedPosition = spRequestLifeTime.getSelectedItemPosition();
 				// add selected time life to service request info
-				controllerSR.getServiceRequest().setRequestLifeTime(availableLifeTimes[selectedPosition]);
+				ServiceRequestsHelper.getServiceRequest().setRequestLifeTime(availableLifeTimes[selectedPosition]);
 				
 		        
 				// C2DM register to receive push notifications from web service
@@ -111,32 +108,32 @@ public class UserTaxiRequestConfirmation extends Activity{
 		}
 		
 	    protected Integer doInBackground(Void... params) {
-	        
+	        ServiceRequestInfo serviceRequest = ServiceRequestsHelper.getServiceRequest();
 			// get address name form origin and destination geopoints.
-			String addressName = getAddressFromGeoPointInfo(controllerSR.getServiceRequest().getGpFrom());
-			controllerSR.getServiceRequest().setAddressFrom(addressName);
-			addressName = getAddressFromGeoPointInfo(controllerSR.getServiceRequest().getGpTo());
-			controllerSR.getServiceRequest().setAddressTo(addressName);
+			String addressName = getAddressFromGeoPointInfo(serviceRequest.getGpFrom());
+			serviceRequest.setAddressFrom(addressName);
+			addressName = getAddressFromGeoPointInfo(serviceRequest.getGpTo());
+			serviceRequest.setAddressTo(addressName);
 	        
 	        Log.d("Service request info"," TaxiDriver ID: "
-	        		+controllerSR.getServiceRequest().getTaxiDriverID()+
+	        		+serviceRequest.getTaxiDriverID()+
 	        		"\n TaxiDriver UUID: "
-	        		+controllerSR.getServiceRequest().getTaxiDriverUUID()+
+	        		+serviceRequest.getTaxiDriverUUID()+
 	        		"\n gpORI: "+
-	        		controllerSR.getServiceRequest().getGpFrom().getLatitudeE6()+
+	        		serviceRequest.getGpFrom().getLatitudeE6()+
 	        		"\n gpDEST: "+
-	        		controllerSR.getServiceRequest().getGpTo().getLatitudeE6()+
+	        		serviceRequest.getGpTo().getLatitudeE6()+
 	        		"\n commnet: "+
-	        		controllerSR.getServiceRequest().getComment()+
+	        		serviceRequest.getComment()+
 	        		"\n lifetime: "+
-	        		controllerSR.getServiceRequest().getRequestLifeTime() +
+	        		serviceRequest.getRequestLifeTime() +
 	        		"\n addressFrom: "+
-	        		controllerSR.getServiceRequest().getAddressFrom() +
+	        		serviceRequest.getAddressFrom() +
 	        		"\n addressTo: "+
-	        		controllerSR.getServiceRequest().getAddressTo());
+	        		serviceRequest.getAddressTo());
 			
 	    	// send service request to server
-	        return ControllerServiceRequests.sendServiceRequest();
+	        return ServiceRequestsHelper.sendServiceRequest();
 	    }
 
 	    protected void onPostExecute(Integer result) {
@@ -155,7 +152,7 @@ public class UserTaxiRequestConfirmation extends Activity{
 				if (result == HttpURLConnection.HTTP_NOT_ACCEPTABLE) {
 					message = getString(R.string.failSendingRequest);
 				}
-				else if (result == ControllerServiceRequests.ERROR_MALFORMED_REQUEST) {
+				else if (result == ServiceRequestsHelper.ERROR_MALFORMED_REQUEST) {
 					message = getString(R.string.failMalformedServiceRequest);
 				}
 				Toast toast = Tools.buildToast(UserTaxiRequestConfirmation.this, message, Gravity.CENTER, Toast.LENGTH_SHORT);

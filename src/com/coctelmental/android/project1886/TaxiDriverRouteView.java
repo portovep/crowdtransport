@@ -17,7 +17,7 @@ import android.widget.Toast;
 import com.coctelmental.android.project1886.common.GeoPointInfo;
 import com.coctelmental.android.project1886.common.ServiceRequestInfo;
 import com.coctelmental.android.project1886.common.util.JsonHandler;
-import com.coctelmental.android.project1886.logic.ControllerServiceRequests;
+import com.coctelmental.android.project1886.helpers.ServiceRequestsHelper;
 import com.coctelmental.android.project1886.util.Tools;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
@@ -137,7 +137,7 @@ public class TaxiDriverRouteView extends MapActivity {
 		
 	    protected Integer doInBackground(Void... params) {
 	    	// send request to server
-	        return ControllerServiceRequests.acceptServiceRequest(serviceRequest.getUserUUID());
+	        return ServiceRequestsHelper.acceptServiceRequest(serviceRequest.getUserUUID());
 	    }
 
 	    protected void onPostExecute(Integer result) {

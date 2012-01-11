@@ -4,7 +4,7 @@ import java.net.HttpURLConnection;
 
 
 import com.coctelmental.android.project1886.common.User;
-import com.coctelmental.android.project1886.logic.ControllerUsers;
+import com.coctelmental.android.project1886.helpers.UsersHelper;
 import com.coctelmental.android.project1886.model.Credentials;
 import com.coctelmental.android.project1886.util.Tools;
 
@@ -34,18 +34,14 @@ public class UserRegistration extends Activity {
 	private String password;
 	private String password2;
 	private String email;
-	
-	private ControllerUsers controllerU;
+
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_registration);
-        
-        // get a instance of our controller
-        controllerU = new ControllerUsers();
-        
-        // obtain views
+
+        // get views
         etName= (EditText) findViewById(R.id.fullName);
         etUserName= (EditText) findViewById(R.id.userName);
         etPassword= (EditText) findViewById(R.id.password);
@@ -90,7 +86,7 @@ public class UserRegistration extends Activity {
 	      * delivers it the parameters given to AsyncTask.execute() */		
 	    protected Integer doInBackground(Void... params) {
 			// create an user instance with registration data
-			user= new User(userName, name, controllerU.passwordToDigest(password), email);
+			user= new User(userName, name, UsersHelper.passwordToDigest(password), email);
 			// send request to the server and return response code
 	        return tryRegistration(user);
 	    }	    
@@ -103,7 +99,7 @@ public class UserRegistration extends Activity {
 			if(responseStatus == HttpURLConnection.HTTP_OK) {
 				// add registered user as active user (log in)
 				Credentials credentials = new Credentials(user.getUserName(), user.getPassword(), Credentials.TYPE_USER);
-				controllerU.logIn(credentials);
+				UsersHelper.logIn(credentials);
 				// information panel
 				Tools.buildToast(getApplicationContext(), getString(R.string.correctRegister),
 						Gravity.CENTER, Toast.LENGTH_SHORT).show();
@@ -130,7 +126,7 @@ public class UserRegistration extends Activity {
 	}
 	
 	private int tryRegistration(User user) {
-		return controllerU.registerUser(user);		
+		return UsersHelper.registerUser(user);		
 	}
 	
 }

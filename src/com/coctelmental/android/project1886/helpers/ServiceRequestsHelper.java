@@ -1,4 +1,4 @@
-package com.coctelmental.android.project1886.logic;
+package com.coctelmental.android.project1886.helpers;
 
 
 import com.coctelmental.android.project1886.MyApplication;
@@ -8,29 +8,24 @@ import com.coctelmental.android.project1886.common.util.JsonHandler;
 import com.coctelmental.android.project1886.model.ResultBundle;
 import com.coctelmental.android.project1886.util.ConnectionsHandler;
 
-public class ControllerServiceRequests {
+public class ServiceRequestsHelper {
 	
 	public static final int ERROR_MALFORMED_REQUEST = -1;
 	
-	private static final String C2DM_REGISTRATION_RESOURCE = "/c2dm-registration";
-	private static final String SERVICE_REQUEST_RESOURCE = "/service-request";
-	private static final String CONFIRMATION_REQUEST_RESOURCE = "/request-response";
+	private static final String URI_C2DM_REGISTRATION_RESOURCE = "/c2dm-registration";
+	private static final String URI_SERVICE_REQUEST_RESOURCE = "/service-request";
+	private static final String URI_REQUEST_RESPONSE_RESOURCE = "/request-response";
+
 	
-	private ControllerUsers controllerU;
-	
-	public ControllerServiceRequests() {
-		controllerU = new ControllerUsers();
-	}
-	
-	public void createServiceRequest() {
+	public static void createNewServiceRequest() {
 		// get installation unique id
 		String userUUID = MyApplication.getInstance().id();
 		ServiceRequestInfo serviceRequestInfo = new ServiceRequestInfo(userUUID);
 		
 		// get logged user ID
 		String userID;
-		if(controllerU.existActiveUser())
-			userID = controllerU.getActiveUser().getId();
+		if(UsersHelper.existActiveUser())
+			userID = UsersHelper.getActiveUser().getId();
 		else
 			userID = userUUID;
 		
@@ -40,7 +35,7 @@ public class ControllerServiceRequests {
 		MyApplication.getInstance().storeServiceRequestInfo(serviceRequestInfo);
 	}
 	
-	public ServiceRequestInfo getServiceRequest() {
+	public static ServiceRequestInfo getServiceRequest() {
 		return MyApplication.getInstance().getServiceRequestInfo();
 	}
 	
@@ -51,10 +46,16 @@ public class ControllerServiceRequests {
 		if (serviceRequest != null) {
 			// convert to json
 			String jsonServiceRequest = JsonHandler.toJson(serviceRequest);
-			result = ConnectionsHandler.put(SERVICE_REQUEST_RESOURCE, jsonServiceRequest);
+			result = ConnectionsHandler.put(URI_SERVICE_REQUEST_RESOURCE, jsonServiceRequest);
 		}
 		
 		return result;		
+	}
+	
+	public static ResultBundle obtainAllServiceRequest(){
+		String taxiUUID = MyApplication.getInstance().id();
+		String targetURL = URI_SERVICE_REQUEST_RESOURCE + "/" + taxiUUID;
+		return ConnectionsHandler.get(targetURL);	
 	}
 
 	public static int acceptServiceRequest(String requestID){
@@ -65,7 +66,7 @@ public class ControllerServiceRequests {
 		    // build data
 		    String[] request = {"accept", taxiUUID};
 		    String jsonRequest = JsonHandler.toJson(request);
-			String targetURL = CONFIRMATION_REQUEST_RESOURCE + "/" + requestID;
+			String targetURL = URI_REQUEST_RESPONSE_RESOURCE + "/" + requestID;
 			result = ConnectionsHandler.post(targetURL, jsonRequest);	
 		}
 		
@@ -81,7 +82,7 @@ public class ControllerServiceRequests {
 			String requestID = serviceRequest.getUserUUID();
 			
 			if (taxiUUID != null && requestID != null) {
-				String targetURL = SERVICE_REQUEST_RESOURCE + "/" + taxiUUID + "/request/" + requestID;
+				String targetURL = URI_SERVICE_REQUEST_RESOURCE + "/" + taxiUUID + "/request/" + requestID;
 				result = ConnectionsHandler.delete(targetURL);
 			}
 		}
@@ -89,25 +90,13 @@ public class ControllerServiceRequests {
 		return result;		
 	}
 	
-	public static int rejectAllServiceRequest(){
+	public static int cancelAllServiceRequest(){
 		String taxiUUID = MyApplication.getInstance().id();
-		String targetURL = SERVICE_REQUEST_RESOURCE + "/" + taxiUUID;
+		String targetURL = URI_SERVICE_REQUEST_RESOURCE + "/" + taxiUUID;
 		return ConnectionsHandler.delete(targetURL);		
 	}
 	
-	public static ResultBundle getNewServiceRequest(String requestID){
-		String taxiUUID = MyApplication.getInstance().id();
-		String targetURL = SERVICE_REQUEST_RESOURCE + "/" + taxiUUID + "/request/" + requestID;
-		return ConnectionsHandler.get(targetURL);	
-	}
-	
-	public static ResultBundle getAllServiceRequest(){
-		String taxiUUID = MyApplication.getInstance().id();
-		String targetURL = SERVICE_REQUEST_RESOURCE + "/" + taxiUUID;
-		return ConnectionsHandler.get(targetURL);	
-	}
-	
-	public static int sendRegistrationIdToServer(String registrationID) {
+	public static int sendRegistrationID(String registrationID) {
 		int result = -1;
 		if (registrationID != null && registrationID != "") {
 			// get installation UUID		
@@ -119,7 +108,7 @@ public class ControllerServiceRequests {
 			
 			// send to webservice
 			String jsonDeviceInfo = JsonHandler.toJson(deviceInfo);
-			result = ConnectionsHandler.post(C2DM_REGISTRATION_RESOURCE, jsonDeviceInfo);
+			result = ConnectionsHandler.post(URI_C2DM_REGISTRATION_RESOURCE, jsonDeviceInfo);
 		}
 		return result;
 	}

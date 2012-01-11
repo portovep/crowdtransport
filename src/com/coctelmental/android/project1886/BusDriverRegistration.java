@@ -4,7 +4,7 @@ import java.net.HttpURLConnection;
 
 
 import com.coctelmental.android.project1886.common.BusDriver;
-import com.coctelmental.android.project1886.logic.ControllerUsers;
+import com.coctelmental.android.project1886.helpers.UsersHelper;
 import com.coctelmental.android.project1886.model.Credentials;
 import com.coctelmental.android.project1886.util.Tools;
 
@@ -39,15 +39,10 @@ public class BusDriverRegistration extends Activity {
 	private String companyCIF;
 	private String companyAuthCode;
 	
-	private ControllerUsers controllerU;
-	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bus_driver_registration);
-        
-        // get a instance of our controller
-        controllerU = new ControllerUsers();
         
         // obtain views
         etFullName= (EditText) findViewById(R.id.fullName);
@@ -100,7 +95,7 @@ public class BusDriverRegistration extends Activity {
 	      * delivers it the parameters given to AsyncTask.execute() */		
 	    protected Integer doInBackground(Void... params) {
 			// create a busDriver instance with registration data
-			busDriver= new BusDriver(dni, fullName, controllerU.passwordToDigest(password), email,
+			busDriver= new BusDriver(dni, fullName, UsersHelper.passwordToDigest(password), email,
 					companyCIF, companyAuthCode);
 	    	// send request to the server and return response code
 	        return tryRegistration(busDriver);
@@ -114,7 +109,7 @@ public class BusDriverRegistration extends Activity {
 			if(responseStatus == HttpURLConnection.HTTP_OK) {
 				// add registered user as active user (auto log in after registration)
 				Credentials credentials = new Credentials(busDriver.getDni(), busDriver.getPassword(), Credentials.TYPE_BUS);
-				controllerU.logIn(credentials);
+				UsersHelper.logIn(credentials);
 				// show message to the user
 				Tools.buildToast(getApplicationContext(), getString(R.string.correctRegister),
 						Gravity.CENTER, Toast.LENGTH_SHORT).show();
@@ -144,7 +139,7 @@ public class BusDriverRegistration extends Activity {
 	}
 	
 	private int tryRegistration(BusDriver busDriver) {
-		return controllerU.registerBusDriver(busDriver);			
+		return UsersHelper.registerBusDriver(busDriver);			
 	}
 
 }

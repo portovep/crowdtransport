@@ -11,8 +11,8 @@ import java.util.TimerTask;
 import com.coctelmental.android.project1886.common.GeoPointInfo;
 import com.coctelmental.android.project1886.common.TaxiLocation;
 import com.coctelmental.android.project1886.common.util.JsonHandler;
-import com.coctelmental.android.project1886.logic.ControllerLocations;
-import com.coctelmental.android.project1886.logic.ControllerServiceRequests;
+import com.coctelmental.android.project1886.helpers.LocationsHelper;
+import com.coctelmental.android.project1886.helpers.ServiceRequestsHelper;
 import com.coctelmental.android.project1886.model.ResultBundle;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
@@ -47,9 +47,7 @@ public class UserTaxiLocationMap extends MapActivity {
 	private MapController mc;
 	private List<Overlay> mapOverlays;	
 	private Drawable drawableTaxiMarker;
-	
-	private ControllerLocations controllerL;
-	private ControllerServiceRequests controllerSR;
+
 	
 	@Override
 	protected boolean isRouteDisplayed() {
@@ -60,13 +58,9 @@ public class UserTaxiLocationMap extends MapActivity {
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 	    setContentView(R.layout.user_taxi_location_map);
-	    
-        // get a instance of our controller
-        controllerL = new ControllerLocations();
-        controllerSR = new ControllerServiceRequests();
         
 	    // get origin geopoint from service request info
-    	gpOrigin = controllerSR.getServiceRequest().getGpFrom();        
+    	gpOrigin = ServiceRequestsHelper.getServiceRequest().getGpFrom();        
 	    
 	    Log.w(getString(R.string.app_name), "User loc: "+gpOrigin.getLatitudeE6()+" : "+gpOrigin.getLongitudeE6());
 	    
@@ -173,7 +167,7 @@ public class UserTaxiLocationMap extends MapActivity {
 		public void run() {
 
 			if (!taxiItemizedOverlays.isOverlayDialogVisible()) {
-				updatedLocation = controllerL.obtainTaxiLocation(gpOrigin);
+				updatedLocation = LocationsHelper.obtainTaxiLocations(gpOrigin);
 				// notify the handler
 				handler.sendEmptyMessage(0);
 			}

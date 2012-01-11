@@ -9,7 +9,7 @@ import com.coctelmental.android.project1886.c2dm.C2DMRegistrationReceiver;
 import com.coctelmental.android.project1886.c2dm.C2DMessageReceiver;
 import com.coctelmental.android.project1886.common.ServiceRequestInfo;
 import com.coctelmental.android.project1886.common.util.JsonHandler;
-import com.coctelmental.android.project1886.logic.ControllerServiceRequests;
+import com.coctelmental.android.project1886.helpers.ServiceRequestsHelper;
 import com.coctelmental.android.project1886.model.ResultBundle;
 import com.coctelmental.android.project1886.util.Tools;
 import com.google.gson.reflect.TypeToken;
@@ -206,7 +206,7 @@ public class TaxiDriverInformationPanel extends Activity{
 		
 	    protected ResultBundle doInBackground(Void... params) {
 	    	// retrieving new request from webservice
-	        return ControllerServiceRequests.getAllServiceRequest();
+	        return ServiceRequestsHelper.obtainAllServiceRequest();
 	    }
 
 	    protected void onPostExecute(ResultBundle rb) {    	
@@ -267,7 +267,7 @@ public class TaxiDriverInformationPanel extends Activity{
 	private class RejectAllServiceRequestTask extends AsyncTask<Void, Void, Integer> {
 		
 	    protected Integer doInBackground(Void... params) {
-	        return ControllerServiceRequests.rejectAllServiceRequest();
+	        return ServiceRequestsHelper.cancelAllServiceRequest();
 	    }
 
 	    protected void onPostExecute(Integer result) {    	
