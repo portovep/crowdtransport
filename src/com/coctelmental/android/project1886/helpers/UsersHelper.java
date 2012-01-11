@@ -4,6 +4,7 @@ import com.coctelmental.android.project1886.MyApplication;
 import com.coctelmental.android.project1886.common.BusDriver;
 import com.coctelmental.android.project1886.common.TaxiDriver;
 import com.coctelmental.android.project1886.common.User;
+import com.coctelmental.android.project1886.common.util.JsonHandler;
 import com.coctelmental.android.project1886.model.Credentials;
 import com.coctelmental.android.project1886.model.ResultBundle;
 import com.coctelmental.android.project1886.util.ConnectionsHandler;
@@ -32,15 +33,15 @@ public class UsersHelper {
 	}
 
 	public static int registerUser(User user) {
-		return ConnectionsHandler.put(URI_USER_RESOURCE, user.toJson());
+		return ConnectionsHandler.put(URI_USER_RESOURCE, JsonHandler.toJson(user));
 	}
 
 	public static int registerBusDriver(BusDriver busDriver) {
-		return ConnectionsHandler.put(URI_BUS_RESOURCE, busDriver.toJson());
+		return ConnectionsHandler.put(URI_BUS_RESOURCE, JsonHandler.toJson(busDriver));
 	}
 	
 	public static int registerTaxiDriver(TaxiDriver taxiDriver) {
-		return ConnectionsHandler.put(URI_TAXI_RESOURCE, taxiDriver.toJson());
+		return ConnectionsHandler.put(URI_TAXI_RESOURCE, JsonHandler.toJson(taxiDriver));
 	}
 	
 	public static void logIn(Credentials credentials) {

@@ -1,6 +1,5 @@
 package com.coctelmental.android.project1886.common;
 
-import com.coctelmental.android.project1886.common.util.JsonHandler;
 
 public class TaxiDriver {
 
@@ -80,18 +79,5 @@ public class TaxiDriver {
 	public String getPassword() {
 		return password;
 	}
-	
-	public String toString() {
-		return String.format("dni: %s\n" +
-							 "fullName: %s\n" +
-							 "email: %s\n" +
-							 "licence: %s\n" +
-							 "carBrand: %s\n" +
-							 "carModel: %s", dni, fullName, email, licenceNumber, carBrand, carModel );
-	}
 
-	public String toJson() {
-		return JsonHandler.toJson(this);	
-	}
-	
 }

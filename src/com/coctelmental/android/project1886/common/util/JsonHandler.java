@@ -17,14 +17,14 @@ public class JsonHandler {
 		return gson.toJson(object, type);
 	}
 
-	public static <T> T fromJson(String jsonObject, Class<T> classType) {
-		Gson gson = new Gson();
-		return gson.fromJson(jsonObject, classType);
-	}
-	
 	public static <T> T fromJson(String jsonObject, Type type) {
 		Gson gson = new Gson();
 		return gson.fromJson(jsonObject, type);
+	}
+	
+	public static <T> T fromJson(String jsonObject, Class<T> classType) {
+		Gson gson = new Gson();
+		return gson.fromJson(jsonObject, classType);
 	}
 
 }

@@ -1,6 +1,5 @@
 package com.coctelmental.android.project1886.common;
 
-import com.coctelmental.android.project1886.common.util.JsonHandler;
 
 
 public class User {
@@ -51,13 +50,4 @@ public class User {
 		return email;
 	}
 
-	public String toString() {
-		return String.format("userName: %s\n" +
-							 "fullName: %s\n" +
-							 "email: %s", userName, fullName, email );
-	}
-
-	public String toJson() {
-		return JsonHandler.toJson(this);	
-	}
 }
