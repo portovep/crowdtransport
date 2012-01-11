@@ -1,4 +1,5 @@
 package com.coctelmental.android.project1886.buses;
+
 import java.util.ArrayList;
 
 import android.app.AlertDialog;
@@ -10,40 +11,35 @@ import com.google.android.maps.OverlayItem;
 
 
 
-public class CustomItemizedOverlay extends ItemizedOverlay<OverlayItem> {
+public class BusItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 	
 	private Context context;
-	private ArrayList<OverlayItem> aOverlays;
+	private ArrayList<OverlayItem> overlayList;
+
 	
-	public CustomItemizedOverlay(Drawable defaultMarker) {
+	public BusItemizedOverlay(Drawable defaultMarker, Context context) {
 		super(boundCenter(defaultMarker));
-		aOverlays= new ArrayList<OverlayItem>();
-	}
-	
-	public CustomItemizedOverlay(Drawable defaultMarker, Context context) {
-		super(boundCenter(defaultMarker));
-		aOverlays= new ArrayList<OverlayItem>();
+		overlayList= new ArrayList<OverlayItem>();
 		this.context=context;
 	}
 	
-	public void addOverlay(OverlayItem overlay)
-	{
-		aOverlays.add(overlay);
+	public void addOverlay(OverlayItem overlay) {
+		overlayList.add(overlay);
 	}
 
 	@Override
 	protected OverlayItem createItem(int i) {
-		return aOverlays.get(i);
+		return overlayList.get(i);
 	}
 
 	@Override
 	public int size() {
-		return aOverlays.size();
+		return overlayList.size();
 	}
 
 	@Override
 	protected boolean onTap(int index) {
-		OverlayItem item = aOverlays.get(index);
+		OverlayItem item = overlayList.get(index);
 		AlertDialog.Builder dialog = new AlertDialog.Builder(context);
 		dialog.setTitle(item.getTitle());
 		dialog.setMessage(item.getSnippet());

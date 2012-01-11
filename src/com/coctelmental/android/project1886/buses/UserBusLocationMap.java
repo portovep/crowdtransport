@@ -63,8 +63,8 @@ public class UserBusLocationMap extends MapActivity {
         
 	    // get data from intent
     	Bundle extras = getIntent().getExtras();	    
-        targetCity = extras != null ? extras.getString(UserBusLineSelection.TARGET_CITY) : null;
-        targetLine = extras != null ? extras.getString(UserBusLineSelection.TARGET_LINE) : null;      
+        targetCity = extras != null ? extras.getString(UserBusLineSelection.EXTRA_TARGET_CITY) : null;
+        targetLine = extras != null ? extras.getString(UserBusLineSelection.EXTRA_TARGET_LINE) : null;      
 	    
 	    Log.w(getString(R.string.app_name), "Request information to city: "+targetCity+" and line: "+targetLine);
 	        
@@ -91,9 +91,7 @@ public class UserBusLocationMap extends MapActivity {
 		mc = mapView.getController();
         mc.setZoom(17);
         // get reference to map overlays
-        mapOverlays = mapView.getOverlays();
-        
-	    
+        mapOverlays = mapView.getOverlays();       	    
 
 	    // get reference for our marker custom icon
         drawableBusMarker = this.getResources().getDrawable(R.drawable.marker_bus);    
@@ -116,8 +114,7 @@ public class UserBusLocationMap extends MapActivity {
 		super.onPause();
 	}
 
-	private void showUpdatedLocation(ResultBundle rb)
-	{
+	private void showUpdatedLocation(ResultBundle rb) {
 	    // position available
 	    if (rb.getResultCode() == HttpURLConnection.HTTP_OK) {
 	    	String jsonLocations = rb.getContent();
@@ -129,7 +126,7 @@ public class UserBusLocationMap extends MapActivity {
 	    			" lat="+newLocations.get(0).getGeopoint().getLatitudeE6()+" long="+newLocations.get(0).getGeopoint().getLongitudeE6());
 
 	    	// remove previous overlays
-	    	CustomItemizedOverlay busItemizedOverlays = new CustomItemizedOverlay(drawableBusMarker, this);    
+	    	BusItemizedOverlay busItemizedOverlays = new BusItemizedOverlay(drawableBusMarker, this);    
 	    	
 	    	GeoPoint geopoint = null;
 	    	for(BusLocation busLocation : newLocations) {
@@ -183,7 +180,7 @@ public class UserBusLocationMap extends MapActivity {
 		}
 	}
 	
-	private Handler handler = new Handler(){
+	private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {       		
 			showUpdatedLocation(updatedLocation);
@@ -197,7 +194,7 @@ public class UserBusLocationMap extends MapActivity {
 		handler.removeCallbacksAndMessages(null);
 	}
 	
-	private void goPreviousActivity(String message){
+	private void goPreviousActivity(String message) {
 		if(alertDialogLocationNotFound == null) {
 	    	// setup and show a alert dialog
 	    	AlertDialog.Builder builder = new AlertDialog.Builder(this);

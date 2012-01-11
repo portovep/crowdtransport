@@ -27,8 +27,8 @@ import android.widget.Toast;
 
 public class UserBusLineSelection extends Activity {
 	
-	public static final String TARGET_CITY="targetCity";
-	public static final String TARGET_LINE="targetLine";
+	public static final String EXTRA_TARGET_CITY="targetCity";
+	public static final String EXTRA_TARGET_LINE="targetLine";
 	
 	private Button bSearch;
 	private Spinner spCities;
@@ -50,8 +50,8 @@ public class UserBusLineSelection extends Activity {
 			public void onClick(View v) {
 				Intent intent;
 				intent= new Intent(UserBusLineSelection.this, UserBusLocationMap.class);
-				intent.putExtra(TARGET_CITY, targetCity);
-				intent.putExtra(TARGET_LINE, targetLine);
+				intent.putExtra(EXTRA_TARGET_CITY, targetCity);
+				intent.putExtra(EXTRA_TARGET_LINE, targetLine);
 				startActivity(intent);
 			}
 		});
@@ -68,8 +68,7 @@ public class UserBusLineSelection extends Activity {
         
     }
 
-	public class CitiesSpinnerItemSelectedListener implements OnItemSelectedListener
-	{
+	private class CitiesSpinnerItemSelectedListener implements OnItemSelectedListener {
 		@Override
 		public void onItemSelected(AdapterView<?> parent, View view, int pos,
 				long id) {
@@ -85,8 +84,7 @@ public class UserBusLineSelection extends Activity {
 		}		
 	}
 	
-	public class LinesSpinnerItemSelectedListener implements OnItemSelectedListener
-	{
+	private class LinesSpinnerItemSelectedListener implements OnItemSelectedListener {
 		@Override
 		public void onItemSelected(AdapterView<?> parent, View view, int pos,
 				long id) {

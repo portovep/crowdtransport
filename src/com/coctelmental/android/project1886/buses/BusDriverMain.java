@@ -43,7 +43,7 @@ public class BusDriverMain extends Activity {
     }
 	
 	@Override
-	public void onResume() {
+	protected void onResume() {
 		super.onResume();		
 		// check if exist a user logged into the application 
         if(UsersHelper.existActiveUser()) {

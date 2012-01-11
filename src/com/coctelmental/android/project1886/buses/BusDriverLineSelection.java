@@ -67,8 +67,7 @@ public class BusDriverLineSelection extends Activity {
         
     }
 
-	public class CitiesSpinnerItemSelectedListener implements OnItemSelectedListener
-	{
+	private class CitiesSpinnerItemSelectedListener implements OnItemSelectedListener {
 		@Override
 		public void onItemSelected(AdapterView<?> parent, View view, int pos,
 				long id) {
@@ -84,8 +83,7 @@ public class BusDriverLineSelection extends Activity {
 		}		
 	}
 	
-	public class LinesSpinnerItemSelectedListener implements OnItemSelectedListener
-	{
+	private class LinesSpinnerItemSelectedListener implements OnItemSelectedListener {
 		@Override
 		public void onItemSelected(AdapterView<?> parent, View view, int pos,
 				long id) {
@@ -106,14 +104,12 @@ public class BusDriverLineSelection extends Activity {
 			// show a progress dialog while data is retrieved from the server
 			pdLoadingCities = ProgressDialog.show(BusDriverLineSelection.this, "", getString(R.string.loadingCities), true);
 		}
-	    /** The system calls this to perform work in a worker thread and
-	      * delivers it the parameters given to AsyncTask.execute() */		
+		
 	    protected ResultBundle doInBackground(Void... params) {
 	    	// retrieving available cities form server
 	        return AvailableDataHelper.getAvailableCities();
 	    }	    
-	    /** The system calls this to perform work in the UI thread and delivers
-	      * the result from doInBackground() */
+
 	    protected void onPostExecute(ResultBundle rb) {
 	    	// disable the progress dialog
 	        pdLoadingCities.dismiss();
