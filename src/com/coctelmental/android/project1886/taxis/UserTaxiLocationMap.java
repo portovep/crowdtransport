@@ -9,10 +9,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import com.coctelmental.android.project1886.R;
-import com.coctelmental.android.project1886.R.drawable;
-import com.coctelmental.android.project1886.R.id;
-import com.coctelmental.android.project1886.R.layout;
-import com.coctelmental.android.project1886.R.string;
 import com.coctelmental.android.project1886.common.GeoPointInfo;
 import com.coctelmental.android.project1886.common.TaxiLocation;
 import com.coctelmental.android.project1886.common.util.JsonHandler;
@@ -50,8 +46,6 @@ public class UserTaxiLocationMap extends MapActivity {
 	
 	private MapView mapView;
 	private MapController mc;
-	private List<Overlay> mapOverlays;	
-	private Drawable drawableTaxiMarker;
 
 	
 	@Override
@@ -83,13 +77,13 @@ public class UserTaxiLocationMap extends MapActivity {
 		mc = mapView.getController();
         mc.setZoom(17);
         // get reference to map overlays
-        mapOverlays = mapView.getOverlays();
+        List<Overlay> mapOverlays = mapView.getOverlays();
         
         // focus map's center on origin geopoint
         mc.animateTo(new GeoPoint(gpOrigin.getLatitudeE6(), gpOrigin.getLongitudeE6()));
 	    
 	    // get custom marker icon
-        drawableTaxiMarker = this.getResources().getDrawable(R.drawable.marker_taxi);    
+        Drawable drawableTaxiMarker = this.getResources().getDrawable(R.drawable.marker_taxi);    
 		
 		// setup custom overlays
 		taxiItemizedOverlays = new TaxiItemizedOverlay(drawableTaxiMarker, this);
@@ -114,9 +108,9 @@ public class UserTaxiLocationMap extends MapActivity {
 		super.onPause();
 	}
 
-	private void showUpdatedLocation(ResultBundle rb) {
-	    // position available
+	private void showUpdatedLocation(ResultBundle rb) {	    
 	    if (rb.getResultCode() == HttpURLConnection.HTTP_OK) {
+	    	// locations available
 	    	String jsonLocations = rb.getContent();
 			// Obtaining specific object from json codification
 			Type listType = new TypeToken<List<TaxiLocation>>() {}.getType();			
@@ -148,8 +142,9 @@ public class UserTaxiLocationMap extends MapActivity {
 	        // re-draw the map with new overlays
 	        mapView.invalidate();
 	    }
-	    // no new locations
+	    
 		else {
+			// no new locations
 			if (!taxiItemizedOverlays.isOverlayDialogVisible()) {
 		    	// stop updaterTimer
 		    	stopUpdater();			

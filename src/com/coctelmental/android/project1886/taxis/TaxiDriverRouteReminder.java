@@ -1,10 +1,6 @@
 package com.coctelmental.android.project1886.taxis;
 
 import com.coctelmental.android.project1886.R;
-import com.coctelmental.android.project1886.R.drawable;
-import com.coctelmental.android.project1886.R.id;
-import com.coctelmental.android.project1886.R.layout;
-import com.coctelmental.android.project1886.R.string;
 import com.coctelmental.android.project1886.common.GeoPointInfo;
 import com.coctelmental.android.project1886.common.ServiceRequestInfo;
 import com.coctelmental.android.project1886.common.util.JsonHandler;
@@ -25,7 +21,7 @@ import android.widget.Toast;
 
 public class TaxiDriverRouteReminder extends MapActivity {
 
-	private static final int ZOOM_LEVEL = 17;
+	private static final int INIT_ZOOM_LEVEL = 17;
 	
 	private Chronometer chrono;
 	
@@ -33,7 +29,6 @@ public class TaxiDriverRouteReminder extends MapActivity {
 	
 	@Override
 	protected boolean isRouteDisplayed() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 	
@@ -53,7 +48,7 @@ public class TaxiDriverRouteReminder extends MapActivity {
         Bundle extras = getIntent().getExtras();
         String jsonServiceRequest = null;
         if (extras != null)
-        	jsonServiceRequest = extras.getString(TaxiDriverRouteView.SERVICE_REQUEST);
+        	jsonServiceRequest = extras.getString(TaxiDriverRouteView.EXTRA_SERVICE_REQUEST);
         
         ServiceRequestInfo serviceRequest = null;
         if (jsonServiceRequest == null) {
@@ -82,7 +77,7 @@ public class TaxiDriverRouteReminder extends MapActivity {
 	        
 	        // setup zoom
 	        mapView.getController().setCenter(overlayOri.getPoint());
-	        mapView.getController().setZoom(ZOOM_LEVEL);
+	        mapView.getController().setZoom(INIT_ZOOM_LEVEL);
 	        
 	        // redraw map
 	        mapView.invalidate();

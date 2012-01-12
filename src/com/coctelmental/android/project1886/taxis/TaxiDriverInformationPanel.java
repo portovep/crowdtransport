@@ -8,9 +8,6 @@ import java.util.List;
 import com.coctelmental.android.project1886.MyApplication;
 import com.coctelmental.android.project1886.R;
 import com.coctelmental.android.project1886.TrackingService;
-import com.coctelmental.android.project1886.R.id;
-import com.coctelmental.android.project1886.R.layout;
-import com.coctelmental.android.project1886.R.string;
 import com.coctelmental.android.project1886.c2dm.C2DMRegistrationReceiver;
 import com.coctelmental.android.project1886.c2dm.C2DMessageReceiver;
 import com.coctelmental.android.project1886.common.ServiceRequestInfo;
@@ -44,7 +41,7 @@ import android.widget.Toast;
 
 public class TaxiDriverInformationPanel extends Activity{
 	
-	public static final String ACTION_RECEIVER_REQUEST = "RECEIVER_REQUEST";
+	public static final String ACTION_RECEIVE_REQUEST = "RECEIVE_REQUEST";
 
 	private static final int TTS_CHECK_CODE = 0;
 	
@@ -53,7 +50,7 @@ public class TaxiDriverInformationPanel extends Activity{
 	private TextView tvNumberOfRequests;
 	private AlertDialog gpsAlertDialog;
 	
-	private ArrayList<ServiceRequestInfo> requests;
+	private ArrayList<ServiceRequestInfo> requestList;
 		
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -115,7 +112,24 @@ public class TaxiDriverInformationPanel extends Activity{
 				startTrackingService();
 			}
 		}
-	}	
+	}
+	
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		/*
+		 *  Check Text to speech capability
+		 *  If any language/voice package is needed, send request to install it.
+		 */
+	    if(requestCode == TTS_CHECK_CODE) {
+	        if(resultCode != TextToSpeech.Engine.CHECK_VOICE_DATA_PASS) {
+	        	Log.w("TTS", "Missing TTS data");
+	            // missing TTS data, install it
+	            Intent installIntent = new Intent();
+	            installIntent.setAction(TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA);
+	            startActivity(installIntent);
+	        }
+	    }
+	    super.onActivityResult(requestCode, resultCode, data);
+	}
 
 	@Override
 	public void onBackPressed() {
@@ -160,7 +174,7 @@ public class TaxiDriverInformationPanel extends Activity{
 	    i.putExtra(TrackingService.CALLER_ACTIVITY, TrackingService.TAXIDRIVER_ACTIVITY_ID);			    
 	    startService(i);
 		// activate broadcast receiver
-		registerReceiver(serviceRequestReceiver, new IntentFilter(ACTION_RECEIVER_REQUEST));
+		registerReceiver(serviceRequestReceiver, new IntentFilter(ACTION_RECEIVE_REQUEST));
 	}
 	
 	private void finishTrackingService() {
@@ -171,28 +185,11 @@ public class TaxiDriverInformationPanel extends Activity{
 		stopService(i);
 	}
 	
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		/*
-		 *  Check Text to speech capability
-		 *  If any language/voice package is needed, send request to install it.
-		 */
-	    if(requestCode == TTS_CHECK_CODE) {
-	        if(resultCode != TextToSpeech.Engine.CHECK_VOICE_DATA_PASS) {
-	        	Log.w("TTS", "Missing TTS data");
-	            // missing TTS data, install it
-	            Intent installIntent = new Intent();
-	            installIntent.setAction(TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA);
-	            startActivity(installIntent);
-	        }
-	    }
-	    super.onActivityResult(requestCode, resultCode, data);
-	}
-	
 	private BroadcastReceiver serviceRequestReceiver = new BroadcastReceiver() {
 				
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			// get number of requests
+			// get number of requestList
 			int nRequests = intent.getIntExtra(C2DMessageReceiver.EXTRA_NUMBER_REQUESTS, -1);
 			if (nRequests > 0) {
 				// update UI
@@ -222,11 +219,11 @@ public class TaxiDriverInformationPanel extends Activity{
 		    	String jsonRequests = rb.getContent();
 				// Obtaining specific object from json codification
 				Type listType = new TypeToken<List<ServiceRequestInfo>>() {}.getType();			
-		    	requests = JsonHandler.fromJson(jsonRequests, listType);
+		    	requestList = JsonHandler.fromJson(jsonRequests, listType);
 		    			    	
-		    	if (requests != null && !requests.isEmpty()) {
+		    	if (requestList != null && !requestList.isEmpty()) {
 		    		// update UI label
-		    		String nRequest = String.valueOf(requests.size());
+		    		String nRequest = String.valueOf(requestList.size());
 		    		tvNumberOfRequests.setText(nRequest);
 		    		
 		    		// setup adapter and dialog
@@ -234,17 +231,17 @@ public class TaxiDriverInformationPanel extends Activity{
 		    		builder.setTitle(R.string.chooseServiceRequest);
 		    		int resID = R.layout.service_request_view;
 		    		ServiceRequestAdapter adapter = new ServiceRequestAdapter(TaxiDriverInformationPanel.this,
-		    				resID, requests);
+		    				resID, requestList);
 		    		
 		    		builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
 		    		    public void onClick(DialogInterface dialog, int item) {
 		    		    	// parse data to send with intent
-		    		    	ServiceRequestInfo selectedRequest = requests.get(item);
+		    		    	ServiceRequestInfo selectedRequest = requestList.get(item);
 		    		    	String jsonServiceRequest = JsonHandler.toJson(selectedRequest);
 
 		    		    	Intent intent = new Intent(getApplicationContext(), TaxiDriverRouteView.class);
 		    		    	// attach JSON data to intent
-		    		    	intent.putExtra(TaxiDriverRouteView.SERVICE_REQUEST, jsonServiceRequest);
+		    		    	intent.putExtra(TaxiDriverRouteView.EXTRA_SERVICE_REQUEST, jsonServiceRequest);
 		    		    	startActivity(intent);
 		    		    }
 		    		});
@@ -262,7 +259,7 @@ public class TaxiDriverInformationPanel extends Activity{
 		    		message = getString(R.string.serviceRequestsNotFound);
 		    		// reset label
 		    		tvNumberOfRequests.setText("0");
-		    		Log.d("SERVICE REQUESTS", "Service requests found -> 0");
+		    		Log.d("SERVICE REQUESTS", "Service requestList found -> 0");
 				}
 				Toast toast = Tools.buildToast(TaxiDriverInformationPanel.this, message, Gravity.CENTER, Toast.LENGTH_SHORT);
 				toast.show();				

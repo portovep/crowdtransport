@@ -6,9 +6,6 @@ import java.util.List;
 import java.util.Locale;
 
 import com.coctelmental.android.project1886.R;
-import com.coctelmental.android.project1886.R.id;
-import com.coctelmental.android.project1886.R.layout;
-import com.coctelmental.android.project1886.R.string;
 import com.coctelmental.android.project1886.c2dm.C2DMRegistrationReceiver;
 import com.coctelmental.android.project1886.common.GeoPointInfo;
 import com.coctelmental.android.project1886.common.ServiceRequestInfo;
@@ -35,13 +32,9 @@ import android.widget.Toast;
 
 public class UserTaxiRequestConfirmation extends Activity{
 	
-	public static final String TAXI_DRIVER_ID = "TAXI_DRIVER_ID";
-	public static final String TAXI_DRIVER_UUID = "TAXI_DRIVER_UUID";
-	public static final String TAXI_DRIVER_NAME = "TAXI_DRIVER_NAME";
+	private static final Integer[] availableLifeTimes = {5, 10, 15};
 	
-	private static final Integer availableLifeTimes[] = {5, 10, 15};
-	
-	private EditText etClarificationComment;
+	private EditText etServiceRequestComment;
 	private Spinner spRequestLifeTime;
 	
     @Override
@@ -49,20 +42,23 @@ public class UserTaxiRequestConfirmation extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_taxi_request_confirmation);
         
-        String targetTaxiDriverID = null;
-        String targetTaxiDriverName = null;
-        String targetTaxiDriverUUID = null;
-        
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-        	targetTaxiDriverID = extras.getString(TAXI_DRIVER_ID);
-        	targetTaxiDriverUUID = extras.getString(TAXI_DRIVER_UUID);
-        	targetTaxiDriverName = extras.getString(TAXI_DRIVER_NAME);
-        }
+        String targetTaxiDriverID = ServiceRequestsHelper.getServiceRequest().getTaxiDriverID();
+        String targetTaxiDriverUUID = ServiceRequestsHelper.getServiceRequest().getTaxiDriverUUID();
+		String targetTaxiDriverName = ServiceRequestsHelper.getServiceRequest().getTaxiDriverFullName();
+		String targetTaxiDriverCarBrand = ServiceRequestsHelper.getServiceRequest().getTaxiDriverCarBrand();
+		String targetTaxiDriverCarModel = ServiceRequestsHelper.getServiceRequest().getTaxiDriverCarModel();
         
         // fill taxi driver name label
         TextView tvTaxiDriverName = (TextView) findViewById(R.id.tvTaxiDriverName);
         tvTaxiDriverName.setText(targetTaxiDriverName);
+        
+        // fill taxi driver car info label
+        if (targetTaxiDriverCarBrand != null && targetTaxiDriverCarModel !=null) {
+	        TextView tvTaxiDriverCarInfo = (TextView) findViewById(R.id.tvTaxiDriverCarInfo);
+	        tvTaxiDriverCarInfo.setText(targetTaxiDriverCarBrand);
+	        tvTaxiDriverCarInfo.append(" ");
+	        tvTaxiDriverCarInfo.append(targetTaxiDriverCarModel);
+        }
         
     	// add taxi driver id to request info
         ServiceRequestsHelper.getServiceRequest().setTaxiDriverID(targetTaxiDriverID);
@@ -70,7 +66,7 @@ public class UserTaxiRequestConfirmation extends Activity{
     	ServiceRequestsHelper.getServiceRequest().setTaxiDriverUUID(targetTaxiDriverUUID);
 		
         // get edit text view
-        etClarificationComment = (EditText) findViewById(R.id.etClarificationComment);
+        etServiceRequestComment = (EditText) findViewById(R.id.etClarificationComment);
         
         // fill spinner with available lifetimes
         spRequestLifeTime = (Spinner) findViewById(R.id.spRequestLifeTime);
@@ -85,7 +81,7 @@ public class UserTaxiRequestConfirmation extends Activity{
 			@Override
 			public void onClick(View v) {
 				// get clarification comment if there
-				String clarificationComment = etClarificationComment.getText().toString();
+				String clarificationComment = etServiceRequestComment.getText().toString();
 				// add comment to service request info
 				ServiceRequestsHelper.getServiceRequest().setComment(clarificationComment);
 				// get request time life
@@ -114,9 +110,9 @@ public class UserTaxiRequestConfirmation extends Activity{
 	    protected Integer doInBackground(Void... params) {
 	        ServiceRequestInfo serviceRequest = ServiceRequestsHelper.getServiceRequest();
 			// get address name form origin and destination geopoints.
-			String addressName = getAddressFromGeoPointInfo(serviceRequest.getGpFrom());
+			String addressName = getAddressNameFromGeoPointInfo(serviceRequest.getGpFrom());
 			serviceRequest.setAddressFrom(addressName);
-			addressName = getAddressFromGeoPointInfo(serviceRequest.getGpTo());
+			addressName = getAddressNameFromGeoPointInfo(serviceRequest.getGpTo());
 			serviceRequest.setAddressTo(addressName);
 	        
 	        Log.d("Service request info"," TaxiDriver ID: "
@@ -167,7 +163,7 @@ public class UserTaxiRequestConfirmation extends Activity{
 	    }
 	}
 	
-	private String getAddressFromGeoPointInfo(GeoPointInfo geopoint) {
+	private String getAddressNameFromGeoPointInfo(GeoPointInfo geopoint) {
 		String addressName = null;
 		
 		if (geopoint == null)

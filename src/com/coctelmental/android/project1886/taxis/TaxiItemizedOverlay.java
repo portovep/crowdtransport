@@ -14,33 +14,27 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.coctelmental.android.project1886.R;
-import com.coctelmental.android.project1886.R.id;
-import com.coctelmental.android.project1886.R.layout;
-import com.coctelmental.android.project1886.R.string;
 import com.coctelmental.android.project1886.common.TaxiDriver;
 import com.coctelmental.android.project1886.common.util.JsonHandler;
+import com.coctelmental.android.project1886.helpers.ServiceRequestsHelper;
 import com.coctelmental.android.project1886.helpers.UsersHelper;
 import com.coctelmental.android.project1886.model.ResultBundle;
 import com.google.android.maps.ItemizedOverlay;
 import com.google.android.maps.OverlayItem;
 
-public class TaxiItemizedOverlay extends ItemizedOverlay<OverlayItem>{
+public class TaxiItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 
 	private Context mContext;
-	private ArrayList<OverlayItem> aOverlays;
+	private ArrayList<OverlayItem> overlayList;
 	
 	private TaxiDriverInfoAsyncTask taxiDriverInfoAsyncTask;
 	
 	private AlertDialog overlayDialog;
 	private View layoutInformationOverlay;
-	
-	private String selectedTaxiDriverID = null;
-	private String selectedTaxiDriverUUID = null;
-	private String selectedTaxiDriverName = null;
 		
 	public TaxiItemizedOverlay(Drawable defaultMarker, Context context) {
 		super(boundCenter(defaultMarker));
-		aOverlays = new ArrayList<OverlayItem>();
+		overlayList = new ArrayList<OverlayItem>();
 		mContext = context;
 		
 		// get custom overlay layout
@@ -54,10 +48,6 @@ public class TaxiItemizedOverlay extends ItemizedOverlay<OverlayItem>{
 			public void onClick(View v) {
 				overlayDialog.dismiss();
 				Intent intent = new Intent(mContext, UserTaxiRequestConfirmation.class);
-				// attach selected taxi driver ID, UUID and name to intent
-				intent.putExtra(UserTaxiRequestConfirmation.TAXI_DRIVER_ID, selectedTaxiDriverID);
-				intent.putExtra(UserTaxiRequestConfirmation.TAXI_DRIVER_UUID, selectedTaxiDriverUUID);
-				intent.putExtra(UserTaxiRequestConfirmation.TAXI_DRIVER_NAME, selectedTaxiDriverName);
 				mContext.startActivity(intent);
 			}
 		});
@@ -70,26 +60,27 @@ public class TaxiItemizedOverlay extends ItemizedOverlay<OverlayItem>{
 	}
 	
 	public void addOverlay(OverlayItem overlay) {
-		aOverlays.add(overlay);
+		overlayList.add(overlay);
 	}
 
 	@Override
 	protected OverlayItem createItem(int i) {
-		return aOverlays.get(i);
+		return overlayList.get(i);
 	}
 
 	@Override
 	public int size() {
-		return aOverlays.size();
+		return overlayList.size();
 	}
 
 	@Override
 	protected boolean onTap(int index) {
-		OverlayItem item = aOverlays.get(index);
+		OverlayItem item = overlayList.get(index);
 		String TaxiDriverId = item.getTitle();
 		
 		// retrieve taxi driver UUID from overlay snippet text
-		selectedTaxiDriverUUID = item.getSnippet();
+		String selectedTaxiDriverUUID = item.getSnippet();
+		ServiceRequestsHelper.getServiceRequest().setTaxiDriverUUID(selectedTaxiDriverUUID);
 		
 		// show overlay dialog
 		overlayDialog.show();
@@ -110,7 +101,7 @@ public class TaxiItemizedOverlay extends ItemizedOverlay<OverlayItem>{
 	
 	public void clear() {
 		// clear array
-		aOverlays = new ArrayList<OverlayItem>();
+		overlayList = new ArrayList<OverlayItem>();
 		populate();
 	}
 	
@@ -132,7 +123,7 @@ public class TaxiItemizedOverlay extends ItemizedOverlay<OverlayItem>{
 	
 	    protected ResultBundle doInBackground(String... params) {
 			// send request to server and return response code
-	        return getTaxiDriverInfo(params[0]);
+	        return tryGetTaxiDriverInfo(params[0]);
 	    }	    
 
 	    protected void onPostExecute(ResultBundle rb) {		
@@ -142,9 +133,13 @@ public class TaxiItemizedOverlay extends ItemizedOverlay<OverlayItem>{
 				TaxiDriver taxiDriver = JsonHandler.fromJson(jsonUser, TaxiDriver.class);
 				
 				// set selected taxi driver ID
-				selectedTaxiDriverID = taxiDriver.getDni();
+				ServiceRequestsHelper.getServiceRequest().setTaxiDriverID(taxiDriver.getDni());
 				// set selected taxi driver name
-				selectedTaxiDriverName = taxiDriver.getFullName();
+				ServiceRequestsHelper.getServiceRequest().setTaxiDriverFullName(taxiDriver.getFullName());
+				// set selected taxi driver car brand
+				ServiceRequestsHelper.getServiceRequest().setTaxiDriverCarBrand(taxiDriver.getCarBrand());
+				// set selected taxi driver car model
+				ServiceRequestsHelper.getServiceRequest().setTaxiDriverCarModel(taxiDriver.getCarModel());
 				
 				// get overlay textviews
 				TextView tvTaxiDriverName = (TextView) layoutInformationOverlay.findViewById(R.id.labelTaxiDriverName);
@@ -167,7 +162,7 @@ public class TaxiItemizedOverlay extends ItemizedOverlay<OverlayItem>{
 	    }
 	}
 	
-	private ResultBundle getTaxiDriverInfo(String taxiDriverID) {
+	private ResultBundle tryGetTaxiDriverInfo(String taxiDriverID) {
 		ResultBundle rb = null;
 		rb = UsersHelper.getTaxiDriver(taxiDriverID);
 		return rb;

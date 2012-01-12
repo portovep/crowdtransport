@@ -16,10 +16,6 @@ import android.widget.Toast;
 
 import com.coctelmental.android.project1886.R;
 import com.coctelmental.android.project1886.TrackingService;
-import com.coctelmental.android.project1886.R.drawable;
-import com.coctelmental.android.project1886.R.id;
-import com.coctelmental.android.project1886.R.layout;
-import com.coctelmental.android.project1886.R.string;
 import com.coctelmental.android.project1886.common.GeoPointInfo;
 import com.coctelmental.android.project1886.common.ServiceRequestInfo;
 import com.coctelmental.android.project1886.common.util.JsonHandler;
@@ -33,12 +29,14 @@ import com.google.android.maps.OverlayItem;
 
 public class TaxiDriverRouteView extends MapActivity {
 
-	public static final String SERVICE_REQUEST = "SERVICE_REQUEST";
+	public static final String EXTRA_SERVICE_REQUEST = "EXTRA_SERVICE_REQUEST";
+	
 	private static final int INIT_ZOOM_LEVEL = 17;
 
 	private MyLocationOverlay myLocationOverlay;
 	
 	private ServiceRequestInfo serviceRequest;
+	private String jsonServiceRequest = null;
 	
 	@Override
 	protected boolean isRouteDisplayed() {
@@ -60,9 +58,8 @@ public class TaxiDriverRouteView extends MapActivity {
         
         // get serviceRequestInfo
         Bundle extras = getIntent().getExtras();
-        String jsonServiceRequest = null;
         if (extras != null)
-        	jsonServiceRequest = extras.getString(SERVICE_REQUEST);
+        	jsonServiceRequest = extras.getString(EXTRA_SERVICE_REQUEST);
         
         serviceRequest = null;
         if (jsonServiceRequest == null) {
@@ -158,13 +155,10 @@ public class TaxiDriverRouteView extends MapActivity {
 				Intent i = new Intent(getApplicationContext(), TrackingService.class);
 				stopService(i);
 				
-		    	// parse data to send into intent
-		    	String jsonServiceRequest = JsonHandler.toJson(serviceRequest);
-				
 				// goto new activity
 				Intent intent = new Intent(getApplicationContext(), TaxiDriverRouteReminder.class);
 		    	// attach JSON data to intent
-		    	intent.putExtra(SERVICE_REQUEST, jsonServiceRequest);
+		    	intent.putExtra(EXTRA_SERVICE_REQUEST, jsonServiceRequest);
 	        	startActivity(intent);
 	        	finish();
 	        }				

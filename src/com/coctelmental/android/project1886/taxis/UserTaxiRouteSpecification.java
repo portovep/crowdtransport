@@ -24,10 +24,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.coctelmental.android.project1886.R;
-import com.coctelmental.android.project1886.R.drawable;
-import com.coctelmental.android.project1886.R.id;
-import com.coctelmental.android.project1886.R.layout;
-import com.coctelmental.android.project1886.R.string;
 import com.coctelmental.android.project1886.common.GeoPointInfo;
 import com.coctelmental.android.project1886.helpers.ServiceRequestsHelper;
 import com.coctelmental.android.project1886.helpers.UserLocationHelper;
@@ -50,19 +46,20 @@ public class UserTaxiRouteSpecification extends MapActivity {
 	private static final int TIME_BETWEEN_EXECUTIONS = 2000; // 2s
 	private static final int MAX_TIME_LOOKING_FOR_LOCATION = 60000; // 60s
 	
-	private MapView mapView = null;
-	private static final int ZOOM_LEVEL = 17;
+	private static final int INIT_ZOOM_LEVEL = 17;
+	private MapView mapView = null;	
 	
 	private GeoPoint gpOrigin = null;
 	private GeoPoint gpDestination = null;
 	
-	private RelativeLayout layout;
+	private RelativeLayout backgroundLayout;
 	private TextView tvDistance;
-	private ProgressDialog pdLookingLocation = null;	
+	private ProgressDialog pdLookingLocation = null;
+	
 	private Timer timer = null;
 	private UserLocationHelper userLocationHelper = null;
 	
-	private int executions = 0;
+	private int nExecutions = 0;
 
 	@Override
 	protected boolean isRouteDisplayed() {
@@ -75,9 +72,9 @@ public class UserTaxiRouteSpecification extends MapActivity {
 	    super.onCreate(savedInstanceState);
 	    setContentView(R.layout.user_taxi_route_specification);
 	    
-	    // get layout and set invisible during setup
-	    layout = (RelativeLayout) findViewById(R.id.container);
-	    layout.setVisibility(ViewGroup.GONE);
+	    // get backgroundLayout and set invisible during setup
+	    backgroundLayout = (RelativeLayout) findViewById(R.id.container);
+	    backgroundLayout.setVisibility(ViewGroup.GONE);
 	    
         // get distance label
         tvDistance = (TextView) findViewById(R.id.distance);
@@ -128,7 +125,7 @@ public class UserTaxiRouteSpecification extends MapActivity {
 	    }
 	}
 	
-	private class RouteSpecificationItemizedOverlay extends ItemizedOverlay<OverlayItem> {
+	private class RouteDragAndDropItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 		
 		private ArrayList<OverlayItem> aOverlays;
 		private int offsetX;
@@ -140,7 +137,7 @@ public class UserTaxiRouteSpecification extends MapActivity {
 		private Drawable destinationMarker;
 		private OverlayItem selectedOverlay;
 		
-		public RouteSpecificationItemizedOverlay(Drawable defaultMarker) {
+		public RouteDragAndDropItemizedOverlay(Drawable defaultMarker) {
 			super(boundCenterBottom(defaultMarker));
 			aOverlays= new ArrayList<OverlayItem>();
 			
@@ -271,7 +268,7 @@ public class UserTaxiRouteSpecification extends MapActivity {
 	
 	private class GetUserLocationTask extends TimerTask {
 		public void run() {
-			executions++;
+			nExecutions++;
 			// notify the handler
 			handler.sendEmptyMessage(0);
 		}
@@ -292,7 +289,7 @@ public class UserTaxiRouteSpecification extends MapActivity {
 				setupOverlays(userLocation);
 							    
 			}
-			else if ((executions * TIME_BETWEEN_EXECUTIONS) > MAX_TIME_LOOKING_FOR_LOCATION || !userLocationHelper.areProvidersEnabled()) {
+			else if ((nExecutions * TIME_BETWEEN_EXECUTIONS) > MAX_TIME_LOOKING_FOR_LOCATION || !userLocationHelper.areProvidersEnabled()) {
 				// stop timer
 				timer.cancel();
 				// remove pending messages
@@ -311,8 +308,8 @@ public class UserTaxiRouteSpecification extends MapActivity {
 	};
 	
 	private void setupOverlays(Location userLocation) {
-		// show layout
-		layout.setVisibility(View.VISIBLE);
+		// show backgroundLayout
+		backgroundLayout.setVisibility(View.VISIBLE);
 		
 		Double lat = userLocation.getLatitude() * 1E6;
 		Double lng = userLocation.getLongitude() * 1E6;
@@ -324,12 +321,12 @@ public class UserTaxiRouteSpecification extends MapActivity {
 	    MapController mc = mapView.getController();
 	    // center to origin geopoint
 	    mc.setCenter(gpOrigin);
-	    mc.setZoom(ZOOM_LEVEL);
+	    mc.setZoom(INIT_ZOOM_LEVEL);
 	    
 	    Drawable defaultMarker = (Drawable) getResources().getDrawable(R.drawable.marker_ori);
 	    defaultMarker.setBounds(0, 0, defaultMarker.getIntrinsicWidth(), defaultMarker.getIntrinsicHeight());
 	    //add our custom overlays
-	    mapView.getOverlays().add(new RouteSpecificationItemizedOverlay(defaultMarker));
+	    mapView.getOverlays().add(new RouteDragAndDropItemizedOverlay(defaultMarker));
 	}
 	
 	private void updateDistanceLabel() {

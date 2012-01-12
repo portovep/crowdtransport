@@ -95,7 +95,7 @@ public class C2DMessageReceiver extends BroadcastReceiver{
 		TextToSpeechMain.playMessage(context, ttsMessage);
 		
 		// notify activity
-		Intent intent = new Intent(TaxiDriverInformationPanel.ACTION_RECEIVER_REQUEST);
+		Intent intent = new Intent(TaxiDriverInformationPanel.ACTION_RECEIVE_REQUEST);
 		intent.putExtra(EXTRA_NUMBER_REQUESTS, nRequests);
 		context.sendBroadcast(intent);
 	}
@@ -105,14 +105,14 @@ public class C2DMessageReceiver extends BroadcastReceiver{
 		if (payloadData.equals(PAYLOAD_USER_RESPONSE_ACCEPT)) {
 			Log.d("C2DM", "Message: Service request accepted");
 			// notify activity
-			Intent intent = new Intent(UserTaxiWaitingPanel.ACTION_REQUEST_RESPONSE_RECEIVER);
+			Intent intent = new Intent(UserTaxiWaitingPanel.ACTION_RECEIVE_REQUEST_RESPONSE);
 			intent.putExtra(EXTRA_TAXI_RESPONSE, PAYLOAD_USER_RESPONSE_ACCEPT);
 			context.sendBroadcast(intent);
 		}
 		else if (payloadData.equals(PAYLOAD_USER_RESPONSE_CANCEL)) {
 			Log.d("C2DM", "Message: Service request canceled");
 			// notify activity
-			Intent intent = new Intent(UserTaxiWaitingPanel.ACTION_REQUEST_RESPONSE_RECEIVER);
+			Intent intent = new Intent(UserTaxiWaitingPanel.ACTION_RECEIVE_REQUEST_RESPONSE);
 			intent.putExtra(EXTRA_TAXI_RESPONSE, PAYLOAD_USER_RESPONSE_CANCEL);
 			context.sendBroadcast(intent);
 		}

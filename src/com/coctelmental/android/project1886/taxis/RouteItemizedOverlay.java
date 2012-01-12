@@ -8,31 +8,31 @@ import com.google.android.maps.ItemizedOverlay;
 import com.google.android.maps.OverlayItem;
 
 public class RouteItemizedOverlay extends ItemizedOverlay<OverlayItem> {
-	private ArrayList<OverlayItem> overlays;
+	private ArrayList<OverlayItem> overlayList;
 	
 	public RouteItemizedOverlay(Drawable defaultMarker) {
 		super(boundCenterBottom(defaultMarker));
-		overlays = new ArrayList<OverlayItem>();
+		overlayList = new ArrayList<OverlayItem>();
 	}
 
 	@Override
 	protected OverlayItem createItem(int i) {
-		return overlays.get(i);
+		return overlayList.get(i);
 	}
 
 	@Override
 	public int size() {
-		return overlays.size();
+		return overlayList.size();
 	}
 	
 	public void addOverlay(OverlayItem overlay) {
-		overlays.add(overlay);
+		overlayList.add(overlay);
 	}
 	
 	public void addOverlay(OverlayItem overlay, Drawable  marker) {
 		marker.setBounds(0, 0, marker.getIntrinsicWidth(), marker.getIntrinsicHeight());
 		overlay.setMarker(boundCenterBottom(marker));
-		overlays.add(overlay);
+		overlayList.add(overlay);
 	}
 	
 	public void populateNow() {

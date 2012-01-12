@@ -9,10 +9,14 @@ public class ServiceRequestInfo {
 	private GeoPointInfo gpTo;
 	private String taxiDriverID;
 	private String taxiDriverUUID;
+	private String taxiDriverFullName;
+	private String taxiDriverCarBrand;
+	private String taxiDriverCarModel;
 	private String comment;
 	private int requestLifeTime;
 	private String addressFrom;
 	private String addressTo;
+	
 	
 	public ServiceRequestInfo(String userUUID) {
 		this.userUUID = userUUID;
@@ -64,6 +68,30 @@ public class ServiceRequestInfo {
 
 	public void setTaxiDriverUUID(String taxiDriverUUID) {
 		this.taxiDriverUUID = taxiDriverUUID;
+	}
+
+	public String getTaxiDriverFullName() {
+		return taxiDriverFullName;
+	}
+
+	public void setTaxiDriverFullName(String taxiDriverFullName) {
+		this.taxiDriverFullName = taxiDriverFullName;
+	}
+
+	public String getTaxiDriverCarBrand() {
+		return taxiDriverCarBrand;
+	}
+
+	public void setTaxiDriverCarBrand(String taxiDriverCarBrand) {
+		this.taxiDriverCarBrand = taxiDriverCarBrand;
+	}
+
+	public String getTaxiDriverCarModel() {
+		return taxiDriverCarModel;
+	}
+
+	public void setTaxiDriverCarModel(String taxiDriverCarModel) {
+		this.taxiDriverCarModel = taxiDriverCarModel;
 	}
 
 	public String getComment() {

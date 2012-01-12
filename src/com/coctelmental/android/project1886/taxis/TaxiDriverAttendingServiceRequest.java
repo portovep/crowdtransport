@@ -1,8 +1,6 @@
 package com.coctelmental.android.project1886.taxis;
 
 import com.coctelmental.android.project1886.R;
-import com.coctelmental.android.project1886.R.id;
-import com.coctelmental.android.project1886.R.layout;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -13,7 +11,7 @@ import android.widget.Button;
 public class TaxiDriverAttendingServiceRequest extends Activity {
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.taxi_driver_attending_service_request);
 		

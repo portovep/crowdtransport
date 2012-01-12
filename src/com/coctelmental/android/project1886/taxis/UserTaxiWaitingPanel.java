@@ -4,9 +4,6 @@ import java.net.HttpURLConnection;
 
 import com.coctelmental.android.project1886.MainActivity;
 import com.coctelmental.android.project1886.R;
-import com.coctelmental.android.project1886.R.id;
-import com.coctelmental.android.project1886.R.layout;
-import com.coctelmental.android.project1886.R.string;
 import com.coctelmental.android.project1886.c2dm.C2DMRegistrationReceiver;
 import com.coctelmental.android.project1886.c2dm.C2DMessageReceiver;
 import com.coctelmental.android.project1886.common.ServiceRequestInfo;
@@ -33,7 +30,7 @@ import android.widget.Toast;
 
 public class UserTaxiWaitingPanel extends Activity {
 	
-	public static final String ACTION_REQUEST_RESPONSE_RECEIVER = "REQUEST_RESPONSE";
+	public static final String ACTION_RECEIVE_REQUEST_RESPONSE = "RECEIVE_REQUEST_RESPONSE";
 
 	private ProgressBar progressBar;
 	private CountDownTimer countDown;
@@ -41,7 +38,7 @@ public class UserTaxiWaitingPanel extends Activity {
 	private String addressFrom;
 	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.user_taxi_waiting_panel);		
 		
@@ -54,7 +51,7 @@ public class UserTaxiWaitingPanel extends Activity {
         tvTaxiDriverName.setText(targetTaxiDriverName);
         
 		// activate broadcast receiver
-		registerReceiver(responseToRequestReceiver, new IntentFilter(ACTION_REQUEST_RESPONSE_RECEIVER));
+		registerReceiver(requestResponseReceiver, new IntentFilter(ACTION_RECEIVE_REQUEST_RESPONSE));
         
         // setup cancel button
         Button bCancelRequest = (Button) findViewById(R.id.bCancelRequest);
@@ -113,7 +110,7 @@ public class UserTaxiWaitingPanel extends Activity {
 		moveTaskToBack(true);
 	}
 
-	private BroadcastReceiver responseToRequestReceiver = new BroadcastReceiver() {
+	private BroadcastReceiver requestResponseReceiver = new BroadcastReceiver() {
 		
 		@Override
 		public void onReceive(Context context, Intent intent) {			
@@ -154,7 +151,7 @@ public class UserTaxiWaitingPanel extends Activity {
 		// stop countDown
 		countDown.cancel();
 		// stop broadcast receiver
-		unregisterReceiver(responseToRequestReceiver);
+		unregisterReceiver(requestResponseReceiver);
 		// unregister C2DM
 		C2DMRegistrationReceiver.unregister(getApplicationContext());
 		
@@ -195,7 +192,7 @@ public class UserTaxiWaitingPanel extends Activity {
 				// stop countDown
 				countDown.cancel();
 				// stop broadcast receiver
-				unregisterReceiver(responseToRequestReceiver);
+				unregisterReceiver(requestResponseReceiver);
 				
 				Tools.buildToast(getApplicationContext(), getString(R.string.requestCanceled), Gravity.CENTER, Toast.LENGTH_SHORT).show();
 				// go to main
