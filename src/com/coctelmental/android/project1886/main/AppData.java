@@ -24,7 +24,7 @@ public class AppData extends Application {
 	
 	private Credentials activeUser;
 	
-	private AppData(){}
+	
 	
 	public static AppData getInstance() {
 		return singleton;
