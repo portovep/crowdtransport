@@ -2,7 +2,7 @@ package com.coctelmental.android.project1886.buses;
 
 import java.net.HttpURLConnection;
 
-import com.coctelmental.android.project1886.MyApplication;
+import com.coctelmental.android.project1886.AppData;
 import com.coctelmental.android.project1886.R;
 import com.coctelmental.android.project1886.common.util.JsonHandler;
 import com.coctelmental.android.project1886.helpers.AvailableDataHelper;
@@ -47,7 +47,7 @@ public class BusDriverLineSelection extends Activity {
 			@Override
 			public void onClick(View v) {
 				// save selected targets
-				MyApplication.getInstance().storeTrackingInfo(targetCity, targetLine);
+				AppData.getInstance().storeTrackingInfo(targetCity, targetLine);
 				Intent intent;
 				intent= new Intent(getApplicationContext(), BusDriverInformationPanel.class);
 				startActivity(intent);

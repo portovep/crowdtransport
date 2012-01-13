@@ -1,8 +1,9 @@
 package com.coctelmental.android.project1886.buses;
 
-import com.coctelmental.android.project1886.MyApplication;
+import com.coctelmental.android.project1886.AppData;
 import com.coctelmental.android.project1886.R;
 import com.coctelmental.android.project1886.buses.BusTrackingService;
+import com.coctelmental.android.project1886.util.Tools;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -36,7 +37,7 @@ public class CollaboratorInformationPanel extends Activity {
         tvLine = (TextView) findViewById(R.id.collaborationInfoLine);
         
         // get saved info
-        String[] storedInfo = MyApplication.getInstance().getStoredTrackingInfo();
+        String[] storedInfo = AppData.getInstance().getStoredTrackingInfo();
         String city = storedInfo[0];
         String line = storedInfo[1];
         // fill info labels
@@ -60,7 +61,7 @@ public class CollaboratorInformationPanel extends Activity {
 	protected void onResume() {
 		super.onResume();
 		
-		if (!MyApplication.getInstance().isGPSEnabled()) {
+		if (!Tools.isGPSEnabled(getApplicationContext())) {
 			// hide content
 			backgroundLayout.setVisibility(ViewGroup.GONE);
 			showGPSDialog();
@@ -69,7 +70,7 @@ public class CollaboratorInformationPanel extends Activity {
 			if (backgroundLayout.getVisibility() != ViewGroup.VISIBLE)
 				// show content
 				backgroundLayout.setVisibility(ViewGroup.VISIBLE);
-			if(!MyApplication.getInstance().isServiceRunning(BusTrackingService.class.getName())) {
+			if(!Tools.isServiceRunning(getApplicationContext(), BusTrackingService.class.getName())) {
 			    // launch location tracking service
 			    Intent i = new Intent(this, BusTrackingService.class);
 			    i.putExtra(BusTrackingService.EXTRA_CALLER_ACTIVITY, BusTrackingService.ID_COLLABORATOR_ACTIVITY);

@@ -3,7 +3,7 @@ package com.coctelmental.android.project1886.helpers;
 import android.location.Location;
 import android.util.Log;
 
-import com.coctelmental.android.project1886.MyApplication;
+import com.coctelmental.android.project1886.AppData;
 import com.coctelmental.android.project1886.common.CollaboratorBusLocation;
 import com.coctelmental.android.project1886.common.GeoPointInfo;
 import com.coctelmental.android.project1886.common.TaxiDriverLocation;
@@ -42,7 +42,7 @@ public class LocationsHelper {
 			cBusLocation.setGeopoint(gp);	
 			
 	        // get targets
-	        String[] storedInfo = MyApplication.getInstance().getStoredTrackingInfo();
+	        String[] storedInfo = AppData.getInstance().getStoredTrackingInfo();
 	        String city = storedInfo[0];
 	        String line = storedInfo[1];
 			
@@ -70,7 +70,7 @@ public class LocationsHelper {
 			cBusLocation.setGeopoint(gp);		
 			
 	        // get targets
-	        String[] storedInfo = MyApplication.getInstance().getStoredTrackingInfo();
+	        String[] storedInfo = AppData.getInstance().getStoredTrackingInfo();
 	        String city = storedInfo[0];
 	        String line = storedInfo[1];
 			
@@ -91,7 +91,7 @@ public class LocationsHelper {
 		
 		if (location != null) {		
 			// get installation UUID 
-			String taxiDriverUUID = MyApplication.getInstance().id();
+			String taxiDriverUUID = AppData.getInstance().getInstallationUniqueId();
 			// setup location info
 			TaxiDriverLocation taxiDriverLocation = new TaxiDriverLocation(taxiDriverID, taxiDriverUUID);
 			taxiDriverLocation.setTaxiDriverID(taxiDriverID);

@@ -1,7 +1,7 @@
 package com.coctelmental.android.project1886.helpers;
 
 
-import com.coctelmental.android.project1886.MyApplication;
+import com.coctelmental.android.project1886.AppData;
 import com.coctelmental.android.project1886.common.DeviceInfo;
 import com.coctelmental.android.project1886.common.ServiceRequestInfo;
 import com.coctelmental.android.project1886.common.util.JsonHandler;
@@ -19,7 +19,7 @@ public class ServiceRequestsHelper {
 	
 	public static void createNewServiceRequest() {
 		// get installation unique id
-		String userUUID = MyApplication.getInstance().id();
+		String userUUID = AppData.getInstance().getInstallationUniqueId();
 		ServiceRequestInfo serviceRequestInfo = new ServiceRequestInfo(userUUID);
 		
 		// get logged user ID
@@ -32,17 +32,17 @@ public class ServiceRequestsHelper {
 		serviceRequestInfo.setUserID(userID);
 				
 		// store info overriding previous data
-		MyApplication.getInstance().storeServiceRequestInfo(serviceRequestInfo);
+		AppData.getInstance().storeServiceRequestInfo(serviceRequestInfo);
 	}
 	
 	public static ServiceRequestInfo getServiceRequest() {
-		return MyApplication.getInstance().getServiceRequestInfo();
+		return AppData.getInstance().getStoredServiceRequestInfo();
 	}
 	
 	public static int sendServiceRequest(){
 		int result = ERROR_MALFORMED_REQUEST;
 
-		ServiceRequestInfo serviceRequest = MyApplication.getInstance().getServiceRequestInfo();
+		ServiceRequestInfo serviceRequest = AppData.getInstance().getStoredServiceRequestInfo();
 		if (serviceRequest != null) {
 			// convert to json
 			String jsonServiceRequest = JsonHandler.toJson(serviceRequest);
@@ -53,7 +53,7 @@ public class ServiceRequestsHelper {
 	}
 	
 	public static ResultBundle obtainAllServiceRequest(){
-		String taxiUUID = MyApplication.getInstance().id();
+		String taxiUUID = AppData.getInstance().getInstallationUniqueId();
 		String targetURL = URI_SERVICE_REQUEST_RESOURCE + "/" + taxiUUID;
 		return ConnectionsHandler.get(targetURL);	
 	}
@@ -62,7 +62,7 @@ public class ServiceRequestsHelper {
 		int result = -1;
 	
 		if (requestID != null) {
-		    String taxiUUID = MyApplication.getInstance().id();
+		    String taxiUUID = AppData.getInstance().getInstallationUniqueId();
 		    // build data
 		    String[] request = {"accept", taxiUUID};
 		    String jsonRequest = JsonHandler.toJson(request);
@@ -76,7 +76,7 @@ public class ServiceRequestsHelper {
 	public static int cancelSentServiceRequest(){
 		int result = ERROR_MALFORMED_REQUEST;
 		
-		ServiceRequestInfo serviceRequest = MyApplication.getInstance().getServiceRequestInfo();
+		ServiceRequestInfo serviceRequest = AppData.getInstance().getStoredServiceRequestInfo();
 		if (serviceRequest != null) {
 			String taxiUUID = serviceRequest.getTaxiDriverUUID();
 			String requestID = serviceRequest.getUserUUID();
@@ -91,7 +91,7 @@ public class ServiceRequestsHelper {
 	}
 	
 	public static int cancelAllServiceRequest(){
-		String taxiUUID = MyApplication.getInstance().id();
+		String taxiUUID = AppData.getInstance().getInstallationUniqueId();
 		String targetURL = URI_SERVICE_REQUEST_RESOURCE + "/" + taxiUUID;
 		return ConnectionsHandler.delete(targetURL);		
 	}
@@ -100,7 +100,7 @@ public class ServiceRequestsHelper {
 		int result = -1;
 		if (registrationID != null && registrationID != "") {
 			// get installation UUID		
-			String UUID = MyApplication.getInstance().id();
+			String UUID = AppData.getInstance().getInstallationUniqueId();
 			
 			// setup device info
 			DeviceInfo deviceInfo = new DeviceInfo(UUID);

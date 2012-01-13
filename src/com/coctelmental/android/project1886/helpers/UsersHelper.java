@@ -1,6 +1,6 @@
 package com.coctelmental.android.project1886.helpers;
 
-import com.coctelmental.android.project1886.MyApplication;
+import com.coctelmental.android.project1886.AppData;
 import com.coctelmental.android.project1886.common.BusDriver;
 import com.coctelmental.android.project1886.common.TaxiDriver;
 import com.coctelmental.android.project1886.common.User;
@@ -45,11 +45,11 @@ public class UsersHelper {
 	}
 	
 	public static void logIn(Credentials credentials) {
-		MyApplication.getInstance().setActiveUser(credentials);
+		AppData.getInstance().setActiveUser(credentials);
 	}
 	
 	public static void logOut() {
-		MyApplication.getInstance().setActiveUser(null);
+		AppData.getInstance().setActiveUser(null);
 	}
 	
 	public static boolean existActiveUser() {
@@ -59,7 +59,7 @@ public class UsersHelper {
 	}
 	
 	public static Credentials getActiveUser() {
-		return MyApplication.getInstance().getActiveUser();
+		return AppData.getInstance().getActiveUser();
 	}
 	
 	public static String passwordToDigest(String password) {

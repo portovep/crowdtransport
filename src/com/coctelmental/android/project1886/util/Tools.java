@@ -7,8 +7,11 @@ import java.util.Date;
 
 import com.google.android.maps.GeoPoint;
 
+import android.app.ActivityManager;
+import android.app.ActivityManager.RunningServiceInfo;
 import android.content.Context;
 import android.location.Location;
+import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
@@ -69,6 +72,24 @@ public class Tools {
 		if(!ni.isConnected())
 			return false;
 		return true;
+	}
+	
+	public static boolean isGPSEnabled(Context context) {
+		LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+		if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+			return false;
+		}
+		return true;
+	}
+	
+	public static boolean isServiceRunning(Context context, String serviceName) {
+	    ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+	    for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+	        if (serviceName.equals(service.service.getClassName())) {
+	            return true;
+	        }
+	    }
+	    return false;
 	}
 	
 	public static double calculateDistanceInMeters(GeoPoint from, GeoPoint to) {

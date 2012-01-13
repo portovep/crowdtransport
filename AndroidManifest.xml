@@ -20,7 +20,7 @@
     <uses-permission android:name="com.coctelmental.android.project1886.permission.C2D_MESSAGE" />
 
     <application
-        android:name=".MyApplication"
+        android:name=".AppData"
         android:theme="@android:style/Theme.NoTitleBar"
         android:debuggable="true"
         android:icon="@drawable/ic_launcher"

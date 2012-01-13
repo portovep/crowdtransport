@@ -1,6 +1,6 @@
 package com.coctelmental.android.project1886.buses;
 
-import com.coctelmental.android.project1886.MyApplication;
+import com.coctelmental.android.project1886.AppData;
 import com.coctelmental.android.project1886.R;
 import com.coctelmental.android.project1886.helpers.LocationsHelper;
 import com.coctelmental.android.project1886.helpers.UsersHelper;
@@ -92,7 +92,7 @@ public class BusTrackingService extends Service {
 	    }
 	    else {
 	    	// if no user logged, use unique id as identification of this app installation
-	    	userID = MyApplication.getInstance().id();
+	    	userID = AppData.getInstance().getInstallationUniqueId();
 	    	userType = Credentials.TYPE_USER;
 	    }
         

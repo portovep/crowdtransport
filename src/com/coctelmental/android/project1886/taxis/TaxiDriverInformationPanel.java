@@ -5,7 +5,6 @@ import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.coctelmental.android.project1886.MyApplication;
 import com.coctelmental.android.project1886.R;
 import com.coctelmental.android.project1886.c2dm.C2DMRegistrationReceiver;
 import com.coctelmental.android.project1886.c2dm.C2DMessageReceiver;
@@ -95,7 +94,7 @@ public class TaxiDriverInformationPanel extends Activity{
 	protected void onResume() {
 		super.onResume();
 		
-		if (!MyApplication.getInstance().isGPSEnabled()) {
+		if (!Tools.isGPSEnabled(getApplicationContext())) {
 			// hide content
 			backgroundLayout.setVisibility(ViewGroup.GONE);
 			showGPSDialog();
@@ -104,7 +103,7 @@ public class TaxiDriverInformationPanel extends Activity{
 			if (backgroundLayout.getVisibility() != ViewGroup.VISIBLE)
 				// show content
 				backgroundLayout.setVisibility(ViewGroup.VISIBLE);
-			if(!MyApplication.getInstance().isServiceRunning(TaxiTrackingService.class.getName())) {
+			if(!Tools.isServiceRunning(getApplicationContext(), TaxiTrackingService.class.getName())) {
 				// C2DM register to receive push notifications from web service
 				C2DMRegistrationReceiver.register(getApplicationContext());
 			    // launch location tracking service
@@ -157,7 +156,7 @@ public class TaxiDriverInformationPanel extends Activity{
 		           .setNegativeButton(getString(R.string.noEnableGPS), new DialogInterface.OnClickListener() {
 			           public void onClick(DialogInterface dialog, int id) {
 							dialog.cancel();
-							if(MyApplication.getInstance().isServiceRunning(TaxiTrackingService.class.getName())) {
+							if(Tools.isServiceRunning(getApplicationContext(), TaxiTrackingService.class.getName())) {
 								finishTrackingService();
 							}
 							goMainMenu();

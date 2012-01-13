@@ -5,17 +5,14 @@ import java.util.UUID;
 import com.coctelmental.android.project1886.common.ServiceRequestInfo;
 import com.coctelmental.android.project1886.model.Credentials;
 
-import android.app.ActivityManager;
 import android.app.Application;
-import android.app.ActivityManager.RunningServiceInfo;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.location.LocationManager;
 
-public class MyApplication extends Application {
+public class AppData extends Application {
 	
-	private static MyApplication singleton;
+	private static AppData singleton;
 	
 	private static String uniqueID = null;
 	private static final String PREF_UNIQ_ID = "PREF_UNIQ_ID";
@@ -27,7 +24,9 @@ public class MyApplication extends Application {
 	
 	private Credentials activeUser;
 	
-	public static MyApplication getInstance() {
+	private AppData(){}
+	
+	public static AppData getInstance() {
 		return singleton;
 	}
 	
@@ -44,12 +43,12 @@ public class MyApplication extends Application {
 		this.activeUser = activeUser;
 	}
 	
-	public void storeTrackingInfo(String targetCity, String targetLine) {
+	public synchronized void storeTrackingInfo(String targetCity, String targetLine) {
 		this.targetCity = targetCity;
 		this.targetLine = targetLine;
 	}
 	
-	public String[] getStoredTrackingInfo() {
+	public synchronized String[] getStoredTrackingInfo() {
 		String result[] = {targetCity, targetLine};
 		return result;
 	}
@@ -58,11 +57,11 @@ public class MyApplication extends Application {
 		this.serviceRequestInfo = serviceRequestInfo;
 	}
 	
-	public synchronized ServiceRequestInfo getServiceRequestInfo() {
+	public synchronized ServiceRequestInfo getStoredServiceRequestInfo() {
 		return serviceRequestInfo;
 	}
 	
-	public synchronized String id() {
+	public synchronized String getInstallationUniqueId() {
 		if (uniqueID == null) {
 			SharedPreferences appSettings = getSharedPreferences(PREF_UNIQ_ID, Context.MODE_PRIVATE);
 			// looking for stored unique id into app preferences
@@ -77,24 +76,6 @@ public class MyApplication extends Application {
 			}
 		}
 		return uniqueID;
-	}
-	
-	public boolean isServiceRunning(String serviceName) {
-	    ActivityManager manager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
-	    for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-	        if (serviceName.equals(service.service.getClassName())) {
-	            return true;
-	        }
-	    }
-	    return false;
-	}
-	
-	public boolean isGPSEnabled() {
-		LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-		if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-			return false;
-		}
-		return true;
 	}
 	
 }

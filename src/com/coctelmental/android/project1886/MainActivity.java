@@ -37,7 +37,7 @@ public class MainActivity extends Activity{
     }
       
 	@Override
-	public void onResume() {
+	protected void onResume() {
 		super.onResume();		
 		// check if exist a user logged into the application 
         if(UsersHelper.existActiveUser()) {
@@ -59,7 +59,7 @@ public class MainActivity extends Activity{
 		menu.clear();
 
 		MenuInflater inflater = getMenuInflater();
-		if(MyApplication.getInstance().isServiceRunning(BusTrackingService.class.getName())) {
+		if(Tools.isServiceRunning(getApplicationContext(), BusTrackingService.class.getName())) {
 			inflater.inflate(R.menu.main_activity_service_started, menu);
 			if(!UsersHelper.existActiveUser())
 				menu.removeItem(R.id.menuProfile);
@@ -116,7 +116,7 @@ public class MainActivity extends Activity{
 	public void onCollaborationAction(View view) {
 		Intent intent;
 		// if collaborationTrackingService is running
-		if (MyApplication.getInstance().isServiceRunning(BusTrackingService.class.getName())) {
+		if (Tools.isServiceRunning(getApplicationContext(), BusTrackingService.class.getName())) {
 			intent = new Intent(getApplicationContext(), CollaboratorInformationPanel.class);
 		}
 		else

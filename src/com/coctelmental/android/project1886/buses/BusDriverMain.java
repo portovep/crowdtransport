@@ -1,8 +1,8 @@
 package com.coctelmental.android.project1886.buses;
 
-import com.coctelmental.android.project1886.MyApplication;
 import com.coctelmental.android.project1886.R;
 import com.coctelmental.android.project1886.helpers.UsersHelper;
+import com.coctelmental.android.project1886.util.Tools;
 import com.coctelmental.android.project1886.buses.BusTrackingService;
 
 import android.app.Activity;
@@ -32,7 +32,7 @@ public class BusDriverMain extends Activity {
 			public void onClick(View v) {
 				Intent intent;
 				// if collaborationTrackingService is running
-				if (MyApplication.getInstance().isServiceRunning(BusTrackingService.class.getName())) {
+				if (Tools.isServiceRunning(getApplicationContext(), BusTrackingService.class.getName())) {
 					intent = new Intent(getApplicationContext(), BusDriverInformationPanel.class);
 				}
 				else
