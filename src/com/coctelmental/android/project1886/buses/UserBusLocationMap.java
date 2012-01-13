@@ -9,9 +9,9 @@ import java.util.TimerTask;
 
 import com.coctelmental.android.project1886.R;
 import com.coctelmental.android.project1886.common.BusLocation;
-import com.coctelmental.android.project1886.common.util.JsonHandler;
 import com.coctelmental.android.project1886.helpers.LocationsHelper;
 import com.coctelmental.android.project1886.model.ResultBundle;
+import com.coctelmental.android.project1886.util.JsonHandler;
 import com.coctelmental.android.project1886.util.Tools;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;

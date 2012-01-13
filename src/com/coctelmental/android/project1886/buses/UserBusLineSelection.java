@@ -3,9 +3,9 @@ package com.coctelmental.android.project1886.buses;
 import java.net.HttpURLConnection;
 
 import com.coctelmental.android.project1886.R;
-import com.coctelmental.android.project1886.common.util.JsonHandler;
 import com.coctelmental.android.project1886.helpers.AvailableDataHelper;
 import com.coctelmental.android.project1886.model.ResultBundle;
+import com.coctelmental.android.project1886.util.JsonHandler;
 import com.coctelmental.android.project1886.util.Tools;
 
 import android.app.Activity;

@@ -9,9 +9,9 @@ import com.coctelmental.android.project1886.R;
 import com.coctelmental.android.project1886.c2dm.C2DMRegistrationReceiver;
 import com.coctelmental.android.project1886.c2dm.C2DMessageReceiver;
 import com.coctelmental.android.project1886.common.ServiceRequestInfo;
-import com.coctelmental.android.project1886.common.util.JsonHandler;
 import com.coctelmental.android.project1886.helpers.ServiceRequestsHelper;
 import com.coctelmental.android.project1886.model.ResultBundle;
+import com.coctelmental.android.project1886.util.JsonHandler;
 import com.coctelmental.android.project1886.util.Tools;
 import com.google.gson.reflect.TypeToken;
 

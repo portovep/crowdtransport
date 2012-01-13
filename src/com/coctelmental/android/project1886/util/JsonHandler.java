@@ -1,4 +1,4 @@
-package com.coctelmental.android.project1886.common.util;
+package com.coctelmental.android.project1886.util;
 
 import java.lang.reflect.Type;
 

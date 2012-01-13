@@ -3,7 +3,7 @@ package com.coctelmental.android.project1886.taxis;
 import com.coctelmental.android.project1886.R;
 import com.coctelmental.android.project1886.common.GeoPointInfo;
 import com.coctelmental.android.project1886.common.ServiceRequestInfo;
-import com.coctelmental.android.project1886.common.util.JsonHandler;
+import com.coctelmental.android.project1886.util.JsonHandler;
 import com.coctelmental.android.project1886.util.Tools;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;

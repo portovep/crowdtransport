@@ -5,10 +5,10 @@ import java.net.HttpURLConnection;
 import com.coctelmental.android.project1886.R;
 import com.coctelmental.android.project1886.buses.BusDriverMain;
 import com.coctelmental.android.project1886.common.BusDriver;
-import com.coctelmental.android.project1886.common.util.JsonHandler;
 import com.coctelmental.android.project1886.helpers.UsersHelper;
 import com.coctelmental.android.project1886.model.Credentials;
 import com.coctelmental.android.project1886.model.ResultBundle;
+import com.coctelmental.android.project1886.util.JsonHandler;
 import com.coctelmental.android.project1886.util.Tools;
 
 import android.app.Activity;

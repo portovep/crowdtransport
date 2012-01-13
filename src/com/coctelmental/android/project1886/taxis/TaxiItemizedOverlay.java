@@ -15,10 +15,10 @@ import android.widget.TextView;
 
 import com.coctelmental.android.project1886.R;
 import com.coctelmental.android.project1886.common.TaxiDriver;
-import com.coctelmental.android.project1886.common.util.JsonHandler;
 import com.coctelmental.android.project1886.helpers.ServiceRequestsHelper;
 import com.coctelmental.android.project1886.helpers.UsersHelper;
 import com.coctelmental.android.project1886.model.ResultBundle;
+import com.coctelmental.android.project1886.util.JsonHandler;
 import com.google.android.maps.ItemizedOverlay;
 import com.google.android.maps.OverlayItem;
 
