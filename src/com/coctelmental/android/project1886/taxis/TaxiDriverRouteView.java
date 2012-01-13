@@ -15,7 +15,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.coctelmental.android.project1886.R;
-import com.coctelmental.android.project1886.TrackingService;
 import com.coctelmental.android.project1886.common.GeoPointInfo;
 import com.coctelmental.android.project1886.common.ServiceRequestInfo;
 import com.coctelmental.android.project1886.common.util.JsonHandler;
@@ -152,7 +151,7 @@ public class TaxiDriverRouteView extends MapActivity {
 				Tools.buildToast(getApplicationContext(), getString(R.string.taxiDriverAcceptRequest), Gravity.CENTER, Toast.LENGTH_SHORT).show();
 				
 				// finish tracking service
-				Intent i = new Intent(getApplicationContext(), TrackingService.class);
+				Intent i = new Intent(getApplicationContext(), TaxiTrackingService.class);
 				stopService(i);
 				
 				// goto new activity

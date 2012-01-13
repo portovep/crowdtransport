@@ -7,7 +7,6 @@ import java.util.List;
 
 import com.coctelmental.android.project1886.MyApplication;
 import com.coctelmental.android.project1886.R;
-import com.coctelmental.android.project1886.TrackingService;
 import com.coctelmental.android.project1886.c2dm.C2DMRegistrationReceiver;
 import com.coctelmental.android.project1886.c2dm.C2DMessageReceiver;
 import com.coctelmental.android.project1886.common.ServiceRequestInfo;
@@ -105,7 +104,7 @@ public class TaxiDriverInformationPanel extends Activity{
 			if (backgroundLayout.getVisibility() != ViewGroup.VISIBLE)
 				// show content
 				backgroundLayout.setVisibility(ViewGroup.VISIBLE);
-			if(!MyApplication.getInstance().isServiceRunning(TrackingService.class.getName())) {
+			if(!MyApplication.getInstance().isServiceRunning(TaxiTrackingService.class.getName())) {
 				// C2DM register to receive push notifications from web service
 				C2DMRegistrationReceiver.register(getApplicationContext());
 			    // launch location tracking service
@@ -158,7 +157,7 @@ public class TaxiDriverInformationPanel extends Activity{
 		           .setNegativeButton(getString(R.string.noEnableGPS), new DialogInterface.OnClickListener() {
 			           public void onClick(DialogInterface dialog, int id) {
 							dialog.cancel();
-							if(MyApplication.getInstance().isServiceRunning(TrackingService.class.getName())) {
+							if(MyApplication.getInstance().isServiceRunning(TaxiTrackingService.class.getName())) {
 								finishTrackingService();
 							}
 							goMainMenu();
@@ -170,8 +169,7 @@ public class TaxiDriverInformationPanel extends Activity{
 	}
 	
 	private void startTrackingService() {
-	    Intent i = new Intent(this, TrackingService.class);
-	    i.putExtra(TrackingService.CALLER_ACTIVITY, TrackingService.TAXIDRIVER_ACTIVITY_ID);			    
+	    Intent i = new Intent(this, TaxiTrackingService.class);		    
 	    startService(i);
 		// activate broadcast receiver
 		registerReceiver(serviceRequestReceiver, new IntentFilter(ACTION_RECEIVE_REQUEST));
@@ -181,7 +179,7 @@ public class TaxiDriverInformationPanel extends Activity{
 		// stop broadcast receiver
 		unregisterReceiver(serviceRequestReceiver);
 		// finish location tracking service
-		Intent i = new Intent(getApplicationContext(), TrackingService.class);
+		Intent i = new Intent(getApplicationContext(), TaxiTrackingService.class);
 		stopService(i);
 	}
 	

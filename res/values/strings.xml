@@ -10,7 +10,7 @@
     <string name="option_menu_exit">Salir</string>
     <string name="option_menu_profile">Mi perfil</string>
     <string name="option_menu_collaboratorPanel">Panel de colaboración</string>
-    <string name="option_menu_finishCollaborationService">Finalizar seguimiento</string>
+    <string name="option_menu_finishTrackingService">Finalizar seguimiento</string>
     <string name="dash_bus">Autobuses</string>
     <string name="dash_taxi">Taxis</string>
     <string name="dash_collaboration">Colabora</string>
@@ -184,10 +184,10 @@
     <string name="cancelRequestInProgress">Cancelando solicitud..</string>
 
     <!-- Notifications -->
-    <string name="collaborationServiceStarted">El modo de seguimiento ha sido activado</string>
-    <string name="collaborationServiceRunning">El modo de seguimiento está activado</string>
-    <string name="collaborationServiceGPSDisabled">GPS deshabilitado. Habilitelo para poder enviar información de la posición del autobús</string>
-    <string name="collaborationServiceFinished">El modo de seguimiento ha sido deshabilitado</string>
+    <string name="trackingServiceStarted">El modo de seguimiento ha sido activado</string>
+    <string name="trackingServiceRunning">El modo de seguimiento está activado</string>
+    <string name="trackingServiceGPSDisabled">GPS deshabilitado. Habilitelo para poder enviar información de la posición del autobús</string>
+    <string name="trackingServiceFinished">El modo de seguimiento ha sido deshabilitado</string>
 
     <!-- TTS messages (tex-to-speech) -->
     <string name="newIncomingRequestTTS">"Ha recibido una nueva solicitud de servicio."</string>

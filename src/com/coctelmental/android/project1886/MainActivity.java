@@ -4,6 +4,7 @@ import com.coctelmental.android.project1886.buses.CollaboratorInformationPanel;
 import com.coctelmental.android.project1886.buses.CollaboratorLineSelection;
 import com.coctelmental.android.project1886.buses.UserBusLineSelection;
 import com.coctelmental.android.project1886.helpers.UsersHelper;
+import com.coctelmental.android.project1886.buses.BusTrackingService;
 import com.coctelmental.android.project1886.taxis.UserTaxiRouteSpecification;
 import com.coctelmental.android.project1886.users.Authentication;
 import com.coctelmental.android.project1886.users.Registration;
@@ -58,7 +59,7 @@ public class MainActivity extends Activity{
 		menu.clear();
 
 		MenuInflater inflater = getMenuInflater();
-		if(MyApplication.getInstance().isServiceRunning(TrackingService.class.getName())) {
+		if(MyApplication.getInstance().isServiceRunning(BusTrackingService.class.getName())) {
 			inflater.inflate(R.menu.main_activity_service_started, menu);
 			if(!UsersHelper.existActiveUser())
 				menu.removeItem(R.id.menuProfile);
@@ -98,7 +99,7 @@ public class MainActivity extends Activity{
 				break;
 			case R.id.menufinishService:
 				// finish location tracking service
-				Intent i = new Intent(getApplicationContext(), TrackingService.class);
+				Intent i = new Intent(getApplicationContext(), BusTrackingService.class);
 				stopService(i);
 				break;				
 			}
@@ -115,7 +116,7 @@ public class MainActivity extends Activity{
 	public void onCollaborationAction(View view) {
 		Intent intent;
 		// if collaborationTrackingService is running
-		if (MyApplication.getInstance().isServiceRunning(TrackingService.class.getName())) {
+		if (MyApplication.getInstance().isServiceRunning(BusTrackingService.class.getName())) {
 			intent = new Intent(getApplicationContext(), CollaboratorInformationPanel.class);
 		}
 		else

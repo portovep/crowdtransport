@@ -118,7 +118,7 @@
         </receiver>
 
         <service
-            android:name=".TrackingService"
+            android:name=".buses.TaxiTrackingService"
             android:exported="false" >
         </service>
         <service

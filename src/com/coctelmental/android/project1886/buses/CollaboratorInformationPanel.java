@@ -2,7 +2,7 @@ package com.coctelmental.android.project1886.buses;
 
 import com.coctelmental.android.project1886.MyApplication;
 import com.coctelmental.android.project1886.R;
-import com.coctelmental.android.project1886.TrackingService;
+import com.coctelmental.android.project1886.buses.BusTrackingService;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -69,10 +69,10 @@ public class CollaboratorInformationPanel extends Activity {
 			if (backgroundLayout.getVisibility() != ViewGroup.VISIBLE)
 				// show content
 				backgroundLayout.setVisibility(ViewGroup.VISIBLE);
-			if(!MyApplication.getInstance().isServiceRunning(TrackingService.class.getName())) {
+			if(!MyApplication.getInstance().isServiceRunning(BusTrackingService.class.getName())) {
 			    // launch location tracking service
-			    Intent i = new Intent(this, TrackingService.class);
-			    i.putExtra(TrackingService.CALLER_ACTIVITY, TrackingService.COLLABORATOR_ACTIVITY_ID);
+			    Intent i = new Intent(this, BusTrackingService.class);
+			    i.putExtra(BusTrackingService.EXTRA_CALLER_ACTIVITY, BusTrackingService.ID_COLLABORATOR_ACTIVITY);
 			    startService(i);
 			}
 		}
@@ -108,7 +108,7 @@ public class CollaboratorInformationPanel extends Activity {
 	
 	private void finishTrackingService() {
 		// finish location tracking service
-		Intent i = new Intent(getApplicationContext(), TrackingService.class);
+		Intent i = new Intent(getApplicationContext(), BusTrackingService.class);
 		stopService(i);
 	}	   
 
