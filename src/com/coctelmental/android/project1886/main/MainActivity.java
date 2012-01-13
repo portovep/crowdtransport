@@ -1,5 +1,6 @@
-package com.coctelmental.android.project1886;
+package com.coctelmental.android.project1886.main;
 
+import com.coctelmental.android.project1886.R;
 import com.coctelmental.android.project1886.buses.CollaboratorInformationPanel;
 import com.coctelmental.android.project1886.buses.CollaboratorLineSelection;
 import com.coctelmental.android.project1886.buses.UserBusLineSelection;

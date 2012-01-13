@@ -2,12 +2,12 @@ package com.coctelmental.android.project1886.taxis;
 
 import java.net.HttpURLConnection;
 
-import com.coctelmental.android.project1886.MainActivity;
 import com.coctelmental.android.project1886.R;
 import com.coctelmental.android.project1886.c2dm.C2DMRegistrationReceiver;
 import com.coctelmental.android.project1886.c2dm.C2DMessageReceiver;
 import com.coctelmental.android.project1886.common.ServiceRequestInfo;
 import com.coctelmental.android.project1886.helpers.ServiceRequestsHelper;
+import com.coctelmental.android.project1886.main.MainActivity;
 import com.coctelmental.android.project1886.util.Tools;
 
 import android.app.Activity;

@@ -19,10 +19,10 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemSelectedListener;
 
-import com.coctelmental.android.project1886.AppData;
 import com.coctelmental.android.project1886.R;
 import com.coctelmental.android.project1886.common.util.JsonHandler;
 import com.coctelmental.android.project1886.helpers.AvailableDataHelper;
+import com.coctelmental.android.project1886.main.AppData;
 import com.coctelmental.android.project1886.model.ResultBundle;
 import com.coctelmental.android.project1886.util.Tools;
 

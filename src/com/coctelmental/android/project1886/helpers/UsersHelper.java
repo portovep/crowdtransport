@@ -1,10 +1,10 @@
 package com.coctelmental.android.project1886.helpers;
 
-import com.coctelmental.android.project1886.AppData;
 import com.coctelmental.android.project1886.common.BusDriver;
 import com.coctelmental.android.project1886.common.TaxiDriver;
 import com.coctelmental.android.project1886.common.User;
 import com.coctelmental.android.project1886.common.util.JsonHandler;
+import com.coctelmental.android.project1886.main.AppData;
 import com.coctelmental.android.project1886.model.Credentials;
 import com.coctelmental.android.project1886.model.ResultBundle;
 import com.coctelmental.android.project1886.util.ConnectionsHandler;

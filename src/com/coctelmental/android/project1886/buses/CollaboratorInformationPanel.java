@@ -1,8 +1,8 @@
 package com.coctelmental.android.project1886.buses;
 
-import com.coctelmental.android.project1886.AppData;
 import com.coctelmental.android.project1886.R;
 import com.coctelmental.android.project1886.buses.BusTrackingService;
+import com.coctelmental.android.project1886.main.AppData;
 import com.coctelmental.android.project1886.util.Tools;
 
 import android.app.Activity;

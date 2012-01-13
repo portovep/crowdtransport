@@ -3,11 +3,11 @@ package com.coctelmental.android.project1886.helpers;
 import android.location.Location;
 import android.util.Log;
 
-import com.coctelmental.android.project1886.AppData;
 import com.coctelmental.android.project1886.common.CollaboratorBusLocation;
 import com.coctelmental.android.project1886.common.GeoPointInfo;
 import com.coctelmental.android.project1886.common.TaxiDriverLocation;
 import com.coctelmental.android.project1886.common.util.JsonHandler;
+import com.coctelmental.android.project1886.main.AppData;
 import com.coctelmental.android.project1886.model.ResultBundle;
 import com.coctelmental.android.project1886.util.ConnectionsHandler;
 
