@@ -13,12 +13,9 @@
         android:orientation="vertical" >
 
         <com.google.android.maps.MapView
-            xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/mapTaxiRoute"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:apiKey="0GFJEPSerwjLp6q2Rcu8oLWI6Hb1W3SmdNnM-OQ"
-            android:clickable="true" />
+            style="@style/defaultMapView" >
+        </com.google.android.maps.MapView>
 
         <LinearLayout
             android:id="@+id/dock"

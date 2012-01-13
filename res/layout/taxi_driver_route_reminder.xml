@@ -5,13 +5,12 @@
     android:orientation="vertical" >
 
     <com.google.android.maps.MapView
-        xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/mapApiKey"
         android:id="@+id/mapTaxiRoute"
         android:layout_width="272dp"
         android:layout_height="0dip"
         android:layout_gravity="center_horizontal"
         android:layout_weight="0.07"
-        android:apiKey="0GFJEPSerwjLp6q2Rcu8oLWI6Hb1W3SmdNnM-OQ"
         android:clickable="true" >
     </com.google.android.maps.MapView>
 

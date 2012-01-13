@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <style name="mapApiKey">
+        <item name="android:apiKey">0GFJEPSerwjLp6q2Rcu8oLWI6Hb1W3SmdNnM-OQ</item>
+    </style>
+
+    <style name="defaultMapView" parent="@style/mapApiKey">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:clickable">true</item>
+    </style>
+
     <style name="ActionBarCompat">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">50dp</item>
@@ -168,7 +178,7 @@
         <item name="android:layout_marginBottom">3dp</item>
         <item name="android:layout_marginLeft">@dimen/form_registration_tv_margin</item>
     </style>
-    
+
     <style name="formDNIEt">
         <item name="android:inputType">textCapCharacters</item>
     </style>

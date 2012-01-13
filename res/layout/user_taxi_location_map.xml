@@ -14,10 +14,7 @@
 
         <com.google.android.maps.MapView
             android:id="@+id/mapTaxiLocation"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:apiKey="0GFJEPSerwjLp6q2Rcu8oLWI6Hb1W3SmdNnM-OQ"
-            android:clickable="true" />
+            style="@style/defaultMapView" />
 
         <LinearLayout
             android:id="@+id/dock"
