@@ -13,6 +13,7 @@ import com.coctelmental.android.project1886.common.GeoPointInfo;
 import com.coctelmental.android.project1886.common.TaxiLocation;
 import com.coctelmental.android.project1886.helpers.LocationsHelper;
 import com.coctelmental.android.project1886.helpers.ServiceRequestsHelper;
+import com.coctelmental.android.project1886.main.Preferences;
 import com.coctelmental.android.project1886.model.ResultBundle;
 import com.coctelmental.android.project1886.util.JsonHandler;
 import com.google.android.maps.GeoPoint;
@@ -25,16 +26,18 @@ import com.google.gson.reflect.TypeToken;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 
 public class UserTaxiLocationMap extends MapActivity {
 	
-	private static final int TIME_BETWEEN_UPDATES = 5000;	
+	private int refreshRate;	
 	private Timer updaterTimer;
 	
 	private AlertDialog alertDialogLocationNotFound;
@@ -63,13 +66,23 @@ public class UserTaxiLocationMap extends MapActivity {
 	    
 	    Log.w(getString(R.string.app_name), "User loc: "+gpOrigin.getLatitudeE6()+" : "+gpOrigin.getLongitudeE6());
 	    
+        // check user preferences
+	    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+	    boolean satellite = sp.getBoolean(Preferences.PREF_USER_MAP_SATELLITE,
+	    		Preferences.DEFAULT_USER_MAP_SATELLITE);
+	    boolean zoomControls = sp.getBoolean(Preferences.PREF_USER_MAP_ZOOM_CONTROL,
+	    		Preferences.DEFAULT_USER_MAP_ZOOM_CONTROL);
+	    String stRefreshRate = sp.getString(Preferences.PREF_USER_REFRESH_RATE,
+	    		Preferences.DEFAULT_USER_REFRESH_RATE);
+	    // parse to int
+	    refreshRate = Integer.valueOf(stRefreshRate);
 	    
 	    // setup map configuration
 	    mapView = (MapView) findViewById(R.id.mapTaxiLocation);
-	    mapView.setBuiltInZoomControls(true);
         mapView.setClickable(true);
         mapView.setEnabled(true);
-        mapView.setSatellite(true);
+	    mapView.setBuiltInZoomControls(zoomControls);
+        mapView.setSatellite(satellite);
         mapView.setTraffic(false);	
         mapView.setStreetView(false);
 	        
@@ -95,7 +108,7 @@ public class UserTaxiLocationMap extends MapActivity {
 	protected void onResume() {
 	    // start a timer witch allow us to obtain the location from the server at regular intervals
 		updaterTimer = new Timer();
-	    updaterTimer.schedule(new updaterTimerTask(), 0, TIME_BETWEEN_UPDATES);
+	    updaterTimer.schedule(new updaterTimerTask(), 0, refreshRate);
 		super.onResume();
 	}
 	

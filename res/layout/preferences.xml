@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory android:title="@string/categoryGeneral" >
+
+        <EditTextPreference
+            android:defaultValue="@string/profile_welcome"
+            android:key="custom_welcome_message"
+            android:maxLength="10"
+            android:summary="@string/prefSummaryWelcomeMessage"
+            android:title="@string/prefWelcomeMessage" />
+
+        <Preference
+            android:key="button_custom_welcome_message"
+            android:summary="@string/prefSummaryRemoveCustomMessage"
+            android:title="@string/prefRemoveCustomMessage" >
+        </Preference>
+
+        <ListPreference
+            android:defaultValue="km"
+            android:entries="@array/units_text"
+            android:entryValues="@array/units_values"
+            android:key="distance_units"
+            android:summary="@string/prefSummaryUnits"
+            android:title="@string/prefUnits" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/categoryMaps" >
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="user_maps_satellite"
+            android:summary="@string/prefSummaryMapSatellite"
+            android:title="@string/prefMapSatellite" />
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="user_maps_zoom_controls"
+            android:summary="@string/prefSummaryMapZoomControl"
+            android:title="@string/prefMapZoomControl" />
+
+        <ListPreference
+            android:defaultValue="10000"
+            android:dialogTitle="@string/prefRefreshRateDialogTitle"
+            android:entries="@array/refresh_rate_text"
+            android:entryValues="@array/refresh_rate_values"
+            android:key="user_refresh_rate"
+            android:summary="@string/prefSummaryRefreshRate"
+            android:title="@string/prefRefreshRate" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/categoryCollaboration" >
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="collaboration_notification_sound"
+            android:summary="@string/prefSummaryNotificationSound"
+            android:title="@string/prefNotificationSound" />
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="collaboration_notification_vibration"
+            android:summary="@string/prefSummaryNotificationVibration"
+            android:title="@string/prefNotificationVibration" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

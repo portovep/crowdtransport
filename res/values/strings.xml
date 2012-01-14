@@ -195,4 +195,37 @@
     <string name="destinationTTS">"Destino: "</string>
     <string name="clarificationCommentTTS">"Aclaración del usuario: "</string>
 
+    <!-- Preferences -->
+    <!-- GENERAL -->
+    <string name="categoryGeneral">Configuración general</string>
+    <string name="prefWelcomeMessage">Mensaje de bienvenida</string>
+    <string name="prefSummaryWelcomeMessage">Personalizar mensaje</string>
+    <string name="prefRemoveCustomMessage">Borrar mensaje personalizado</string>
+    <string name="prefSummaryRemoveCustomMessage">Mostrar el mensaje por defecto</string>
+    <string name="customWelcomeMsgRemoved">Mensaje personalziado borrado</string>
+    <string name="prefUnits">Unidades</string>
+    <string name="prefSummaryUnits">Unidades en las que se motrará la distancia</string>
+    <string name="kilometers">kilómetros</string>
+    <string name="meters">metros</string>
+
+    <!-- MAPS -->
+    <string name="categoryMaps">Configuración de los mapas</string>
+    <string name="prefMapSatellite">Capa satélite</string>
+    <string name="prefSummaryMapSatellite">Habilitar la vista satélite en los mapas</string>
+    <string name="prefMapZoomControl">Botones de zoom</string>
+    <string name="prefSummaryMapZoomControl">Mostrar botones para ajustar el zoom</string>
+    <string name="prefRefreshRate">Localizaciones</string>
+    <string name="prefRefreshRateDialogTitle">Frecuencia actualización</string>
+    <string name="prefSummaryRefreshRate">Frecuencia con la que se actualizarán las posiciones de los autobuses y taxis en el mapa</string>
+    <string name="high">Alta</string>
+    <string name="medium">Media</string>
+    <string name="low">Baja</string>
+
+    <!-- COLLABORATION -->
+    <string name="categoryCollaboration">Colaboración</string>
+    <string name="prefNotificationSound">Notificaciones</string>
+    <string name="prefSummaryNotificationSound">Habilitar notificación sonora</string>
+    <string name="prefNotificationVibration">Vibración</string>
+    <string name="prefSummaryNotificationVibration">Vibrar cuando se reciba una notificación</string>
+
 </resources>

@@ -9,12 +9,14 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +29,7 @@ import com.coctelmental.android.project1886.R;
 import com.coctelmental.android.project1886.common.GeoPointInfo;
 import com.coctelmental.android.project1886.helpers.ServiceRequestsHelper;
 import com.coctelmental.android.project1886.helpers.UserLocationHelper;
+import com.coctelmental.android.project1886.main.Preferences;
 import com.coctelmental.android.project1886.util.Tools;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.ItemizedOverlay;
@@ -79,11 +82,18 @@ public class UserTaxiRouteSpecification extends MapActivity {
         // get distance label
         tvDistance = (TextView) findViewById(R.id.distance);
 	    
+        // check user preferences
+	    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+	    boolean satellite = sp.getBoolean(Preferences.PREF_USER_MAP_SATELLITE,
+	    		Preferences.DEFAULT_USER_MAP_SATELLITE);
+	    boolean zoomControls = sp.getBoolean(Preferences.PREF_USER_MAP_ZOOM_CONTROL,
+	    		Preferences.DEFAULT_USER_MAP_ZOOM_CONTROL);
+        
         // setup map configuration
 	    mapView = (MapView) findViewById(R.id.mapTaxiRoute);	    
-	    mapView.setBuiltInZoomControls(false);
         mapView.setEnabled(true);
-        mapView.setSatellite(false);
+	    mapView.setBuiltInZoomControls(zoomControls);
+        mapView.setSatellite(satellite);
         mapView.setTraffic(false);	
         mapView.setStreetView(false);
 	 
@@ -332,9 +342,17 @@ public class UserTaxiRouteSpecification extends MapActivity {
 	private void updateDistanceLabel() {
 		// calculating distance
 		Double distance = Tools.calculateDistanceInMeters(gpOrigin, gpDestination);
-		DecimalFormat df = new DecimalFormat("#######0.0#");
+		DecimalFormat df = new DecimalFormat("#######0.00#");
+		
+		// check user preferences
+		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+		String units = sp.getString(Preferences.PREF_DISTANCE_UNITS, Preferences.DEFAULT_DISTANCE_UNITS);
+		
+		if (units.equals("km"))
+			// parse to kilometers
+			distance = distance / 1000;
 		// update label
-		tvDistance.setText(" "+df.format(distance)+"m");
+		tvDistance.setText(" " + df.format(distance) + units);
 	}
 	
 	private void showBackAlertDialog(String textToShow) {

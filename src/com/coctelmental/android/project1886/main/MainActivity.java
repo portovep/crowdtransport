@@ -14,16 +14,16 @@ import com.coctelmental.android.project1886.util.Tools;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class MainActivity extends Activity{   
 
@@ -43,8 +43,14 @@ public class MainActivity extends Activity{
 		// check if exist a user logged into the application 
         if(UsersHelper.existActiveUser()) {
         	String userName = UsersHelper.getActiveUser().getId();
+        	
+        	// check user preferences
+        	SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        	// get custom welcome message
+        	String welcomeMessage = sp.getString(Preferences.PREF_CUSTOM_WELCOME_MESSAGE, "");
+        	
         	// show user's name
-        	tvProfileName.setText(getString(R.string.profile_welcome)+" "+userName);
+        	tvProfileName.setText(welcomeMessage + " " +userName);
         	tvProfileName.setVisibility(View.VISIBLE);
         }
         else {
@@ -132,8 +138,9 @@ public class MainActivity extends Activity{
 	}
 	
 	public void onPreferencesAction(View view) {
-		// TO-DO
-		Tools.buildToast(getApplicationContext(), "TO-DO", Gravity.CENTER, Toast.LENGTH_SHORT).show();
+		// launch preference activity
+		Intent intent = new Intent(getApplicationContext(), Preferences.class);
+		startActivity(intent);
 	}
 	
 	public void onAboutAction(View view) {

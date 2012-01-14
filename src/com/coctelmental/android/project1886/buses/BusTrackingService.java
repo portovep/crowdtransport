@@ -4,6 +4,7 @@ import com.coctelmental.android.project1886.R;
 import com.coctelmental.android.project1886.helpers.LocationsHelper;
 import com.coctelmental.android.project1886.helpers.UsersHelper;
 import com.coctelmental.android.project1886.main.AppData;
+import com.coctelmental.android.project1886.main.Preferences;
 import com.coctelmental.android.project1886.model.Credentials;
 import com.coctelmental.android.project1886.util.Tools;
 
@@ -13,11 +14,13 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.view.Gravity;
 import android.widget.Toast;
 
@@ -160,8 +163,29 @@ public class BusTrackingService extends Service {
 			CharSequence contentText, PendingIntent pendingIntent) {	
 		long when = System.currentTimeMillis();		
 		Notification notification = new Notification(icon, tickerText, when);
-		// default sound when notification is launched
-		notification.defaults |= Notification.DEFAULT_SOUND;
+		
+		// check preferences
+		boolean notificationSound = true;
+		boolean notificationVibration = true;
+		
+	    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+	    if (userType == Credentials.TYPE_USER) {
+	    	notificationSound = sp.getBoolean(Preferences.PREF_COL_NOTIFICATION_SOUND,
+	    		Preferences.DEFAULT_COL_NOTIFICATION_SOUND);
+	    	notificationVibration = sp.getBoolean(Preferences.PREF_COL_NOTIFICATION_VIB,
+		    		Preferences.DEFAULT_COL_NOTIFICATION_VIB);
+	    }
+		
+	    // set notification properties
+	    if (notificationSound) {
+			// activate sound
+			notification.defaults |= Notification.DEFAULT_SOUND;
+	    }
+	    if (notificationVibration) {
+			// activate vibration
+	    	notification.defaults |= Notification.DEFAULT_VIBRATE;    	
+	    }
+	    
 		// add flag to unable behavior of clear button for this notification and specify as ongoing event
 		notification.flags |= Notification.FLAG_NO_CLEAR | Notification.FLAG_ONGOING_EVENT;
 		notification.setLatestEventInfo(getApplicationContext(), contentTitle, contentText, pendingIntent);		
