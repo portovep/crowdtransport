@@ -29,18 +29,21 @@ public class UserLocationHelper {
 		
 		List<String> providers = lm.getAllProviders();
 		for(String provider : providers) {
-			Location location = lm.getLastKnownLocation(provider);
-			if (location != null) {
-				float accuracy = location.getAccuracy();
-				long time = now - location.getTime();
-				
-				if((time > 0 && time <= bestTime && accuracy <= bestAccuracy)) {
-					// time > 0 to elude a problem with some GPS time information
-					bestLocation = location;
-					bestAccuracy = accuracy;
-					bestTime = time;
-				}
-		  }
+			if (!provider.equals(LocationManager.GPS_PROVIDER)) {
+				// GPS not used because a bug with location time info
+				Location location = lm.getLastKnownLocation(provider);
+				if (location != null) {
+					float accuracy = location.getAccuracy();
+					long time = now - location.getTime();
+					
+					if((time > 0 && time <= bestTime && accuracy <= bestAccuracy)) {
+						// time > 0 to elude a problem with some GPS time information
+						bestLocation = location;
+						bestAccuracy = accuracy;
+						bestTime = time;
+					}
+			  }
+			}
 		}
 		return bestLocation;
 	}
