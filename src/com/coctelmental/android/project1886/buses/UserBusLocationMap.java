@@ -40,7 +40,9 @@ public class UserBusLocationMap extends MapActivity {
 	private int refreshRate;
 	private Timer updaterTimer;
 	
-	private AlertDialog alertDialogLocationNotFound; 
+	private AlertDialog alertDialogLocationNotFound;
+	
+	private BusItemizedOverlay busItemizedOverlays;
 	
 	private String targetCity = null;
 	private String targetLine = null;	
@@ -49,8 +51,6 @@ public class UserBusLocationMap extends MapActivity {
 	private TextView infoLabel;
 	private MapView mapView;
 	private MapController mc;
-	private List<Overlay> mapOverlays;	
-	private Drawable drawableBusMarker;
 	
 	private boolean flagFirstLaunch = true;
 	
@@ -63,15 +63,14 @@ public class UserBusLocationMap extends MapActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
-        
+	    setContentView(R.layout.user_bus_location_map);
+	    
 	    // get data from intent
     	Bundle extras = getIntent().getExtras();	    
         targetCity = extras != null ? extras.getString(UserBusLineSelection.EXTRA_TARGET_CITY) : null;
         targetLine = extras != null ? extras.getString(UserBusLineSelection.EXTRA_TARGET_LINE) : null;      
 	    
 	    Log.w(getString(R.string.app_name), "Request information to city: "+targetCity+" and line: "+targetLine);
-	        
-	    setContentView(R.layout.user_bus_location_map);
 	    
 	    // setup information label at the top of view
 	    infoLabel = (TextView) findViewById(R.id.infoLabel);
@@ -104,11 +103,16 @@ public class UserBusLocationMap extends MapActivity {
 		// get map controller to control zoom and other stuff
 		mc = mapView.getController();
         mc.setZoom(17);
+        
         // get reference to map overlays
-        mapOverlays = mapView.getOverlays();       	    
+        List<Overlay> mapOverlays = mapView.getOverlays();       	    
 
-	    // get reference for our marker custom icon
-        drawableBusMarker = this.getResources().getDrawable(R.drawable.marker_bus);    
+	    // get custom marker icon
+        Drawable drawableBusMarker = this.getResources().getDrawable(R.drawable.marker_bus);
+        
+        // setup custom overlays
+    	busItemizedOverlays = new BusItemizedOverlay(drawableBusMarker, this);    
+    	mapOverlays.add(busItemizedOverlays);
 	}
 	
 	@Override
@@ -129,8 +133,8 @@ public class UserBusLocationMap extends MapActivity {
 	}
 
 	private void showUpdatedLocation(ResultBundle rb) {
-	    // position available
 	    if (rb.getResultCode() == HttpURLConnection.HTTP_OK) {
+	    	// location available
 	    	String jsonLocations = rb.getContent();
 			// Obtaining specific object from json codification
 			Type listType = new TypeToken<List<BusLocation>>() {}.getType();			
@@ -140,7 +144,7 @@ public class UserBusLocationMap extends MapActivity {
 	    			" lat="+newLocations.get(0).getGeopoint().getLatitudeE6()+" long="+newLocations.get(0).getGeopoint().getLongitudeE6());
 
 	    	// remove previous overlays
-	    	BusItemizedOverlay busItemizedOverlays = new BusItemizedOverlay(drawableBusMarker, this);    
+	    	busItemizedOverlays.clear();
 	    	
 	    	GeoPoint geopoint = null;
 	    	for(BusLocation busLocation : newLocations) {
@@ -161,36 +165,37 @@ public class UserBusLocationMap extends MapActivity {
 	    		flagFirstLaunch = false;
 	    	}
 	    	
-	    	// clear previous overlays
-	    	mapOverlays.clear();
-		    // adding our custom overlay to the list of the map
-	        mapOverlays.add(busItemizedOverlays);
-	        // re-draw the map with new overlays
+	    	// re-draw the map with new overlays
 	        mapView.invalidate();
 	    }
-	    // no new locations
 		else {
-	    	// stop updaterTimer
-	    	stopUpdater();			
-	    	
-			// default message = error server not found
-			String errorMessage = getString(R.string.failServerNotFound);
-			
-			Log.e("Http error code", Integer.toString(rb.getResultCode()));
-			
-			if (rb.getResultCode() == HttpURLConnection.HTTP_NOT_ACCEPTABLE)
-				// if response code = request not acceptable
-				errorMessage = getString(R.string.busLocationsNotFound);
-			
-	    	goPreviousActivity(errorMessage);
+			// no new locations
+			if (!busItemizedOverlays.isOverlayDialogVisible()) {
+		    	// stop updaterTimer
+		    	stopUpdater();			
+		    	
+				// default message = error server not found
+				String errorMessage = getString(R.string.failServerNotFound);
+				
+				Log.e("Http error code", Integer.toString(rb.getResultCode()));
+				
+				if (rb.getResultCode() == HttpURLConnection.HTTP_NOT_ACCEPTABLE)
+					// if response code = request not acceptable
+					errorMessage = getString(R.string.busLocationsNotFound);
+				
+		    	goPreviousActivity(errorMessage);
+			}
 	    }
 	}
 
 	private class updaterTimerTask extends TimerTask {		
 		public void run() {
-			updatedLocation = LocationsHelper.obtainBusLocations(targetCity, targetLine);
-			// notify the handler
-			handler.sendEmptyMessage(0);
+			
+			if (!busItemizedOverlays.isOverlayDialogVisible()) {
+				updatedLocation = LocationsHelper.obtainBusLocations(targetCity, targetLine);
+				// notify the handler
+				handler.sendEmptyMessage(0);
+			}
 		}
 	}
 	

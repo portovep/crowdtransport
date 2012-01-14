@@ -15,6 +15,8 @@ public class BusItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 	
 	private Context context;
 	private ArrayList<OverlayItem> overlayList;
+	
+	private AlertDialog overlayDialog;
 
 	
 	public BusItemizedOverlay(Drawable defaultMarker, Context context) {
@@ -40,10 +42,11 @@ public class BusItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 	@Override
 	protected boolean onTap(int index) {
 		OverlayItem item = overlayList.get(index);
-		AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-		dialog.setTitle(item.getTitle());
-		dialog.setMessage(item.getSnippet());
-		dialog.show();
+		AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
+		dialogBuilder.setTitle(item.getTitle());
+		dialogBuilder.setMessage(item.getSnippet());
+		overlayDialog = dialogBuilder.create();
+		overlayDialog.show();
 		return true;
 	}
 	
@@ -51,4 +54,15 @@ public class BusItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 		populate();
 	}
 
+	public void clear() {
+		// clear array
+		overlayList = new ArrayList<OverlayItem>();
+		populate();
+	}
+	
+	public boolean isOverlayDialogVisible() {
+		if (overlayDialog != null && overlayDialog.isShowing())
+			return true;
+		return false;
+	}
 }
