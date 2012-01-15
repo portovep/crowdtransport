@@ -10,11 +10,11 @@ public class AvailableDataHelper {
 	
 	public static ResultBundle getAvailableCities() {
 		// request to specific resource
-		return ConnectionsHandler.get(URI_CITY_RESOURCE);
+		return ConnectionsHandler.get(ConnectionsHandler.SERVER_ADDRESS + URI_CITY_RESOURCE);
 	}
 	
 	public static ResultBundle getAvailableLines(String targetCity) {
-		String targetUrl = URI_CITY_RESOURCE + "/" + targetCity + URI_LINE_RESOURCE;
+		String targetUrl = ConnectionsHandler.SERVER_ADDRESS + URI_CITY_RESOURCE + "/" + targetCity + URI_LINE_RESOURCE;
 		return ConnectionsHandler.get(targetUrl);
 	}
 

@@ -18,7 +18,7 @@ public class LocationsHelper {
 	
 	public static ResultBundle obtainBusLocations(String city, String line) {
 		String resourceID = city + line;
-		String targetURL = URI_BUS_LOCATION_RESOURCE + "/" + resourceID;
+		String targetURL = ConnectionsHandler.SERVER_ADDRESS + URI_BUS_LOCATION_RESOURCE + "/" + resourceID;
 		// request to target resource
 		return ConnectionsHandler.get(targetURL);
 	}
@@ -26,7 +26,7 @@ public class LocationsHelper {
 	public static ResultBundle obtainTaxiLocations(GeoPointInfo gpOrigin) {
 		String jsonGpOrigin = JsonHandler.toJson(gpOrigin);
 		
-		String targetURL = URI_TAXI_LOCATION_RESOURCE + "/" + jsonGpOrigin;
+		String targetURL = ConnectionsHandler.SERVER_ADDRESS + URI_TAXI_LOCATION_RESOURCE + "/" + jsonGpOrigin;
 		return ConnectionsHandler.get(targetURL);
 	}
 	
@@ -47,7 +47,7 @@ public class LocationsHelper {
 	        String line = storedInfo[1];
 			
 			String resourceID = city + line;
-			String targetURL = URI_BUS_LOCATION_RESOURCE + "/" + resourceID;
+			String targetURL = ConnectionsHandler.SERVER_ADDRESS + URI_BUS_LOCATION_RESOURCE + "/" + resourceID;
 			result = ConnectionsHandler.put(targetURL, JsonHandler.toJson(cBusLocation));
 			
 			// Log
@@ -75,7 +75,7 @@ public class LocationsHelper {
 	        String line = storedInfo[1];
 			
 			String resourceID = city + line;
-			String targetURL = URI_BUS_LOCATION_RESOURCE + "/" + resourceID;
+			String targetURL = ConnectionsHandler.SERVER_ADDRESS + URI_BUS_LOCATION_RESOURCE + "/" + resourceID;
 			result = ConnectionsHandler.put(targetURL, JsonHandler.toJson(cBusLocation));
 			
 			// Log
@@ -101,7 +101,7 @@ public class LocationsHelper {
 			taxiDriverLocation.setGeopoint(gp);
 			
 			
-			String targetURL = URI_TAXI_LOCATION_RESOURCE;
+			String targetURL = ConnectionsHandler.SERVER_ADDRESS + URI_TAXI_LOCATION_RESOURCE;
 			String jsonLocation = JsonHandler.toJson(taxiDriverLocation);
 			result = ConnectionsHandler.put(targetURL, jsonLocation);
 			

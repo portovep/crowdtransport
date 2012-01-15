@@ -18,30 +18,30 @@ public class UsersHelper {
 
 	
 	public static ResultBundle getUser(String userID) {
-		String targetURL = URI_USER_RESOURCE + "/" + userID;
+		String targetURL = ConnectionsHandler.SERVER_ADDRESS + URI_USER_RESOURCE + "/" + userID;
 		return ConnectionsHandler.get(targetURL);
 	}
 
 	public static ResultBundle getBusDriver(String busDriverID) {
-		String targetURL = URI_BUS_RESOURCE + "/" + busDriverID;
+		String targetURL = ConnectionsHandler.SERVER_ADDRESS + URI_BUS_RESOURCE + "/" + busDriverID;
 		return ConnectionsHandler.get(targetURL);
 	}
 	
 	public static ResultBundle getTaxiDriver(String taxiDriverID) {
-		String targetURL = URI_TAXI_RESOURCE + "/" + taxiDriverID;
+		String targetURL = ConnectionsHandler.SERVER_ADDRESS + URI_TAXI_RESOURCE + "/" + taxiDriverID;
 		return ConnectionsHandler.get(targetURL);
 	}
 
 	public static int registerUser(User user) {
-		return ConnectionsHandler.put(URI_USER_RESOURCE, JsonHandler.toJson(user));
+		return ConnectionsHandler.put(ConnectionsHandler.SERVER_ADDRESS + URI_USER_RESOURCE, JsonHandler.toJson(user));
 	}
 
 	public static int registerBusDriver(BusDriver busDriver) {
-		return ConnectionsHandler.put(URI_BUS_RESOURCE, JsonHandler.toJson(busDriver));
+		return ConnectionsHandler.put(ConnectionsHandler.SERVER_ADDRESS + URI_BUS_RESOURCE, JsonHandler.toJson(busDriver));
 	}
 	
 	public static int registerTaxiDriver(TaxiDriver taxiDriver) {
-		return ConnectionsHandler.put(URI_TAXI_RESOURCE, JsonHandler.toJson(taxiDriver));
+		return ConnectionsHandler.put(ConnectionsHandler.SERVER_ADDRESS + URI_TAXI_RESOURCE, JsonHandler.toJson(taxiDriver));
 	}
 	
 	public static void logIn(Credentials credentials) {

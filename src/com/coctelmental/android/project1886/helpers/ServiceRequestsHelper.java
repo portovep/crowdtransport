@@ -7,6 +7,7 @@ import com.coctelmental.android.project1886.main.AppData;
 import com.coctelmental.android.project1886.model.ResultBundle;
 import com.coctelmental.android.project1886.util.ConnectionsHandler;
 import com.coctelmental.android.project1886.util.JsonHandler;
+import com.google.android.maps.GeoPoint;
 
 public class ServiceRequestsHelper {
 	
@@ -46,7 +47,8 @@ public class ServiceRequestsHelper {
 		if (serviceRequest != null) {
 			// convert to json
 			String jsonServiceRequest = JsonHandler.toJson(serviceRequest);
-			result = ConnectionsHandler.put(URI_SERVICE_REQUEST_RESOURCE, jsonServiceRequest);
+			String targetURL = ConnectionsHandler.SERVER_ADDRESS + URI_SERVICE_REQUEST_RESOURCE; 
+			result = ConnectionsHandler.put(targetURL, jsonServiceRequest);
 		}
 		
 		return result;		
@@ -54,7 +56,7 @@ public class ServiceRequestsHelper {
 	
 	public static ResultBundle obtainAllServiceRequest(){
 		String taxiUUID = AppData.getInstance().getInstallationUniqueId();
-		String targetURL = URI_SERVICE_REQUEST_RESOURCE + "/" + taxiUUID;
+		String targetURL = ConnectionsHandler.SERVER_ADDRESS + URI_SERVICE_REQUEST_RESOURCE + "/" + taxiUUID;
 		return ConnectionsHandler.get(targetURL);	
 	}
 
@@ -66,7 +68,7 @@ public class ServiceRequestsHelper {
 		    // build data
 		    String[] request = {"accept", taxiUUID};
 		    String jsonRequest = JsonHandler.toJson(request);
-			String targetURL = URI_REQUEST_RESPONSE_RESOURCE + "/" + requestID;
+			String targetURL = ConnectionsHandler.SERVER_ADDRESS + URI_REQUEST_RESPONSE_RESOURCE + "/" + requestID;
 			result = ConnectionsHandler.post(targetURL, jsonRequest);	
 		}
 		
@@ -82,7 +84,7 @@ public class ServiceRequestsHelper {
 			String requestID = serviceRequest.getUserUUID();
 			
 			if (taxiUUID != null && requestID != null) {
-				String targetURL = URI_SERVICE_REQUEST_RESOURCE + "/" + taxiUUID + "/request/" + requestID;
+				String targetURL = ConnectionsHandler.SERVER_ADDRESS + URI_SERVICE_REQUEST_RESOURCE + "/" + taxiUUID + "/request/" + requestID;
 				result = ConnectionsHandler.delete(targetURL);
 			}
 		}
@@ -92,7 +94,7 @@ public class ServiceRequestsHelper {
 	
 	public static int cancelAllServiceRequest(){
 		String taxiUUID = AppData.getInstance().getInstallationUniqueId();
-		String targetURL = URI_SERVICE_REQUEST_RESOURCE + "/" + taxiUUID;
+		String targetURL = ConnectionsHandler.SERVER_ADDRESS + URI_SERVICE_REQUEST_RESOURCE + "/" + taxiUUID;
 		return ConnectionsHandler.delete(targetURL);		
 	}
 	
@@ -108,9 +110,10 @@ public class ServiceRequestsHelper {
 			
 			// send to webservice
 			String jsonDeviceInfo = JsonHandler.toJson(deviceInfo);
-			result = ConnectionsHandler.post(URI_C2DM_REGISTRATION_RESOURCE, jsonDeviceInfo);
+			String targetURL = ConnectionsHandler.SERVER_ADDRESS + URI_C2DM_REGISTRATION_RESOURCE;
+			result = ConnectionsHandler.post(targetURL, jsonDeviceInfo);
 		}
 		return result;
 	}
-
+	
 }

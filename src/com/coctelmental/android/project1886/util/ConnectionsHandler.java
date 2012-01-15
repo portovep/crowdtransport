@@ -15,7 +15,7 @@ import com.coctelmental.android.project1886.model.ResultBundle;
 public class ConnectionsHandler {
 	
 	//private static final String SERVER_ADDRESS = "http://project1886.servehttp.com:8085/webservice";
-	private static final String SERVER_ADDRESS = "http://192.168.1.140:8085/webservice";	
+	public static final String SERVER_ADDRESS = "http://192.168.1.140:8085/webservice";	
 	//private static final String SERVER_ADDRESS = "http://192.168.43.253:8085/webservice";
 	//private static final String SERVER_ADDRESS = "http://project1886.servehttp.com:80/webservice";
 	
@@ -25,7 +25,7 @@ public class ConnectionsHandler {
 		// setup connector
 		Client client = new Client(Protocol.HTTP);
 		client.setConnectTimeout(5000); // 5s
-		ClientResource cr = new ClientResource(SERVER_ADDRESS + targetURL);
+		ClientResource cr = new ClientResource(targetURL);
 		// attach client connector
 		cr.setNext(client);
 		try {
@@ -57,7 +57,7 @@ public class ConnectionsHandler {
 		// setup connector
 		Client client = new Client(Protocol.HTTP);
 		client.setConnectTimeout(10000); // 10s
-		ClientResource cr = new ClientResource(SERVER_ADDRESS+targetURL);
+		ClientResource cr = new ClientResource(targetURL);
 		// attach client connector
 		cr.setNext(client);
 		try{
@@ -82,7 +82,7 @@ public class ConnectionsHandler {
 	}
 	
 	public static int put(String targetURL, String jsonString) {
-		ClientResource cr = new ClientResource(SERVER_ADDRESS+targetURL);
+		ClientResource cr = new ClientResource(targetURL);
 		// set default response status as 404
 		int responseStatus = Status.CLIENT_ERROR_NOT_FOUND.getCode();
 		try{
@@ -101,7 +101,7 @@ public class ConnectionsHandler {
 	}
 	
 	public static int delete(String targetURL) {
-		ClientResource cr = new ClientResource(SERVER_ADDRESS+targetURL);
+		ClientResource cr = new ClientResource(targetURL);
 		// set default response status as 404
 		int responseStatus = Status.CLIENT_ERROR_NOT_FOUND.getCode();
 		try{
@@ -115,4 +115,5 @@ public class ConnectionsHandler {
 		cr.release();
 		return responseStatus;	
 	}
+
 }
