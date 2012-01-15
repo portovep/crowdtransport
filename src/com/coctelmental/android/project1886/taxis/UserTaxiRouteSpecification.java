@@ -386,7 +386,6 @@ public class UserTaxiRouteSpecification extends MapActivity {
 	private class GetRouteInfoAsyncTask extends AsyncTask<Void, Void, ResultBundle> {
 		
 	    protected ResultBundle doInBackground(Void... params) {
-	    	// send device info to server
 	        return ServiceRequestsHelper.obtainRouteInfo(gpOrigin, gpDestination);
 	    }
 
@@ -411,12 +410,12 @@ public class UserTaxiRouteSpecification extends MapActivity {
 			        			.getJSONObject(0).getJSONObject("distance").getDouble("value");
 			        	// get time text
 			        	String timeText = (String) rows.getJSONObject(0).getJSONArray("elements")
-			        			.getJSONObject(0).getJSONObject("duration").getString("text");
-		
+			        			.getJSONObject(0).getJSONObject("duration").getString("text");		
 			        	
 			        	Log.d("ROUTE_INFO", "Route distance: " + distance);
 			        	Log.d("ROUTE_INFO", "Route time: " + timeText);
 			        	
+			        	// update labels
 			        	updateDistanceLabel(distance);
 			        	updateRouteTimeLabel(timeText);
 		        	}
