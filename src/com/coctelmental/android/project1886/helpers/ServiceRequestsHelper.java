@@ -116,4 +116,30 @@ public class ServiceRequestsHelper {
 		return result;
 	}
 	
+	public static ResultBundle obtainRouteInfo(GeoPoint gpOrigin, GeoPoint gpDestination){
+		// get coordinates
+		double oriLatitude = gpOrigin.getLatitudeE6() / 1E6;
+		double oriLongitude = gpOrigin.getLongitudeE6() / 1E6;
+		
+		double destLatitude = gpDestination.getLatitudeE6() / 1E6;
+		double destLongitude = gpDestination.getLongitudeE6() / 1E6;
+		
+		// build URL
+		String baseURL = "http://maps.googleapis.com/maps/api/distancematrix/json?";
+		StringBuilder stBuilder = new StringBuilder(baseURL);
+		stBuilder.append("origins=");
+		stBuilder.append(String.valueOf(oriLatitude));
+		stBuilder.append(",");
+		stBuilder.append(String.valueOf(oriLongitude));
+		stBuilder.append("&destinations=");
+		stBuilder.append(String.valueOf(destLatitude));
+		stBuilder.append(",");
+		stBuilder.append(String.valueOf(destLongitude));
+		stBuilder.append("&language=es&sensor=true");
+		
+		String targetURL = stBuilder.toString();
+		
+		return ConnectionsHandler.get(targetURL);	
+	}
+	
 }

@@ -62,7 +62,10 @@
     <string name="origin">Origen</string>
     <string name="destination">Destino</string>
     <string name="confirm">Confirmar</string>
-    <string name="distance">Distancia: </string>
+    <string name="distanceLabel">Distancia: </string>
+    <string name="distanceLabelDefault">-</string>
+    <string name="timeLabel">Tiempo: </string>
+    <string name="routeTimeLabelDefault">-</string>
 
     <!-- Taxi available map -->
     <string name="availableTaxis">Taxistas disponibles a su alrededor</string>

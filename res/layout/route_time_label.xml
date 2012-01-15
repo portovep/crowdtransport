@@ -7,16 +7,16 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="5dp"
-        android:text="@string/distanceLabel"
+        android:layout_marginRight="16dp"
+        android:text="@string/timeLabel"
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/distance"
+        android:id="@+id/time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/distanceLabelDefault"
         android:layout_gravity="right"
+        android:text="@string/routeTimeLabelDefault"
         android:textStyle="bold" />
 
 </LinearLayout>

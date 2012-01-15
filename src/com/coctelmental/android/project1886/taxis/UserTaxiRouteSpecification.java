@@ -1,9 +1,14 @@
 package com.coctelmental.android.project1886.taxis;
 
+import java.net.HttpURLConnection;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -13,10 +18,12 @@ import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +37,7 @@ import com.coctelmental.android.project1886.common.GeoPointInfo;
 import com.coctelmental.android.project1886.helpers.ServiceRequestsHelper;
 import com.coctelmental.android.project1886.helpers.UserLocationHelper;
 import com.coctelmental.android.project1886.main.Preferences;
+import com.coctelmental.android.project1886.model.ResultBundle;
 import com.coctelmental.android.project1886.util.Tools;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.ItemizedOverlay;
@@ -57,6 +65,7 @@ public class UserTaxiRouteSpecification extends MapActivity {
 	
 	private RelativeLayout backgroundLayout;
 	private TextView tvDistance;
+	private TextView tvTime;
 	private ProgressDialog pdLookingLocation = null;
 	
 	private Timer timer = null;
@@ -81,7 +90,9 @@ public class UserTaxiRouteSpecification extends MapActivity {
 	    
         // get distance label
         tvDistance = (TextView) findViewById(R.id.distance);
-	    
+        // get route time label
+        tvTime = (TextView) findViewById(R.id.time);
+        
         // check user preferences
 	    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 	    boolean satellite = sp.getBoolean(Preferences.PREF_USER_MAP_SATELLITE,
@@ -169,8 +180,8 @@ public class UserTaxiRouteSpecification extends MapActivity {
 				aOverlays.add(destination);
 			}			
 			populate();
-			// update distance between geopoints
-			updateDistanceLabel();
+			// update route info labels
+			new GetRouteInfoAsyncTask().execute();
 		}
 
 		@Override
@@ -262,8 +273,10 @@ public class UserTaxiRouteSpecification extends MapActivity {
 				populate();
 				// no overlay selected
 				selectedOverlay = null;
-				// calculate and update the distance
-				updateDistanceLabel();
+				
+				// update route info labels
+				new GetRouteInfoAsyncTask().execute();
+				
 				result = true;
 			}			
  			return (result || super.onTouchEvent(event, mapView));
@@ -339,20 +352,21 @@ public class UserTaxiRouteSpecification extends MapActivity {
 	    mapView.getOverlays().add(new RouteDragAndDropItemizedOverlay(defaultMarker));
 	}
 	
-	private void updateDistanceLabel() {
-		// calculating distance
-		Double distance = Tools.calculateDistanceInMeters(gpOrigin, gpDestination);
-		DecimalFormat df = new DecimalFormat("#######0.00#");
-		
+	private void updateDistanceLabel(double distanceInMeters) {		
 		// check user preferences
 		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 		String units = sp.getString(Preferences.PREF_DISTANCE_UNITS, Preferences.DEFAULT_DISTANCE_UNITS);
 		
 		if (units.equals("km"))
 			// parse to kilometers
-			distance = distance / 1000;
+			distanceInMeters = distanceInMeters / 1000;
 		// update label
-		tvDistance.setText(" " + df.format(distance) + units);
+		DecimalFormat df = new DecimalFormat("#######0.0#");
+		tvDistance.setText(" " + df.format(distanceInMeters) + units);
+	}
+	
+	private void updateRouteTimeLabel(String timeText) {		
+		tvTime.setText("   " + timeText);
 	}
 	
 	private void showBackAlertDialog(String textToShow) {
@@ -367,5 +381,57 @@ public class UserTaxiRouteSpecification extends MapActivity {
     	       });
     	AlertDialog alert = builder.create();
     	alert.show();
+	}
+	
+	private class GetRouteInfoAsyncTask extends AsyncTask<Void, Void, ResultBundle> {
+		
+	    protected ResultBundle doInBackground(Void... params) {
+	    	// send device info to server
+	        return ServiceRequestsHelper.obtainRouteInfo(gpOrigin, gpDestination);
+	    }
+
+	    protected void onPostExecute(ResultBundle rb) {
+	    	boolean error = true;
+	        // check response code
+	        if(rb.getResultCode() == HttpURLConnection.HTTP_OK) {
+	        	String jsonRouteInfo = rb.getContent();
+	        	
+	        	try{
+	        		// parse JSON route info data
+		        	JSONObject joRouteInfo = new JSONObject(jsonRouteInfo);
+		        	
+		        	// check response code
+		        	String status = joRouteInfo.getString("status");
+		        	if (status.equals("OK")) {
+		        		// disable error flag
+			        	error = false;
+			        	JSONArray rows = joRouteInfo.getJSONArray("rows");
+			        	// get distance in meters
+			        	double distance = (double) rows.getJSONObject(0).getJSONArray("elements")
+			        			.getJSONObject(0).getJSONObject("distance").getDouble("value");
+			        	// get time text
+			        	String timeText = (String) rows.getJSONObject(0).getJSONArray("elements")
+			        			.getJSONObject(0).getJSONObject("duration").getString("text");
+		
+			        	
+			        	Log.d("ROUTE_INFO", "Route distance: " + distance);
+			        	Log.d("ROUTE_INFO", "Route time: " + timeText);
+			        	
+			        	updateDistanceLabel(distance);
+			        	updateRouteTimeLabel(timeText);
+		        	}
+	        	}catch (JSONException je) {
+					Log.w("JSON error", je.getMessage());
+				}	        	
+	        }				
+	        
+	        if (error) {
+	    		// calculate unaccurate distance
+	    		Double distanceInMeters = Tools.calculateDistanceInMeters(gpOrigin, gpDestination);
+	    		// show unaccurate distance
+	    		updateDistanceLabel(distanceInMeters);
+	    		updateRouteTimeLabel(getString(R.string.routeTimeLabelDefault));
+	        }
+	    }
 	}
 }

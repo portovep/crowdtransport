@@ -72,9 +72,12 @@
             android:layout_below="@+id/dock"
             android:layout_centerHorizontal="true"
             android:background="@color/dock_map"
-            android:padding="6sp" >
+            android:padding="6sp" 
+            android:orientation="vertical">
 
             <include layout="@layout/distance_label" />
+
+            <include layout="@layout/route_time_label" />
         </LinearLayout>
 
         <ImageView
