@@ -185,8 +185,10 @@ public class UserTaxiRequestConfirmation extends Activity{
 				if (addressName != null && !addressName.equals("")) {
 					// parse address to get address name only
 					int indexOfComma = addressName.indexOf(',');
-					addressName = addressName.substring(0, indexOfComma);
-					Log.d("Geocoder", addressName);
+					if (indexOfComma != -1) {
+						addressName = addressName.substring(0, indexOfComma);
+						Log.d("Geocoder", addressName);
+					}
 				}
 			}
 		}catch (IOException ioe) {
