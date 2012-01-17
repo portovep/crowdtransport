@@ -43,12 +43,22 @@ public class UserTaxiWaitingPanel extends Activity {
 		setContentView(R.layout.user_taxi_waiting_panel);		
 		
 		ServiceRequestInfo serviceRequest = ServiceRequestsHelper.getServiceRequest();
-		String targetTaxiDriverName = serviceRequest.getTaxiDriverID();
+		String targetTaxiDriverName = serviceRequest.getTaxiDriverFullName();
+		String targetTaxiDriverCarBrand = serviceRequest.getTaxiDriverCarBrand();
+		String targetTaxiDriverCarModel = serviceRequest.getTaxiDriverCarModel();
 		addressFrom = serviceRequest.getAddressFrom();
         
         // fill taxi driver name label
         TextView tvTaxiDriverName = (TextView) findViewById(R.id.tvTaxiDriverName);
         tvTaxiDriverName.setText(targetTaxiDriverName);
+        
+        // fill taxi driver car info label
+        if (targetTaxiDriverCarBrand != null && targetTaxiDriverCarModel !=null) {
+	        TextView tvTaxiDriverCarInfo = (TextView) findViewById(R.id.tvTaxiDriverCarInfo);
+	        tvTaxiDriverCarInfo.setText(targetTaxiDriverCarBrand);
+	        tvTaxiDriverCarInfo.append(" ");
+	        tvTaxiDriverCarInfo.append(targetTaxiDriverCarModel);
+        }
         
 		// activate broadcast receiver
 		registerReceiver(requestResponseReceiver, new IntentFilter(ACTION_RECEIVE_REQUEST_RESPONSE));
