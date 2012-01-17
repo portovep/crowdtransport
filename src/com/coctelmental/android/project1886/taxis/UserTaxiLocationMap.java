@@ -50,6 +50,8 @@ public class UserTaxiLocationMap extends MapActivity {
 	private MapView mapView;
 	private MapController mc;
 
+	private boolean flagFirstLaunch = true;
+	
 	
 	@Override
 	protected boolean isRouteDisplayed() {
@@ -151,6 +153,12 @@ public class UserTaxiLocationMap extends MapActivity {
 			    taxiItemizedOverlays.addOverlay(overlayItem);
 	    	}
 	    	taxiItemizedOverlays.populateNow();
+	    	
+		    // focus map center on last geopoint at first launch
+	    	if(flagFirstLaunch) {
+	    		mc.animateTo(geopoint);
+	    		flagFirstLaunch = false;
+	    	}
 
 	        // re-draw the map with new overlays
 	        mapView.invalidate();
