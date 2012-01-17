@@ -32,7 +32,7 @@ import android.widget.Toast;
 
 public class UserTaxiRequestConfirmation extends Activity{
 	
-	private static final Integer[] availableLifeTimes = {5, 10, 15};
+	private static final String[] availableLifeTimes = {"1 min", "3 min", "5 min"};
 	
 	private EditText etServiceRequestComment;
 	private Spinner spRequestLifeTime;
@@ -70,7 +70,7 @@ public class UserTaxiRequestConfirmation extends Activity{
         
         // fill spinner with available lifetimes
         spRequestLifeTime = (Spinner) findViewById(R.id.spRequestLifeTime);
-        ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this,
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
         					android.R.layout.simple_spinner_item, availableLifeTimes);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spRequestLifeTime.setAdapter(adapter);  	
@@ -87,8 +87,11 @@ public class UserTaxiRequestConfirmation extends Activity{
 				// get request time life
 				int selectedPosition = spRequestLifeTime.getSelectedItemPosition();
 				// add selected time life to service request info
-				ServiceRequestsHelper.getServiceRequest().setRequestLifeTime(availableLifeTimes[selectedPosition]);
-				
+				// get digit
+				String aux = availableLifeTimes[selectedPosition];
+				String stSelectedLifeTime = aux.substring(0, aux.indexOf('m')-1);
+				int selectedLifeTime = Integer.parseInt(stSelectedLifeTime);
+				ServiceRequestsHelper.getServiceRequest().setRequestLifeTime(selectedLifeTime);
 		        
 				// C2DM register to receive push notifications from web service
 				C2DMRegistrationReceiver.register(getApplicationContext());
