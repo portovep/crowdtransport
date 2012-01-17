@@ -52,7 +52,10 @@ public class TaxiItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 			}
 		});
 		
-		//setup overlay alert dialog
+		// call populate to fix a bug (Issue 2035)
+		populate();
+		
+		// setup overlay alert dialog
 		AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(mContext);
 		dialogBuilder.setTitle(R.string.taxiDriverInformation);
 		dialogBuilder.setView(layoutInformationOverlay);

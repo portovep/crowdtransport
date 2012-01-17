@@ -23,6 +23,9 @@ public class BusItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 		super(boundCenter(defaultMarker));
 		overlayList= new ArrayList<OverlayItem>();
 		this.context=context;
+		
+		// call populate to fix a bug (Issue 2035)
+		populate();
 	}
 	
 	public void addOverlay(OverlayItem overlay) {

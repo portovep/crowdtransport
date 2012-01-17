@@ -13,6 +13,9 @@ public class RouteItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 	public RouteItemizedOverlay(Drawable defaultMarker) {
 		super(boundCenterBottom(defaultMarker));
 		overlayList = new ArrayList<OverlayItem>();
+		
+		// call populate to fix a bug (Issue 2035)
+		populate();
 	}
 
 	@Override
