@@ -42,11 +42,10 @@ public class UserTaxiRequestConfirmation extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_taxi_request_confirmation);
         
-        String targetTaxiDriverID = ServiceRequestsHelper.getServiceRequest().getTaxiDriverID();
-        String targetTaxiDriverUUID = ServiceRequestsHelper.getServiceRequest().getTaxiDriverUUID();
-		String targetTaxiDriverName = ServiceRequestsHelper.getServiceRequest().getTaxiDriverFullName();
-		String targetTaxiDriverCarBrand = ServiceRequestsHelper.getServiceRequest().getTaxiDriverCarBrand();
-		String targetTaxiDriverCarModel = ServiceRequestsHelper.getServiceRequest().getTaxiDriverCarModel();
+        ServiceRequestInfo serviceRequest = ServiceRequestsHelper.getServiceRequest();
+		String targetTaxiDriverName = serviceRequest.getTaxiDriverFullName();
+		String targetTaxiDriverCarBrand = serviceRequest.getTaxiDriverCarBrand();
+		String targetTaxiDriverCarModel = serviceRequest.getTaxiDriverCarModel();
         
         // fill taxi driver name label
         TextView tvTaxiDriverName = (TextView) findViewById(R.id.tvTaxiDriverName);
@@ -59,11 +58,6 @@ public class UserTaxiRequestConfirmation extends Activity{
 	        tvTaxiDriverCarInfo.append(" ");
 	        tvTaxiDriverCarInfo.append(targetTaxiDriverCarModel);
         }
-        
-    	// add taxi driver id to request info
-        ServiceRequestsHelper.getServiceRequest().setTaxiDriverID(targetTaxiDriverID);
-    	// add taxi driver UUID to request info
-    	ServiceRequestsHelper.getServiceRequest().setTaxiDriverUUID(targetTaxiDriverUUID);
 		
         // get edit text view
         etServiceRequestComment = (EditText) findViewById(R.id.etClarificationComment);
