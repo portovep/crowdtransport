@@ -8,6 +8,7 @@
 
     <ImageView
         style="@style/ActionBarButton"
+        android:contentDescription="@string/cdAboutButton"
         android:onClick="onAboutAction"
         android:src="@drawable/actionbar_ic_about_white" />
 

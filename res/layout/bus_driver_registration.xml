@@ -24,7 +24,7 @@
         <EditText
             android:id="@+id/dni"
             style="@style/formRegistrationEditText"
-            android:inputType="textPersonName"
+            android:inputType="textCapCharacters"
             android:maxLength="9" />
 
         <TextView
@@ -75,7 +75,7 @@
             android:id="@+id/authCode"
             style="@style/formRegistrationEditText"
             android:inputType="text"
-            android:maxLength="20" />
+            android:maxLength="22" />
 
         <Button
             android:id="@+id/buttonRegisterBus"

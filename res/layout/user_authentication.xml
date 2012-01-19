@@ -7,29 +7,32 @@
 
     <LinearLayout style="@style/form_auth_panel" >
 
-            <TextView
-                style="@style/formAuthText"
-                android:text="@string/userID" />
+        <TextView
+            style="@style/formAuthText"
+            android:text="@string/userID" />
 
-            <EditText
-                android:id="@+id/userID"
-                android:layout_width="181dp"
-                android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/userID"
+            android:layout_width="181dp"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:maxLength="10" />
 
-            <TextView
-                style="@style/formAuthText"
-                android:text="@string/password" />
+        <TextView
+            style="@style/formAuthText"
+            android:text="@string/password" />
 
-            <EditText
-                android:id="@+id/password"
-                android:layout_width="180dp"
-                android:layout_height="wrap_content"
-                android:password="true" />
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:maxLength="45" />
 
-            <Button
-                android:id="@+id/buttonLogin"
-                style="@style/buttonLogin"
-                android:text="@string/buttonLogin" />
+        <Button
+            android:id="@+id/buttonLogin"
+            style="@style/buttonLogin"
+            android:text="@string/buttonLogin" />
     </LinearLayout>
 
 </ScrollView>

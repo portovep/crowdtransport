@@ -5,6 +5,12 @@
         <item name="android:apiKey">0GFJEPSerwjLp6q2Rcu8oLWI6Hb1W3SmdNnM-OQ</item>
     </style>
 
+    <style name="CustomTheme" parent="@android:style/Theme.Light.NoTitleBar">
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@null</item>
+        <item name="android:background">@color/background</item>
+    </style>
+
     <style name="defaultMapView" parent="@style/mapApiKey">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">fill_parent</item>
@@ -13,7 +19,7 @@
 
     <style name="ActionBarCompat">
         <item name="android:layout_width">fill_parent</item>
-        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_height">@dimen/actionbar_height</item>
         <item name="android:orientation">horizontal</item>
         <item name="android:background">@drawable/actionbar_background</item>
     </style>
@@ -281,16 +287,6 @@
         <item name="android:layout_marginTop">@dimen/form_registration_et_margin</item>
         <item name="android:layout_marginBottom">3dp</item>
         <item name="android:layout_marginLeft">@dimen/form_registration_tv_margin</item>
-    </style>
-
-    <style name="formDNIEt">
-        <item name="android:inputType">textCapCharacters</item>
-        <item name="android:maxLength">9</item>
-    </style>
-
-    <style name="formPasswordEt">
-        <item name="android:inputType">textPassword</item>
-        <item name="android:maxLength">45</item>
     </style>
 
     <style name="formRegistrationText">

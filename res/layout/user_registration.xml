@@ -13,7 +13,9 @@
 
         <EditText
             android:id="@+id/fullName"
-            style="@style/formRegistrationEditText" />
+            style="@style/formRegistrationEditText"
+            android:inputType="textCapWords"
+            android:maxLength="45" />
 
         <TextView
             style="@style/formRegistrationText"
@@ -21,7 +23,9 @@
 
         <EditText
             android:id="@+id/userName"
-            style="@style/formRegistrationEditText" />
+            style="@style/formRegistrationEditText"
+            android:inputType="text"
+            android:maxLength="10" />
 
         <TextView
             style="@style/formRegistrationText"
@@ -30,7 +34,8 @@
         <EditText
             android:id="@+id/password"
             style="@style/formRegistrationEditText"
-            android:password="true" />
+            android:inputType="textPassword"
+            android:maxLength="45" />
 
         <TextView
             style="@style/formRegistrationText"
@@ -39,7 +44,8 @@
         <EditText
             android:id="@+id/password2"
             style="@style/formRegistrationEditText"
-            android:password="true" />
+            android:inputType="textPassword"
+            android:maxLength="45" />
 
         <TextView
             style="@style/formRegistrationText"
@@ -47,7 +53,9 @@
 
         <EditText
             android:id="@+id/email"
-            style="@style/formRegistrationEditText" />
+            style="@style/formRegistrationEditText"
+            android:inputType="textEmailAddress"
+            android:maxLength="45" />
 
         <Button
             android:id="@+id/buttonRegisterUser"

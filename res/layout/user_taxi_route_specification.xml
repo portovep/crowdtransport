@@ -27,6 +27,7 @@
                 android:layout_marginLeft="4sp"
                 android:layout_marginRight="2sp"
                 android:layout_marginTop="5sp"
+                android:contentDescription="@string/cdOriMarker"
                 android:src="@drawable/ic_marker_ori" />
 
             <TextView
@@ -45,6 +46,7 @@
                 android:layout_marginLeft="12sp"
                 android:layout_marginRight="2sp"
                 android:layout_marginTop="5sp"
+                android:contentDescription="@string/cdDestMarker"
                 android:src="@drawable/ic_marker_dest" />
 
             <TextView
@@ -72,8 +74,8 @@
             android:layout_below="@+id/dock"
             android:layout_centerHorizontal="true"
             android:background="@color/dock_map"
-            android:padding="6sp" 
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="6sp" >
 
             <include layout="@layout/distance_label" />
 
@@ -84,6 +86,7 @@
             android:id="@+id/originImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:contentDescription="@string/cdOriMarker"
             android:src="@drawable/marker_ori"
             android:visibility="gone" />
 
@@ -91,6 +94,7 @@
             android:id="@+id/destinationImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:contentDescription="@string/cdDestMarker"
             android:src="@drawable/marker_dest"
             android:visibility="gone" />
     </RelativeLayout>
