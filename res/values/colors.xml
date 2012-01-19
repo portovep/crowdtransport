@@ -8,5 +8,7 @@
     <color name="spinner_text">#ff29549f</color>
     <color name="form_text">#ff29549f</color>
     <color name="dock_map">#65000000</color>
+    <color name="info_label_line">#cccccc</color>
+    <color name="line_info_text">#ff29549f</color>
 
 </resources>

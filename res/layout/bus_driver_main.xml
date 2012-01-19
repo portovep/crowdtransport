@@ -1,36 +1,45 @@
-<?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:fillViewport="true" >
+    android:background="@color/background"
+    android:orientation="vertical" >
 
-    <LinearLayout
+    <include layout="@layout/actionbar" />
+
+    <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:fillViewport="true"
         android:orientation="vertical" >
 
-        <TextView
-            android:id="@+id/profileName"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="35dip"
-            android:gravity="center"
-            android:textStyle="bold" />
+        <LinearLayout style="@style/normal_vertical_panel" >
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="65dip"
-            android:text="@string/busDriverMainInfo" />
+            <TextView
+                android:id="@+id/profileName"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dip"
+                android:gravity="center"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:visibility="gone" />
 
-        <Button
-            android:id="@+id/buttonStart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="35dip"
-            android:text="@string/start" />
-    </LinearLayout>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/bus_main" >
+            </ImageView>
 
-</ScrollView>
+            <TextView
+                style="@style/MainPanelText"
+                android:text="@string/trackingOff" />
+
+            <Button
+                android:id="@+id/buttonStart"
+                style="@style/buttonBusDriver"
+                android:text="@string/start" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

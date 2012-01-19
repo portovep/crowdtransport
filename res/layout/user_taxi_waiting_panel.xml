@@ -4,97 +4,97 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/tvTaxiDriverName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="41dp"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+    <include layout="@layout/actionbar" />
 
-    <LinearLayout
-        android:id="@+id/containerWaiting"
+    <ScrollView
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="130dp"
+        android:layout_height="fill_parent"
+        android:fillViewport="true"
         android:orientation="vertical" >
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/labelWaitingConfirmation" />
-
-        <ProgressBar
-            android:id="@+id/waitingProgressBar"
-            style="@android:style/Widget.ProgressBar.Horizontal"
-            android:layout_width="190dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="40dp" />
-
-        <Button
-            android:id="@+id/bCancelRequest"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="40dp"
-            android:text="@string/bCancelRequest" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/containerResponse"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="130dp"
-        android:orientation="vertical"
-        android:visibility="gone" >
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:background="@android:color/white"
-            android:orientation="vertical" >
+        <LinearLayout style="@style/normal_vertical_panel" >
 
             <TextView
-                android:id="@+id/labelResponse"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:padding="20dp"
-                android:paddingBottom="10dp"
-                android:textColor="@android:color/black" />
+                android:id="@+id/tvTaxiDriverName"
+                style="@style/LabelTaxiDriverName"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <TextView
-                android:id="@+id/labelAddressInfo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:padding="3dp"
-                android:text="@string/labelAddressInfo"
-                android:textColor="@android:color/black"
-                android:textSize="10dp"
-                android:visibility="gone" />
+                android:id="@+id/tvTaxiDriverCarInfo"
+                style="@style/LabelTaxiDriverCarInfo"
+                android:layout_marginBottom="15dp" />
 
-            <TextView
-                android:id="@+id/tvAddressName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:paddingBottom="10dp"              
-                android:textColor="@android:color/black"
-                android:textSize="10dp"
-                android:visibility="gone" />
+            <LinearLayout
+                android:id="@+id/containerWaiting"
+                style="@style/InfoPanel" >
+
+                <View style="@style/InfoLabelLine" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="@string/labelWaitingConfirmation"
+                    android:textColor="@color/line_info_text"
+                    android:textSize="16sp" />
+
+                <ProgressBar
+                    android:id="@+id/waitingProgressBar"
+                    style="@android:style/Widget.ProgressBar.Horizontal"
+                    android:layout_width="190dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginTop="15dp" />
+
+                <View style="@style/InfoLabelLine" />
+
+                <Button
+                    android:id="@+id/bCancelRequest"
+                    style="@style/buttonUserTaxiRequest"
+                    android:text="@string/bCancelRequest" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/containerResponse"
+                style="@style/InfoPanel"
+                android:visibility="gone" >
+
+                <View style="@style/InfoLabelLine" />
+
+                <TextView
+                    android:id="@+id/labelResponse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:textColor="@color/line_info_text"
+                    android:textSize="26sp" />
+
+                <TextView
+                    android:id="@+id/labelAddressInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="3dp"
+                    android:text="@string/labelAddressInfo"
+                    android:textSize="18sp"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tvAddressName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"
+                    android:visibility="gone" />
+
+                <View style="@style/InfoLabelLine" />
+
+                <Button
+                    android:id="@+id/bGoMainMenu"
+                    style="@style/buttonUserTaxiRequest"
+                    android:text="@string/bGoMainMenu" />
+            </LinearLayout>
         </LinearLayout>
-
-        <Button
-            android:id="@+id/bGoMainMenu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="55dp"
-            android:text="@string/bGoMainMenu" />
-    </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

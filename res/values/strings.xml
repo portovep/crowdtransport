@@ -15,8 +15,9 @@
     <string name="dash_taxi">Taxis</string>
     <string name="dash_collaboration">Colabora</string>
     <string name="dash_preferences">Opciones</string>
-    <string name="titleAboutDialog">Información de la aplicación</string>
+    <string name="titleAboutDialog">Información sobre la aplicación</string>
     <string name="versionLabelText">versión</string>
+    <string name="about_text">Esta aplicación ha sido desarrollada como trabajo fin de grado para la titulación de Grado en Ingeniería Informática impartida en la Universidad de Santiago de Compostela.</string>
 
     <!-- Tabs -->
     <string name="tabUser">Usuarios</string>
@@ -88,20 +89,21 @@
 
     <!-- Collaboration status panel -->
     <string name="buttonFinishCollaboration">Finalizar seguimiento</string>
-    <string name="collaborationStatusMessage">Usted está colaborando con otros usuarios enviando información
-   	en tiempo real de la posición del autobús en el que viaja</string>
-    <string name="collaborationInfoCity">Ciudad: </string>
-    <string name="collaborationInfoLine">Línea: </string>
+    <string name="collaborationStatusMessage">Estás colaborando con otros usuarios enviando información
+   	en tiempo real de la posición del autobús en el que viajas</string>
+    <string name="collaborationInfoCity">Ciudad</string>
+    <string name="collaborationInfoLine">Línea</string>
 
     <!-- Bus driver main -->
     <string name="start">Empezar</string>
-    <string name="busDriverMainInfo">"El modo de seguimiento está deshabilitado."</string>
+    <string name="trackingOff">"El modo de seguimiento está deshabilitado."</string>
     <!-- Bus driver line selection -->
     <string name="busDriverMessage">Elija la línea que va a recorrer 
         para poder empezar a geoposicionar el autobús que conduce.</string>
     <!-- Bus driver information panel -->
     <string name="busDriverStatusMessage">Está enviando información que ayuda a otros
-         usuarios a localizar en un mapa el autobús que conduce. Gracias.</string>
+         usuarios a localizar en un mapa el autobús que conduce.</string>
+    <string name="thanksLabel">Gracias!</string>
 
     <!-- Taxi driver main -->
     <string name="taxiDriverMainInfo">Usted está libre en estos momentos y quiere
@@ -110,7 +112,8 @@
     <!-- Taxi driver information panel -->
     <string name="taxiDriverStatusMessage">El modo de seguimiento está activado, por lo que su
         posición será mostrada a los usuarios sobre un mapa y éstos podrán enviarle solicitudes de servicio.</string>
-    <string name="incomingRequest">Solicitudes recibidas:</string>
+    <string name="incomingRequest">Solicitudes recibidas</string>
+    <string name="defaultNumberIRequest">0</string>
     <string name="serviceRequestsNotFound">En estos momentos no tiene solicitudes de servicio activas</string>
     <string name="chooseServiceRequest">Elija una solicitud</string>
     <string name="unknownLocation">Localización desconocida</string>
@@ -128,13 +131,13 @@
     <string name="bServiceCompleted">Solicitud atendida</string>
 
     <!-- User taxi waiting panel -->
-    <string name="labelWaitingConfirmation">Esperando confirmación del taxista..</string>
+    <string name="labelWaitingConfirmation">Esperando la confirmación del taxista..</string>
     <string name="bCancelRequest">Cancelar solicitud</string>
     <string name="bGoMainMenu">Volver al menú</string>
     <string name="requestAccepted">Solicitud aceptada!</string>
     <string name="requestCanceled">Solicitud cancelada</string>
-    <string name="requestNoAccepted">Solicitud no aceptada.</string>
-    <string name="requestExpired">La solicitud ha caducado.</string>
+    <string name="requestNoAccepted">Solicitud no aceptada</string>
+    <string name="requestExpired">La solicitud ha caducado</string>
     <string name="requestAcceptedMessage">Su solicitud de servicio ha sido aceptada</string>
     <string name="requestCanceledMessage">Lo sentimos. Su solicitud de servicio no ha sido aceptada</string>
     <string name="requestExpiredMessage">Lo sentimos. Su solicitud de servicio ha caducado</string>
@@ -151,8 +154,6 @@
     <string name="differentPasswords">Las contraseñas no son iguales</string>
     <string name="correctLogin">Autenticación correcta</string>
     <string name="failLoginInvalidData">ID de usuario o contraseña incorrectas</string>
-    <string name="processingUserAuthentication">Comprobando credenciales...</string>
-    <string name="processingUserRegistration">Registrando usuario...</string>
     <string name="correctRegister">Usuario registrado correctamente</string>
     <string name="failRegister">Ha ocurrido un error en el proceso de registro\nVuelva a intentarlo</string>
     <string name="failRegisterInvalidUserName">Ya existe un usuario con ese nombre\nElija otro nombre de usuario</string>
@@ -178,13 +179,15 @@
     <string name="failAcceptingRequest">Error al intentar aceptar la solicitud, vuelva a intentarlo.</string>
 
     <!-- Progress dialogs -->
-    <string name="loadingCities">Obteniendo información de las ciudades disponibles..</string>
-    <string name="loadingLines">Obteniendo información de las líneas disponibles..</string>
-    <string name="obtainingUserLocation">Obteniendo su ubicación..</string>
-    <string name="loadingRequests">Obteniendo sus solicitudes de servicio..</string>
-    <string name="sendingRequest">Enviando solicitud de servicio..</string>
-    <string name="acceptingRequest">Enviando aceptación..</string>
-    <string name="cancelRequestInProgress">Cancelando solicitud..</string>
+    <string name="processingUserAuthentication">Comprobando credenciales…</string>
+    <string name="processingUserRegistration">Registrando usuario…</string>
+    <string name="loadingCities">Obteniendo información de las ciudades disponibles…</string>
+    <string name="loadingLines">Obteniendo información de las líneas disponibles…</string>
+    <string name="obtainingUserLocation">Obteniendo su ubicación…</string>
+    <string name="loadingRequests">Obteniendo sus solicitudes de servicio…</string>
+    <string name="sendingRequest">Enviando solicitud de servicio…</string>
+    <string name="acceptingRequest">Enviando aceptación…</string>
+    <string name="cancelRequestInProgress">Cancelando solicitud…</string>
 
     <!-- Notifications -->
     <string name="trackingServiceStarted">El modo de seguimiento ha sido activado</string>

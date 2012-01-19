@@ -1,40 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <com.google.android.maps.MapView
-        style="@style/mapApiKey"
-        android:id="@+id/mapTaxiRoute"
-        android:layout_width="272dp"
-        android:layout_height="0dip"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="0.07"
-        android:clickable="true" >
-    </com.google.android.maps.MapView>
+    <include layout="@layout/actionbar" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:text="@string/timeSinceAcceptation"
-        android:textStyle="bold" />
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:fillViewport="true"
+        android:orientation="vertical" >
 
-    <Chronometer
-        android:id="@+id/chrono"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="5dp" />
+        <LinearLayout style="@style/normal_vertical_panel" >
 
-    <Button
-        android:id="@+id/bPickedUp"
-        android:layout_width="114dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:text="@string/bPickedUp" />
+            <com.google.android.maps.MapView
+                android:id="@+id/mapTaxiRoute"
+                style="@style/mapApiKey"
+                android:layout_width="fill_parent"
+                android:layout_height="250dp"
+                android:layout_margin="20dp"
+                android:clickable="true" >
+            </com.google.android.maps.MapView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/timeSinceAcceptation"
+                android:textStyle="bold" />
+
+            <Chronometer
+                android:id="@+id/chrono"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/spinner_text"
+                android:textSize="34sp" />
+
+            <Button
+                android:id="@+id/bPickedUp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:layout_marginTop="20dp"
+                android:text="@string/bPickedUp" />
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

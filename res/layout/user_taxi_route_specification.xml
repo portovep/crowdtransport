@@ -27,7 +27,7 @@
                 android:layout_marginLeft="4sp"
                 android:layout_marginRight="2sp"
                 android:layout_marginTop="5sp"
-                android:src="@drawable/marker_ori" />
+                android:src="@drawable/ic_marker_ori" />
 
             <TextView
                 android:id="@+id/tv"
@@ -45,7 +45,7 @@
                 android:layout_marginLeft="12sp"
                 android:layout_marginRight="2sp"
                 android:layout_marginTop="5sp"
-                android:src="@drawable/marker_dest" />
+                android:src="@drawable/ic_marker_dest" />
 
             <TextView
                 android:layout_width="wrap_content"

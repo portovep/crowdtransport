@@ -23,9 +23,9 @@
 
         <EditText
             android:id="@+id/password"
+            style="@style/formPasswordEt"
             android:layout_width="180dp"
-            android:layout_height="wrap_content"
-            android:password="true" />
+            android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/buttonLogin"

@@ -13,7 +13,9 @@
 
         <EditText
             android:id="@+id/fullName"
-            style="@style/formRegistrationEditText" />
+            style="@style/formRegistrationEditText"
+            android:inputType="textCapWords"
+            android:maxLength="45" />
 
         <TextView
             style="@style/formRegistrationText"
@@ -22,7 +24,8 @@
         <EditText
             android:id="@+id/dni"
             style="@style/formRegistrationEditText"
-            android:inputType="textCapCharacters"/>
+            android:inputType="textPersonName"
+            android:maxLength="9" />
 
         <TextView
             style="@style/formRegistrationText"
@@ -31,7 +34,8 @@
         <EditText
             android:id="@+id/password"
             style="@style/formRegistrationEditText"
-            android:password="true" />
+            android:inputType="textPassword"
+            android:maxLength="45" />
 
         <TextView
             style="@style/formRegistrationText"
@@ -40,7 +44,8 @@
         <EditText
             android:id="@+id/password2"
             style="@style/formRegistrationEditText"
-            android:password="true" />
+            android:inputType="textPassword"
+            android:maxLength="45" />
 
         <TextView
             style="@style/formRegistrationText"
@@ -48,7 +53,9 @@
 
         <EditText
             android:id="@+id/email"
-            style="@style/formRegistrationEditText" />
+            style="@style/formRegistrationEditText"
+            android:inputType="textEmailAddress"
+            android:maxLength="45" />
 
         <TextView
             style="@style/formRegistrationText"
@@ -56,7 +63,9 @@
 
         <EditText
             android:id="@+id/cif"
-            style="@style/formRegistrationEditText" />
+            style="@style/formRegistrationEditText"
+            android:inputType="textCapCharacters"
+            android:maxLength="9" />
 
         <TextView
             style="@style/formRegistrationText"
@@ -64,7 +73,9 @@
 
         <EditText
             android:id="@+id/authCode"
-            style="@style/formRegistrationEditText" />
+            style="@style/formRegistrationEditText"
+            android:inputType="text"
+            android:maxLength="20" />
 
         <Button
             android:id="@+id/buttonRegisterBus"

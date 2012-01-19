@@ -83,13 +83,81 @@
         <item name="android:textSize">16dp</item>
     </style>
 
+    <style name="MainPanelText">
+        <item name="android:layout_margin">15dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textColor">@color/panel_normal_text</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="ThanksText">
+        <item name="android:layout_margin">10dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textColor">@color/panel_normal_text</item>
+        <item name="android:textSize">16dp</item>
+    </style>
+
+    <style name="InfoPanel">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:layout_marginBottom">5dp</item>
+    </style>
+
+    <style name="InfoLabelLine">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@color/info_label_line</item>
+        <item name="android:paddingTop">20dp</item>
+        <item name="android:layout_marginRight">30dp</item>
+        <item name="android:layout_marginLeft">30dp</item>
+        <item name="android:layout_marginTop">15dp</item>
+        <item name="android:layout_marginBottom">15dp</item>
+    </style>
+
+    <style name="InfoText">
+        <item name="android:textColor">@color/line_info_text</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+
+    <style name="LabelTaxiDriverName">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">35dp</item>
+        <item name="android:textColor">@color/form_text</item>
+    </style>
+
+    <style name="LabelTaxiDriverCarInfo">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">10dp</item>
+    </style>
+
     <style name="SpinnerText">
         <item name="android:textColor">@color/spinner_text</item>
-        <item name="android:textSize">18dp</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginBottom">3dp</item>
         <item name="android:layout_marginTop">20dp</item>
+    </style>
+
+    <style name="NormalFormText">
+        <item name="android:textColor">@color/spinner_text</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">3dp</item>
     </style>
 
     <style name="buttonSpinners">
@@ -99,6 +167,42 @@
         <item name="android:layout_gravity">center</item>
         <item name="android:layout_marginTop">45dp</item>
         <item name="android:textSize">18dp</item>
+    </style>
+
+    <style name="buttonInfoPanel">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_marginTop">35dp</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="buttonUserTaxiRequest">
+        <item name="android:layout_width">150dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">35dp</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="buttonBusDriver">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_marginTop">25dp</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:padding">25dp</item>
+    </style>
+
+    <style name="buttonTaxiDriver">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_marginTop">25dp</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:padding">25dp</item>
     </style>
 
     <style name="buttonLogin">
@@ -181,6 +285,12 @@
 
     <style name="formDNIEt">
         <item name="android:inputType">textCapCharacters</item>
+        <item name="android:maxLength">9</item>
+    </style>
+
+    <style name="formPasswordEt">
+        <item name="android:inputType">textPassword</item>
+        <item name="android:maxLength">45</item>
     </style>
 
     <style name="formRegistrationText">

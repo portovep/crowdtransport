@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="@color/background"
     android:orientation="vertical"
     android:padding="5dp" >
 
@@ -9,18 +10,17 @@
         android:id="@+id/adapterlocationInfo"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Calle rosalía" >
+        android:textColor="@color/line_info_text"
+        android:textSize="24sp" >
     </TextView>
 
     <TextView
         android:id="@+id/adapterlocationComment"
         android:layout_width="fill_parent"
-        android:textStyle="italic"
         android:layout_height="wrap_content"
         android:layout_marginTop="3dp"
-        android:text="al lado del semáforo"
-        android:textSize="9dp" >
-
+        android:textColor="@android:color/black"
+        android:textSize="16sp" >
     </TextView>
 
 </LinearLayout>

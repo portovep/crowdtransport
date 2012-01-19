@@ -4,62 +4,65 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/tvTaxiDriverName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="41dp"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+    <include layout="@layout/actionbar" />
 
-    <TextView
-        android:id="@+id/tvTaxiDriverCarInfo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp" />
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:fillViewport="true"
+        android:orientation="vertical" >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="50dp"
-        android:text="@string/addclarificationCommnet" />
+        <LinearLayout
+            style="@style/normal_vertical_panel"
+            android:focusable="true"
+            android:focusableInTouchMode="true" >
 
-    <EditText
-        android:id="@+id/etClarificationComment"
-        android:layout_width="198dp"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/textView3"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_toRightOf="@+id/tvTaxiDriverName" >
+            <TextView
+                android:id="@+id/tvTaxiDriverName"
+                style="@style/LabelTaxiDriverName"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
-        <requestFocus />
-    </EditText>
+            <TextView
+                android:id="@+id/tvTaxiDriverCarInfo"
+                style="@style/LabelTaxiDriverCarInfo" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:text="@string/requestLifeTime" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="35dp"
+                android:orientation="vertical" >
 
-    <Spinner
-        android:id="@+id/spRequestLifeTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp" />
+                <TextView
+                    style="@style/NormalFormText"
+                    android:text="@string/addclarificationCommnet" />
 
-    <Button
-        android:id="@+id/bConfirmRequest"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30dp"
-        android:text="@string/confirm" />
+                <EditText
+                    android:id="@+id/etClarificationComment"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:maxLines="1"
+                    android:inputType="textShortMessage" />
+
+                <TextView
+                    style="@style/NormalFormText"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/requestLifeTime" />
+
+                <Spinner
+                    android:id="@+id/spRequestLifeTime"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/bConfirmRequest"
+                style="@style/buttonUserTaxiRequest"
+                android:text="@string/confirm" />
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

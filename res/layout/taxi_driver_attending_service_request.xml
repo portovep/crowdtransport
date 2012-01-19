@@ -1,24 +1,36 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/background"
     android:orientation="vertical" >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="150dp"
-        android:text="@string/messageAttendingRequest" />
+    <include layout="@layout/actionbar" />
 
-    <Button
-        android:id="@+id/bServiceCompleted"
-        android:layout_width="114dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30dp"
-        android:text="@string/bServiceCompleted" />
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:fillViewport="true"
+        android:orientation="vertical" >
+
+        <LinearLayout style="@style/normal_vertical_panel" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="60dp"
+                android:src="@drawable/taxi_attending_request" />
+
+            <TextView
+                style="@style/MainPanelText"
+                android:layout_marginTop="20dp"
+                android:text="@string/messageAttendingRequest" />
+
+            <Button
+                android:id="@+id/bServiceCompleted"
+                style="@style/buttonTaxiDriver"
+                android:text="@string/bServiceCompleted" />
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>
