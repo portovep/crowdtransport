@@ -120,6 +120,7 @@ public class TaxiDriverInformationPanel extends Activity{
 	    if(requestCode == TTS_CHECK_CODE) {
 	        if(resultCode != TextToSpeech.Engine.CHECK_VOICE_DATA_PASS) {
 	        	Log.w("TTS", "Missing TTS data");
+	        	Tools.buildToast(this, getString(R.string.ttsRequirement), Gravity.CENTER, Toast.LENGTH_LONG).show();
 	            // missing TTS data, install it
 	            Intent installIntent = new Intent();
 	            installIntent.setAction(TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA);
