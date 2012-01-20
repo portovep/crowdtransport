@@ -55,6 +55,7 @@
     <!-- Bus location map -->
     <string name="whenReceived">Recibido</string>
     <string name="numberCollaborators">Nº colaboradores</string>
+    <string name="buttonShowMap">Ver mapa</string>
 
     <!-- Taxi route specification -->
     <string name="origin">Origen</string>
@@ -178,6 +179,8 @@
     <string name="sendingRequest">Enviando solicitud de servicio…</string>
     <string name="acceptingRequest">Enviando aceptación…</string>
     <string name="cancelRequestInProgress">Cancelando solicitud…</string>
+    <string name="searchingTaxiLocations">Buscando taxistas…</string>
+    <string name="searchingBusLocations">Buscando autobuses…</string>
 
     <!-- Notifications -->
     <string name="trackingServiceStarted">El modo de seguimiento ha sido activado</string>

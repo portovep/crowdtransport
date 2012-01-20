@@ -24,6 +24,7 @@ import com.google.gson.reflect.TypeToken;
 
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
@@ -41,6 +42,7 @@ public class UserBusLocationMap extends MapActivity {
 	private Timer updaterTimer;
 	
 	private AlertDialog alertDialogLocationNotFound;
+	private ProgressDialog pdSearchingBusLocations;
 	
 	private BusItemizedOverlay busItemizedOverlays;
 	
@@ -113,6 +115,12 @@ public class UserBusLocationMap extends MapActivity {
         // setup custom overlays
     	busItemizedOverlays = new BusItemizedOverlay(drawableBusMarker, this);    
     	mapOverlays.add(busItemizedOverlays);
+    	
+        // show a progress dialog while data is retrieved for the first time
+        pdSearchingBusLocations = new ProgressDialog(this);
+        pdSearchingBusLocations.setMessage(getString(R.string.searchingBusLocations));
+        pdSearchingBusLocations.setCancelable(false);
+        pdSearchingBusLocations.show();
 	}
 	
 	@Override
@@ -128,6 +136,9 @@ public class UserBusLocationMap extends MapActivity {
 		// dismiss alert dialog if it's needed
 		if (this.alertDialogLocationNotFound != null)
 			this.alertDialogLocationNotFound.cancel();
+		// cancel progressDialog
+		if (this.pdSearchingBusLocations.isShowing())
+			this.pdSearchingBusLocations.cancel();
 		stopUpdater();
 		super.onPause();
 	}
@@ -182,8 +193,8 @@ public class UserBusLocationMap extends MapActivity {
 				if (rb.getResultCode() == HttpURLConnection.HTTP_NOT_ACCEPTABLE)
 					// if response code = request not acceptable
 					errorMessage = getString(R.string.busLocationsNotFound);
-				
-		    	goPreviousActivity(errorMessage);
+				if (!isFinishing())
+					goPreviousActivity(errorMessage);
 			}
 	    }
 	}
@@ -201,7 +212,12 @@ public class UserBusLocationMap extends MapActivity {
 	
 	private Handler handler = new Handler() {
         @Override
-        public void handleMessage(Message msg) {       		
+        public void handleMessage(Message msg) {
+        	
+        	if(pdSearchingBusLocations.isShowing())
+            	// cancel progress dialog
+        		pdSearchingBusLocations.cancel();
+        	
 			showUpdatedLocation(updatedLocation);
         }
 	};
@@ -210,7 +226,7 @@ public class UserBusLocationMap extends MapActivity {
     	// cancel timer
     	updaterTimer.cancel();
 		// remove pending messages
-		handler.removeCallbacksAndMessages(null);
+		handler.removeMessages(0);
 	}
 	
 	private void goPreviousActivity(String message) {
@@ -219,16 +235,26 @@ public class UserBusLocationMap extends MapActivity {
 	    	AlertDialog.Builder builder = new AlertDialog.Builder(this);
 	    	builder.setMessage(message)
 	    	       .setCancelable(false)
-	    	       .setPositiveButton(getString(R.string.buttonBack), new DialogInterface.OnClickListener() {
+	    	       .setNegativeButton(getString(R.string.buttonBack), new DialogInterface.OnClickListener() {
 	    	           public void onClick(DialogInterface dialog, int id) {
 	    	        	    dialog.dismiss();
 	    	       			// finish activity and go previous activity
 	    	       			UserBusLocationMap.super.onBackPressed();
 	    	           }
 	    	       });
-	    	// creating the alert dialog
+	    	       
+	    	if(!flagFirstLaunch) {
+	    		// allow the user to view the map
+		    	builder.setPositiveButton(getString(R.string.buttonShowMap), new DialogInterface.OnClickListener() {
+			           public void onClick(DialogInterface dialog, int id) {
+			        	    dialog.dismiss();
+			           }
+	    	       });
+	    	}
+	    	
 	    	alertDialogLocationNotFound = builder.create();
 		}
+		
 		if(!alertDialogLocationNotFound.isShowing()) {
 			alertDialogLocationNotFound.setMessage(message);
 	    	alertDialogLocationNotFound.show();

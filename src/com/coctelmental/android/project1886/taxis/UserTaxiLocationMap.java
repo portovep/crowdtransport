@@ -25,6 +25,7 @@ import com.google.android.maps.OverlayItem;
 import com.google.gson.reflect.TypeToken;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
@@ -41,6 +42,7 @@ public class UserTaxiLocationMap extends MapActivity {
 	private Timer updaterTimer;
 	
 	private AlertDialog alertDialogLocationNotFound;
+	private ProgressDialog pdSearchingTaxiLocations;
 	
 	private TaxiItemizedOverlay taxiItemizedOverlays;
 	
@@ -104,6 +106,12 @@ public class UserTaxiLocationMap extends MapActivity {
 		taxiItemizedOverlays = new TaxiItemizedOverlay(drawableTaxiMarker, this);
 	    // add our custom overlay to the map
         mapOverlays.add(taxiItemizedOverlays);
+        
+        // show a progress dialog while data is retrieved for the first time
+        pdSearchingTaxiLocations = new ProgressDialog(this);
+        pdSearchingTaxiLocations.setMessage(getString(R.string.searchingTaxiLocations));
+        pdSearchingTaxiLocations.setCancelable(false);
+        pdSearchingTaxiLocations.show();
 	}
 	
 	@Override
@@ -119,6 +127,9 @@ public class UserTaxiLocationMap extends MapActivity {
 		// dismiss alert dialog if it's needed
 		if (this.alertDialogLocationNotFound != null)
 			this.alertDialogLocationNotFound.cancel();
+		// cancel progressDialog
+		if (this.pdSearchingTaxiLocations.isShowing())
+			this.pdSearchingTaxiLocations.cancel();
 		stopUpdater();
 		super.onPause();
 	}
@@ -179,7 +190,8 @@ public class UserTaxiLocationMap extends MapActivity {
 					// if response code = request not acceptable
 					errorMessage = getString(R.string.taxiLocationsNotFound);			
 		    	
-		    	goPreviousActivity(errorMessage);
+				if (!isFinishing())
+					goPreviousActivity(errorMessage);
 			}
 	    }
 	}
@@ -197,7 +209,12 @@ public class UserTaxiLocationMap extends MapActivity {
 	
 	private Handler handler = new Handler(){
         @Override
-        public void handleMessage(Message msg) {       		
+        public void handleMessage(Message msg) {
+        	
+        	if(pdSearchingTaxiLocations.isShowing())
+            	// cancel progress dialog
+        		pdSearchingTaxiLocations.cancel();
+        	
 			showUpdatedLocation(updatedLocation);
         }
 	};
@@ -206,7 +223,7 @@ public class UserTaxiLocationMap extends MapActivity {
     	// cancel timer
     	updaterTimer.cancel();
 		// remove pending messages
-		handler.removeCallbacksAndMessages(null);
+    	handler.removeMessages(0);
 	}
 	
 	private void goPreviousActivity(String message){
