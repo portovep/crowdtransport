@@ -305,8 +305,10 @@ public class UserTaxiRouteSpecification extends MapActivity {
 				timer.cancel();
 				// remove pending messages
 				handler.removeMessages(0);
-            	// hide progress dialog
-            	pdLookingLocation.dismiss();
+				if (!isFinishing()) {
+	            	// hide progress dialog
+	            	pdLookingLocation.dismiss();
+				}
         		
 				Location userLocation = userLocationHelper.getBestLocation();
 				setupOverlays(userLocation);
@@ -317,15 +319,22 @@ public class UserTaxiRouteSpecification extends MapActivity {
 				timer.cancel();
 				// remove pending messages
 				handler.removeMessages(0);
-            	// hide progress dialog
-            	pdLookingLocation.dismiss();
+				if (!isFinishing()) {
+	            	// hide progress dialog
+	            	pdLookingLocation.dismiss();
+				}
+
             	// get cause
+				String cause = "";
             	if (!userLocationHelper.areProvidersEnabled())
             		// providers have been deactivated
-            		showBackAlertDialog(getString(R.string.failLocationProviders));
+            		cause = getString(R.string.failLocationProviders);
             	else
             		// no location found
-            		showBackAlertDialog(getString(R.string.failUserLocationNotFound));
+            		cause = getString(R.string.failUserLocationNotFound);
+            	
+            	if (!isFinishing())
+            		showBackAlertDialog(cause);
 			}				
         }
 	};
