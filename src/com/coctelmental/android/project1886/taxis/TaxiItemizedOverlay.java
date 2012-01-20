@@ -92,12 +92,16 @@ public class TaxiItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 	@Override
 	protected boolean onTap(int index) {
 		OverlayItem item = overlayList.get(index);
-		String TaxiDriverId = item.getTitle();
+		String taxiDriverId = item.getTitle();
+		
+		// set selected taxi driver ID
+		ServiceRequestsHelper.getServiceRequest()
+			    .setTaxiDriverID(taxiDriverId);
 
 		// retrieve taxi driver UUID from overlay snippet text
 		String selectedTaxiDriverUUID = item.getSnippet();
-		ServiceRequestsHelper.getServiceRequest().setTaxiDriverUUID(
-				selectedTaxiDriverUUID);
+		ServiceRequestsHelper.getServiceRequest()
+				.setTaxiDriverUUID(selectedTaxiDriverUUID);
 
 		// show overlay dialog
 		overlayDialog.show();
@@ -108,7 +112,7 @@ public class TaxiItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 
 		taxiDriverInfoAsyncTask = new TaxiDriverInfoAsyncTask();
 		// launch async task adding taxi driver id as param
-		taxiDriverInfoAsyncTask.execute(TaxiDriverId);
+		taxiDriverInfoAsyncTask.execute(taxiDriverId);
 		return true;
 	}
 
@@ -154,9 +158,6 @@ public class TaxiItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 				TaxiDriver taxiDriver = JsonHandler.fromJson(jsonUser,
 						TaxiDriver.class);
 
-				// set selected taxi driver ID
-				ServiceRequestsHelper.getServiceRequest().setTaxiDriverID(
-						taxiDriver.getDni());
 				// set selected taxi driver name
 				ServiceRequestsHelper.getServiceRequest()
 						.setTaxiDriverFullName(taxiDriver.getFullName());
