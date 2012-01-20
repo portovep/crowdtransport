@@ -38,16 +38,21 @@ public class C2DMRegistrationReceiver extends BroadcastReceiver{
 	private void handleRegistration(Context context, Intent intent) {
 		 String registrationID = intent.getStringExtra(EXTRA_REGISTRATION_ID);
 		 
-		 if (intent.getStringExtra(EXTRA_ERROR) != null)
-			// Registration failed, should try again later.
-			 Log.e("C2DM", "Error in C2DM registration process: " + intent.getStringExtra(EXTRA_ERROR));
+		 if (intent.getStringExtra(EXTRA_ERROR) != null) {
+			 String errorCode = intent.getStringExtra(EXTRA_ERROR);
+			 // Registration failed, should try again later.
+			 Log.e("C2DM", "Error in C2DM registration process: " + errorCode);
+			 if (errorCode.equals("SERVICE_NOT_AVAILABLE"))
+				 // try again
+				 register(context);
+		 }
 		 else if (intent.getStringExtra(EXTRA_UNREGISTERED) != null)
 			 // unregistration done, new messages from the authorized sender will be rejected
 			 Log.d("C2DM", "Device succesful unregistered");
 		 else if (registrationID != null) {
 			 Log.d("C2DM", "Device succesful registered");
 			 // register device in webservice
-			 new SendRegistrationIDTask().execute(registrationID);
+			 new SendRegistrationIDTask(registrationID).execute(0);
 		 }
 
 	}
@@ -71,21 +76,40 @@ public class C2DMRegistrationReceiver extends BroadcastReceiver{
         new RemoveDeviceInfoTask().execute();
     }
     
-	private class SendRegistrationIDTask extends AsyncTask<String, Void, Integer> {
+	private class SendRegistrationIDTask extends AsyncTask<Integer, Void, Integer> {
 	
-	    protected Integer doInBackground(String... params) {
-	    	// send device info to server
-	        return ServiceRequestsHelper.sendRegistrationID(params[0]);
+		private String registrationID;
+		private Integer attempts;
+		
+		public SendRegistrationIDTask(String registrationID) {
+			this.registrationID = registrationID;
+		}
+		
+	    protected Integer doInBackground(Integer... params) {
+	    	// save number of attempts
+	    	attempts = params[0];
+		    return ServiceRequestsHelper.sendRegistrationID(registrationID);	    	
 	    }
 
 	    protected void onPostExecute(Integer result) {
-	        // check result
+	        // check result	    	
 	        if(result == HttpURLConnection.HTTP_OK) {
 	        	Log.w("C2DM", "Succesful device registration in webservice.");
 	        }				
 	        else {
-	        	Log.e("C2DM", "Error trying device registration in webservice." +
-	        			"Error code -> (" + result +")");
+	        	// check attempts
+	        	if (attempts != null && attempts < 6) {
+		        	Log.e("C2DM", "Error trying device registration in webservice."
+		        			+ "Error code -> (" + result +") "
+		        			+ "Attempt -> " + attempts);
+		        	// try again
+		        	new SendRegistrationIDTask(this.registrationID).execute(attempts+1);
+		        	Log.e("C2DM", "Trying device registration again");
+	        	}
+	        	else {
+		        	Log.e("C2DM", "Error trying device registration in webservice after "
+		        			+ attempts + " attempts.");
+	        	}
 	        }
 	    }
 	}
