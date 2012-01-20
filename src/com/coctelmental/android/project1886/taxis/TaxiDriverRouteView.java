@@ -58,11 +58,18 @@ public class TaxiDriverRouteView extends MapActivity {
 		super.onCreate(savedInstance);
 		setContentView(R.layout.taxi_driver_route_view);
 		
+        // check user preferences
+	    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+	    boolean satellite = sp.getBoolean(Preferences.PREF_TAXI_MAP_SATELLITE,
+	    		Preferences.DEFAULT_TAXI_MAP_SATELLITE);
+	    boolean zoomControls = sp.getBoolean(Preferences.PREF_TAXI_MAP_ZOOM_CONTROL,
+	    		Preferences.DEFAULT_TAXI_MAP_ZOOM_CONTROL);
+		
         // setup map configuration
 	    MapView mapView = (MapView) findViewById(R.id.mapTaxiRoute);	    
-	    mapView.setBuiltInZoomControls(true);
         mapView.setEnabled(true);
-        mapView.setSatellite(false);
+	    mapView.setBuiltInZoomControls(zoomControls);
+        mapView.setSatellite(satellite);
         mapView.setTraffic(false);	
         mapView.setStreetView(false);
         
@@ -187,7 +194,7 @@ public class TaxiDriverRouteView extends MapActivity {
 	private void updateDistanceLabel(double distanceInMeters) {		
 		// check user preferences
 		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-		String units = sp.getString(Preferences.PREF_DISTANCE_UNITS, Preferences.DEFAULT_DISTANCE_UNITS);
+		String units = sp.getString(Preferences.PREF_TAXI_DISTANCE_UNITS, Preferences.DEFAULT_TAXI_DISTANCE_UNITS);
 		
 		if (units.equals("km"))
 			// parse to kilometers

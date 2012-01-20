@@ -9,7 +9,7 @@
     <string name="option_menu_exit">Salir</string>
     <string name="option_menu_preferences">Opciones</string>
     <string name="option_menu_collaboratorPanel">Panel de colaboración</string>
-    <string name="option_menu_finishTrackingService">Finalizar seguimiento</string>
+    <string name="option_menu_finishTrackingService">Finalizar</string>
     <string name="dash_bus">Autobuses</string>
     <string name="dash_taxi">Taxis</string>
     <string name="dash_collaboration">Colabora</string>
@@ -111,7 +111,7 @@
     <string name="unknownLocation">Localización desconocida</string>
     <!-- Taxi driver route view -->
     <string name="labelYourLocation">Tú</string>
-    <string name="bAcceptRequest">Aceptar solicitud</string>
+    <string name="bAcceptRequest">Aceptar</string>
     <string name="taxiDriverAcceptRequest">Ha aceptado la solicitud de servicio!</string>
 
     <!-- Taxi driver user location reminder -->
@@ -192,7 +192,14 @@
     <string name="clarificationCommentTTS">"Aclaración del usuario: "</string>
 
     <!-- Images textual description for accessibility -->
-
+    <string name="cdAppIcon">Icono de la aplicación</string>
+    <string name="cdAboutButton">Botón para visualizar información sobre la aplicación</string>
+    <string name="cdBusImage">Imagen de un autobús</string>
+    <string name="cdTaxiImage">Imagen de un taxi</string>
+    <string name="cdOriMarker">Marcador de punto de recogida</string>
+    <string name="cdDestMarker">Marcador de punto de destino</string>
+    <string name="cdUserLocationMarker">Marcador de posición de usuario</string>
+    <string name="cdRoadImage">Imágen de una carretera</string>
 
     <!-- Preferences -->
     <!-- GENERAL -->
@@ -201,7 +208,7 @@
     <string name="prefSummaryWelcomeMessage">Personalizar mensaje</string>
     <string name="prefRemoveCustomMessage">Borrar mensaje personalizado</string>
     <string name="prefSummaryRemoveCustomMessage">Mostrar el mensaje por defecto</string>
-    <string name="customWelcomeMsgRemoved">Mensaje personalziado borrado</string>
+    <string name="customWelcomeMsgRemoved">Mensaje personalizado borrado</string>
     <string name="prefUnits">Unidades</string>
     <string name="prefSummaryUnits">Unidades en las que se motrará la distancia</string>
     <string name="kilometers">kilómetros</string>
@@ -226,13 +233,14 @@
     <string name="prefSummaryNotificationSound">Habilitar notificación sonora</string>
     <string name="prefNotificationVibration">Vibración</string>
     <string name="prefSummaryNotificationVibration">Vibrar cuando se reciba una notificación</string>
-    <string name="cdAppIcon">Icono de la aplicación</string>
-    <string name="cdAboutButton">Botón para visualizar información sobre la aplicación</string>
-    <string name="cdBusImage">Imagen de un autobús</string>
-    <string name="cdTaxiImage">Imagen de un taxi</string>
-    <string name="cdOriMarker">Marcador de punto de recogida</string>
-    <string name="cdDestMarker">Marcador de punto de destino</string>
-    <string name="cdUserLocationMarker">Marcador de posición de usuario</string>
-    <string name="cdRoadImage">Imágen de una carretera</string>
+
+    <!-- TAXI DRIVER -->
+    <string name="categoryNotifications">Configuración de avisos</string>
+    <string name="prefNewRequestMessage">Mensaje de notificación</string>
+    <string name="prefSummaryNewRequestMessage">Personalizar mensaje de aviso de solicitud entrante</string>
+    <string name="prefPlayDestination">Lugar de destino</string>
+    <string name="prefSummaryPlayDestination">Reproducir lugar de destino</string>
+    <string name="prefPlayComment">Comentario del usuario</string>
+    <string name="prefSummaryPlayComment">Reproducir comentario de aclaración</string>
 
 </resources>

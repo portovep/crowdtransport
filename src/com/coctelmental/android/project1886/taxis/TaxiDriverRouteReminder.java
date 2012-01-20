@@ -3,6 +3,7 @@ package com.coctelmental.android.project1886.taxis;
 import com.coctelmental.android.project1886.R;
 import com.coctelmental.android.project1886.common.GeoPointInfo;
 import com.coctelmental.android.project1886.common.ServiceRequestInfo;
+import com.coctelmental.android.project1886.main.Preferences;
 import com.coctelmental.android.project1886.util.JsonHandler;
 import com.coctelmental.android.project1886.util.Tools;
 import com.google.android.maps.GeoPoint;
@@ -12,7 +13,9 @@ import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.OverlayItem;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -37,10 +40,18 @@ public class TaxiDriverRouteReminder extends MapActivity {
 		super.onCreate(savedInstance);
 		setContentView(R.layout.taxi_driver_route_reminder);
 		
+        // check user preferences
+	    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+	    boolean satellite = sp.getBoolean(Preferences.PREF_TAXI_MAP_SATELLITE,
+	    		Preferences.DEFAULT_TAXI_MAP_SATELLITE);
+	    boolean zoomControls = sp.getBoolean(Preferences.PREF_TAXI_MAP_ZOOM_CONTROL,
+	    		Preferences.DEFAULT_TAXI_MAP_ZOOM_CONTROL);
+		
         // setup map configuration
 	    MapView mapView = (MapView) findViewById(R.id.mapTaxiRoute);	    
         mapView.setEnabled(true);
-        mapView.setSatellite(false);
+        mapView.setBuiltInZoomControls(zoomControls);
+        mapView.setSatellite(satellite);
         mapView.setTraffic(false);	
         mapView.setStreetView(false);
         

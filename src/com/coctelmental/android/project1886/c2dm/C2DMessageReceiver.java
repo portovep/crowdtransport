@@ -1,6 +1,7 @@
 package com.coctelmental.android.project1886.c2dm;
 
 import com.coctelmental.android.project1886.R;
+import com.coctelmental.android.project1886.main.Preferences;
 import com.coctelmental.android.project1886.taxis.TaxiDriverInformationPanel;
 import com.coctelmental.android.project1886.taxis.UserTaxiWaitingPanel;
 import com.coctelmental.android.project1886.tts.TextToSpeechMain;
@@ -8,6 +9,8 @@ import com.coctelmental.android.project1886.tts.TextToSpeechMain;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 public class C2DMessageReceiver extends BroadcastReceiver{
@@ -71,20 +74,32 @@ public class C2DMessageReceiver extends BroadcastReceiver{
 	
 	private void handleTaxiNotification(Context context, String addressFrom, String addressTo, String requestComment, int nRequests) {
 		
+        // check user preferences
+	    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+	    String incomingRequestMessage = sp.getString(Preferences.PREF_TAXI_NEW_REQUEST_MESSAGE,
+	    		context.getString(R.string.newIncomingRequestTTS));
+	    
+	    boolean playDestination = sp.getBoolean(Preferences.PREF_TAXI_PLAY_DEST,
+	    		Preferences.DEFAULT_TAXI_PLAY_DEST);
+	    boolean playComment = sp.getBoolean(Preferences.PREF_TAXI_PLAY_COMMENT,
+	    		Preferences.DEFAULT_TAXI_PLAY_COMMENT);
+		
+		
 		// create tts message
 		StringBuilder sb = new StringBuilder();
-		sb.append(context.getString(R.string.newIncomingRequestTTS));
+		sb.append(incomingRequestMessage);
+		sb.append(".");
 		if (addressFrom != null && !addressFrom.equals("")) {
 			sb.append(context.getString(R.string.originTTS));
 			sb.append(addressFrom);
 			sb.append(".");
 		}
-		if (addressTo != null && !addressTo.equals("")) {
+		if (playDestination && addressTo != null && !addressTo.equals("")) {
 			sb.append(context.getString(R.string.destinationTTS));
 			sb.append(addressTo);
 			sb.append(".");
 		}
-		if (requestComment != null && !requestComment.equals("")) {
+		if (playComment && requestComment != null && !requestComment.equals("")) {
 			sb.append(context.getString(R.string.clarificationCommentTTS));
 			sb.append(requestComment);
 			sb.append(".");

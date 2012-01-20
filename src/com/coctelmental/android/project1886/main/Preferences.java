@@ -42,6 +42,21 @@ public class Preferences extends PreferenceActivity {
 	public static final boolean DEFAULT_BUS_NOTIFICATION_SOUND = true;
 	public static final String PREF_BUS_NOTIFICATION_VIB = "bus_driver_notification_vibration";
 	public static final boolean DEFAULT_BUS_NOTIFICATION_VIB = false;
+
+	/*************************** TAXI DRIVER PREFS ***************************/
+	public static final String PREF_TAXI_DISTANCE_UNITS = "taxi_driver_distance_units";
+	public static final String DEFAULT_TAXI_DISTANCE_UNITS= "km";
+	public static final String PREF_TAXI_MAP_SATELLITE = "taxi_driver_maps_satellite";
+	public static final boolean DEFAULT_TAXI_MAP_SATELLITE = false;
+	public static final String PREF_TAXI_MAP_ZOOM_CONTROL = "taxi_driver_maps_zoom_controls";
+	public static final boolean DEFAULT_TAXI_MAP_ZOOM_CONTROL = false;
+	public static final String PREF_TAXI_NEW_REQUEST_MESSAGE = "taxi_driver_request_message";
+	public static final String PREF_TAXI_BUTTON_NEW_REQUEST_MESSAGE = "button_taxi_driver_request_message";
+	public static final String PREF_TAXI_PLAY_DEST = "taxi_driver_play_destination";
+	public static final boolean DEFAULT_TAXI_PLAY_DEST = true;
+	public static final String PREF_TAXI_PLAY_COMMENT = "taxi_driver_play_comment";
+	public static final boolean DEFAULT_TAXI_PLAY_COMMENT = true;
+	
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -75,7 +90,22 @@ public class Preferences extends PreferenceActivity {
 			addPreferencesFromResource(R.layout.bus_driver_preferences);
 		}
 		else if (userType == Credentials.TYPE_TAXI) {
-			addPreferencesFromResource(R.layout.preferences);
+			addPreferencesFromResource(R.layout.taxi_driver_preferences);
+			
+			Preference prefNewRequestMsg = findPreference(PREF_TAXI_BUTTON_NEW_REQUEST_MESSAGE);
+			prefNewRequestMsg.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+				
+				@Override
+				public boolean onPreferenceClick(Preference preference) {
+					String defaultMessage = getString(R.string.newIncomingRequestTTS);
+					SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+					Editor editor = sp.edit();
+					editor.putString(PREF_TAXI_NEW_REQUEST_MESSAGE, defaultMessage);
+					editor.commit();
+					Tools.buildToast(Preferences.this, getString(R.string.customWelcomeMsgRemoved), Gravity.CENTER, Toast.LENGTH_SHORT).show();
+					return true;
+				}
+			});
 		}
 		
 		setContentView(R.layout.preferences_panel);

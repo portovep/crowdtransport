@@ -7,8 +7,11 @@ import com.coctelmental.android.project1886.util.Tools;
 import com.coctelmental.android.project1886.buses.BusTrackingService;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -88,5 +91,27 @@ public class BusDriverMain extends Activity {
 	@Override
 	public void onBackPressed() {
 		moveTaskToBack(true);
-	}	
+	}
+	
+	public void onAboutAction(View view) {
+		Dialog dialog = new Dialog(this);
+
+		dialog.setContentView(R.layout.about_dialog);
+		dialog.setTitle(R.string.titleAboutDialog);
+		
+        // fill versión label
+        try {
+        	String versionName = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+        	TextView tvVersion = (TextView) dialog.findViewById(R.id.versionLabel);
+        	tvVersion.append("(");
+        	tvVersion.append(getString(R.string.versionLabelText));
+        	tvVersion.append(" " + versionName);
+        	tvVersion.append(")");
+    	}catch (NameNotFoundException e) {
+			Log.w("APP_VERSION", "Version name not found");
+		}
+		
+		dialog.show();
+		
+	}
 }

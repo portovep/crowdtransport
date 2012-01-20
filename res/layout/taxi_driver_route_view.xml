@@ -97,7 +97,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginTop="5dp"
                 android:text="@string/bAcceptRequest"
-                android:textSize="10dp" />
+                android:textSize="16sp" />
         </LinearLayout>
     </RelativeLayout>
 
