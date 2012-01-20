@@ -7,6 +7,7 @@ public class Credentials {
 	public static final int TYPE_BUS=2;
 	
 	private String id;
+	private String fullName;
 	private String password;
 	private int type;
 	
@@ -24,6 +25,14 @@ public class Credentials {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+	
+	public String getFullName() {
+		return fullName;
+	}
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
 	}
 
 	public String getPassword() {

@@ -51,9 +51,12 @@ public class UserAuthentication extends Activity {
 				if(userID.equals("") || password.equals(""))
 					Tools.buildToast(getApplicationContext(), getString(R.string.missingFields),
 							Gravity.CENTER, Toast.LENGTH_LONG).show();	
-				else 
+				else { 
+					// calculate password digest
+					String passwordDigest = UsersHelper.passwordToDigest(password);		
 					// launch Async Task to attempt to authenticate the user
-					new AuthenticationAsyncTask().execute(userID);
+					new AuthenticationAsyncTask().execute(userID, passwordDigest);
+				}
 			}
 		});        
     }
@@ -69,37 +72,31 @@ public class UserAuthentication extends Activity {
 	      * delivers it the parameters given to AsyncTask.execute() */		
 	    protected ResultBundle doInBackground(String... params) {
 			// send request to the server and return response code
-	        return tryAuthentication(params[0]);
+	        return tryAuthentication(params[0], params[1]);
 	    }	    
 	    /** The system calls this to perform work in the UI thread and delivers
 	      * the result from doInBackground() */
 	    protected void onPostExecute(ResultBundle rb) {
 	    	// disable the progress dialog
 	        pdprocessingAuthentication.dismiss();
-			// calculate password digest
-			String passwordDigest = UsersHelper.passwordToDigest(password);					
+						
 			// check result
 			if (rb.getResultCode() == HttpURLConnection.HTTP_OK) {
 				String jsonUser = rb.getContent();
 				User user = JsonHandler.fromJson(jsonUser, User.class);
-				if (user.getPassword().equals(passwordDigest)) {
-					// setup new user credentials
-					Credentials credentials=new Credentials(userID, passwordDigest, Credentials.TYPE_USER);
-					// log in
-					UsersHelper.logIn(credentials);
-					// information panel
-					Tools.buildToast(getApplicationContext(), getString(R.string.correctLogin),
-							Gravity.CENTER, Toast.LENGTH_SHORT).show();					
-					// go to main menu
-					Intent i = new Intent(getApplicationContext(), MainActivity.class);
-					// add flag to clear this activity from the top of Android activity stack
-					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-					startActivity(i);
-				}
-				else
-					// error: passwords don't match
-					Tools.buildToast(getApplicationContext(), getString(R.string.failLoginInvalidData),
-							Gravity.CENTER, Toast.LENGTH_LONG).show();
+				// setup new user credentials
+				Credentials credentials = new Credentials(user.getUserName(), user.getPassword(), Credentials.TYPE_USER);
+				credentials.setFullName(user.getFullName());
+				// log in
+				UsersHelper.logIn(credentials);
+				// information panel
+				Tools.buildToast(getApplicationContext(), getString(R.string.correctLogin),
+						Gravity.CENTER, Toast.LENGTH_SHORT).show();					
+				// go to main menu
+				Intent i = new Intent(getApplicationContext(), MainActivity.class);
+				// add flag to clear this activity from the top of Android activity stack
+				i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(i);
 			}
 			else {
 				// default message = error server not found
@@ -114,9 +111,9 @@ public class UserAuthentication extends Activity {
 	    }
 	}
 	
-	private ResultBundle tryAuthentication(String userID) {
+	private ResultBundle tryAuthentication(String userID, String passwdDigest) {
 		ResultBundle rb = null;
-		rb = UsersHelper.getUser(userID);
+		rb = UsersHelper.getUser(userID, passwdDigest);
 		return rb;
 	}
 	

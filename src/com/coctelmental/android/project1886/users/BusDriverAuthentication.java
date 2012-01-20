@@ -51,9 +51,12 @@ public class BusDriverAuthentication extends Activity {
 				if(busDriverID.equals("") || password.equals(""))
 					Tools.buildToast(getApplicationContext(), getString(R.string.missingFields),
 							Gravity.CENTER, Toast.LENGTH_LONG).show();	
-				else 
+				else {
+					// calculate password digest
+					String passwordDigest = UsersHelper.passwordToDigest(password);			
 					// launch Async Task to attempt to authenticate the user
-					new AuthenticationAsyncTask().execute(busDriverID);
+					new AuthenticationAsyncTask().execute(busDriverID, passwordDigest);
+				}
 			}
 		});        
     }
@@ -69,36 +72,29 @@ public class BusDriverAuthentication extends Activity {
 	      * delivers it the parameters given to AsyncTask.execute() */		
 	    protected ResultBundle doInBackground(String... params) {
 			// send request to the server and return response code
-	        return tryAuthentication(params[0]);
+	        return tryAuthentication(params[0], params[1]);
 	    }	    
 	    /** The system calls this to perform work in the UI thread and delivers
 	      * the result from doInBackground() */
 	    protected void onPostExecute(ResultBundle rb) {
 	    	// disable the progress dialog
-	        pdprocessingAuthentication.dismiss();
-			// calculate password digest
-			String passwordDigest = UsersHelper.passwordToDigest(password);					
+	        pdprocessingAuthentication.dismiss();		
 			// check result
 			if (rb.getResultCode() == HttpURLConnection.HTTP_OK) {
 				String jsonUser = rb.getContent();
 				BusDriver busDriver = JsonHandler.fromJson(jsonUser, BusDriver.class);
-				if (busDriver.getPassword().equals(passwordDigest)) {
-					// setup new user credentials
-					Credentials credentials=new Credentials(busDriver.getDni(), passwordDigest, Credentials.TYPE_BUS);
-					// log in
-					UsersHelper.logIn(credentials);
-					// information panel
-					Tools.buildToast(getApplicationContext(), getString(R.string.correctLogin),
-							Gravity.CENTER, Toast.LENGTH_SHORT).show();						
-					// go to bus driver main activity
-					Intent i = new Intent(getApplicationContext(), BusDriverMain.class);
-					startActivity(i);
-					finish();
-				}
-				else
-					// error: passwords don't match
-					Tools.buildToast(getApplicationContext(), getString(R.string.failLoginInvalidData),
-							Gravity.CENTER, Toast.LENGTH_LONG).show();	
+				// setup new user credentials
+				Credentials credentials=new Credentials(busDriver.getDni(), busDriver.getPassword(), Credentials.TYPE_BUS);
+				credentials.setFullName(busDriver.getFullName());
+				// log in
+				UsersHelper.logIn(credentials);
+				// information panel
+				Tools.buildToast(getApplicationContext(), getString(R.string.correctLogin),
+						Gravity.CENTER, Toast.LENGTH_SHORT).show();						
+				// go to bus driver main activity
+				Intent i = new Intent(getApplicationContext(), BusDriverMain.class);
+				startActivity(i);
+				finish();
 			}
 			else {
 				// default message = error server not found
@@ -113,9 +109,9 @@ public class BusDriverAuthentication extends Activity {
 		}
 	}
 	
-	private ResultBundle tryAuthentication(String busDriverID) {
+	private ResultBundle tryAuthentication(String busDriverID, String passwdDigest) {
 		ResultBundle rb = null;
-		rb = UsersHelper.getBusDriver(busDriverID);
+		rb = UsersHelper.getBusDriver(busDriverID, passwdDigest);
 		return rb;
 	}
 	

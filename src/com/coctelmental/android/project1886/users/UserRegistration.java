@@ -101,6 +101,7 @@ public class UserRegistration extends Activity {
 			if(responseStatus == HttpURLConnection.HTTP_OK) {
 				// add registered user as active user (log in)
 				Credentials credentials = new Credentials(user.getUserName(), user.getPassword(), Credentials.TYPE_USER);
+				credentials.setFullName(user.getFullName());
 				UsersHelper.logIn(credentials);
 				// information panel
 				Tools.buildToast(getApplicationContext(), getString(R.string.correctRegister),

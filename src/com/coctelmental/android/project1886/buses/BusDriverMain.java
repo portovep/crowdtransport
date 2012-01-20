@@ -51,9 +51,9 @@ public class BusDriverMain extends Activity {
 		super.onResume();		
 		// check if exist a user logged into the application 
         if(UsersHelper.existActiveUser()) {
-        	String userName = UsersHelper.getActiveUser().getId();
+        	String userName = UsersHelper.getActiveUser().getFullName();
         	// show user's name
-        	tvProfileName.setText(getString(R.string.profile_welcome)+" "+userName);
+        	tvProfileName.setText(getString(R.string.profile_welcome) + " " + userName);
         }
         else
         	// remove profile information from main panel

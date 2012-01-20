@@ -17,18 +17,26 @@ public class UsersHelper {
 	private static final String URI_TAXI_RESOURCE = "/taxi";
 
 	
-	public static ResultBundle getUser(String userID) {
-		String targetURL = ConnectionsHandler.SERVER_ADDRESS + URI_USER_RESOURCE + "/" + userID;
+	public static ResultBundle getUser(String userID, String passwdDigest) {
+		String targetURL = ConnectionsHandler.SERVER_ADDRESS + URI_USER_RESOURCE +
+				"/" + userID + "/" + passwdDigest;
 		return ConnectionsHandler.get(targetURL);
 	}
 
-	public static ResultBundle getBusDriver(String busDriverID) {
-		String targetURL = ConnectionsHandler.SERVER_ADDRESS + URI_BUS_RESOURCE + "/" + busDriverID;
+	public static ResultBundle getBusDriver(String busDriverID, String passwdDigest) {
+		String targetURL = ConnectionsHandler.SERVER_ADDRESS + URI_BUS_RESOURCE +
+				"/" + busDriverID + "/" + passwdDigest;
+		return ConnectionsHandler.get(targetURL);
+	}
+
+	public static ResultBundle getTaxiDriver(String taxiDriverID) {
+		String targetURL = ConnectionsHandler.SERVER_ADDRESS + URI_TAXI_RESOURCE + "/" + taxiDriverID;
 		return ConnectionsHandler.get(targetURL);
 	}
 	
-	public static ResultBundle getTaxiDriver(String taxiDriverID) {
-		String targetURL = ConnectionsHandler.SERVER_ADDRESS + URI_TAXI_RESOURCE + "/" + taxiDriverID;
+	public static ResultBundle getTaxiDriver(String taxiDriverID, String passwdDigest) {
+		String targetURL = ConnectionsHandler.SERVER_ADDRESS + URI_TAXI_RESOURCE + 
+				"/" + taxiDriverID + "/" + passwdDigest;
 		return ConnectionsHandler.get(targetURL);
 	}
 

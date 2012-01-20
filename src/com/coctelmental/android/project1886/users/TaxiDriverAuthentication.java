@@ -51,9 +51,13 @@ public class TaxiDriverAuthentication extends Activity {
 				if(taxiDriverID.equals("") || password.equals(""))
 					Tools.buildToast(getApplicationContext(), getString(R.string.missingFields),
 							Gravity.CENTER, Toast.LENGTH_LONG).show();	
-				else 
+				else {
+					// calculate password digest
+					String passwordDigest = UsersHelper.passwordToDigest(password);		
+
 					// launch Async Task to attempt to authenticate the user
-					new AuthenticationAsyncTask().execute(taxiDriverID);
+					new AuthenticationAsyncTask().execute(taxiDriverID, passwordDigest);
+				}
 			}
 		});        
     }
@@ -69,36 +73,29 @@ public class TaxiDriverAuthentication extends Activity {
 	      * delivers it the parameters given to AsyncTask.execute() */		
 	    protected ResultBundle doInBackground(String... params) {
 			// send request to the server and return response code
-	        return tryAuthentication(params[0]);
+	        return tryAuthentication(params[0], params[1]);
 	    }	    
 	    /** The system calls this to perform work in the UI thread and delivers
 	      * the result from doInBackground() */
 	    protected void onPostExecute(ResultBundle rb) {
 	    	// disable the progress dialog
-	        pdprocessingAuthentication.dismiss();
-			// calculate password digest
-			String passwordDigest = UsersHelper.passwordToDigest(password);					
+	        pdprocessingAuthentication.dismiss();			
 			// check result
 			if (rb.getResultCode() == HttpURLConnection.HTTP_OK) {
 				String jsonUser = rb.getContent();
 				TaxiDriver taxiDriver = JsonHandler.fromJson(jsonUser, TaxiDriver.class);
-				if (taxiDriver.getPassword().equals(passwordDigest)) {
-					// setup new user credentials
-					Credentials credentials=new Credentials(taxiDriver.getDni(), passwordDigest, Credentials.TYPE_TAXI);
-					// log in
-					UsersHelper.logIn(credentials);
-					// information panel
-					Tools.buildToast(getApplicationContext(), getString(R.string.correctLogin),
-							Gravity.CENTER, Toast.LENGTH_SHORT).show();						
-					// go to taxi driver main activity
-					Intent i = new Intent(getApplicationContext(), TaxiDriverMain.class);
-					startActivity(i);
-					finish();
-				}
-				else
-					// error: passwords don't match
-					Tools.buildToast(getApplicationContext(), getString(R.string.failLoginInvalidData),
-							Gravity.CENTER, Toast.LENGTH_LONG).show();	
+				// setup new user credentials
+				Credentials credentials=new Credentials(taxiDriver.getDni(), taxiDriver.getPassword(), Credentials.TYPE_TAXI);
+				credentials.setFullName(taxiDriver.getFullName());
+				// log in
+				UsersHelper.logIn(credentials);
+				// information panel
+				Tools.buildToast(getApplicationContext(), getString(R.string.correctLogin),
+						Gravity.CENTER, Toast.LENGTH_SHORT).show();						
+				// go to taxi driver main activity
+				Intent i = new Intent(getApplicationContext(), TaxiDriverMain.class);
+				startActivity(i);
+				finish();
 			}
 			else {
 				// default message = error server not found
@@ -113,9 +110,9 @@ public class TaxiDriverAuthentication extends Activity {
 	    }
 	}
 	
-	private ResultBundle tryAuthentication(String taxiDriverID) {
+	private ResultBundle tryAuthentication(String taxiDriverID, String passwdDigest) {
 		ResultBundle rb = null;
-		rb = UsersHelper.getTaxiDriver(taxiDriverID);
+		rb = UsersHelper.getTaxiDriver(taxiDriverID, passwdDigest);
 		return rb;
 	}
 	
