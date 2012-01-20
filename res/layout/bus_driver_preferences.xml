@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory android:title="@string/categoryGeneral" >
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="bus_driver_notification_sound"
+            android:summary="@string/prefSummaryNotificationSound"
+            android:title="@string/prefNotificationSound" />
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="bus_driver_notification_vibration"
+            android:summary="@string/prefSummaryNotificationVibration"
+            android:title="@string/prefNotificationVibration" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

@@ -82,12 +82,6 @@ public class BusTrackingService extends Service {
         notificationIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 		this.pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);	
 		
-		// setup new notification
-		Notification notification = setupNotification(R.drawable.ic_stat_notify_tracking, getString(R.string.trackingServiceStarted),
-				getString(R.string.app_name), getString(R.string.trackingServiceRunning), pendingIntent);		
-		// launch notification
-		notificationManager.notify(ID_NOTIFICATION, notification);
-	
 		// get userID
 	    if(UsersHelper.existActiveUser()) {
 	    	userID = UsersHelper.getActiveUser().getId();
@@ -98,6 +92,12 @@ public class BusTrackingService extends Service {
 	    	userID = AppData.getInstance().getInstallationUniqueId();
 	    	userType = Credentials.TYPE_USER;
 	    }
+		
+		// setup new notification
+		Notification notification = setupNotification(R.drawable.ic_stat_notify_tracking, getString(R.string.trackingServiceStarted),
+				getString(R.string.app_name), getString(R.string.trackingServiceRunning), pendingIntent);		
+		// launch notification
+		notificationManager.notify(ID_NOTIFICATION, notification);
         
 	    // registering location listener with target settings
         locationManager.requestLocationUpdates(DEFAULT_PROVIDER, TIME_BETWEEN_UPDATES, DISTANCE_BETWEEN_UPDATES, trackingLocationListener);
@@ -174,6 +174,13 @@ public class BusTrackingService extends Service {
 	    		Preferences.DEFAULT_COL_NOTIFICATION_SOUND);
 	    	notificationVibration = sp.getBoolean(Preferences.PREF_COL_NOTIFICATION_VIB,
 		    		Preferences.DEFAULT_COL_NOTIFICATION_VIB);
+	    }
+
+	    if (userType == Credentials.TYPE_BUS) {
+	    	notificationSound = sp.getBoolean(Preferences.PREF_BUS_NOTIFICATION_SOUND,
+	    		Preferences.DEFAULT_BUS_NOTIFICATION_SOUND);
+	    	notificationVibration = sp.getBoolean(Preferences.PREF_BUS_NOTIFICATION_VIB,
+		    		Preferences.DEFAULT_BUS_NOTIFICATION_VIB);
 	    }
 		
 	    // set notification properties

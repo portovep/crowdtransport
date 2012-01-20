@@ -2,6 +2,7 @@ package com.coctelmental.android.project1886.buses;
 
 import com.coctelmental.android.project1886.R;
 import com.coctelmental.android.project1886.helpers.UsersHelper;
+import com.coctelmental.android.project1886.main.Preferences;
 import com.coctelmental.android.project1886.util.Tools;
 import com.coctelmental.android.project1886.buses.BusTrackingService;
 
@@ -68,6 +69,11 @@ public class BusDriverMain extends Activity {
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {		
 		
 		switch(item.getItemId()) {
+			case R.id.menuPreferences:
+				// launch preference activity
+				Intent intent = new Intent(getApplicationContext(), Preferences.class);
+				startActivity(intent);
+				break;
 			case R.id.menuExit:
 				// logout and exit
 				UsersHelper.logOut();

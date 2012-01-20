@@ -1,6 +1,8 @@
 package com.coctelmental.android.project1886.main;
 
 import com.coctelmental.android.project1886.R;
+import com.coctelmental.android.project1886.helpers.UsersHelper;
+import com.coctelmental.android.project1886.model.Credentials;
 import com.coctelmental.android.project1886.util.Tools;
 
 import android.content.SharedPreferences;
@@ -35,27 +37,48 @@ public class Preferences extends PreferenceActivity {
 	public static final String PREF_COL_NOTIFICATION_VIB = "collaboration_notification_vibration";
 	public static final boolean DEFAULT_COL_NOTIFICATION_VIB = false;
 
+	/*************************** BUS DRIVER PREFS ***************************/
+	public static final String PREF_BUS_NOTIFICATION_SOUND = "bus_driver_notification_sound";
+	public static final boolean DEFAULT_BUS_NOTIFICATION_SOUND = true;
+	public static final String PREF_BUS_NOTIFICATION_VIB = "bus_driver_notification_vibration";
+	public static final boolean DEFAULT_BUS_NOTIFICATION_VIB = false;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		addPreferencesFromResource(R.layout.preferences);
-		setContentView(R.layout.preferences_panel);
 		
-		Preference prefCustomWelcomeMsg = findPreference(PREF_BUTTON_CUSTOM_WELCOME_MESSAGE);
-		prefCustomWelcomeMsg.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-			
-			@Override
-			public boolean onPreferenceClick(Preference preference) {
-				String defaultMessage = getString(R.string.profile_welcome);
-				SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-				Editor editor = sp.edit();
-				editor.putString(PREF_CUSTOM_WELCOME_MESSAGE, defaultMessage);
-				editor.commit();
-				Tools.buildToast(Preferences.this, getString(R.string.customWelcomeMsgRemoved), Gravity.CENTER, Toast.LENGTH_SHORT).show();
-				return true;
-			}
-		});
+		int userType = Credentials.TYPE_USER;		
+		if (UsersHelper.existActiveUser()) {
+			userType = UsersHelper.getActiveUser().getType();
+		}
+
+		// show preference panel based on user type
+		if (userType == Credentials.TYPE_USER) {
+			addPreferencesFromResource(R.layout.preferences);
+
+			Preference prefCustomWelcomeMsg = findPreference(PREF_BUTTON_CUSTOM_WELCOME_MESSAGE);
+			prefCustomWelcomeMsg.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+				
+				@Override
+				public boolean onPreferenceClick(Preference preference) {
+					String defaultMessage = getString(R.string.profile_welcome);
+					SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+					Editor editor = sp.edit();
+					editor.putString(PREF_CUSTOM_WELCOME_MESSAGE, defaultMessage);
+					editor.commit();
+					Tools.buildToast(Preferences.this, getString(R.string.customWelcomeMsgRemoved), Gravity.CENTER, Toast.LENGTH_SHORT).show();
+					return true;
+				}
+			});
+		}
+		else if (userType == Credentials.TYPE_BUS) {
+			addPreferencesFromResource(R.layout.bus_driver_preferences);
+		}
+		else if (userType == Credentials.TYPE_TAXI) {
+			addPreferencesFromResource(R.layout.preferences);
+		}
+		
+		setContentView(R.layout.preferences_panel);
 	}
 	
 }

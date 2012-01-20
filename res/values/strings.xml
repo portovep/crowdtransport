@@ -7,7 +7,7 @@
     <string name="option_menu_login">Log in</string>
     <string name="option_menu_register">Registrarse</string>
     <string name="option_menu_exit">Salir</string>
-    <string name="option_menu_profile">Mi perfil</string>
+    <string name="option_menu_preferences">Opciones</string>
     <string name="option_menu_collaboratorPanel">Panel de colaboración</string>
     <string name="option_menu_finishTrackingService">Finalizar seguimiento</string>
     <string name="dash_bus">Autobuses</string>
@@ -80,7 +80,7 @@
     <string name="requestLifeTime">Tiempo de vida de la solicitud:</string>
 
     <!-- Collaboration line selection -->
-    <string name="buttonStart">Comenzar seguimiento</string>
+    <string name="buttonStart">Empezar</string>
     <string name="collaborationMessage">Elija la línea de autobús en la que viaja
    	para empezar a colaborar con otros usuarios.</string>
 
@@ -190,8 +190,9 @@
     <string name="originTTS">"Punto de recogida: "</string>
     <string name="destinationTTS">"Destino: "</string>
     <string name="clarificationCommentTTS">"Aclaración del usuario: "</string>
-    
+
     <!-- Images textual description for accessibility -->
+
 
     <!-- Preferences -->
     <!-- GENERAL -->

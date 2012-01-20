@@ -68,8 +68,6 @@ public class MainActivity extends Activity{
 		MenuInflater inflater = getMenuInflater();
 		if(Tools.isServiceRunning(getApplicationContext(), BusTrackingService.class.getName())) {
 			inflater.inflate(R.menu.main_activity_service_started, menu);
-			if(!UsersHelper.existActiveUser())
-				menu.removeItem(R.id.menuProfile);
 		}
 		else if(UsersHelper.existActiveUser())
 			inflater.inflate(R.menu.main_activity_logged, menu);
@@ -94,6 +92,11 @@ public class MainActivity extends Activity{
 				intent = new Intent(getApplicationContext(), Registration.class);
 				startActivity(intent);
 				break;
+			case R.id.menuPreferences:
+				// launch preference activity
+				intent = new Intent(getApplicationContext(), Preferences.class);
+				startActivity(intent);
+				break;
 			case R.id.menuExit:
 				// logout and exit
 				UsersHelper.logOut();
@@ -103,7 +106,7 @@ public class MainActivity extends Activity{
 				// goto collaborator panel
 				intent = new Intent(getApplicationContext(), CollaboratorInformationPanel.class);
 				startActivity(intent);
-				break;
+				break;	
 			case R.id.menufinishService:
 				// finish location tracking service
 				Intent i = new Intent(getApplicationContext(), BusTrackingService.class);
