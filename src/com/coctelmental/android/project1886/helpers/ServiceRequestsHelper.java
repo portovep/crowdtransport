@@ -116,6 +116,17 @@ public class ServiceRequestsHelper {
 		return result;
 	}
 	
+	public static int removeDeviceInfo() {
+		// get installation UUID		
+		String deviceUUID = AppData.getInstance().getInstallationUniqueId();	
+		
+		// remove device info stored in webservice
+		String targetURL = ConnectionsHandler.SERVER_ADDRESS + URI_C2DM_REGISTRATION_RESOURCE + "/" + deviceUUID;
+		int result = ConnectionsHandler.delete(targetURL);
+
+		return result;
+	}
+	
 	public static ResultBundle obtainRouteInfo(GeoPoint gpOrigin, GeoPoint gpDestination){
 		// get coordinates
 		double oriLatitude = gpOrigin.getLatitudeE6() / 1E6;

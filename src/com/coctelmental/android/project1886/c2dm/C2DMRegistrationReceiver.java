@@ -67,6 +67,8 @@ public class C2DMRegistrationReceiver extends BroadcastReceiver{
                 0, new Intent(), 0));
         // unregister the application. New messages will be blocked by server.
         context.startService(unRegistrationIntent);
+        // unregister device in webservice
+        new RemoveDeviceInfoTask().execute();
     }
     
 	private class SendRegistrationIDTask extends AsyncTask<String, Void, Integer> {
@@ -83,6 +85,25 @@ public class C2DMRegistrationReceiver extends BroadcastReceiver{
 	        }				
 	        else {
 	        	Log.e("C2DM", "Error trying device registration in webservice." +
+	        			"Error code -> (" + result +")");
+	        }
+	    }
+	}
+	
+	private static class RemoveDeviceInfoTask extends AsyncTask<Void, Void, Integer> {
+		
+	    protected Integer doInBackground(Void... params) {
+	    	// remove device info stored in server
+	        return ServiceRequestsHelper.removeDeviceInfo();
+	    }
+
+	    protected void onPostExecute(Integer result) {
+	        // check result
+	        if(result == HttpURLConnection.HTTP_OK) {
+	        	Log.w("C2DM", "Succesful unregistration in webservice.");
+	        }				
+	        else {
+	        	Log.e("C2DM", "Error trying device unregistration in webservice." +
 	        			"Error code -> (" + result +")");
 	        }
 	    }
