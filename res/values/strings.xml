@@ -65,7 +65,7 @@
     <string name="distanceLabelDefault">-</string>
     <string name="timeLabel">Tiempo: </string>
     <string name="routeTimeLabelDefault">-</string>
-    <string name="helpDragAndDrop">En esta pantalla puede especificar el punto de origen y el punto de destino arrastrando y soltando los indicadores sobre el mapa.</string>
+    <string name="helpDragAndDrop">En esta pantalla puede especificar el punto donde quiere que el taxista le recoja (origen) y el punto a donde quiere ir (destino) arrastrando y soltando los indicadores sobre el mapa.</string>
 
     <!-- Taxi available map -->
     <string name="availableTaxis">Taxistas disponibles a su alrededor</string>
