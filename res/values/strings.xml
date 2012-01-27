@@ -57,7 +57,7 @@
     <string name="numberCollaborators">Nº colaboradores</string>
     <string name="buttonShowMap">Ver mapa</string>
 
-    <!-- Taxi route specification -->
+    <!-- User Taxi route specification -->
     <string name="origin">Origen</string>
     <string name="destination">Destino</string>
     <string name="confirm">Confirmar</string>
@@ -65,6 +65,7 @@
     <string name="distanceLabelDefault">-</string>
     <string name="timeLabel">Tiempo: </string>
     <string name="routeTimeLabelDefault">-</string>
+    <string name="helpDragAndDrop">En esta pantalla puede especificar el punto de origen y el punto de destino arrastrando y soltando los indicadores sobre el mapa.</string>
 
     <!-- Taxi available map -->
     <string name="availableTaxis">Taxistas disponibles a su alrededor</string>

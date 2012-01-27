@@ -24,6 +24,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.coctelmental.android.project1886.R;
 import com.coctelmental.android.project1886.common.GeoPointInfo;
@@ -309,7 +311,7 @@ public class UserTaxiRouteSpecification extends MapActivity {
 	            	// hide progress dialog
 	            	pdLookingLocation.dismiss();
 				}
-        		
+				
 				Location userLocation = userLocationHelper.getBestLocation();
 				setupOverlays(userLocation);
 							    
@@ -342,6 +344,10 @@ public class UserTaxiRouteSpecification extends MapActivity {
 	private void setupOverlays(Location userLocation) {
 		// show backgroundLayout
 		backgroundLayout.setVisibility(View.VISIBLE);
+		
+		// show toast with help
+		Tools.buildToast(UserTaxiRouteSpecification.this, getString(R.string.helpDragAndDrop), 
+				Gravity.CENTER, Toast.LENGTH_LONG).show();
 		
 		Double lat = userLocation.getLatitude() * 1E6;
 		Double lng = userLocation.getLongitude() * 1E6;
