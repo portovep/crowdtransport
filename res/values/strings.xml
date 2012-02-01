@@ -4,7 +4,7 @@
     <!-- Main Activity -->
     <string name="app_name">Crowdtransport</string>
     <string name="profile_welcome">Bienvenido</string>
-    <string name="option_menu_login">Log in</string>
+    <string name="option_menu_login">Acceder</string>
     <string name="option_menu_register">Registrarse</string>
     <string name="option_menu_exit">Salir</string>
     <string name="option_menu_preferences">Opciones</string>
@@ -27,7 +27,7 @@
     <string name="loginActivity_name">Página de autenticación</string>
     <string name="userID">Nombre de usuario</string>
     <string name="password">Contraseña</string>
-    <string name="buttonLogin">Entrar</string>
+    <string name="buttonLogin">Acceder</string>
 
     <!-- Registration Activity -->
     <string name="fullName">Nombre y apellidos</string>
