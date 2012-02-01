@@ -68,7 +68,11 @@ public class BusItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 
 	public void clear() {
 		// clear array
-		overlayList = new ArrayList<OverlayItem>();
+		overlayList.clear();
+		// Workaround for another issue with this class:
+		// http://groups.google.com/group/android-developers/browse_thread/thread/38b11314e34714c3
+		setLastFocusedIndex(-1);
+
 		populate();
 	}
 	
