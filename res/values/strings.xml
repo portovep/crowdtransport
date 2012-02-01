@@ -184,10 +184,10 @@
     <string name="searchingBusLocations">Buscando autobuses…</string>
 
     <!-- Notifications -->
-    <string name="trackingServiceStarted">El modo de seguimiento ha sido activado</string>
-    <string name="trackingServiceRunning">El modo de seguimiento está activado</string>
+    <string name="trackingServiceStarted">El modo de seguimiento ha sido activado.</string>
+    <string name="trackingServiceRunning">El modo de seguimiento está activado.</string>
     <string name="trackingServiceGPSDisabled">GPS deshabilitado. Habilitelo para poder enviar información de la posición del autobús</string>
-    <string name="trackingServiceFinished">El modo de seguimiento ha sido deshabilitado</string>
+    <string name="trackingServiceFinished">El modo de seguimiento ha sido deshabilitado.</string>
 
     <!-- TTS messages (tex-to-speech) -->
     <string name="ttsRequirement">Esta aplicación necesita que instales el paquete de voces que proporciona Google para habilitar las funciones de síntesis de voz.</string>
