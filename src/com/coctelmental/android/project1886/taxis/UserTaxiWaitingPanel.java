@@ -242,7 +242,7 @@ public class UserTaxiWaitingPanel extends Activity {
 	        	Log.w("ServiceRequest", "Error trying cancel expired service request in webservice" +
 	        			"Error code -> (" + result + ")");
 	        	
-	        	// TO-DO retry!
+	        	// TO-DO add retry policy!
 	        }	
 	    }
 	}
