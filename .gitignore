@@ -1,3 +1,5 @@
+assets
+gen
 bin
 proguard.cfg
 .project
