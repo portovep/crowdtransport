@@ -14,10 +14,7 @@ import com.coctelmental.android.project1886.model.ResultBundle;
 
 public class ConnectionsHandler {
 	
-	//public static final String SERVER_ADDRESS = "http://project1886.servehttp.com:8085/webservice";
-	//public static final String SERVER_ADDRESS = "http://192.168.1.140:8085/webservice";
-	//public static final String SERVER_ADDRESS = "http://192.168.1.145/crowdtransport-ws/api";	
-	public static final String SERVER_ADDRESS = "http://project1886.servehttp.com/crowdtransport-ws/api";
+	public static final String SERVER_ADDRESS = "http://54.228.210.184:8080/crowdtransport-ws/api";
 	
 	public static ResultBundle get(String targetURL) {
 		// create new result bundle
