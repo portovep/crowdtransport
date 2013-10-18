@@ -2,5 +2,5 @@ assets
 gen
 bin
 proguard.cfg
-.project
+.settings
 .classpath
