@@ -2,7 +2,7 @@
 <resources>
 
     <style name="mapApiKey">
-        <item name="android:apiKey">0GFJEPSerwjLp6q2Rcu8oLWI6Hb1W3SmdNnM-OQ</item>
+        <item name="android:apiKey">MAPS_V1_API_KEY</item>
     </style>
 
     <style name="CustomTheme" parent="@android:style/Theme.Light.NoTitleBar">
