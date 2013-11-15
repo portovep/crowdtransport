@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Main Activity -->
+    <string name="app_name">Crowdtransport</string>
+    <string name="profile_welcome">Bienvenido</string>
+    <string name="option_menu_login">Acceder</string>
+    <string name="option_menu_register">Registrarse</string>
+    <string name="option_menu_exit">Salir</string>
+    <string name="option_menu_preferences">Opciones</string>
+    <string name="option_menu_collaboratorPanel">Panel de colaboración</string>
+    <string name="option_menu_finishTrackingService">Finalizar</string>
+    <string name="dash_bus">Autobuses</string>
+    <string name="dash_taxi">Taxis</string>
+    <string name="dash_collaboration">Colabora</string>
+    <string name="dash_preferences">Opciones</string>
+    <string name="titleAboutDialog">Información sobre la aplicación</string>
+    <string name="versionLabelText">versión</string>
+    <string name="about_text">Esta aplicación ha sido desarrollada como trabajo fin de grado para la titulación de Grado en Ingeniería Informática impartida en la Universidad de Santiago de Compostela.</string>
+
+    <!-- Tabs -->
+    <string name="tabUser">Usuarios</string>
+    <string name="tabTaxiDriver">Taxistas</string>
+    <string name="tabBusDriver">Conductores autobús</string>
+
+    <!-- Authentication -->
+    <string name="loginActivity_name">Página de autenticación</string>
+    <string name="userID">Nombre de usuario</string>
+    <string name="password">Contraseña</string>
+    <string name="buttonLogin">Acceder</string>
+
+    <!-- Registration Activity -->
+    <string name="fullName">Nombre y apellidos</string>
+    <string name="password2">Repita la contraseña</string>
+    <string name="email">Email</string>
+    <string name="buttonRegister">Registrarse</string>
+
+    <!-- Taxi driver -->
+    <string name="dni">DNI</string>
+    <string name="licenceNumber">Nº licencia</string>
+    <string name="carBrand">Marca de coche</string>
+    <string name="carModel">Modelo de coche</string>
+
+    <!-- Bus driver -->
+    <string name="cif">CIF empresa</string>
+    <string name="authCode">Código de autorización</string>
+
+    <!-- Bus line selection -->
+    <string name="city">Ciudad</string>
+    <string name="line">Línea</string>
+    <string name="buttonSearch">Buscar</string>
+    <string name="spinnerCities">Elige ciudad</string>
+    <string name="spinnerLines">Elige linea</string>
+
+    <!-- Bus location map -->
+    <string name="whenReceived">Recibido</string>
+    <string name="numberCollaborators">Nº colaboradores</string>
+    <string name="buttonShowMap">Ver mapa</string>
+
+    <!-- User Taxi route specification -->
+    <string name="origin">Origen</string>
+    <string name="destination">Destino</string>
+    <string name="confirm">Confirmar</string>
+    <string name="distanceLabel">Distancia: </string>
+    <string name="distanceLabelDefault">-</string>
+    <string name="timeLabel">Tiempo: </string>
+    <string name="routeTimeLabelDefault">-</string>
+    <string name="helpDragAndDrop">En esta pantalla puede especificar el punto donde quiere que el taxista le recoja (origen) y el punto a donde quiere ir (destino) arrastrando y soltando los indicadores sobre el mapa.</string>
+
+    <!-- Taxi available map -->
+    <string name="availableTaxis">Taxistas disponibles a su alrededor</string>
+
+    <!-- Taxi location map -->
+    <string name="taxiDriverInformation">Información del taxista</string>
+    <string name="failNoInfoTaxi">No se ha podido obtener información del taxista</string>
+    <string name="labelTaxiName">Nombre:</string>
+    <string name="labelCar">Coche:</string>
+    <string name="bSelectTaxiDriver">Seleccionar taxista</string>
+
+    <!-- Taxi request confirmation -->
+    <string name="addclarificationCommnet">Añadir aclaración:</string>
+    <string name="requestLifeTime">Tiempo de vida de la solicitud:</string>
+
+    <!-- Collaboration line selection -->
+    <string name="buttonStart">Empezar</string>
+    <string name="collaborationMessage">Elija la línea de autobús en la que viaja
+   	para empezar a colaborar con otros usuarios.</string>
+
+    <!-- Collaboration status panel -->
+    <string name="buttonFinishCollaboration">Finalizar seguimiento</string>
+    <string name="collaborationStatusMessage">Estás colaborando con otros usuarios enviando información
+   	en tiempo real de la posición del autobús en el que viajas</string>
+
+    <!-- Bus driver main -->
+    <string name="start">Empezar</string>
+    <string name="trackingOff">"El modo de seguimiento está deshabilitado."</string>
+    <!-- Bus driver line selection -->
+    <string name="busDriverMessage">Elija la línea que va a recorrer 
+        para poder empezar a geoposicionar el autobús que conduce.</string>
+    <!-- Bus driver information panel -->
+    <string name="busDriverStatusMessage">Está enviando información que ayuda a otros
+         usuarios a localizar en un mapa el autobús que conduce.</string>
+    <string name="thanksLabel">Gracias!</string>
+
+    <!-- Taxi driver main -->
+    <!-- Taxi driver information panel -->
+    <string name="taxiDriverStatusMessage">El modo de seguimiento está activado, por lo que su
+        posición será mostrada a los usuarios sobre un mapa y éstos podrán enviarle solicitudes de servicio.</string>
+    <string name="incomingRequest">Solicitudes recibidas</string>
+    <string name="defaultNumberIRequest">0</string>
+    <string name="serviceRequestsNotFound">En estos momentos no tiene solicitudes de servicio activas</string>
+    <string name="chooseServiceRequest">Elija una solicitud</string>
+    <string name="unknownLocation">Localización desconocida</string>
+    <!-- Taxi driver route view -->
+    <string name="labelYourLocation">Tú</string>
+    <string name="bAcceptRequest">Aceptar</string>
+    <string name="taxiDriverAcceptRequest">Ha aceptado la solicitud de servicio!</string>
+
+    <!-- Taxi driver user location reminder -->
+    <string name="timeSinceAcceptation">Tiempo transcurrido:</string>
+    <string name="bPickedUp">He recogido al cliente</string>
+
+    <!-- Taxi driver attending service request -->
+    <string name="messageAttendingRequest">Usted está atendiendo una solicitud en estos momentos.</string>
+    <string name="bServiceCompleted">Solicitud atendida</string>
+
+    <!-- User taxi waiting panel -->
+    <string name="labelWaitingConfirmation">Esperando la confirmación del taxista..</string>
+    <string name="bCancelRequest">Cancelar solicitud</string>
+    <string name="bGoMainMenu">Volver al menú</string>
+    <string name="requestAccepted">Solicitud aceptada!</string>
+    <string name="requestCanceled">Solicitud cancelada</string>
+    <string name="requestNoAccepted">Solicitud no aceptada</string>
+    <string name="requestExpired">La solicitud ha caducado</string>
+    <string name="requestAcceptedMessage">Su solicitud de servicio ha sido aceptada</string>
+    <string name="requestCanceledMessage">Lo sentimos. Su solicitud de servicio no ha sido aceptada</string>
+    <string name="requestExpiredMessage">Lo sentimos. Su solicitud de servicio ha caducado</string>
+    <string name="labelAddressInfo">"Punto de recogida: "</string>
+
+    <!-- Common buttons -->
+    <string name="buttonBack">Volver atrás</string>
+
+    <!-- Messages -->
+    <string name="failInternetConnectionNotFound">No se ha podido establecer una conexión a internet. Conectese a una red WIFI o de datos</string>
+    <string name="failServerNotFound">Lo sentimos, no se ha podido establecer conexión con el servidor</string>
+    <string name="missingFields">Todos los campos son obligatorios</string>
+    <string name="differentPasswords">Las contraseñas no son iguales</string>
+    <string name="correctLogin">Autenticación correcta</string>
+    <string name="failLoginInvalidData">ID de usuario o contraseña incorrectas</string>
+    <string name="correctRegister">Usuario registrado correctamente</string>
+    <string name="failRegister">Ha ocurrido un error en el proceso de registro\nVuelva a intentarlo</string>
+    <string name="failRegisterInvalidUserName">Ya existe un usuario con ese nombre\nElija otro nombre de usuario</string>
+    <string name="failRegisterInvalidDNI">Ya existe un usuario registrado con el DNI especificado.\n
+  				Si cree que han suplantado su identidad, contacte con nosotros.</string>
+    <string name="failRegisterInvalidLicence">El número de licencia introducido no es válido</string>
+    <string name="failRegisterInvalidCompanyAuthCode">El código de autorización de registro no es válido para la compañía especificada</string>
+    <string name="busLocationsNotFound">Lo sentimos, pero no tenemos información sobre los autobuses que recorren esta línea</string>
+    <string name="taxiLocationsNotFound">Lo sentimos, pero en este momento no hay ningún taxista disponible en su zona.</string>
+    <string name="failLoadingCities">No hay ciudades disponibles en estos momentos, vuelva a intentarlo más tarde</string>
+    <string name="failLoadingLines">No existen líneas disponibles para la ciudad especificada</string>
+    <string name="failGPSNotFound">El GPS no está habilitado, es necesario activarlo para poder enviar información de la posición del autobús</string>
+    <string name="enableGPS">Activar GPS</string>
+    <string name="noEnableGPS">No activar</string>
+    <string name="failLocationProviders">No hemos podido obtener su ubicación debido a la configuración de su teléfono. 
+        Habilite la localización mediante GPS o mediante la red de datos</string>
+    <string name="failUserLocationNotFound">No hemos podido obtener su ubicación. Vuelva a intentarlo</string>
+    <string name="errorGettingServiceRequestInfo">Error al intentar obtener la información de la solicitud de servicio.</string>
+    <string name="failSendingRequest">Error al intentar enviar la solicitud, vuelva a intentarlo.</string>
+    <string name="failCancelRequest">Error al intentar cancelar la solicitud, vuelva a intentarlo.</string>
+    <string name="failMalformedServiceRequest">Alguno de los datos asociados a la solicitud no es válido. Vuelva a introducirlos.</string>
+    <string name="failAcceptingRequest">Error al intentar aceptar la solicitud, vuelva a intentarlo.</string>
+
+    <!-- Progress dialogs -->
+    <string name="processingUserAuthentication">Comprobando credenciales…</string>
+    <string name="processingUserRegistration">Registrando usuario…</string>
+    <string name="loadingCities">Obteniendo información de las ciudades disponibles…</string>
+    <string name="loadingLines">Obteniendo información de las líneas disponibles…</string>
+    <string name="obtainingUserLocation">Obteniendo su ubicación…</string>
+    <string name="loadingRequests">Obteniendo sus solicitudes de servicio…</string>
+    <string name="sendingRequest">Enviando solicitud de servicio…</string>
+    <string name="acceptingRequest">Enviando aceptación…</string>
+    <string name="cancelRequestInProgress">Cancelando solicitud…</string>
+    <string name="searchingTaxiLocations">Buscando taxistas…</string>
+    <string name="searchingBusLocations">Buscando autobuses…</string>
+
+    <!-- Notifications -->
+    <string name="trackingServiceStarted">El modo de seguimiento ha sido activado.</string>
+    <string name="trackingServiceRunning">El modo de seguimiento está activado.</string>
+    <string name="trackingServiceGPSDisabled">GPS deshabilitado. Habilitelo para poder enviar información de la posición del autobús</string>
+    <string name="trackingServiceFinished">El modo de seguimiento ha sido deshabilitado.</string>
+
+    <!-- TTS messages (tex-to-speech) -->
+    <string name="ttsRequirement">Esta aplicación necesita que instales el paquete de voces que proporciona Google para habilitar las funciones de síntesis de voz.</string>
+    <string name="newIncomingRequestTTS">"Ha recibido una nueva solicitud de servicio."</string>
+    <string name="originTTS">"Punto de recogida: "</string>
+    <string name="destinationTTS">"Destino: "</string>
+    <string name="clarificationCommentTTS">"Aclaración del usuario: "</string>
+
+    <!-- Images textual description for accessibility -->
+    <string name="cdAppIcon">Icono de la aplicación</string>
+    <string name="cdAboutButton">Botón para visualizar información sobre la aplicación</string>
+    <string name="cdBusImage">Imagen de un autobús</string>
+    <string name="cdTaxiImage">Imagen de un taxi</string>
+    <string name="cdOriMarker">Marcador de punto de recogida</string>
+    <string name="cdDestMarker">Marcador de punto de destino</string>
+    <string name="cdUserLocationMarker">Marcador de posición de usuario</string>
+    <string name="cdRoadImage">Imágen de una carretera</string>
+
+    <!-- Preferences -->
+    <!-- GENERAL -->
+    <string name="categoryGeneral">Configuración general</string>
+    <string name="prefWelcomeMessage">Mensaje de bienvenida</string>
+    <string name="prefSummaryWelcomeMessage">Personalizar mensaje</string>
+    <string name="prefRemoveCustomMessage">Borrar mensaje personalizado</string>
+    <string name="prefSummaryRemoveCustomMessage">Mostrar el mensaje por defecto</string>
+    <string name="customWelcomeMsgRemoved">Mensaje personalizado borrado</string>
+    <string name="prefUnits">Unidades</string>
+    <string name="prefSummaryUnits">Unidades en las que se motrará la distancia</string>
+    <string name="kilometers">kilómetros</string>
+    <string name="meters">metros</string>
+
+    <!-- MAPS -->
+    <string name="categoryMaps">Configuración de los mapas</string>
+    <string name="prefMapSatellite">Capa satélite</string>
+    <string name="prefSummaryMapSatellite">Habilitar la vista satélite en los mapas</string>
+    <string name="prefMapZoomControl">Botones de zoom</string>
+    <string name="prefSummaryMapZoomControl">Mostrar botones para ajustar el zoom</string>
+    <string name="prefRefreshRate">Localizaciones</string>
+    <string name="prefRefreshRateDialogTitle">Frecuencia actualización</string>
+    <string name="prefSummaryRefreshRate">Frecuencia con la que se actualizarán las posiciones de los autobuses y taxis en el mapa</string>
+    <string name="high">Alta</string>
+    <string name="medium">Media</string>
+    <string name="low">Baja</string>
+
+    <!-- COLLABORATION -->
+    <string name="categoryCollaboration">Colaboración</string>
+    <string name="prefNotificationSound">Notificaciones</string>
+    <string name="prefSummaryNotificationSound">Habilitar notificación sonora</string>
+    <string name="prefNotificationVibration">Vibración</string>
+    <string name="prefSummaryNotificationVibration">Vibrar cuando se reciba una notificación</string>
+
+    <!-- TAXI DRIVER -->
+    <string name="categoryNotifications">Configuración de avisos</string>
+    <string name="prefNewRequestMessage">Mensaje de notificación</string>
+    <string name="prefSummaryNewRequestMessage">Personalizar mensaje de aviso de solicitud entrante</string>
+    <string name="prefPlayDestination">Lugar de destino</string>
+    <string name="prefSummaryPlayDestination">Reproducir lugar de destino</string>
+    <string name="prefPlayComment">Comentario del usuario</string>
+    <string name="prefSummaryPlayComment">Reproducir comentario de aclaración</string>
+
+</resources>

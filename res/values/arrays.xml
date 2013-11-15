@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string-array name="units_values">
+    <string-array name="units_values" translatable="false">
         <item>km</item>
         <item>m</item>
     </string-array>
@@ -9,7 +9,7 @@
         <item>@string/kilometers</item>
         <item>@string/meters</item>
     </string-array>
-    <string-array name="refresh_rate_values">
+    <string-array name="refresh_rate_values" translatable="false">
         <item>5000</item>
         <item>10000</item>
         <item>20000</item>
